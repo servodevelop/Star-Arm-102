@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="cello_description">
+    <xacro:arg name="initial_positions_file" default="initial_positions.yaml" />
+
+    <!-- Import cello_description urdf file -->
+    <xacro:include filename="$(find cello_description)/urdf/cello_description.urdf" />
+
+    <!-- Import control_xacro -->
+    <xacro:include filename="cello_description.ros2_control.xacro" />
+
+
+    <xacro:cello_description_ros2_control name="FakeSystem" initial_positions_file="$(arg initial_positions_file)"/>
+
+</robot>

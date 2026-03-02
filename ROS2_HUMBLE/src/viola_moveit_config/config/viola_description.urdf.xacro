@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="viola_description">
+    <xacro:arg name="initial_positions_file" default="initial_positions.yaml" />
+
+    <!-- Import viola_description urdf file -->
+    <xacro:include filename="$(find viola_description)/urdf/viola_description.urdf" />
+
+    <!-- Import control_xacro -->
+    <xacro:include filename="viola_description.ros2_control.xacro" />
+
+
+    <xacro:viola_description_ros2_control name="FakeSystem" initial_positions_file="$(arg initial_positions_file)"/>
+
+</robot>

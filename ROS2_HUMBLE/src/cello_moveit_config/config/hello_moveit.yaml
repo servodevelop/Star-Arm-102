@@ -1,0 +1,10 @@
+hello_moveit:
+ ros__parameters:
+    position_x: -0.48
+    position_y: 3.633067535702139e-05
+    position_z: 0.3700339198112488
+
+    orientation_x: -0.7071237564086914
+    orientation_y: 1.094791787181748e-05
+    orientation_z: 0.7070897817611694
+    orientation_w: 5.8400702982908115e-05

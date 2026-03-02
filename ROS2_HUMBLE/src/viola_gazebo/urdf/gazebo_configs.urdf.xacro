@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="viola_description">
+
+    <gazebo reference="base_link">
+        <material>Gazebo/DarkGrey</material>
+        <dampingFactor>0.01</dampingFactor>
+        <self_collide>true</self_collide>
+        
+    </gazebo>
+    <gazebo reference="link1">
+        <material>Gazebo/DarkGrey</material>
+        <dampingFactor>0.01</dampingFactor>
+        <self_collide>true</self_collide>
+        
+    </gazebo>
+    <gazebo reference="link2">
+        <material>Gazebo/DarkGrey</material>
+        <dampingFactor>0.01</dampingFactor>
+        
+    </gazebo>
+    <gazebo reference="link3">
+        <material>Gazebo/DarkGrey</material>
+        <dampingFactor>0.01</dampingFactor>
+        
+    </gazebo>
+    <gazebo reference="link4">
+        <material>Gazebo/DarkGrey</material>
+        <dampingFactor>0.01</dampingFactor>
+        
+    </gazebo>
+    <gazebo reference="link5">
+        <material>Gazebo/DarkGrey</material>
+        <dampingFactor>0.01</dampingFactor>
+    </gazebo>
+    <gazebo reference="link6">
+        <material>Gazebo/DarkGrey</material>
+        <dampingFactor>0.01</dampingFactor>
+        
+    </gazebo>
+    <gazebo reference="link7_left">
+        <material>Gazebo/DarkGrey</material>
+        <dampingFactor>0.01</dampingFactor>
+        
+    </gazebo>
+    <gazebo reference="link7_right">
+        <material>Gazebo/DarkGrey</material>
+        <dampingFactor>0.01</dampingFactor>
+        
+    </gazebo>
+
+    <gazebo>
+        <is_static>true</is_static>
+        <self_collide>false</self_collide>
+    </gazebo>
+
+    <ros2_control name="GazeboSystem" type="system">
+        <hardware>
+            <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+        </hardware>
+        <joint name="joint1">
+            <command_interface name="position"/>
+            <state_interface name="position">
+                <param name="initial_value">0</param>
+            </state_interface>
+            <state_interface name="velocity"/>
+        </joint>
+        <joint name="joint2">
+            <command_interface name="position"/>
+            <state_interface name="position">
+                <param name="initial_value">0</param>
+            </state_interface>
+            <state_interface name="velocity"/>
+        </joint>
+        <joint name="joint3">
+            <command_interface name="position"/>
+            <state_interface name="position">
+                <param name="initial_value">0</param>
+            </state_interface>
+            <state_interface name="velocity"/>
+        </joint>
+        <joint name="joint4">
+            <command_interface name="position"/>
+            <state_interface name="position">
+                <param name="initial_value">0</param>
+            </state_interface>
+            <state_interface name="velocity"/>
+        </joint>
+        <joint name="joint5">
+            <command_interface name="position"/>
+            <state_interface name="position">
+                <param name="initial_value">0</param>
+            </state_interface>
+            <state_interface name="velocity"/>
+        </joint>
+        <joint name="joint6">
+            <command_interface name="position"/>
+            <state_interface name="position">
+                <param name="initial_value">0</param>
+            </state_interface>
+            <state_interface name="velocity"/>
+        </joint>
+        <joint name="joint7_left">
+            <command_interface name="position"/>
+            <state_interface name="position">
+                <param name="initial_value">0</param>
+            </state_interface>
+            <state_interface name="velocity"/>
+        </joint>        
+        <joint name="joint7_right">
+            <command_interface name="position"/>
+            <!-- <state_interface name="position">
+                <param name="initial_value">0</param>
+            </state_interface>
+            <state_interface name="velocity"/> -->
+            <param name="mimic">joint7_left</param>
+            <param name="multiplier">1</param>
+        </joint>
+    </ros2_control>
+
+    <gazebo>
+        <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
+            <parameters>$(find viola_moveit_config)/config/ros2_controllers.yaml</parameters>
+            <robot_param>robot_description</robot_param>
+            <robot_param_node>robot_state_publisher</robot_param_node>
+        </plugin>
+    </gazebo>
+
+</robot>

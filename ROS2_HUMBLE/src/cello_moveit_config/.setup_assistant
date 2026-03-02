@@ -1,0 +1,25 @@
+moveit_setup_assistant_config:
+  urdf:
+    package: cello_description
+    relative_path: urdf/cello_description.urdf
+  srdf:
+    relative_path: config/cello_description.srdf
+  package_settings:
+    author_name: Welt-liu
+    author_email: 12345678@qq.com
+    generated_timestamp: 1753949700
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+      - velocity
+  modified_urdf:
+    xacros:
+      - control_xacro
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+      - velocity

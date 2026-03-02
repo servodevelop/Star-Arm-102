@@ -1,0 +1,10 @@
+moveit_setup_assistant_config:
+  urdf:
+    package: viola_description
+    relative_path: urdf/viola_description.urdf
+  srdf:
+    relative_path: config/viola_description.srdf
+  package_settings:
+    author_name: Welt-liu
+    author_email: 12345678@qq.com
+    generated_timestamp: 1753760450
