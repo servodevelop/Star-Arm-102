@@ -29,9 +29,9 @@ StarArm 102 是一个 6+1 自由度机械臂遥操作控制项目，支持通过
 | 项目 | 要求 |
 |------|------|
 | 操作系统 | Ubuntu 22.04 |
-| Python 版本 | Python 3.8+ |
+| ROS版本 | ROS2 Humble |
 | 硬件设备 | StarArm 102 机械臂 (Leader + Follower) |
-| 驱动程序 | UART USB 驱动 |
+| 驱动程序 | [CH340 USB驱动](https://www.wch.cn/downloads/CH341SER_EXE.html) |
 
 ### 安装步骤
 
@@ -80,12 +80,12 @@ Star-Arm-102/
 │   └── README.md                            # 详细使用文档
 ├── ROS2_HUMBLE/                             # ROS2 控制方式
 │   ├── src/robo_driver/                     # 机械臂驱动节点
-│   ├── src/stararm102_moveit_config/           # MoveIt2 配置
+│   ├── src/stararm102_moveit_config/        # MoveIt2 配置
 │   ├── src/arm_moveit_write/                # 位姿写入节点
 │   └── README.md                            # ROS2 使用文档
 ├── Lerobot/                                 # Lerobot 框架控制方式
-│   ├── fashionstar-lerobot-robot-stararm102/ # Follower 机器人配置
-│   ├── fashionstar-lerobot-teleoperator-stararm102/ # Leader 遥操作器
+│   ├── lerobot-robot-stararm102/            # Follower 机器人配置
+│   ├── lerobot-teleoperator-stararm102/     # Leader 遥操作器
 │   ├── stararm102_en.md                     # Lerobot 使用文档（英文）
 │   ├── stararm102.md                        # Lerobot 使用文档
 │   └── README.md                            # 使用步骤

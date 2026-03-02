@@ -15,7 +15,7 @@ Python SDK 是 StarArm 102 机械臂的 Python 控制接口，提供简单易用
 - 🤖 **主从遥操作**：支持 Leader 机械臂实时控制 Follower 机械臂
 - ⚡ **高实时性**：支持 100Hz+ 的控制频率
 - 🎯 **多关节控制**：同时控制 7 个舵机关节
-- 📊 **性能监控**：实时显示控制频率和运行状态
+- 📊 **性能监控**：实时显示控制频率
 - 🔧 **简单易用**：基于 Python，无需复杂配置
 
 ---
@@ -49,6 +49,7 @@ pip install pyserial fashionstar-uart-sdk
    - 确认端口号（默认为 `/dev/ttyUSB1`）
 
 3. **检查 USB 设备**：
+
 ```bash
 # 查看所有串口设备
 ls -l /dev/ttyUSB*
@@ -123,27 +124,12 @@ python3 stararm102_ro.py
 
 ### 主要函数
 
-#### `measure_frequency()`
-
-测量循环运行频率（每秒运行次数）
-
-**返回值**：返回一个函数，该函数每次调用返回频率值（每秒一次）
-
-**示例**：
-```python
-get_frequency = measure_frequency()
-while True:
-    # ... 你的代码 ...
-    freq = get_frequency()
-    if freq is not None:
-        print(f"当前运行频率: {freq:.2f} Hz")
-```
-
 #### `main(args=None)`
 
 主控制函数
 
 **功能**：
+
 - 初始化 Leader 和 Follower 串口连接
 - 实时读取 Leader 关节角度
 - 控制 Follower 跟随 Leader 运动
@@ -164,7 +150,7 @@ while True:
 
 ## 📊 控制流程
 
-```
+```bash
 ┌─────────────┐
 │  Leader     │
 │  机械臂      │
@@ -273,7 +259,7 @@ sudo chmod 777 /dev/ttyUSB*
 
 ## 🔗 相关链接
 
-- [FashionStar UART SDK](https://fashionrobo.com/)
+- [FashionStar UART SDK](https://github.com/servodevelop/servo-uart-rs485-sdk/)
 - [华馨京科技官网](https://fashionrobo.com/)
 
 ---

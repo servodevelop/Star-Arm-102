@@ -36,6 +36,10 @@ def main(args=None):
 
     follower_uart = serial.Serial(port=FOLLOWER_PORT_NAME,baudrate=SERVO_BAUDRATE,parity=serial.PARITY_NONE,stopbits=1,bytesize=8,timeout=0)
     follower_control = uservo.UartServoManager(follower_uart)
+    leader_control.stop_on_control_mode(0xff,0x10,0x00)
+    follower_control.stop_on_control_mode(0xff,0x10,0x00)
+    leader_control.reset_multi_turn_angle(0xff)
+    follower_control.reset_multi_turn_angle(0xff)
     get_frequency = measure_frequency()
     servo_ids = [0,1,2,3,4,5,6]
     target_angle = [0.0 for i in range(len(servo_ids))]
@@ -44,9 +48,9 @@ def main(args=None):
         for id in servo_ids: 
             target_angle[id] = leader_control.servos[id].angle_monitor
 
-        command_data_list = [struct.pack("<BlLHHH", i, int(target_angle[i]*10), 200, 80, 80, 0) for i in servo_ids]
+        command_data_list = [struct.pack("<BlLHHH", i, int(target_angle[i]*10), 100, 50, 50, 0) for i in servo_ids]
         follower_control.send_sync_multiturnanglebyinterval(14,7, command_data_list)
-        time.sleep(0.005)
+        time.sleep(0.001)
 
         freq = get_frequency()
         if freq is not None:
