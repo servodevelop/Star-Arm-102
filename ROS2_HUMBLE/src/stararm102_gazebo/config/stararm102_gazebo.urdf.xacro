@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="stararm102_description">
+
+    <link name="world"/>
+    <joint name="fixed" type="fixed">
+        <parent link="world"/>
+        <child link="base_link"/>
+    </joint>
+
+    <xacro:include filename="$(find stararm102_gazebo)/urdf/stararm102_gazebo.urdf" />
+    <xacro:include filename="$(find stararm102_gazebo)/urdf/gazebo_configs.urdf.xacro" />
+
+</robot>

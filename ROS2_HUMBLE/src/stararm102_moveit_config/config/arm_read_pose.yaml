@@ -1,0 +1,18 @@
+# Configuration for arm_read_pose node
+
+arm_read_pose:
+  ros__parameters:
+    # Joint state topic
+    joint_states_topic: /joint_states
+    
+    # Pose topic
+    pose_topic: /current_pose
+    
+    # Frame ID
+    frame_id: world
+    
+    # Update rate (Hz)
+    update_rate: 50
+    
+    # Enable TF publishing
+    publish_tf: true
