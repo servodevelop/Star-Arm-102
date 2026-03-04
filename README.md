@@ -35,7 +35,7 @@ StarArm 102 是一个 6+1 自由度机械臂遥操作控制项目，支持通过
 
 ### 安装步骤
 
-#### 方式一：Python SDK（推荐新手）
+#### 方式一：Python裸机控制机械臂遥操（推荐新手）
 
 ```bash
 # 1. 安装依赖
@@ -49,18 +49,7 @@ python3 ./Python_SDK/stararm102_ro.py
 #### 方式二：ROS2 HUMBLE
 
 ```bash
-# 1. 安装ROS2依赖
-cd ROS2_HUMBLE
-colcon build
-source install/setup.bash
-
-# 2. 启动节点（需要两个终端）
-# 终端1：启动硬件驱动
-ros2 run robo_driver driver --ros-args -p lock:='disable'
-
-# 终端2：启动 MoveIt2 控制
-ros2 launch stararm102_moveit_config driver.launch.py
-ros2 launch stararm102_moveit_config actual_robot_demo.launch.py
+# 参考 ROS2_HUMBLE/README.md 配置说明
 ```
 
 #### 方式三：Lerobot 框架

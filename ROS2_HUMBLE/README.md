@@ -153,10 +153,6 @@ ros2 launch stararm102_moveit_config moveit_write_read.launch.py
 **终端 4：启动位姿话题发送节点
 
 ```bash
-# 首次运行需要编译
-colcon build
-source install/setup.bash
-
 # 运行话题发布节点
 ros2 run arm_moveit_write topic_publisher
 ```
