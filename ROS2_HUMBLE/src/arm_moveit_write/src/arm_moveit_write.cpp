@@ -112,7 +112,7 @@ private:
   {
     auto msg = robo_interfaces::msg::SetAngle();
     msg.servo_id = {6};
-    msg.time = {1000}; 
+    msg.time = {1000};
 
     if (command == "open") {
       msg.target_angle = {100.0};
@@ -180,6 +180,16 @@ private:
       move_group_->setStartStateToCurrentState();
       move_group_->setPoseTarget(current_goal);
 
+      // 设置较小的目标容差，确保位姿接近时也会规划
+      move_group_->setGoalPositionTolerance(0.001);  // 1mm
+      move_group_->setGoalOrientationTolerance(0.01);  // 约0.57度
+      move_group_->setPlanningTime(5.0);  // 增加规划时间
+
+      // 打印目标位姿用于调试
+      RCLCPP_INFO(this->get_logger(), "Target pose: x=%.3f, y=%.3f, z=%.3f, qx=%.3f, qy=%.3f, qz=%.3f, qw=%.3f",
+        current_goal.position.x, current_goal.position.y, current_goal.position.z,
+        current_goal.orientation.x, current_goal.orientation.y, current_goal.orientation.z, current_goal.orientation.w);
+
       // 使用 Move() 它是 Plan + Execute 的封装
       // 如果你想只在规划成功时移动，可以用 plan() then execute()
       // moveit::planning_interface::MoveGroupInterface::Plan plan;
@@ -191,9 +201,10 @@ private:
       auto error_code = move_group_->move();
 
       if (error_code == moveit::core::MoveItErrorCode::SUCCESS) {
-        RCLCPP_INFO(this->get_logger(), "Move executed successfully.");
+        RCLCPP_INFO(this->get_logger(), "Move executed successfully to target pose.");
       } else {
         RCLCPP_WARN(this->get_logger(), "Move failed with error code: %d", error_code.val);
+        RCLCPP_WARN(this->get_logger(), "Will continue to next target in next cycle...");
       }
     }
   }

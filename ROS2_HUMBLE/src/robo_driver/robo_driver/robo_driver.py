@@ -88,7 +88,8 @@ class uservo_ex:
         if servo_id in range(6):
             return cls.degrees_to_radians(servo_angle)
         elif servo_id == 6:
-            return cls.degrees_to_meters(servo_angle-100)
+            # 旋转夹爪使用弧度转角度
+            return cls.degrees_to_radians(servo_angle)
 
     # 设置角度（指定转速） / Send angle commands with specified speed
     def set_angle_by_interval(self, size, command_data_list):

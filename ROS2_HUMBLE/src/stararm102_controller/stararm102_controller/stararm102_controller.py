@@ -44,7 +44,8 @@ def jointstate2servoangle(servo_id, joint_state):
     if servo_id < 6:
         return radians_to_degrees(joint_state)
     elif servo_id == 6:
-        return meters_to_degrees(joint_state) + 100
+        # 夹爪直接弧度转角度
+        return radians_to_degrees(joint_state)
 
 
 class RoboActionClient(Node):

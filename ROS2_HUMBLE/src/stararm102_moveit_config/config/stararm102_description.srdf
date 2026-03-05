@@ -11,6 +11,7 @@
         <joint name="joint6"/>
     </group>
     <group name="hand">
+        <joint name="joint7_left"/>
         <link name="link7_left"/>
         <link name="link7_right"/>
     </group>
@@ -22,6 +23,12 @@
         <joint name="joint4" value="0"/>
         <joint name="joint5" value="0"/>
         <joint name="joint6" value="0"/>
+    </group_state>
+    <group_state name="open" group="hand">
+        <joint name="joint7_left" value="1.57"/>
+    </group_state>
+    <group_state name="close" group="hand">
+        <joint name="joint7_left" value="0"/>
     </group_state>
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
     <end_effector name="hand" parent_link="link6" group="hand"/>

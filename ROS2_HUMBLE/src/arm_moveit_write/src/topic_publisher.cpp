@@ -53,8 +53,8 @@ private:
   void init_datasets()
   {
     // --- 在这里定义你的测试序列 ---
-    targets_.push_back({"102 Start",{0.282, 0.094, 0.184},{0.499, -0.500, 0.500, -0.499},"open"});//点位 1（Viola Start）
-    targets_.push_back({"102 Home",{0.373, -0.000, 0.222},{0.499, -0.500, 0.500, -0.499},"close"});//点位 2（Viola Home）
+    targets_.push_back({"102 Start",{0.254, -0.071, 0.274},{-0.499, 0.500, -0.499, 0.499},"open"});//点位 1（Viola Start）
+    targets_.push_back({"102 Home",{0.308, -0.012, 0.215},{-0.499, 0.499, -0.500, 0.500},"close"});//点位 2（Viola Home）
     // 你可以继续添加
     // targets_.push_back({ "Home", {0.3, 0.0, 0.4}, {0,0,0,1}, "open" });
   }
