@@ -115,7 +115,7 @@ private:
     msg.time = {1000};
 
     if (command == "open") {
-      msg.target_angle = {100.0};
+      msg.target_angle = {90.0};
     } else {
       msg.target_angle = {0.0};
     }

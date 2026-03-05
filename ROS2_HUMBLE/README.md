@@ -325,7 +325,7 @@ killall -9 gazebo gzserver gzclient 2>/dev/null || true
 
 如遇到问题，请访问：
 
-- GitHub 仓库：[star-arm-moveit2](https://github.com/Welt-liu/star-arm-moveit2)
+- GitHub 仓库：[Star-Arm-102](https://github.com/servodevelop/Star-Arm-102)
 - 提交 Issue 获取帮助
 
 ---
