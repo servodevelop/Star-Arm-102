@@ -454,8 +454,8 @@
     <axis
       xyz="0 0 1" />
     <limit
-      lower="-1.57"
-      upper="0"
+      lower="0"
+      upper="1.57"
       effort="5"
       velocity="3.14" />
   </joint>
@@ -510,10 +510,10 @@
     <child
       link="link7_right" />
     <axis
-      xyz="0 0 -1" />
+      xyz="0 0 1" />
     <limit
-      lower="-1.57"
-      upper="0"
+      lower="0"
+      upper="1.57"
       effort="5"
       velocity="3.14" />
     <mimic joint="joint7_left" multiplier="-1" />
