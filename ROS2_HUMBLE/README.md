@@ -193,6 +193,7 @@ ros2 run arm_moveit_write topic_publisher
 ```bash
 sudo apt install gazebo
 sudo apt install ros-humble-moveit*
+sudo apt install -y ros-humble-gazebo-ros-pkgs ros-humble-gazebo-ros
 ```
 
 #### 终端 1：启动 Gazebo 图形界面
