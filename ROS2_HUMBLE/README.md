@@ -71,7 +71,7 @@ sudo pip install fashionstar-uart-sdk
 
 ```bash
 cd ~/
-git clone git@github.com:servodevelop/Star-Arm-102.git
+git clone https://github.com/servodevelop/Star-Arm-102.git
 cd ~/Star-Arm-102/ROS2_HUMBLE
 colcon build
 echo "source ~/Star-Arm-102/ROS2_HUMBLE/install/setup.bash" >> ~/.bashrc
