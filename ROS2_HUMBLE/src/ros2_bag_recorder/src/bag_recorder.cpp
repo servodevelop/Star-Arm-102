@@ -27,7 +27,7 @@ float jointstate2servoangle(uint8_t servo_id, float joint_state)
   if (servo_id < 6)
     return joint_state * (180 / 3.1415926);
   else if (servo_id == 6)
-    return (joint_state / 0.032) * 100 + 100;
+    return joint_state * (180 / 3.1415926);
   else
     return 0;
 }
@@ -119,6 +119,7 @@ private:
   std::unique_ptr<rosbag2_cpp::Writer> writer_;
   rclcpp::Subscription<sensor_msgs::msg::JointState>::SharedPtr angle_sub_; // 修改订阅器类型
   std::string dataset_path_;
+  // rclcpp::Time last_message_time_;  // 记录上一条消息的时间戳
 };
 
 int main(int argc, char **argv)
