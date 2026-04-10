@@ -52,7 +52,7 @@ Star Arm 102‑LD 不仅能完美遥操同系列 FL 型号
 
 ## 🔧 手臂规格
 
-| 参数 | Star Arm 102-LD | Star Arm 102-FL |
+|   | Star Arm 102-LD | Star Arm 102-FL |
 |:---|:---|:---|
 | **DOF** | 6+1 | 6+1 |
 | **Accuracy** | - | 5-8mm |
