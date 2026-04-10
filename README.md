@@ -14,11 +14,62 @@ StarArm 102 是一个 6+1 自由度机械臂遥操作控制项目，支持通过
 
 ### ✨ 核心特性
 
-- 🤖 **多控制方式**：支持 ROS2 Humble、Lerobot 框架、Python SDK 三种控制模式
-- ⚡ **高控制频率**：支持最高 200Hz 的实时遥操作
-- 🔄 **关节自动映射**：自动将 Leader 关节角度转换为 Follower 控制指令
-- 🛡️ **安全保护**：内置关节角度限制、力矩控制和异常检测机制
-- 🎯 **旋转夹爪**：支持旋转夹爪协同控制功能（±90°旋转范围）
+- 🔓 **开源 · 低成本 · 灵活获取**
+  
+完全开源的设计，降低学习与使用门槛
+
+提供两种购买方式：预装整机（开箱即用）与DIY套件（自行组装，适合教学与动手实践）
+
+- ⚙️ **高控制频率**
+  
+6个主动关节 + 1个末端执行器
+
+关节构型严格满足 Pieper 准则，支持逆运动学解析法求解，算法透明、易于教学与二次开发
+
+- 🕹️ **多平台兼容 · 即连即用**
+  
+支持裸机直接遥操（无需额外软件）
+
+深度兼容 LeRobot 与 ROS2 生态
+
+覆盖真实机器人应用全流程：数据采集 → 仿真模拟 → 模型训练 → 实物部署
+
+- 📚 **完整学习资源**
+
+提供从入门到进阶的教程、API 文档、示例代码
+
+适合高校教学、科研实验及个人开发者自学
+
+- 🔗 **LD 型号：高兼容性遥操主手**
+
+Star Arm 102‑LD 不仅能完美遥操同系列 FL 型号
+
+还可直接兼容 reBot 及其他同构型或相似构型的机械臂
+
+一套主手，多臂通用，极大降低遥操作系统的搭建成本
+
+---
+
+## 🔧 手臂规格
+
+| 参数 | Star Arm 102-LD | Star Arm 102-FL |
+|:---|:---|:---|
+| **DOF** | 6+1 | 6+1 |
+| **Accuracy** | - | 5-8mm |
+| **Suggested Maximum Payload** | - | 300g |
+| **Joint Range** | Joint 0: ±120°<br>Joint 1: ±163°<br>Joint 2: 0°\~270°<br>Joint 3: ±88°<br>Joint 4: ±66°<br>Joint 5: ±168°<br>Gripper: 0\~336° | Joint 0: ±120°<br>Joint 1: ±163°<br>Joint 2: 0°\~270°<br>Joint 3: ±88°<br>Joint 4: ±66°<br>Joint 5: ±168°<br>Gripper: 0\~200° |
+| **Servos** | RA8-U01H-M for #0, #1, #2, and #3 joints;<br>RA8-U02H-M for #4 joint;<br>RA8-U03H-M for #5 and #6 joints; | RA8-U25H-M for #0, #3, #5 and #6 joints;<br>RX8-U45H-M for #1 and #2 joints;<br>RA8-U25H-M for #4 joint; |
+| **Communication Hub** | UC-01 | UC-01 |
+| **Communication Method** | UART | UART |
+| **Power Supply (optional)** | 12V2A / XT30 | 12V10A / XT30 |
+| **Tools and Bolts** | Screws, Threadlocker, Woodworking clamp, Spare PCB (UC01), DC Power Pigtail (5.5×2.5mm Jack), 200mm Servo Lead Wire | Screws, Threadlocker, Woodworking clamp, Spare PCB (UC01), DC Power Pigtail (5.5×2.5mm Jack), 200mm Servo Lead Wire |
+| **Angle Sensor** | 12-bit magnetic encoder | 12-bit magnetic encoder |
+| **Weight** | 663g | 791g |
+| **Recommended Operating Temperature Range** | 0-40°C | 0-40°C |
+| **Works with LeRobot** | ✓ | ✓ |
+| **Works with ROS 2** | ✓ | ✓ |
+| **Works with MoveIt** | - | ✓ |
+| **Works with Gazebo** | - | ✓ |
 
 ---
 
