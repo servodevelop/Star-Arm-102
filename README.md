@@ -1,4 +1,9 @@
 # StarArm 102 - 机械臂遥操作系统
+<p align="right">
+  <strong>Language / 语言:</strong>
+  <a href="./README.md">中文</a> |
+  <a href="./README_EN.md">English</a>
+</p>
 
 ![Programming Language](https://img.shields.io/badge/language-Python-blue?style=flat-square)
 ![Framework](https://img.shields.io/badge/framework-ROS2%20Humble-orange?style=flat-square)
@@ -18,7 +23,7 @@ StarArm 102 是一个 6+1 自由度机械臂遥操作控制项目，支持通过
   
 完全开源的设计，降低学习与使用门槛
 
-提供两种购买方式：预装整机（开箱即用）与DIY套件（自行组装，适合教学与动手实践）
+提供两种获取方式：购买预装整机（开箱即用），或自行打印组装（需自行打印并购买零件，适合教学与动手实践）
 
 - ⚙️ **高控制频率**
   
@@ -54,22 +59,39 @@ Star Arm 102‑LD 不仅能完美遥操同系列 FL 型号
 
 |   | Star Arm 102-LD | Star Arm 102-FL |
 |:---|:---|:---|
-| **DOF** | 6+1 | 6+1 |
-| **Accuracy** | - | 5-8mm |
-| **Suggested Maximum Payload** | - | 300g |
-| **Joint Range** | Joint 0: ±120°<br>Joint 1: ±163°<br>Joint 2: 0°\~270°<br>Joint 3: ±88°<br>Joint 4: ±66°<br>Joint 5: ±168°<br>Gripper: 0\~336° | Joint 0: ±120°<br>Joint 1: ±163°<br>Joint 2: 0°\~270°<br>Joint 3: ±88°<br>Joint 4: ±66°<br>Joint 5: ±168°<br>Gripper: 0\~200° |
-| **Servos** | RA8-U01H-M for #0, #1, #2, and #3 joints;<br>RA8-U02H-M for #4 joint;<br>RA8-U03H-M for #5 and #6 joints; | RA8-U25H-M for #0, #3, #5 and #6 joints;<br>RX8-U45H-M for #1 and #2 joints;<br>RA8-U25H-M for #4 joint; |
-| **Communication Hub** | UC-01 | UC-01 |
-| **Communication Method** | UART | UART |
-| **Power Supply (optional)** | 12V2A / XT30 | 12V10A / XT30 |
-| **Tools and Bolts** | Screws, Threadlocker, Woodworking clamp, Spare PCB (UC01), DC Power Pigtail (5.5×2.5mm Jack), 200mm Servo Lead Wire | Screws, Threadlocker, Woodworking clamp, Spare PCB (UC01), DC Power Pigtail (5.5×2.5mm Jack), 200mm Servo Lead Wire |
-| **Angle Sensor** | 12-bit magnetic encoder | 12-bit magnetic encoder |
-| **Weight** | 663g | 791g |
-| **Recommended Operating Temperature Range** | 0-40°C | 0-40°C |
-| **Works with LeRobot** | ✓ | ✓ |
-| **Works with ROS 2** | ✓ | ✓ |
-| **Works with MoveIt** | - | ✓ |
-| **Works with Gazebo** | - | ✓ |
+| **自由度** | 6+1 | 6+1 |
+| **精度** | - | 5-8mm |
+| **建议最大负载** | - | 300g |
+| **关节范围** | 关节 0: ±120°<br>关节 1: ±163°<br>关节 2: 0°\~270°<br>关节 3: ±88°<br>关节 4: ±66°<br>关节 5: ±168°<br>夹爪: 0\~120° | 关节 0: ±120°<br>关节 1: ±163°<br>关节 2: 0°\~270°<br>关节 3: ±88°<br>关节 4: ±66°<br>关节 5: ±168°<br>夹爪: 0\~200° |
+| **舵机配置** | #0、#1、#2、#3 关节使用 RA8-U01H-M；<br>#4 关节使用 RA8-U02H-M；<br>#5、#6 关节使用 RA8-U03H-M； | #0、#3、#5、#6 关节使用 RA8-U25H-M；<br>#1、#2 关节使用 RX8-U45H-M；<br>#4 关节使用 RA8-U25H-M； |
+| **通信集线器** | UC-01 | UC-01 |
+| **通信方式** | UART | UART |
+| **电源规格（可选）** | 12V2A / XT30 | 12V10A / XT30 |
+| **工具与紧固件** | 螺丝、螺纹胶、木工夹、备用 PCB（UC01）、DC 电源转接线（5.5×2.5mm 接头）、200mm 舵机延长线、USB-A 转 USB-C 线、鼠标垫 | 螺丝、螺纹胶、木工夹、备用 PCB（UC01）、DC 电源转接线（5.5×2.5mm 接头）、200mm 舵机延长线、USB-A 转 USB-C 线、鼠标垫 |
+| **角度传感器** | 12 位磁编码器 | 12 位磁编码器 |
+| **重量** | 663g | 791g |
+| **推荐工作温度范围** | 0-40°C | 0-40°C |
+| **支持 LeRobot** | ✓ | ✓ |
+| **支持 ROS 2** | ✓ | ✓ |
+| **支持 MoveIt** | - | ✓ |
+| **支持 Gazebo** | - | ✓ |
+
+---
+
+## 🔧硬件资料
+
+<p align="center">
+  <img src="./Media/images/1.jpg" alt="Star-Arm-102 assembly overview" width="720">
+<center>Star Arm 102-LD装配图</center>
+</p>
+
+
+- [Parts List](./hardware/README.md): 查看完整零件清单、数量和配件
+
+- [Engineering Drawings](./hardware/cad/README.md): 查看总装图、和制造图纸
+
+- [Assembly Guide](./hardware/assembly/README.md): 查看装配顺序、注意事项和配图说明(等待完善中)
+
 
 ---
 
@@ -113,30 +135,37 @@ python3 ./Python_SDK/stararm102_ro.py
 
 ## 📂 项目结构
 
-```bash
+```text
 Star-Arm-102/
-├── Python_SDK/                              # Python SDK 控制方式
-│   ├── stararm102_ro.py                     # 主从控制程序
-│   └── README.md                            # 详细使用文档
-├── ROS2_HUMBLE/                             # ROS2 控制方式
-│   └── src/
-│       ├── robo_driver/                     # 机械臂硬件驱动节点
-│       ├── stararm102_description/          # 机械臂URDF模型描述
-│       ├── stararm102_gazebo/               # Gazebo仿真环境配置
-│       ├── stararm102_moveit_config/        # MoveIt2运动规划配置
-│       ├── stararm102_controller/           # 机械臂控制器
-│       ├── arm_moveit_read/                 # 位姿读取节点
-│       ├── arm_moveit_write/                # 位姿写入节点
-│       ├── arm_read_pose/                   # 实时位姿读取
-│       ├── ros2_bag_recorder/               # 示教轨迹录制
-│       └── robo_interfaces/                 # 自定义ROS2接口
-├── Lerobot/                                 # Lerobot 框架控制方式
-│   ├── lerobot-robot-stararm102/            # Follower 机器人配置
-│   ├── lerobot-teleoperator-stararm102/     # Leader 遥操作器
-│   ├── stararm102_en.md                     # Lerobot 使用文档（英文）
-│   ├── stararm102.md                        # Lerobot 使用文档
-│   └── README.md                            # 使用步骤
-└── README.md                                # 本文档
+|-- Hardware/                                # 硬件资料
+|   |-- assembly/                            # 装配说明
+|   |-- cad/                                 # CAD 模型与工程图纸说明
+|   |-- parts/                               # 零件清单与 BOM
+|   `-- README.md                            # 硬件总览
+|-- Lerobot/                                 # LeRobot 框架控制方式
+|   |-- lerobot-robot-stararm102/            # Follower 机器人配置
+|   |-- lerobot-teleoperator-stararm102/     # Leader 遥操作器
+|   |-- stararm102_en.md                     # LeRobot 使用文档（英文）
+|   |-- stararm102.md                        # LeRobot 使用文档
+|   `-- README.md                            # 使用步骤
+|-- Media/                                   # README 与文档使用的图片资源
+|-- Python_SDK/                              # Python SDK 控制方式
+|   |-- stararm102_ro.py                     # 主从控制程序
+|   `-- README.md                            # 详细使用文档
+|-- ROS2_HUMBLE/                             # ROS2 控制方式
+|   `-- src/
+|       |-- arm_moveit_read/                 # 位姿读取节点
+|       |-- arm_moveit_write/                # 位姿写入节点
+|       |-- arm_read_pose/                   # 实时位姿读取
+|       |-- robo_driver/                     # 机械臂硬件驱动节点
+|       |-- robo_interfaces/                 # 自定义 ROS2 接口
+|       |-- ros2_bag_recorder/               # 示教轨迹录制
+|       |-- stararm102_controller/           # 机械臂控制器
+|       |-- stararm102_description/          # 机械臂 URDF 模型描述
+|       |-- stararm102_gazebo/               # Gazebo 仿真环境配置
+|       `-- stararm102_moveit_config/        # MoveIt 2 运动规划配置
+|-- README.md                                # 中文说明文档
+`-- README_EN.md                             # English README
 ```
 
 ---
@@ -287,4 +316,3 @@ sudo chmod 777 /dev/ttyUSB*
 - [ROS2 官方文档](https://docs.ros.org/en/humble/)
 - [MoveIt2 官方文档](https://moveit.picknik.ai/humble/)
 
----
