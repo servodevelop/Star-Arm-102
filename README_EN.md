@@ -26,7 +26,7 @@ StarArm 102 is a 6+1 DOF teleoperation robotic arm project. It supports real-tim
 | **DOF** | 6+1 | 6+1 |
 | **Accuracy** | - | 5-8mm |
 | **Suggested Maximum Payload** | - | 300g |
-| **Joint Range** | Joint 0: ±120°<br>Joint 1: ±163°<br>Joint 2: 0°\~270°<br>Joint 3: ±88°<br>Joint 4: ±66°<br>Joint 5: ±168°<br>Gripper: 0\~120° | Joint 0: ±120°<br>Joint 1: ±163°<br>Joint 2: 0°\~270°<br>Joint 3: ±88°<br>Joint 4: ±66°<br>Joint 5: ±168°<br>Gripper: 0\~200° |
+| **Joint Range** | Joint 1: ±120°<br>Joint 2: ±163°<br>Joint 3: 0°\~270°<br>Joint 4: ±88°<br>Joint 5: ±66°<br>Joint 6: ±168°<br>Gripper: 0\~120° | Joint 1: ±120°<br>Joint 2: ±163°<br>Joint 3: 0°\~270°<br>Joint 4: ±88°<br>Joint 5: ±66°<br>Joint 6: ±168°<br>Gripper: 0\~200° |
 | **Servos** | RA8-U01H-M for #0, #1, #2, and #3 joints;<br>RA8-U02H-M for #4 joint;<br>RA8-U03H-M for #5 and #6 joints; | RA8-U25H-M for #0, #3, #5 and #6 joints;<br>RX8-U45H-M for #1 and #2 joints;<br>RA8-U25H-M for #4 joint; |
 | **Communication Hub** | UC-01 | UC-01 |
 | **Communication Method** | UART | UART |
