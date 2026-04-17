@@ -81,8 +81,7 @@ Star Arm 102‑LD 不仅能完美遥操同系列 FL 型号
 ## 🔧硬件资料
 
 <p align="center">
-  <img src="./Media/images/1.jpg" alt="Star-Arm-102 assembly overview" width="720">
-<center>Star Arm 102-LD装配图</center>
+  <img src="./Media/images/9.png" alt="Star-Arm-102 assembly overview" width="720">
 </p>
 
 
