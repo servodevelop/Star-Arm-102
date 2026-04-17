@@ -15,6 +15,10 @@
 
 ## 📖 项目简介
 
+<p align="center">
+  <img src="./Media/images/9.png" alt="Star-Arm-102 assembly overview" width="720">
+</p>
+
 StarArm 102 是一个 6+1 自由度机械臂遥操作控制项目，支持通过 **Leader 机械臂** 实时远程控制 **Follower 机械臂**。项目提供三种控制方式，适用于机器人研究、遥操作教学、AI训练数据采集等多种场景。
 
 ### ✨ 核心特性
@@ -67,7 +71,7 @@ Star Arm 102‑LD 不仅能完美遥操同系列 FL 型号
 | **通信集线器** | UC-01 | UC-01 |
 | **通信方式** | UART | UART |
 | **电源规格（可选）** | 12V2A / XT30 | 12V10A / XT30 |
-| **工具与紧固件** | 螺丝、螺纹胶、木工夹、备用 PCB（UC01）、DC 电源转接线（5.5×2.5mm 接头）、200mm 舵机延长线、USB-A 转 USB-C 线、鼠标垫 | 螺丝、螺纹胶、木工夹、备用 PCB（UC01）、DC 电源转接线（5.5×2.5mm 接头）、200mm 舵机延长线、USB-A 转 USB-C 线、鼠标垫 |
+| **工具与紧固件** | 螺丝、螺纹胶、木工夹x2、备用 PCB（UC01）、DC 电源转接线（5.5×2.5mm 接头）、200mm 舵机延长线、USB-A 转 USB-C 线、鼠标垫 | 螺丝、螺纹胶、木工夹x2、备用 PCB（UC01）、DC 电源转接线（5.5×2.5mm 接头）、200mm 舵机延长线、USB-A 转 USB-C 线、鼠标垫 |
 | **角度传感器** | 12 位磁编码器 | 12 位磁编码器 |
 | **重量** | 663g | 791g |
 | **推荐工作温度范围** | 0-40°C | 0-40°C |
@@ -78,10 +82,10 @@ Star Arm 102‑LD 不仅能完美遥操同系列 FL 型号
 
 ---
 
-## 🔧硬件资料
+## 🔧硬件资料s
 
 <p align="center">
-  <img src="./Media/images/9.png" alt="Star-Arm-102 assembly overview" width="720">
+  <img src="./Media/images/10.png" alt="Star-Arm-102 assembly overview" width="480">
 </p>
 
 
