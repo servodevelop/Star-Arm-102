@@ -1,4 +1,4 @@
-# StarArm 102 - Robotic Arm Teleoperation System
+# Star Arm 102 - Robotic Arm Teleoperation System
 <p align="right">
   <strong>Language / 语言:</strong>
   <a href="./README.md">中文</a> |

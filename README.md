@@ -1,4 +1,4 @@
-# StarArm 102 - 机械臂遥操作系统
+# Star Arm 102 - 机械臂遥操作系统
 <p align="right">
   <strong>Language / 语言:</strong>
   <a href="./README.md">中文</a> |
