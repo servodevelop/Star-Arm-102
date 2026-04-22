@@ -97,8 +97,10 @@ One leader arm can support multiple robotic arms, significantly reducing the cos
 
 - [Assembly Guide](./Hardware/assembly/README.md): view assembly sequence, notes, and reference images. This section is still being improved.
 
----
+- [MakerWorld 3D Print Models](https://makerworld.com.cn/zh/models/2366043-xing-bi-102-ld?from=search#profileId-2682765): Download the 3D printable part files for Star Arm 102-FL
 
+---
+FL
 ## 🚀 Quick Start
 
 ### Requirements

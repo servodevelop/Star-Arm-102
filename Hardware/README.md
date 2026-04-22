@@ -62,6 +62,8 @@
 | 35 | 9号螺丝套装 | PB2.0*5 自攻十字槽加硬包黑沉头螺杆 16pcs | 1 |
 | 36 | 鼠标垫 | - | 1 |
 
+- [MakerWorld Models](https://makerworld.com.cn/zh/models/2366043-xing-bi-102-ld?from=search#profileId-2682765): 此处可以下载Star Arm 102-LD的3D打印文件，自行替换或者组装机械臂
+
 
 ### 2. CAD 与工程图纸
 
@@ -73,7 +75,3 @@
 装配说明正在制作中，后续可以自购买散件套装，组装自己的机械臂。
 
 
-## 说明
-
-- 当前硬件资料以 `Star Arm 102-LD` 为主。
-- 如果后续补充 `FL` 版本资料，建议继续按 `parts / cad / assembly` 这种结构扩展，保持目录清晰一致。
