@@ -69,7 +69,7 @@ One leader arm can support multiple robotic arms, significantly reducing the cos
 | **DOF** | 6+1 | 6+1 |
 | **Accuracy** | - | 5-8mm |
 | **Suggested Maximum Payload** | - | 300g |
-| **Joint Range** | Joint 1: ±120°<br>Joint 2: ±163°<br>Joint 3: 0°\~270°<br>Joint 4: ±88°<br>Joint 5: ±66°<br>Joint 6: ±168°<br>Gripper: 0\~120° | Joint 1: ±120°<br>Joint 2: ±163°<br>Joint 3: 0°\~270°<br>Joint 4: ±88°<br>Joint 5: ±66°<br>Joint 6: ±168°<br>Gripper: 0\~200° |
+| **Joint Range** | Joint 1: ±110°<br>Joint 2: 0°\~180°<br>Joint 3: 0°\~270°<br>Joint 4: ±90°<br>Joint 5: ±65°<br>Joint 6: ±150°<br>Gripper: 0\~90° | Joint 1: ±110°<br>Joint 2: 0°\~180°<br>Joint 3: 0°\~270°<br>Joint 4: ±90°<br>Joint 5: ±65°<br>Joint 6: ±150°<br>Gripper: 0\~90° |
 | **Servo Configuration** | RA8-U01H-M for joints #1, #2, #3, and #4;<br>RA8-U02H-M for joint #5;<br>RA8-U03H-M for joint #6 and the handle joint; | RA8-U25H-M for joints #1, #4, #7, and the gripper joint;<br>RX8-U45H-M for joints #2 and #3;<br>RA8-U25H-M for joint #5; |
 | **Communication Hub** | UC-01 | UC-01 |
 | **Communication Method** | UART | UART |
@@ -229,13 +229,13 @@ The StarArm 102 robotic arm has 7 joints in total: 6 DOF + 1 rotary gripper.
 
 | Joint | Angle Range | Description |
 |------|-------------|-------------|
-| Joint1 | -120° ~ 120° | Base rotation |
-| Joint2 | -163° ~ 163° | Shoulder pitch |
+| Joint1 | -110° ~ 110° | Base rotation |
+| Joint2 | 0° ~ 180° | Shoulder pitch |
 | Joint3 | 0° ~ 270° | Elbow pitch |
-| Joint4 | -88° ~ 88° | Wrist rotation |
-| Joint5 | -66° ~ 66° | Wrist yaw |
-| Joint6 | -168° ~ 168° | Wrist rotation |
-| Gripper (joint7_left) | -0° ~ 120° | Rotary gripper |
+| Joint4 | -90° ~ 90° | Wrist rotation |
+| Joint5 | -65° ~ 65° | Wrist yaw |
+| Joint6 | -150° ~ 150° | Wrist rotation |
+| Gripper (joint7_left) | 0° ~ 90° | Rotary gripper |
 
 > 📝 **Note**: The rotary gripper is controlled through `joint7_left`. `joint7_right` is a coupled joint and automatically synchronizes in the opposite direction.
 
