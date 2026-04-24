@@ -276,12 +276,12 @@ StarArm102 采用 6自由度机械臂 + 旋转夹爪：
 
 | 关节 | 类型 | 角度范围 | 说明 |
 |------|------|----------|------|
-| Joint1 | revolute | -130° ~ 130° | 底座旋转 |
+| Joint1 | revolute | -110° ~ 110° | 底座旋转 |
 | Joint2 | revolute | 0° ~ 180° | 肩部俯仰 |
-| Joint3 | revolute | -180° ~ 0° | 肘部俯仰 |
-| Joint4 | revolute | -90° ~ 126° | 手腕旋转 |
-| Joint5 | revolute | -69° ~ 69° | 手腕俯仰 |
-| Joint6 | revolute | -130° ~ 130° | 手腕偏航 |
+| Joint3 | revolute | 0° ~ 270° | 肘部俯仰 |
+| Joint4 | revolute | -90° ~ 90° | 手腕旋转 |
+| Joint5 | revolute | -65° ~ 65° | 手腕俯仰 |
+| Joint6 | revolute | -150° ~ 150° | 手腕偏航 |
 | joint7_left | revolute | 0° ~ 90° | 旋转夹爪（主动） |
 | joint7_right | revolute | -90° ~ 0° | 旋转夹爪（联动） |
 
