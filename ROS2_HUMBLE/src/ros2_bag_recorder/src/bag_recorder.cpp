@@ -1,17 +1,18 @@
 #include "rclcpp/rclcpp.hpp"
 #include "rosbag2_cpp/writer.hpp"
-#include "std_msgs/msg/float32_multi_array.hpp" // 添加Float32MultiArray头文件
 #include "sensor_msgs/msg/joint_state.hpp"
 #include "robo_interfaces/msg/set_angle.hpp"
+#include <algorithm>
 #include <string>
-#include <unordered_map>
-#include <filesystem> // 添加文件系统操作支持
+#include <filesystem>
 #include <iostream>
 #include <atomic>
 #include <thread>
-#include <chrono>
+#include <cstdint>
+#include <mutex>
+
 #define LEADER_ARM_ANGLE_TOPIC "joint_states"
-#define ROBO_SET_ANGLE_SUBSCRIBER "set_angle_topic" // 设置角度话题 / topic for setting angles
+#define ROBO_SET_ANGLE_SUBSCRIBER "set_angle_topic"
 
 std::vector<std::string> joint_name = {
     "joint1",
@@ -22,14 +23,14 @@ std::vector<std::string> joint_name = {
     "joint6",
     "joint7_left"};
 
-float jointstate2servoangle(uint8_t servo_id, float joint_state)
+double jointstate2servoangle(size_t servo_id, double joint_state)
 {
   if (servo_id < 6)
-    return joint_state * (180 / 3.1415926);
+    return joint_state * (180.0 / 3.1415926);
   else if (servo_id == 6)
-    return joint_state * (180 / 3.1415926);
+    return -(joint_state * (180.0 / 3.1415926));
   else
-    return 0;
+    return 0.0;
 }
 
 // 全局原子变量，用于控制录制状态
@@ -40,110 +41,150 @@ class BagRecorder : public rclcpp::Node
 public:
   BagRecorder() : Node("bag_recorder")
   {
-    // 声明并获取dataset参数
     this->declare_parameter("dataset", "bag/my_bag");
     dataset_path_ = this->get_parameter("dataset").as_string();
-    
-    // 确保目录存在
+
     std::filesystem::path dir_path = std::filesystem::path(dataset_path_).parent_path();
     if (!dir_path.empty() && !std::filesystem::exists(dir_path)) {
       std::filesystem::create_directories(dir_path);
     }
-    
+
     RCLCPP_INFO(get_logger(), "Dataset path set to: %s", dataset_path_.c_str());
     RCLCPP_INFO(get_logger(), "Press Enter to start recording...");
-    
-    // 初始化时不立即打开writer
 
     angle_sub_ = create_subscription<sensor_msgs::msg::JointState>(
-        LEADER_ARM_ANGLE_TOPIC, 10,
+        LEADER_ARM_ANGLE_TOPIC, rclcpp::SensorDataQoS(),
         [this](const sensor_msgs::msg::JointState &msg)
         {
-          // 只有在录制状态下才记录数据
+          {
+            std::lock_guard<std::mutex> lock(last_joint_state_mutex_);
+            last_joint_state_ = msg;
+            has_seen_joint_states_ = true;
+          }
+
           if (!g_is_recording || !writer_) {
             return;
           }
-          
-          auto custom_msg = std::make_unique<robo_interfaces::msg::SetAngle>();
 
-          for (size_t i = 0; i < msg.name.size(); i++)
-          {
-            auto id = std::find(joint_name.begin(), joint_name.end(), msg.name[i]) - joint_name.begin();
-            custom_msg->servo_id.push_back(id);
-            auto angle = jointstate2servoangle(id, msg.position[i]);
-            custom_msg->time.push_back(200);
-            if (id ==6)
-            {
-              angle -=10;
-            }
-            custom_msg->target_angle.push_back(angle);
-          }
-
-          // 记录自定义消息到bag
-          writer_->write(
-              *custom_msg,
-              ROBO_SET_ANGLE_SUBSCRIBER, // 自定义话题名
-              this->now()                // 使用原始时间戳
-          );
+          write_joint_state_message(msg);
         });
   }
 
-  // 开始录制
   void start_recording() {
     if (g_is_recording) {
       RCLCPP_WARN(get_logger(), "Recording is already in progress!");
       return;
     }
-    
-    // 创建并打开writer
+
     writer_ = std::make_unique<rosbag2_cpp::Writer>();
     writer_->open(dataset_path_);
-    
+    writer_->create_topic(
+        {
+            ROBO_SET_ANGLE_SUBSCRIBER,
+            "robo_interfaces/msg/SetAngle",
+            "cdr",
+            ""
+        });
+
+    messages_written_ = 0;
     g_is_recording = true;
     RCLCPP_INFO(get_logger(), "Recording started! Press Enter to stop recording...");
+
+    sensor_msgs::msg::JointState cached_joint_state;
+    bool has_cached_joint_state = false;
+    {
+      std::lock_guard<std::mutex> lock(last_joint_state_mutex_);
+      has_cached_joint_state = has_seen_joint_states_;
+      if (has_cached_joint_state) {
+        cached_joint_state = last_joint_state_;
+      }
+    }
+
+    if (has_cached_joint_state) {
+      write_joint_state_message(cached_joint_state);
+      RCLCPP_INFO(get_logger(), "Recorded initial cached /joint_states sample.");
+    } else {
+      RCLCPP_WARN(
+          get_logger(),
+          "No /joint_states received yet. This bag will stay empty until a publisher starts sending joint states.");
+    }
   }
-  
-  // 停止录制
+
   void stop_recording() {
     if (!g_is_recording) {
       RCLCPP_WARN(get_logger(), "No recording in progress!");
       return;
     }
-    
+
     g_is_recording = false;
-    writer_.reset(); // 关闭并释放writer
+    writer_.reset();
     RCLCPP_INFO(get_logger(), "Recording stopped and saved to: %s", dataset_path_.c_str());
+    RCLCPP_INFO(get_logger(), "Total messages written: %zu", messages_written_);
   }
 
 private:
+  void write_joint_state_message(const sensor_msgs::msg::JointState &msg)
+  {
+    auto custom_msg = std::make_unique<robo_interfaces::msg::SetAngle>();
+
+    for (size_t i = 0; i < msg.name.size(); i++)
+    {
+      auto joint_it = std::find(joint_name.begin(), joint_name.end(), msg.name[i]);
+      if (joint_it == joint_name.end() || i >= msg.position.size()) {
+        continue;
+      }
+
+      auto id = static_cast<size_t>(std::distance(joint_name.begin(), joint_it));
+      custom_msg->servo_id.push_back(id);
+      auto angle = jointstate2servoangle(id, msg.position[i]);
+      custom_msg->time.push_back(200);
+      custom_msg->target_angle.push_back(angle);
+    }
+
+    if (custom_msg->servo_id.empty()) {
+      return;
+    }
+
+    auto stamp = msg.header.stamp.sec == 0 && msg.header.stamp.nanosec == 0
+      ? this->now()
+      : rclcpp::Time(msg.header.stamp);
+
+    writer_->write(
+        *custom_msg,
+        ROBO_SET_ANGLE_SUBSCRIBER,
+        stamp
+    );
+    ++messages_written_;
+  }
+
   std::unique_ptr<rosbag2_cpp::Writer> writer_;
   rclcpp::Subscription<sensor_msgs::msg::JointState>::SharedPtr angle_sub_; // 修改订阅器类型
   std::string dataset_path_;
-  // rclcpp::Time last_message_time_;  // 记录上一条消息的时间戳
+  size_t messages_written_{0};
+  sensor_msgs::msg::JointState last_joint_state_;
+  std::mutex last_joint_state_mutex_;
+  bool has_seen_joint_states_{false};
 };
 
 int main(int argc, char **argv)
 {
   rclcpp::init(argc, argv);
   auto recorder_node = std::make_shared<BagRecorder>();
-  
-  // 创建一个线程来运行ROS节点
+
   std::thread ros_thread([&recorder_node]() {
     rclcpp::spin(recorder_node);
   });
-  
-  // 主线程处理用户输入
+
   std::cout << "Press Enter to start recording..." << std::endl;
-  std::cin.get(); // 等待第一次回车，开始录制
-  
+  std::cin.get();
+
   recorder_node->start_recording();
-  
+
   std::cout << "Recording in progress. Press Enter to stop recording..." << std::endl;
-  std::cin.get(); // 等待第二次回车，停止录制
-  
+  std::cin.get();
+
   recorder_node->stop_recording();
-  
-  // 关闭ROS节点
+
   rclcpp::shutdown();
   if (ros_thread.joinable()) {
     ros_thread.join();

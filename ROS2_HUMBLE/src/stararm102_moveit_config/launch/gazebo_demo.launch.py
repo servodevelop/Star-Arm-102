@@ -1,40 +1,44 @@
-from moveit_configs_utils import MoveItConfigsBuilder
-from moveit_configs_utils.launches import generate_moveit_rviz_launch
 import os
-from ament_index_python.packages import get_package_share_directory
+
 from launch import LaunchDescription
-from launch.actions import (
-    DeclareLaunchArgument,
-    IncludeLaunchDescription,
-)
-from moveit_configs_utils.launch_utils import (
-    add_debuggable_node,
-    DeclareBooleanLaunchArg,
-)
-from launch.substitutions import LaunchConfiguration
-from launch_ros.parameter_descriptions import ParameterValue
+from launch.actions import IncludeLaunchDescription, DeclareLaunchArgument
 from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch.substitutions import LaunchConfiguration
+
+from ament_index_python.packages import get_package_share_directory
+
+from moveit_configs_utils import MoveItConfigsBuilder
+from moveit_configs_utils.launch_utils import add_debuggable_node, DeclareBooleanLaunchArg
+from launch_ros.parameter_descriptions import ParameterValue
 
 
 def generate_launch_description():
-    moveit_config = MoveItConfigsBuilder("stararm102_description", package_name="stararm102_moveit_config").to_moveit_configs()
-    # robo_gazebo_launch = os.path.join(get_package_share_directory('robo_gazebo'),'launch')
+    moveit_config = MoveItConfigsBuilder(
+        "stararm102_description",
+        package_name="stararm102_moveit_config",
+    ).to_moveit_configs()
+
+    gazebo_pkg_path = get_package_share_directory("stararm102_gazebo")
+    gazebo_launch = os.path.join(
+        gazebo_pkg_path,
+        "launch",
+        "stararm102_gazebo.launch.py",
+    )
 
     ld = LaunchDescription()
 
-    # generate_gazebo_launch(ld, robo_gazebo_launch)
+    ld.add_action(
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(gazebo_launch)
+        )
+    )
+
     generate_move_group_launch(ld, moveit_config)
     generate_moveit_rviz_launch(ld, moveit_config)
-
     return ld
 
-def generate_gazebo_launch(ld, robo_gazebo_launch):
-    robo_moveit_rviz_node = IncludeLaunchDescription(PythonLaunchDescriptionSource([robo_gazebo_launch,'/stararm102_gazebo.launch.py']))
-    ld.add_action(robo_moveit_rviz_node)
-    return ld
 
 def generate_move_group_launch(ld, moveit_config):
-
     ld.add_action(DeclareBooleanLaunchArg("debug", default_value=False))
     ld.add_action(
         DeclareBooleanLaunchArg("allow_trajectory_execution", default_value=True)
@@ -42,13 +46,8 @@ def generate_move_group_launch(ld, moveit_config):
     ld.add_action(
         DeclareBooleanLaunchArg("publish_monitored_planning_scene", default_value=True)
     )
-    # load non-default MoveGroup capabilities (space separated)
     ld.add_action(DeclareLaunchArgument("capabilities", default_value=""))
-    # inhibit these default MoveGroup capabilities (space separated)
     ld.add_action(DeclareLaunchArgument("disable_capabilities", default_value=""))
-
-    # do not copy dynamics information from /joint_states to internal robot monitoring
-    # default to false, because almost nothing in move_group relies on this information
     ld.add_action(DeclareBooleanLaunchArg("monitor_dynamics", default_value=False))
 
     should_publish = LaunchConfiguration("publish_monitored_planning_scene")
@@ -56,14 +55,12 @@ def generate_move_group_launch(ld, moveit_config):
     move_group_configuration = {
         "publish_robot_description_semantic": True,
         "allow_trajectory_execution": LaunchConfiguration("allow_trajectory_execution"),
-        # Note: Wrapping the following values is necessary so that the parameter value can be an empty string
         "capabilities": ParameterValue(
             LaunchConfiguration("capabilities"), value_type=str
         ),
         "disable_capabilities": ParameterValue(
             LaunchConfiguration("disable_capabilities"), value_type=str
         ),
-        # Publish the planning scene of the physical robot so that rviz plugin can know actual robot
         "publish_planning_scene": should_publish,
         "publish_geometry_updates": should_publish,
         "publish_state_updates": should_publish,
@@ -71,11 +68,19 @@ def generate_move_group_launch(ld, moveit_config):
         "monitor_dynamics": False,
     }
 
+    trajectory_execution = {
+        "moveit_manage_controllers": False,
+        "trajectory_execution.allowed_execution_duration_scaling": 1.2,
+        "trajectory_execution.allowed_goal_duration_margin": 0.5,
+        "trajectory_execution.allowed_start_tolerance": 0.15,
+    }
+
     move_group_params = [
         moveit_config.to_dict(),
         move_group_configuration,
+        trajectory_execution,
+        {"use_sim_time": True},
     ]
-    move_group_params.append({"use_sim_time": True})
 
     add_debuggable_node(
         ld,
@@ -85,15 +90,11 @@ def generate_move_group_launch(ld, moveit_config):
         output="screen",
         parameters=move_group_params,
         extra_debug_args=["--debug"],
-        # Set the display variable, in case OpenGL code is used internally
-        additional_env={"DISPLAY": ":0"},
     )
     return ld
 
-def generate_moveit_rviz_launch(ld, moveit_config):
-    """Launch file for rviz"""
 
-    ld.add_action(DeclareBooleanLaunchArg("debug", default_value=False))
+def generate_moveit_rviz_launch(ld, moveit_config):
     ld.add_action(
         DeclareLaunchArgument(
             "rviz_config",
@@ -104,8 +105,8 @@ def generate_moveit_rviz_launch(ld, moveit_config):
     rviz_parameters = [
         moveit_config.planning_pipelines,
         moveit_config.robot_description_kinematics,
+        {"use_sim_time": True},
     ]
-    rviz_parameters.append({"use_sim_time": True})
 
     add_debuggable_node(
         ld,

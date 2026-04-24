@@ -14,6 +14,7 @@ import math
 import fashionstar_uart_sdk as uservo
 import time
 import serial
+import traceback
 
 ROBO_DRIVER_NODE = "robo_driver_node"  # 驱动节点名称 / driver node name
 ROBO_SET_ANGLE_SUBSCRIBER = "set_angle_topic"  # 设置角度话题 / topic for setting angles
@@ -88,8 +89,8 @@ class uservo_ex:
         if servo_id in range(6):
             return cls.degrees_to_radians(servo_angle)
         elif servo_id == 6:
-            # 旋转夹爪使用弧度转角度
-            return cls.degrees_to_radians(servo_angle)
+            # Joint7 axis was flipped in URDF, so invert the gripper feedback too.
+            return -cls.degrees_to_radians(servo_angle)
 
     # 设置角度（指定转速） / Send angle commands with specified speed
     def set_angle_by_interval(self, size, command_data_list):
@@ -204,6 +205,9 @@ def main(args=None):
     try:
         robo_driver_node = Arm_contorl()
     except Exception as e:
+        print(f"[robo_driver] Failed to initialize driver: {e}")
+        traceback.print_exc()
+        rclpy.shutdown()
         return
 
     try:

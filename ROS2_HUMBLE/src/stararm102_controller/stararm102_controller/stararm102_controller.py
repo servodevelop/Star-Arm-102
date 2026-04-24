@@ -44,8 +44,8 @@ def jointstate2servoangle(servo_id, joint_state):
     if servo_id < 6:
         return radians_to_degrees(joint_state)
     elif servo_id == 6:
-        # 夹爪直接弧度转角度
-        return radians_to_degrees(joint_state)
+        # Joint7 axis was flipped in URDF, so invert the gripper mapping here too.
+        return -radians_to_degrees(joint_state)
 
 
 class RoboActionClient(Node):

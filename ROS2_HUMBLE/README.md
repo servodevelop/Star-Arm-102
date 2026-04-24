@@ -137,7 +137,17 @@ ros2 launch stararm102_moveit_config demo.launch.py
 ros2 launch stararm102_moveit_config driver.launch.py
 ```
 
-**终端 2：启动 MoveIt2**
+> [!TIP]
+>
+> - 如果serial出现问题可以运行
+>
+> ```bash
+> sudo apt install --reinstall python3-serial
+> ```
+
+**终端 2**
+
+**：启动 MoveIt2**
 
 ```bash
 ros2 launch stararm102_moveit_config actual_robot_demo.launch.py
@@ -187,6 +197,7 @@ ros2 run arm_moveit_write topic_publisher
 > [!TIP]
 > - 在关闭 Gazebo 图形界面后，建议使用 `pkill -9 -f gazebo` 命令彻底关闭
 > - 运行例程前，需要关闭其他所有正在运行的节点
+> - `killall -9 gazebo gzserver gzclient ros2`
 
 #### 安装 Gazebo
 
@@ -253,6 +264,10 @@ ros2 bag play ./star/record-test
 
 机械臂会按照记录的轨迹自动运动。
 
+> [!TIP]
+>
+> - 如果路径位置已经存在可以尝试删除旧路径`rm -rf star/record-test`或者更换新的路径如`dataset:=star/record-test2`
+
 ---
 
 ## 📊 关节配置
@@ -262,13 +277,13 @@ StarArm102 采用 6自由度机械臂 + 旋转夹爪：
 | 关节 | 类型 | 角度范围 | 说明 |
 |------|------|----------|------|
 | Joint1 | revolute | -130° ~ 130° | 底座旋转 |
-| Joint2 | revolute | -90° ~ 90° | 肩部俯仰 |
-| Joint3 | revolute | -90° ~ 90° | 肘部俯仰 |
-| Joint4 | revolute | -90° ~ 90° | 手腕旋转 |
-| Joint5 | revolute | -90° ~ 90° | 手腕俯仰 |
+| Joint2 | revolute | 0° ~ 180° | 肩部俯仰 |
+| Joint3 | revolute | -180° ~ 0° | 肘部俯仰 |
+| Joint4 | revolute | -90° ~ 126° | 手腕旋转 |
+| Joint5 | revolute | -69° ~ 69° | 手腕俯仰 |
 | Joint6 | revolute | -130° ~ 130° | 手腕偏航 |
-| joint7_left | revolute | -90° ~ 90° | 旋转夹爪（主动） |
-| joint7_right | revolute | -90° ~ 90° | 旋转夹爪（联动） |
+| joint7_left | revolute | 0° ~ 90° | 旋转夹爪（主动） |
+| joint7_right | revolute | -90° ~ 0° | 旋转夹爪（联动） |
 
 > 📝 **旋转夹爪说明**：`joint7_right` 为 mimic 关节，自动与 `joint7_left` 反向同步。
 
