@@ -81,7 +81,7 @@ Python_SDK/
 ```python
 SERVO_BAUDRATE = 1000000          # 舵机通信波特率
 LEADER_PORT_NAME = "/dev/ttyUSB0" # Leader 机械臂端口号
-FOLLOWER_PORT_NAME = "/dev/ttyUSB1" # Follower 机械臂端口号
+FOLLOWER_PORT_NAME_Arr = ["/dev/ttyUSB1"]  # follower端口号
 ```
 
 #### 2. 运行主从控制程序

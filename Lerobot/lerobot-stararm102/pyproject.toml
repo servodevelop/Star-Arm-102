@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=61", "setuptools-scm[toml]>=8", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lerobot_teleoperator_stararm102_hd"
+dynamic = ["version"]
+description = "Refactored StarArm102 HD teleoperator integration for LeRobot"
+readme = "README.md"
+authors = [
+  { name = "ljh" },
+]
+license = { text = "MIT" }
+requires-python = ">=3.10"
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+]
+dependencies = [
+  "lerobot>=0.4",
+  "fashionstar_uart_sdk>=1.3.12",
+  "lerobot_motor_starai>=0.0.6"
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["lerobot_teleoperator_stararm102_hd*"]
+exclude = ["*.egg-info"]
+
+[tool.setuptools_scm]
+fallback_version = "0.0.0"
