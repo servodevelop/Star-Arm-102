@@ -3,6 +3,8 @@ from numbers import Real
 
 from lerobot.motors import Motor
 from lerobot.robots.config import RobotConfig
+from lerobot.cameras import CameraConfig
+from lerobot.cameras.opencv import OpenCVCameraConfig
 
 from lerobot_motor_starai.starai import (
     build_stararm_motors,
@@ -49,6 +51,7 @@ class Stararm102FLConfig(RobotConfig):
             "gripper": [-270, 0],
         }
     )
+    cameras: dict[str, CameraConfig] = field(default_factory=dict)
 
     def __post_init__(self) -> None:
         super_post_init = getattr(super(), "__post_init__", None)

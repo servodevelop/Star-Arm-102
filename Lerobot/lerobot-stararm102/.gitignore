@@ -41,3 +41,9 @@ htmlcov/
 
 .codex/
 .agents/
+
+.gitignore
+
+# Test file
+test/
+outputs/

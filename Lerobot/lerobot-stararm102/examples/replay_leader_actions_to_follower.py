@@ -145,11 +145,11 @@ if __name__ == "__main__":
 
 
 '''
-PYTHONPATH=.:/home/welt/kian/lerobot/rebot_102/lerobot/src \
+PYTHONPATH=. \
 /home/welt/miniconda3/envs/kian/bin/python \
 examples/replay_leader_actions_to_follower.py \
   --port=/dev/ttyUSB0 \
-  --input-log='./examples/leader.log' \
+  --input-log='./outputs/leader.log' \
   --skip-locked \
   --interval=0.2
 '''

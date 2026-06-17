@@ -219,6 +219,53 @@ from lerobot_teleoperator_stararm102_hd import (
 )
 ```
 
+## Add Camera
+
+### find camera
+
+```bash
+lerobot-find-cameras opencv # or realsense for Intel Realsense cameras
+```
+
+```bash
+lerobot-teleoperate \
+  --teleop.type=stararm102_hd \
+  --teleop.id=stararm102_hd \
+  --teleop.port=/dev/ttyUSB0 \
+  --teleop.baudrate=1000000 \
+  --robot.type=stararm102_fl \
+  --robot.id=stararm102_fl \
+  --robot.port=/dev/ttyUSB1 \
+  --robot.baudrate=1000000 \
+  --robot.cameras="{first_person: {type: opencv, index_or_path: 0, width: 640, height: 480, fps: 30}, third_person: {type: opencv, index_or_path: 2, width: 640, height: 480, fps: 30}}"
+```
+
+### record
+
+```bash
+lerobot-record \
+  --robot.type=stararm102_fl \
+  --robot.id=stararm102_fl \
+  --robot.port=/dev/ttyUSB1 \
+  --robot.baudrate=1000000 \
+  --robot.cameras="{first_person: {type: opencv, index_or_path: 2, width: 640, height: 480, fps: 30}, third_person: {type: opencv, index_or_path: 0, width: 640, height: 480, fps: 30}}" \
+  --teleop.type=stararm102_hd \
+  --teleop.id=stararm102_hd \
+  --teleop.port=/dev/ttyUSB0 \
+  --teleop.baudrate=1000000 \
+  --dataset.repo_id=kian/stararm102_test \
+  --dataset.single_task="Test recording" \
+  --dataset.num_episodes=2 \
+  --dataset.episode_time_s=30 \
+  --dataset.reset_time_s=10 \
+  --dataset.push_to_hub=false \
+  --display_data=true
+```
+
+```bash
+rm -rf /home/welt/.cache/huggingface/lerobot/kian/stararm102_test
+```
+
 ## reBot Arm 102
 
 ## Teleoperate

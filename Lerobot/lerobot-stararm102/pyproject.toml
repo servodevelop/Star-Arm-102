@@ -3,7 +3,7 @@ requires = ["setuptools>=61", "setuptools-scm[toml]>=8", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "lerobot_teleoperator_stararm102_hd"
+name = "lerobot_teleoperator_stararm102"
 dynamic = ["version"]
 description = "Refactored StarArm102 HD teleoperator integration for LeRobot"
 readme = "README.md"
@@ -25,7 +25,7 @@ dependencies = [
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["lerobot_teleoperator_stararm102_hd*"]
+include = ["lerobot_teleoperator_stararm102*"]
 exclude = ["*.egg-info"]
 
 [tool.setuptools_scm]

@@ -12,6 +12,7 @@ from lerobot.utils.errors import DeviceAlreadyConnectedError, DeviceNotConnected
 from lerobot_motor_starai.starai import (
     StaraiMotorsBus,
 )
+from lerobot.cameras import make_cameras_from_configs
 
 from .config_stararm102_fl import Stararm102FLConfig
 
@@ -41,9 +42,21 @@ class Stararm102FL(Robot):
             f"{motor_name}.pos": 0.0 for motor_name in self.motor_names
         }
 
+        self.cameras = make_cameras_from_configs(config.cameras)
+
     @property
-    def observation_features(self) -> dict[str, type]:
-        return {f"{motor_name}.pos": float for motor_name in self.motor_names}
+    def observation_features(self) -> dict[str, type | tuple[int, int, int]]:
+        features: dict[str, type | tuple[int, int, int]] = {
+            f"{motor_name}.pos": float for motor_name in self.motor_names
+        }
+        for cam_name, cam_cfg in self.config.cameras.items():
+            features[cam_name] = (
+                cam_cfg.height,
+                cam_cfg.width,
+                3,
+            )
+
+        return features
 
     @property
     def action_features(self) -> dict[str, type]:
@@ -70,7 +83,19 @@ class Stararm102FL(Robot):
                 self.calibrate()
 
             self.configure()
+
+            for cam_name, camera in self.cameras.items():
+                logger.info("Connecting camera %s...", cam_name)
+                camera.connect()
+
         except Exception:
+            for camera in self.cameras.values():
+                try:
+                    if camera.is_connected:
+                        camera.disconnect()
+                except Exception:
+                    logger.warning("Failed to disconnect camera during cleanup.", exc_info=True)
+
             self.bus.disconnect(disable_torque=False)
             raise
 
@@ -153,7 +178,16 @@ class Stararm102FL(Robot):
                     for motor_name, angle in raw_positions.items()
                     if angle is not None
                 }
-                self._last_observation = dict(obs_dict)
+                self._last_observation = dict(obs_dict)  
+
+        for cam_name, camera in self.cameras.items():
+            try:
+                frame = camera.async_read()
+            except Exception as exc:
+                logger.warning("Failed to read camera %s: %s", cam_name, exc)
+                continue
+
+            obs_dict[cam_name] = frame
 
         dt_ms = (time.perf_counter() - start) * 1e3
         logger.debug(f"{self} read observation: {dt_ms:.1f}ms")
@@ -190,6 +224,14 @@ class Stararm102FL(Robot):
     def disconnect(self) -> None:
         if not self.is_connected:
             raise DeviceNotConnectedError(f"{self} is not connected.")
+
+        for cam_name, camera in self.cameras.items():
+            try:
+                if camera.is_connected:
+                    logger.info("Disconnecting camera %s...", cam_name)
+                    camera.disconnect()
+            except Exception:
+                logger.warning("Failed to disconnect camera %s.", cam_name, exc_info=True)
 
         self.bus.disconnect(disable_torque=True)
         logger.info(f"{self} disconnected.")

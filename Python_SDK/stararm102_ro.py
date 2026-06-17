@@ -56,7 +56,7 @@ def main(args):
     # 默认（102LD）
     button_enable = False
     button_id = 7
-    filtered_size = 30
+    filtered_size = 60
 
     if args.leader_type == "102HD":
         button_enable = True
@@ -65,7 +65,7 @@ def main(args):
     elif args.leader_type == "102LD" or args.leader_type is None:
         button_enable = False
         button_id = 7
-        filtered_size = 30
+        filtered_size = 60
     else:
         print(f"警告：未知 leader.type={args.leader_type}，使用默认102LD配置")
 

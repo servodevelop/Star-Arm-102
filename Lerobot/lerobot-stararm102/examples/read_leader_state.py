@@ -28,7 +28,7 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
-    log_path = Path(__file__).resolve().parent / "leader.log"
+    log_path = "./outputs/leader.log"
     formatter = logging.Formatter("%(asctime)s %(levelname)s %(name)s: %(message)s")
 
     root_logger = logging.getLogger()
@@ -80,7 +80,7 @@ if __name__ == "__main__":
     main()
 
 '''
-PYTHONPATH=.:/home/welt/kian/lerobot/rebot_102/lerobot/src \
+PYTHONPATH=. \
 /home/welt/miniconda3/envs/kian/bin/python \
 examples/read_leader_state.py \
   --port=/dev/ttyUSB0 \
