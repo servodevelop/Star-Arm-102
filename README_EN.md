@@ -16,10 +16,10 @@
 ## 📖 Project Overview
 
 <p align="center">
-  <img src="./Media/images/9.png" alt="Star-Arm-102 assembly overview" width="720">
+  <img src="./Media/images/11.png" alt="Star-Arm-102 assembly overview" width="720">
 </p>
 
-StarArm 102 is a 6+1 DOF robotic arm teleoperation project. It supports real-time remote control of a **Follower robotic arm** through a **Leader robotic arm**. The project provides three control methods and is suitable for robotics research, teleoperation education, AI training data collection, and related applications.
+StarArm 102 is a 6+1 DOF robotic arm teleoperation project. It supports real-time remote control of a **Follower robotic arm** through a **Leader robotic arm**. The project provides three control methods and is suitable for robotics research, teleoperation education, AI training data collection, and other scenarios.
 
 Hardware can be purchased through the following channels:
 
@@ -30,19 +30,33 @@ Hardware can be purchased through the following channels:
 
 - 🔓 **Open source · Low cost · Flexible access**
 
-Fully open-source design lowers the barrier to learning, experimentation, and deployment.
+Fully open-source design lowers the barrier to learning and use.
 
 Two access options are available: purchase a pre-assembled unit for immediate use, or print and assemble it yourself by preparing the printed parts and components. The DIY option is well suited for teaching and hands-on practice.
 
-- ⚙️ **High control frequency**
+- ⚙️ **Well-designed robotic arm configuration**
 
 6 active joints + 1 end effector.
 
-The joint configuration strictly satisfies the Pieper criterion and supports analytical inverse kinematics. The algorithm is transparent, making it easier to teach, understand, and extend.
+The joint configuration strictly satisfies the Pieper criterion and supports analytical inverse kinematics. The algorithm is transparent, making it easy to teach and extend.
+
+- 🔗 **LD model: highly compatible teleoperation leader arm**
+
+Star Arm 102-LD can smoothly teleoperate the FL model in the same series.
+
+It is also directly compatible with reBot and other robotic arms that have identical or similar kinematic configurations.
+
+One leader arm can work with multiple arms, providing a smoother teleoperation experience across different systems.
+
+- 🔒 **HD model: enhanced leader arm with one-button locking**
+
+Star Arm 102-HD is an upcoming leader-arm model in the Star Arm 102 series.
+
+Compared with the LD model, HD adds a one-button locking function: after the lock button is pressed, the leader arm holds its current pose and the follower arm enters the locked state at the same time; pressing the button again unlocks the system.
 
 - 🕹️ **Multi-platform compatibility · Plug and play**
 
-Supports direct bare-metal teleoperation without additional software.
+Supports direct teleoperation through the Python SDK.
 
 Deeply compatible with the LeRobot and ROS 2 ecosystems.
 
@@ -54,53 +68,51 @@ Provides tutorials, API documentation, and example code from beginner to advance
 
 Suitable for university teaching, research experiments, and self-learning by individual developers.
 
-- 🔗 **LD model: highly compatible teleoperation leader arm**
-
-Star Arm 102-LD can not only teleoperate the FL model in the same series, but can also be compatible with reBot and other robotic arms with identical or similar kinematic configurations.
-
-One leader arm can support multiple robotic arms, significantly reducing the cost of building teleoperation systems.
-
 ---
 
 ## 🔧 Arm Specifications
 
-|   | Star Arm 102-LD | Star Arm 102-FL |
-|:---|:---|:---|
-| **DOF** | 6+1 | 6+1 |
-| **Accuracy** | - | 5-8mm |
-| **Suggested Maximum Payload** | - | 300g |
-| **Joint Range** | Joint 1: ±110°<br>Joint 2: 0°\~180°<br>Joint 3: 0°\~270°<br>Joint 4: ±90°<br>Joint 5: ±65°<br>Joint 6: ±150°<br>Gripper: 0\~90° | Joint 1: ±110°<br>Joint 2: 0°\~180°<br>Joint 3: 0°\~270°<br>Joint 4: ±90°<br>Joint 5: ±65°<br>Joint 6: ±150°<br>Gripper: 0\~90° |
-| **Servo Configuration** | RA8-U01H-M for joints #1, #2, #3, and #4;<br>RA8-U02H-M for joint #5;<br>RA8-U03H-M for joint #6 and the handle joint; | RA8-U25H-M for joints #1, #4, #7, and the gripper joint;<br>RX8-U45H-M for joints #2 and #3;<br>RA8-U25H-M for joint #5; |
-| **Communication Hub** | UC-01 | UC-01 |
-| **Communication Method** | UART | UART |
-| **Power Supply (optional)** | 12V2A / XT30 | 12V10A / XT30 |
-| **Tools and Fasteners** | Screws, threadlocker, woodworking clamps x2, spare PCB (UC01), DC power pigtail (5.5×2.5mm jack), 200mm servo extension cable, USB-A to USB-C cable, mouse pad | Screws, threadlocker, woodworking clamps x2, spare PCB (UC01), DC power pigtail (5.5×2.5mm jack), 200mm servo extension cable, USB-A to USB-C cable, mouse pad |
-| **Angle Sensor** | 12-bit magnetic encoder | 12-bit magnetic encoder |
-| **Weight** | 663g | 791g |
-| **Recommended Operating Temperature Range** | 0-40°C | 0-40°C |
-| **LeRobot Support** | ✓ | ✓ |
-| **ROS 2 Support** | ✓ | ✓ |
-| **MoveIt Support** | - | ✓ |
-| **Gazebo Support** | - | ✓ |
+|   | Star Arm 102-LD | Star Arm 102-HD | Star Arm 102-FL |
+|---|---|---|---|
+| Arm span | 420mm | 420mm | 420mm |
+| DOF | 6+1 | 6+1 | 6+1 |
+| Repeatability | - | - | ±0.5mm |
+| Suggested maximum payload | - | - | 300g |
+| Joint range<br> | Joint 1: ±110°<br>Joint 2: 0°\~180°<br>Joint 3: 0°\~270°<br>Joint 4: ±90°<br>Joint 5: ±65°<br>Joint 6: ±150°<br>Handle: 0\~90° | Joint 1: ±110°<br>Joint 2: 0°\~180°<br>Joint 3: 0°\~270°<br>Joint 4: ±90°<br>Joint 5: ±65°<br>Joint 6: ±150°<br>Handle: 0\~90° | Joint 1: ±110°<br>Joint 2: 0°\~180°<br>Joint 3: 0°\~270°<br>Joint 4: ±90°<br>Joint 5: ±65°<br>Joint 6: ±150°<br>Gripper: 0\~90° |
+| Servo configuration | Joints 1-4 (servo IDs 0-3): RA8-U01H-M;<br>Joint 5 (servo ID 4): RA8-U02H-M;<br>Joint 6 and handle joint (servo IDs 5-6): RA8-U03H-M; | Joints 1-4 (servo IDs 0-3): RP8-U45H-M;<br>Joint 5 (servo ID 4): RP8-U45H-M-C029;<br>Joint 6 and handle joint (servo IDs 5-6): RP8-U45H-M-C028; | Joints 1, 4, 7, and gripper joint (servo IDs 0, 3, 6): RA8-U35H-M;<br>Joints 2 and 3 (servo IDs 1-2): RX8-U45H-M;<br>Joint 5 (servo ID 4): RA8-U25H-M; |
+| Communication hub | UC-01 | UC-01 | UC-01 |
+| Communication method | UART | UART | UART |
+| Power supply | 12V2A / DC5521 | 12V10A / XT30 | 12V10A / XT30 |
+| Accessories | Screws, threadlocker, woodworking clamps x2, spare PCB (UC01), XT30 power adapter cable, 200mm servo extension cable, USB-A to USB-C cable, mouse pad, base support | Screws, threadlocker, woodworking clamps x2, spare PCB (UC01), DC power adapter cable (5.5×2.1mm connector), 200mm servo extension cable, USB-A to USB-C cable, mouse pad, base support | Screws, threadlocker, woodworking clamps x2, spare PCB (UC01), DC power adapter cable (5.5×2.1mm connector), 200mm servo extension cable, USB-A to USB-C cable, mouse pad |
+| Encoder | 12-bit magnetic encoder | 12-bit magnetic encoder | 12-bit magnetic encoder |
+| Weight | 663g | 883g | 791g |
+| Recommended operating temperature | 0-40°C | 0-40°C | 0-40°C |
+| Button lock support | × | ✓ | - |
+| LeRobot support | ✓ | ✓ | ✓ |
+| ROS 2 support | ✓ | ✓ | ✓ |
+| MoveIt support | - | - | ✓ |
+| Gazebo support | - | - | ✓ |
 
 ---
 
 ## 🔧 Hardware Resources
 
 <p align="center">
-  <img src="./Media/images/10.png" alt="Star-Arm-102 hardware overview" width="480">
+  <img src="./Media/images/10.png" alt="Star-Arm-102 assembly overview" width="480">
 </p>
 
-- [Parts List](./Hardware/README.md): view the complete parts list, quantities, and accessory information
+- [Parts List](./Hardware/README.md): view the complete parts list, quantities, and accessories
 
 - [Engineering Drawings](./Hardware/cad/README.md): view assembly drawings and manufacturing drawings
 
 - [Assembly Guide](./Hardware/assembly/README.md): view assembly sequence, notes, and reference images. This section is still being improved.
 
-- [MakerWorld 3D Print Models](https://makerworld.com.cn/zh/models/2366043-xing-bi-102-ld?from=search#profileId-2682765): Download the 3D printable part files for Star Arm 102-FL
+- [MakerWorld Models](https://makerworld.com.cn/zh/models/2366043-xing-bi-102-ld?from=search#profileId-2682765): download the 3D printable files for Star Arm 102-LD, which can be used to replace parts or assemble the robotic arm yourself
+
+> The firmware and documentation for the Star Arm 102-HD lock-button board are located in the `Star-Arm-102-dev-main` project. The button board uses ID 7 by default. In host mode, it can directly send lock / unlock commands. In slave mode, it can be polled by the host as a simulated servo and returns 0.0° / 180.0° to indicate unlocked / locked states.
 
 ---
-FL
+
 ## 🚀 Quick Start
 
 ### Requirements
@@ -109,7 +121,7 @@ FL
 |------|-------------|
 | Operating System | Ubuntu 22.04 |
 | ROS Version | ROS 2 Humble |
-| Hardware | StarArm 102 robotic arms (Leader + Follower) |
+| Hardware | StarArm 102 robotic arms (Leader/HD + Follower) |
 | Driver | [CH340 USB Driver](https://www.wch.cn/downloads/CH341SER_EXE.html) |
 
 ### Installation
@@ -141,22 +153,35 @@ python3 ./Python_SDK/stararm102_ro.py
 
 ## 📂 Project Structure
 
+<details>
+<summary>Expand to view the project structure</summary>
+
 ```text
 Star-Arm-102/
+|-- .gitignore                               # Git ignore rules
 |-- Hardware/                                # Hardware resources
-|   |-- assembly/                            # Assembly guide
-|   |-- cad/                                 # CAD models and engineering drawings
+|   |-- assembly/                            # Assembly instructions
+|   |-- cad/                                 # CAD models and engineering drawing documentation
 |   |-- parts/                               # Parts list and BOM
 |   `-- README.md                            # Hardware overview
-|-- Lerobot/                                 # LeRobot control workflow
+|-- Lerobot/                                 # LeRobot framework control workflow
 |   |-- lerobot-robot-stararm102/            # Follower robot configuration
 |   |-- lerobot-teleoperator-stararm102/     # Leader teleoperator
-|   |-- stararm102_en.md                     # LeRobot documentation in English
-|   |-- stararm102.md                        # LeRobot documentation
-|   `-- README.md                            # Usage instructions
-|-- Media/                                   # Images used by README files and documentation
+|   |-- lerobot-stararm102/                  # New StarArm102 LeRobot plugin package
+|   |   |-- examples/                        # State reading and leader-follower replay examples
+|   |   |-- lerobot_teleoperator_stararm102/ # HD/FL device configuration and driver implementation
+|   |   |-- pyproject.toml                   # Python package configuration
+|   |   `-- README.md                        # Plugin package usage instructions
+|   |-- media/                               # Media assets for LeRobot documentation
+|   |-- stararm102_en.md                     # LeRobot usage documentation in English
+|   |-- stararm102.md                        # LeRobot usage documentation
+|   `-- README.md                            # Usage steps
+|-- Media/                                   # Image assets used by README files and documentation
+|   |-- images/                              # Image assets
+|   `-- video/                               # Video assets
 |-- Python_SDK/                              # Python SDK control workflow
-|   |-- stararm102_ro.py                     # Leader-follower control program
+|   |-- stararm102_ro.py                     # Leader-follower control program with LD/HD configuration support
+|   |-- stararm102_ro_hover.py               # Hover / lock control example program
 |   `-- README.md                            # Detailed usage documentation
 |-- ROS2_HUMBLE/                             # ROS 2 control workflow
 |   `-- src/
@@ -167,23 +192,25 @@ Star-Arm-102/
 |       |-- robo_interfaces/                 # Custom ROS 2 interfaces
 |       |-- ros2_bag_recorder/               # Demonstration trajectory recording
 |       |-- stararm102_controller/           # Robotic arm controller
-|       |-- stararm102_description/          # Robotic arm URDF description
-|       |-- stararm102_gazebo/               # Gazebo simulation configuration
+|       |-- stararm102_description/          # Robotic arm URDF model description
+|       |-- stararm102_gazebo/               # Gazebo simulation environment configuration
 |       `-- stararm102_moveit_config/        # MoveIt 2 motion planning configuration
 |-- README.md                                # Chinese README
 `-- README_EN.md                             # English README
 ```
+
+</details>
 
 ---
 
 ## 🎯 Control Method Comparison
 
 | Feature | Python SDK | ROS 2 Humble | LeRobot |
-|------|------------|--------------|---------|
+|------|------------|-------------|---------|
 | Difficulty | ⭐ Easy | ⭐⭐⭐ Medium | ⭐⭐⭐⭐⭐ Advanced |
-| Real-time Performance | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐ |
+| Real-time performance | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐ |
 | Extensibility | ⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ |
-| Use Cases | Quick testing, teaching | Robotic system integration | AI training, research |
+| Use cases | Quick testing, teaching | Robotic system integration | AI training, research |
 
 ---
 
@@ -217,7 +244,7 @@ lsusb
 # List serial devices
 ls -l /dev/ttyUSB*
 
-# Grant device permissions
+# Grant permissions
 sudo chmod 777 /dev/ttyUSB*
 ```
 
@@ -225,17 +252,17 @@ sudo chmod 777 /dev/ttyUSB*
 
 ## 📊 Joint Mapping
 
-The StarArm 102 robotic arm has 7 joints in total: 6 DOF + 1 rotary gripper.
+The StarArm 102 robotic arm has 7 joints in total: 6 DOF + 1 rotary gripper. The joint numbers used in the documentation start from 1, while the servo IDs used in code and on the servo bus start from 0. The mapping is shown below:
 
-| Joint | Angle Range | Description |
-|------|-------------|-------------|
-| Joint1 | -110° ~ 110° | Base rotation |
-| Joint2 | 0° ~ 180° | Shoulder pitch |
-| Joint3 | 0° ~ 270° | Elbow pitch |
-| Joint4 | -90° ~ 90° | Wrist rotation |
-| Joint5 | -65° ~ 65° | Wrist yaw |
-| Joint6 | -150° ~ 150° | Wrist rotation |
-| Gripper (joint7_left) | 0° ~ 90° | Rotary gripper |
+| Functional joint | Code joint name | Servo ID | Angle range | Description |
+|------|------|------|----------|------|
+| Joint 1 | Joint1 | 0 | -110° ~ 110° | Base rotation |
+| Joint 2 | Joint2 | 1 | 0° ~ 180° | Shoulder pitch |
+| Joint 3 | Joint3 | 2 | 0° ~ 270° | Elbow pitch |
+| Joint 4 | Joint4 | 3 | -90° ~ 90° | Wrist rotation |
+| Joint 5 | Joint5 | 4 | -65° ~ 65° | Wrist yaw |
+| Joint 6 | Joint6 | 5 | -150° ~ 150° | Wrist rotation |
+| Gripper / Joint 7 | Gripper (joint7_left) | 6 | 0° ~ 90° | Rotary gripper |
 
 > 📝 **Note**: The rotary gripper is controlled through `joint7_left`. `joint7_right` is a coupled joint and automatically synchronizes in the opposite direction.
 

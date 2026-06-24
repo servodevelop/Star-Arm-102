@@ -16,7 +16,7 @@
 ## 📖 项目简介
 
 <p align="center">
-  <img src="./Media/images/9.png" alt="Star-Arm-102 assembly overview" width="720">
+  <img src="./Media/images/11.png" alt="Star-Arm-102 assembly overview" width="720">
 </p>
 
 StarArm 102 是一个 6+1 自由度机械臂遥操作控制项目，支持通过 **Leader 机械臂** 实时远程控制 **Follower 机械臂**。项目提供三种控制方式，适用于机器人研究、遥操作教学、AI训练数据采集等多种场景。
@@ -50,6 +50,12 @@ Star Arm 102‑LD 不仅能丝滑遥操同系列 FL 型号
 
 一套主手，多臂通用，提供更丝滑的遥操体验
 
+- 🔒 **HD 型号：支持一键锁定的增强主手**
+
+Star Arm 102-HD 是 Star Arm 102 系列即将推出的新主臂型号
+
+相比 LD 型号，HD 增加了一键锁定功能：按下锁定按键后，主臂可在当前姿态锁定，从臂同步进入锁定状态；再次按下按键后解除锁定
+
 - 🕹️ **多平台兼容 · 即连即用**
   
 
@@ -69,24 +75,26 @@ Star Arm 102‑LD 不仅能丝滑遥操同系列 FL 型号
 
 ## 🔧 手臂规格
 
-|   | Star Arm 102-LD | Star Arm 102-FL |
-|:---|:---|:---|
-| **自由度** | 6+1 | 6+1 |
-| **精度** | - | 5-8mm |
-| **建议最大负载** | - | 300g |
-| **关节范围** | 关节 1: ±110°<br>关节 2:  0°\~180°<br>关节 3: 0°\~270°<br>关节 4: ±90°<br>关节 5: ±65°<br>关节 6: ±150°<br>夹爪: 0\~90° | 关节 1: ±110°<br>关节 2: 0°\~180°<br>关节 3: 0°\~270°<br>关节 4: ±90°<br>关节 5: ±65°<br>关节 6: ±150°<br>夹爪: 0\~90° |
-| **舵机配置** | #1、#2、#3、#4 关节使用 RA8-U01H-M；<br>#5 关节使用 RA8-U02H-M；<br>#6、手柄关节使用 RA8-U03H-M； | #1、#4、#7、夹爪关节使用 RA8-U25H-M；<br>#2、#3 关节使用 RX8-U45H-M；<br>#5 关节使用 RA8-U25H-M； |
-| **通信集线器** | UC-01 | UC-01 |
-| **通信方式** | UART | UART |
-| **电源规格（可选）** | 12V2A / XT30 | 12V10A / XT30 |
-| **工具与紧固件** | 螺丝、螺纹胶、木工夹x2、备用 PCB（UC01）、DC 电源转接线（5.5×2.5mm 接头）、200mm 舵机延长线、USB-A 转 USB-C 线、鼠标垫 | 螺丝、螺纹胶、木工夹x2、备用 PCB（UC01）、DC 电源转接线（5.5×2.5mm 接头）、200mm 舵机延长线、USB-A 转 USB-C 线、鼠标垫 |
-| **角度传感器** | 12 位磁编码器 | 12 位磁编码器 |
-| **重量** | 663g | 791g |
-| **推荐工作温度范围** | 0-40°C | 0-40°C |
-| **支持 LeRobot** | ✓ | ✓ |
-| **支持 ROS 2** | ✓ | ✓ |
-| **支持 MoveIt** | - | ✓ |
-| **支持 Gazebo** | - | ✓ |
+||Star Arm 102\-LD|Star Arm 102\-HD|Star Arm 102\-FL|
+|---|---|---|---|
+|臂展|420mm|420mm|420mm|
+|自由度|6\+1|6\+1|6\+1|
+|重复精度|\-|\-|±0\.5mm|
+|建议最大负载|\-|\-|300g|
+|关节范围<br>|关节 1: ±110°<br>关节 2: 0°\~180°<br>关节 3: 0°\~270°<br>关节 4: ±90°<br>关节 5: ±65°<br>关节 6: ±150°<br>手柄: 0\~90°|关节 1: ±110°<br>关节 2: 0°\~180°<br>关节 3: 0°\~270°<br>关节 4: ±90°<br>关节 5: ±65°<br>关节 6: ±150°<br>手柄: 0\~90|关节 1: ±110°<br>关节 2: 0°\~180°<br>关节 3: 0°\~270°<br>关节 4: ±90°<br>关节 5: ±65°<br>关节 6: ±150°<br>夹爪: 0\~90|
+|舵机配置|关节 1\-4（舵机 ID 0\-3）使用 RA8\-U01H\-M；<br>关节 5（舵机 ID 4）使用 RA8\-U02H\-M；<br>关节 6 与手柄关节（舵机 ID 5\-6）使用 RA8\-U03H\-M；|关节 1\-4（舵机 ID 0\-3）使用 RP8\-U45H\-M；<br>关节 5（舵机 ID 4）使用 RP8\-U45H\-M\-C029；<br>关节 6 与手柄关节（舵机 ID 5\-6）使用 RP8\-U45H\-M\-C028；|关节 1、4、7 与夹爪关节（舵机 ID 0、3、6）使用 RA8\-U35H\-M；<br>关节 2、3（舵机 ID 1\-2）使用 RX8\-U45H\-M；<br>关节 5（舵机 ID 4）使用 RA8\-U25H\-M；|
+|通讯集线器|UC\-01|UC\-01|UC\-01|
+|通信方式|UART|UART|UART|
+|电源规格|12V2A / DC5521|12V10A / XT30|12V10A / XT30|
+|配件|螺丝、螺纹胶、木工夹x2、备用 PCB（UC01）、XT30 电源转接线、200mm 舵机延长线、USB\-A 转 USB\-C 线、鼠标垫、底托|螺丝、螺纹胶、木工夹x2、备用 PCB（UC01）、DC 电源转接线（5\.5×2\.1mm 接头）、200mm 舵机延长线、USB\-A 转 USB\-C 线、鼠标垫、底托|螺丝、螺纹胶、木工夹x2、备用 PCB（UC01）、DC 电源转接线（5\.5×2\.1mm 接头）、200mm 舵机延长线、USB\-A 转 USB\-C 线、鼠标垫|
+|编码器|12\-bit magnetic encoder|12\-bit magnetic encoder|12\-bit magnetic encoder|
+|重量|663g|883g|791g|
+|推荐工作温度|0\-40℃|0\-40℃|0\-40℃|
+|支持按键锁定|×|✓ |\-|
+|支持Lerobot|✓ |✓ |✓ |
+|支持ROS 2 |✓ |✓ |✓ |
+|支持MoveIt |\-|\-|✓ |
+|支持Gazebo |\-|\-|✓ |
 
 ---
 
@@ -97,13 +105,15 @@ Star Arm 102‑LD 不仅能丝滑遥操同系列 FL 型号
 </p>
 
 
-- [Parts List](./hardware/README.md): 查看完整零件清单、数量和配件
+- [Parts List](./Hardware/README.md): 查看完整零件清单、数量和配件
 
-- [Engineering Drawings](./hardware/cad/README.md): 查看总装图、和制造图纸
+- [Engineering Drawings](./Hardware/cad/README.md): 查看总装图、和制造图纸
 
-- [Assembly Guide](./hardware/assembly/README.md): 查看装配顺序、注意事项和配图说明(等待完善中)
+- [Assembly Guide](./Hardware/assembly/README.md): 查看装配顺序、注意事项和配图说明(等待完善中)
 
 - [MakerWorld Models](https://makerworld.com.cn/zh/models/2366043-xing-bi-102-ld?from=search#profileId-2682765): 下载Star Arm 102-LD的3D打印文件，可自行替换或者组装机械臂
+
+> Star Arm 102-HD 的锁定功能按键板固件与说明位于 `Star-Arm-102-dev-main` 工程中。按键板默认使用 ID 7，主机模式下可直接发送锁定 / 解锁控制；从机模式下可作为模拟舵机被主机轮询，返回 0.0° / 180.0° 表示解锁 / 锁定状态。
 
 ---
 
@@ -115,7 +125,7 @@ Star Arm 102‑LD 不仅能丝滑遥操同系列 FL 型号
 |------|------|
 | 操作系统 | Ubuntu 22.04 |
 | ROS版本 | ROS2 Humble |
-| 硬件设备 | StarArm 102 机械臂 (Leader + Follower) |
+| 硬件设备 | StarArm 102 机械臂 (Leader/HD + Follower) |
 | 驱动程序 | [CH340 USB驱动](https://www.wch.cn/downloads/CH341SER_EXE.html) |
 
 ### 安装步骤
@@ -147,8 +157,12 @@ python3 ./Python_SDK/stararm102_ro.py
 
 ## 📂 项目结构
 
+<details>
+<summary>展开查看项目结构</summary>
+
 ```text
 Star-Arm-102/
+|-- .gitignore                               # Git 忽略规则
 |-- Hardware/                                # 硬件资料
 |   |-- assembly/                            # 装配说明
 |   |-- cad/                                 # CAD 模型与工程图纸说明
@@ -157,12 +171,21 @@ Star-Arm-102/
 |-- Lerobot/                                 # LeRobot 框架控制方式
 |   |-- lerobot-robot-stararm102/            # Follower 机器人配置
 |   |-- lerobot-teleoperator-stararm102/     # Leader 遥操作器
+|   |-- lerobot-stararm102/                  # 新版 StarArm102 LeRobot 插件包
+|   |   |-- examples/                        # 状态读取与主从回放示例
+|   |   |-- lerobot_teleoperator_stararm102/ # HD/FL 设备配置与驱动实现
+|   |   |-- pyproject.toml                   # Python 包配置
+|   |   `-- README.md                        # 插件包使用说明
+|   |-- media/                               # LeRobot 文档媒体资源
 |   |-- stararm102_en.md                     # LeRobot 使用文档（英文）
 |   |-- stararm102.md                        # LeRobot 使用文档
 |   `-- README.md                            # 使用步骤
 |-- Media/                                   # README 与文档使用的图片资源
+|   |-- images/                              # 图片资源
+|   `-- video/                               # 视频资源
 |-- Python_SDK/                              # Python SDK 控制方式
-|   |-- stararm102_ro.py                     # 主从控制程序
+|   |-- stararm102_ro.py                     # 主从控制程序，支持 LD/HD 配置
+|   |-- stararm102_ro_hover.py               # 悬停 / 锁定控制示例程序
 |   `-- README.md                            # 详细使用文档
 |-- ROS2_HUMBLE/                             # ROS2 控制方式
 |   `-- src/
@@ -179,6 +202,8 @@ Star-Arm-102/
 |-- README.md                                # 中文说明文档
 `-- README_EN.md                             # English README
 ```
+
+</details>
 
 ---
 
@@ -231,17 +256,17 @@ sudo chmod 777 /dev/ttyUSB*
 
 ## 📊 关节映射
 
-StarArm102 机械臂共有 7 个关节（6个自由度 + 1个旋转夹爪）：
+StarArm102 机械臂共有 7 个关节（6个自由度 + 1个旋转夹爪）。文档中的关节编号从 1 开始，代码与舵机总线中的舵机 ID 从 0 开始，两者映射如下：
 
-| 关节 | 角度范围 | 说明 |
-|------|----------|------|
-| Joint1 | -110° ~ 110° | 底座旋转 |
-| Joint2 | 0° ~ 180° | 肩部俯仰 |
-| Joint3 | 0° ~ 270° | 肘部俯仰 |
-| Joint4 | -90° ~ 90° | 手腕旋转 |
-| Joint5 | -65° ~ 65° | 手腕偏航 |
-| Joint6 | -150° ~ 150° | 手腕旋转 |
-| Gripper (joint7_left) | 0° ~ 90° | 旋转夹爪 |
+| 功能关节 | 代码关节名 | 舵机 ID | 角度范围 | 说明 |
+|------|------|------|----------|------|
+| 关节 1 | Joint1 | 0 | -110° ~ 110° | 底座旋转 |
+| 关节 2 | Joint2 | 1 | 0° ~ 180° | 肩部俯仰 |
+| 关节 3 | Joint3 | 2 | 0° ~ 270° | 肘部俯仰 |
+| 关节 4 | Joint4 | 3 | -90° ~ 90° | 手腕旋转 |
+| 关节 5 | Joint5 | 4 | -65° ~ 65° | 手腕偏航 |
+| 关节 6 | Joint6 | 5 | -150° ~ 150° | 手腕旋转 |
+| 夹爪 / 关节 7 | Gripper (joint7_left) | 6 | 0° ~ 90° | 旋转夹爪 |
 
 > 📝 **注意**：旋转夹爪通过 `joint7_left` 控制，`joint7_right` 为联动关节，自动反向同步。
 
