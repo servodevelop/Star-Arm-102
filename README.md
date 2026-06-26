@@ -186,7 +186,7 @@ Star-Arm-102/
 |-- Python_SDK/                              # Python SDK 控制方式
 |   |-- stararm102_ro.py                     # 主从控制程序，支持 LD/HD 配置
 |   |-- stararm102_ro_hover.py               # 悬停 / 锁定控制示例程序
-|   `-- README.md                            # 详细使用文档
+|   `-- PYTHON_SDK_GUIDE.md                  # Python SDK 详细使用文档
 |-- ROS2_HUMBLE/                             # ROS2 控制方式
 |   `-- src/
 |       |-- arm_moveit_read/                 # 位姿读取节点
@@ -330,7 +330,7 @@ sudo chmod 777 /dev/ttyUSB*
 
 选择你需要的控制方式查看详细文档：
 
-- 📘 **[Python SDK 详细文档](./Python_SDK/README.md)** - 推荐！最简单易用
+- 📘 **[Python SDK 详细文档](./Python_SDK/PYTHON_SDK_GUIDE.md)** - 推荐！最简单易用
 - 📗 **[ROS2 HUMBLE 详细文档](./ROS2_HUMBLE/README.md)** - 适用于机器人系统集成
 - 📙 **[Lerobot 详细文档](./Lerobot/README.md)** - 适用于AI训练和研究
 

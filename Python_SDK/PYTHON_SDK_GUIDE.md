@@ -15,6 +15,7 @@ Python SDK 是 StarArm 102 机械臂的 Python 控制接口，提供简单易用
 - 🤖 **主从遥操作**：支持 Leader 机械臂实时控制 Follower 机械臂
 - ⚡ **高实时性**：支持 100Hz+ 的控制频率
 - 🎯 **多关节控制**：同时控制 7 个舵机关节
+- 🔒 **HD 锁定状态扩展**：Star Arm 102-HD 可通过锁定功能按键板提供锁定 / 解锁状态
 - 📊 **性能监控**：实时显示控制频率
 - 🔧 **简单易用**：基于 Python，无需复杂配置
 
@@ -65,7 +66,7 @@ sudo chmod 777 /dev/ttyUSB*
 ```bash
 Python_SDK/
 ├── stararm102_ro.py       # 主从控制程序
-└── README.md              # 本文档
+└── PYTHON_SDK_GUIDE.md    # 本文档
 ```
 
 ---
@@ -145,6 +146,44 @@ python3 stararm102_ro.py
 | `LEADER_PORT_NAME` | /dev/ttyUSB0 | Leader 端口号 |
 | `FOLLOWER_PORT_NAME` | /dev/ttyUSB1 | Follower 端口号 |
 | `servo_ids` | [0,1,2,3,4,5,6] | 舵机 ID 列表 |
+
+### Star Arm 102-HD 锁定功能按键板
+
+Star Arm 102-HD 相比 LD 型号增加了一键锁定功能。按下锁定按键后，主臂会在当前姿态锁定，并让从臂同步进入锁定状态；再次按下按键后解除锁定。
+
+#### 通过修改 `stararm102_ro.py` 开启按键功能
+
+`stararm102_ro.py` 默认按照 Star Arm 102-LD 使用，不启用按键板。如果你使用的是 Star Arm 102-HD，需要编辑 `Python_SDK/stararm102_ro.py`，在 `main(args)` 函数开头找到默认配置：
+
+```python
+# 默认（102LD）
+button_enable = False
+button_id = 7
+filtered_size = 30
+```
+
+将 `button_enable` 改为 `True`：
+
+```python
+# Star Arm 102-HD
+button_enable = True
+button_id = 7
+filtered_size = 30
+```
+
+保存后正常运行：
+
+```bash
+python3 stararm102_ro.py
+```
+
+按键板默认 ID 为 `7`。如果你的按键板 ID 不是 `7`，请同步修改 `button_id` 的值。
+
+也可以不改源码，直接通过启动参数开启 HD 配置：
+
+```bash
+python3 stararm102_ro.py --leader_type 102HD
+```
 
 ---
 

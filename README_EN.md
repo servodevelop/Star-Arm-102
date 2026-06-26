@@ -182,7 +182,7 @@ Star-Arm-102/
 |-- Python_SDK/                              # Python SDK control workflow
 |   |-- stararm102_ro.py                     # Leader-follower control program with LD/HD configuration support
 |   |-- stararm102_ro_hover.py               # Hover / lock control example program
-|   `-- README.md                            # Detailed usage documentation
+|   `-- PYTHON_SDK_GUIDE.md                  # Detailed Python SDK usage documentation
 |-- ROS2_HUMBLE/                             # ROS 2 control workflow
 |   `-- src/
 |       |-- arm_moveit_read/                 # Pose reading node
@@ -326,7 +326,7 @@ sudo chmod 777 /dev/ttyUSB*
 
 Choose the control method you need and read the corresponding documentation:
 
-- 📘 **[Python SDK Documentation](./Python_SDK/README.md)** - Recommended, the easiest way to get started
+- 📘 **[Python SDK Documentation](./Python_SDK/PYTHON_SDK_GUIDE.md)** - Recommended, the easiest way to get started
 - 📗 **[ROS 2 Humble Documentation](./ROS2_HUMBLE/README.md)** - Suitable for robotic system integration
 - 📙 **[LeRobot Documentation](./Lerobot/README.md)** - Suitable for AI training and research
 
