@@ -5,6 +5,8 @@ import time
 import cv2
 from lerobot.cameras.opencv import OpenCVCameraConfig
 
+from lerobot.cameras.configs import Cv2Rotation
+
 from lerobot_teleoperator_stararm102 import (
     Stararm102FL,
     Stararm102FLConfig,
@@ -49,9 +51,12 @@ def build_cameras(args: argparse.Namespace) -> dict[str, OpenCVCameraConfig]:
     return {
         "first_person": OpenCVCameraConfig(
             index_or_path=parse_camera_path(args.first_person),
-            width=args.camera_width,
-            height=args.camera_height,
+            # width=,args.camera_width,
+            # height=args.camera_height,
+            height=args.camera_width,
+            width=args.camera_height,
             fps=args.camera_fps,
+            rotation=Cv2Rotation.ROTATE_270
         ),
         "third_person": OpenCVCameraConfig(
             index_or_path=parse_camera_path(args.third_person),

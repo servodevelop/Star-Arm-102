@@ -5,9 +5,9 @@ import struct
 import argparse
 
 SERVO_BAUDRATE = 1000000  # 舵机的波特率 / Servo communication baud rate
-LEADER_PORT_NAME = "/dev/ttyUSB0"  # leader端口号
+LEADER_PORT_NAME = "/dev/ttyUSB2"  # leader端口号
 FOLLOWER_PORT_NAME_Arr = [
-   "/dev/ttyUSB1"
+   "/dev/ttyUSB3"
     # "COM33"
     ]  # follower端口号
 
@@ -56,16 +56,16 @@ def main(args):
     # 默认（102LD）
     button_enable = False
     button_id = 7
-    filtered_size = 60
+    filtered_size = 1
 
     if args.leader_type == "102HD":
         button_enable = True
         button_id = 7
-        filtered_size = 30
+        filtered_size = 1
     elif args.leader_type == "102LD" or args.leader_type is None:
         button_enable = False
         button_id = 7
-        filtered_size = 60
+        filtered_size = 1
     else:
         print(f"警告：未知 leader.type={args.leader_type}，使用默认102LD配置")
 

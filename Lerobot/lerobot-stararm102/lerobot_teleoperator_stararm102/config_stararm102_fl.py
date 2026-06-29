@@ -42,12 +42,12 @@ class Stararm102FLConfig(RobotConfig):
     )
     joint_ranges: dict[str, list[int]] = field(
         default_factory=lambda: {
-            "shoulder_pan": [-150, 150],
-            "shoulder_lift": [-170, 1],
-            "elbow_flex": [-200, 1],
-            "wrist_flex": [-80, 90],
-            "wrist_yaw": [-90, 90],
-            "wrist_roll": [-90, 90],
+            "shoulder_pan": [-105, 105],
+            "shoulder_lift": [-180, 1],
+            "elbow_flex": [-270, 1],
+            "wrist_flex": [-90, 90],
+            "wrist_yaw": [-65, 65],
+            "wrist_roll": [-180, 180],
             "gripper": [-270, 0],
         }
     )

@@ -52,11 +52,12 @@ Enable the optional external button device:
 
 ```bash
 lerobot-teleoperate \
+  --fps=120 \
   --teleop.type=stararm102_hd \
   --teleop.id=stararm102_hd \
   --teleop.port=/dev/ttyUSB0 \
   --teleop.baudrate=1000000 \
-  --teleop.button.enabled=true \
+  --teleop.button.enabled=false \
   --robot.type=stararm102_fl \
   --robot.id=stararm102_fl \
   --robot.port=/dev/ttyUSB1 \
@@ -233,6 +234,7 @@ lerobot-teleoperate \
   --teleop.id=stararm102_hd \
   --teleop.port=/dev/ttyUSB0 \
   --teleop.baudrate=1000000 \
+  --teleop.button.enabled=false \
   --robot.type=stararm102_fl \
   --robot.id=stararm102_fl \
   --robot.port=/dev/ttyUSB1 \
@@ -243,12 +245,13 @@ lerobot-teleoperate \
 ### record
 
 ```bash
+rm -rf ./outputs/datasets
 lerobot-record \
   --robot.type=stararm102_fl \
   --robot.id=stararm102_fl \
   --robot.port=/dev/ttyUSB1 \
   --robot.baudrate=1000000 \
-  --robot.cameras="{first_person: {type: opencv, index_or_path: 2, width: 640, height: 480, fps: 30}, third_person: {type: opencv, index_or_path: 0, width: 640, height: 480, fps: 30}}" \
+  --robot.cameras="{first_person: {type: opencv, index_or_path: 0, width: 480, height: 640, fps: 30, rotation: ROTATE_270}, third_person: {type: opencv, index_or_path: 2, width: 640, height: 480, fps: 30}}" \
   --teleop.type=stararm102_hd \
   --teleop.id=stararm102_hd \
   --teleop.port=/dev/ttyUSB0 \
@@ -256,14 +259,77 @@ lerobot-record \
   --dataset.repo_id=kian/stararm102_test \
   --dataset.single_task="Test recording" \
   --dataset.num_episodes=2 \
-  --dataset.episode_time_s=30 \
+  --dataset.episode_time_s=600 \
   --dataset.reset_time_s=10 \
   --dataset.push_to_hub=false \
-  --display_data=true
+  --dataset.root=./outputs/datasets \
+  --display_data=false
 ```
 
 ```bash
-rm -rf /home/welt/.cache/huggingface/lerobot/kian/stararm102_test
+rm -rf ~/.cache/huggingface/lerobot/kian/stararm102_test
+```
+
+
+### Pick up a block
+
+```bash
+lerobot-record \
+  --robot.type=stararm102_fl \
+  --robot.id=stararm102_fl \
+  --robot.port=/dev/ttyUSB1 \
+  --robot.baudrate=1000000 \
+  --robot.cameras="{first_person: {type: opencv, index_or_path: 0, width: 480, height: 640, fps: 20, rotation: ROTATE_270}, third_person: {type: opencv, index_or_path: 2, width: 640, height: 480, fps: 20}}" \
+  --teleop.type=stararm102_hd \
+  --teleop.id=stararm102_hd \
+  --teleop.port=/dev/ttyUSB0 \
+  --teleop.baudrate=1000000 \
+  --dataset.repo_id=kian/stararm102_pick_block_v4 \
+  --dataset.single_task="Pick up a block from the table and hold it steadily" \
+  --dataset.num_episodes=200 \
+  --dataset.episode_time_s=60 \
+  --dataset.reset_time_s=3 \
+  --dataset.push_to_hub=false \
+  --dataset.root=./outputs/stararm102_pick_block_v4 \
+  --display_data=true
+```
+
+### train
+
+```bash
+lerobot-train \
+  --dataset.repo_id=kian/stararm102_pick_block_v3 \
+  --dataset.root=./outputs/stararm102_pick_block_v3 \
+  --policy.type=act \
+  --policy.device=cuda \
+  --policy.push_to_hub=false \
+  --output_dir=./outputs/train_stararm102_pick_block_v3 \
+  --batch_size=8 \
+  --steps=5000 \
+  --save_freq=200 \
+  --eval_freq=0 \
+  --num_workers=0
+```
+
+### test
+
+```bash
+rm -rf ./outputs/eval_stararm102_pick_block_v3_last_run1
+LD_LIBRARY_PATH="$CONDA_PREFIX/lib:${LD_LIBRARY_PATH}" lerobot-record \
+  --robot.type=stararm102_fl \
+  --robot.id=stararm102_fl \
+  --robot.port=/dev/ttyUSB1 \
+  --robot.baudrate=1000000 \
+  --robot.cameras="{first_person: {type: opencv, index_or_path: /dev/video0, width: 640, height: 480, fps: 30, backend: V4L2}, third_person: {type: opencv, index_or_path: /dev/video2, width: 640, height: 480, fps: 30, backend: V4L2}}" \
+  --policy.path=./outputs/train_stararm102_pick_block_v3/checkpoints/last/pretrained_model \
+  --dataset.repo_id=kian/eval_stararm102_pick_block_v3_last_run1 \
+  --dataset.single_task="eval checkpoint last" \
+  --dataset.num_episodes=1 \
+  --dataset.episode_time_s=50 \
+  --dataset.reset_time_s=8 \
+  --dataset.push_to_hub=false \
+  --dataset.root=./outputs/eval_stararm102_pick_block_v3_last_run1 \
+  --display_data=true
 ```
 
 ## reBot Arm 102
