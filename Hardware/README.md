@@ -31,7 +31,7 @@
 | 9 | 3D打印件（star102_手柄） | - | 1 |
 | 10 | 3D打印件（star102_指环左） | - | 1 |
 | 11 | 3D打印件（star102_指环右） | - | 1 |
-| 12 | PCBD | UC-01 XT30接口 | 1 |
+| 12 | PCBD | UC-01 0.75平方5.5x2.1母头 | 1 |
 | 13 | 线材 | L=120 mm 黑色编织线 | 5 |
 | 14 | 线材 | L=200 mm 黑色编织线 | 2 |
 | 15 | 螺丝 | HSCS M3*10 12.9级内六角圆柱头螺钉 | 1 |
@@ -53,8 +53,8 @@
 |:---|:---|:---|:---|
 | 27 | 螺丝胶 | - | 1 |
 | 28 | 木工夹 | - | 2 |
-| 29 | 备用PCBD | UC-01 XT30接口 | 1 |
-| 30 | 备用电源线 | 0.75平方5.5x2.5母头, 0.25米 | 1 |
+| 29 | 备用PCBD | UC-01 | 1 |
+| 30 | 备用电源线 | XT30 电源转接线, 0.25米 | 1 |
 | 31 | 数据线 | USB转type c数据线 | 1 |
 | 32 | 线材 | PH-3Y 双头反向60芯 0.08 黑色硅胶排线 L=200 mm 黑色编织线 | 1 |
 | 33 | 7号螺丝套装 | M2*8 黑色内六角 8pcs | 1 |
@@ -64,13 +64,30 @@
 
 - [MakerWorld Models](https://makerworld.com.cn/zh/models/2366043-xing-bi-102-ld?from=search#profileId-2682765): 此处可以下载Star Arm 102-LD的3D打印文件，自行替换或者组装机械臂
 
+### 2. 开放 STEP 文件
 
-### 2. CAD 与工程图纸
+`parts/` 目录中提供了部分可编辑 STEP 文件，方便用户根据自己的安装场景、底座形状或手型进行二次修改。用户可以使用常见 CAD 软件打开这些文件，调整后再导出 STL 或其他格式进行 3D 打印。
+
+| 文件 | 说明 | 适用场景 |
+|:---|:---|:---|
+| [First-Person_Camera_Mount_Base.STEP](./parts/First-Person_Camera_Mount_Base.STEP) | 第一视角相机固定底座 | 安装第一视角相机，可根据相机尺寸或安装位置调整 |
+| [First-Person_Camera_Mount_Top_Cover.STEP](./parts/First-Person_Camera_Mount_Top_Cover.STEP) | 第一视角相机固定上盖 | 与相机固定底座配合使用，用于固定相机 |
+| [StarArm102_Base_Bottom.STEP](./parts/StarArm102_Base_Bottom.STEP) | 机械臂底座下半部分 | 可根据实际安装方式修改底部结构 |
+| [StarArm102_Base_Top.STEP](./parts/StarArm102_Base_Top.STEP) | 机械臂底座上半部分 | 可装配到修改后的StarArm102_Base_Bottom上检查是否有干涉 |
+| [StarArm102_Base_Support.STEP](./parts/StarArm102_Base_Support.STEP) | 机械臂底托 | 用于归位时放置手柄，可自行打印 |
+| [StarArm102_Handle.STEP](./parts/StarArm102_Handle.STEP) | 手柄 | 可根据用户手掌大小和握持习惯微调 |
+| [StarArm102_Finger_Ring_Left.STEP](./parts/StarArm102_Finger_Ring_Left.STEP) | 左指环 | 可根据左手手指尺寸调整佩戴手感 |
+| [StarArm102_Finger_Ring_Right.STEP](./parts/StarArm102_Finger_Ring_Right.STEP) | 右指环 | 可根据右手手指尺寸调整佩戴手感 |
+
+> 建议在修改前保留原始文件备份；如果调整了相机固定件、底座或手柄结构，请在打印前检查装配间隙、螺丝孔位和运动空间，避免与机械臂运动范围发生干涉。
+
+
+### 3. CAD 与工程图纸
 
 如果你想查看整机结构、核对尺寸，可以进入 [cad/README.md](./cad/README.md)。
 
 
-### 3. 装配说明
+### 4. 装配说明
 
 装配说明正在制作中，后续可以自购买散件套装，组装自己的机械臂。
 
