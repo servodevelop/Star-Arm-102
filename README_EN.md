@@ -21,6 +21,8 @@
 
 StarArm 102 is a 6+1 DOF robotic arm teleoperation project. It supports real-time remote control of a **Follower robotic arm** through a **Leader robotic arm**. The project provides three control methods and is suitable for robotics research, teleoperation education, AI training data collection, and other scenarios.
 
+The Star Arm 102 project includes two optional Leader arms, Star Arm 102-HD and Star Arm 102-LD, and one Follower arm, Star Arm 102-FL, so users can choose the combination that best fits their teleoperation needs.
+
 Hardware can be purchased through the following channels:
 
 - [Official Store](https://store.fashionstar.com.hk/product/star-arm-102-leader/): recommended for users outside mainland China
@@ -79,7 +81,7 @@ Suitable for university teaching, research experiments, and self-learning by ind
 | Repeatability | - | - | ±0.5mm |
 | Suggested maximum payload | - | - | 300g |
 | Joint range<br> | Joint 1: ±110°<br>Joint 2: 0°\~180°<br>Joint 3: 0°\~270°<br>Joint 4: ±90°<br>Joint 5: ±65°<br>Joint 6: ±150°<br>Handle: 0\~90° | Joint 1: ±110°<br>Joint 2: 0°\~180°<br>Joint 3: 0°\~270°<br>Joint 4: ±90°<br>Joint 5: ±65°<br>Joint 6: ±150°<br>Handle: 0\~90° | Joint 1: ±110°<br>Joint 2: 0°\~180°<br>Joint 3: 0°\~270°<br>Joint 4: ±90°<br>Joint 5: ±65°<br>Joint 6: ±150°<br>Gripper: 0\~90° |
-| Servo configuration | Joints 1-4 (servo IDs 0-3): RP8-U45H-M;<br>Joint 5 (servo ID 4): RP8-U45H-M-C029;<br>Joint 6 and handle joint (servo IDs 5-6): RP8-U45H-M-C028; | Joints 1-4 (servo IDs 0-3): RA8-U01H-M;<br>Joint 5 (servo ID 4): RA8-U02H-M;<br>Joint 6 and handle joint (servo IDs 5-6): RA8-U03H-M; | Joints 1, 4, 7, and gripper joint (servo IDs 0, 3, 6): RA8-U35H-M;<br>Joints 2 and 3 (servo IDs 1-2): RX8-U45H-M;<br>Joint 5 (servo ID 4): RA8-U25H-M; |
+| Servo configuration | Joints 1-4 (servo IDs 0-3): RP8-U45H-M;<br>Joint 5 (servo ID 4): RP8-U45H-M-C029;<br>Joint 6 and handle joint (servo IDs 5-6): RP8-U45H-M-C028; | Joints 1-4 (servo IDs 0-3): RA8-U01H-M;<br>Joint 5 (servo ID 4): RA8-U02H-M;<br>Joint 6 and handle joint (servo IDs 5-6): RA8-U03H-M; | Joints 1, 4, 7, and gripper joint (servo IDs 0, 3, 6): RA8-U35H-M;<br>Joints 2 and 3 (servo IDs 1-2): RX8-U50H-M;<br>Joint 5 (servo ID 4): RA8-U27H-M-C005;<br>Joint 6 (servo ID 5): RA8-U35H-M-C047; |
 | Communication hub | UC-01 | UC-01 | UC-01 |
 | Communication method | UART | UART | UART |
 | Power supply | 12V10A / XT30 | 12V2A / DC5521 | 12V10A / XT30 |
