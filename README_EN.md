@@ -79,15 +79,15 @@ Suitable for university teaching, research experiments, and self-learning by ind
 | Arm span | 420mm | 420mm | 420mm |
 | DOF | 6+1 | 6+1 | 6+1 |
 | Repeatability | - | - | ±0.5mm |
-| Suggested maximum payload | - | - | 300g |
+| Suggested maximum payload | - | - | 500g |
 | Joint range<br> | Joint 1: ±110°<br>Joint 2: 0°\~180°<br>Joint 3: 0°\~270°<br>Joint 4: ±90°<br>Joint 5: ±65°<br>Joint 6: ±150°<br>Handle: 0\~90° | Joint 1: ±110°<br>Joint 2: 0°\~180°<br>Joint 3: 0°\~270°<br>Joint 4: ±90°<br>Joint 5: ±65°<br>Joint 6: ±150°<br>Handle: 0\~90° | Joint 1: ±110°<br>Joint 2: 0°\~180°<br>Joint 3: 0°\~270°<br>Joint 4: ±90°<br>Joint 5: ±65°<br>Joint 6: ±150°<br>Gripper: 0\~90° |
 | Servo configuration | Joints 1-4 (servo IDs 0-3): RP8-U45H-M;<br>Joint 5 (servo ID 4): RP8-U45H-M-C029;<br>Joint 6 and handle joint (servo IDs 5-6): RP8-U45H-M-C028; | Joints 1-4 (servo IDs 0-3): RA8-U01H-M;<br>Joint 5 (servo ID 4): RA8-U02H-M;<br>Joint 6 and handle joint (servo IDs 5-6): RA8-U03H-M; | Joints 1, 4, 7, and gripper joint (servo IDs 0, 3, 6): RA8-U35H-M;<br>Joints 2 and 3 (servo IDs 1-2): RX8-U50H-M;<br>Joint 5 (servo ID 4): RA8-U27H-M-C005;<br>Joint 6 (servo ID 5): RA8-U35H-M-C047; |
 | Communication hub | UC-01 | UC-01 | UC-01 |
 | Communication method | UART | UART | UART |
-| Power supply | 12V10A / XT30 | 12V2A / DC5521 | 12V10A / XT30 |
+| Power supply | 12V10A / XT30 | 12V3A / DC5521 | 12V10A / XT30 |
 | Accessories | Screws, threadlocker, woodworking clamps x2, spare PCB (UC01), DC power adapter cable (5.5×2.1mm connector), 200mm servo extension cable, USB-A to USB-C cable, mouse pad, base support | Screws, threadlocker, woodworking clamps x2, spare PCB (UC01), XT30 power adapter cable, 200mm servo extension cable, USB-A to USB-C cable, mouse pad, base support | Screws, threadlocker, woodworking clamps x2, spare PCB (UC01), DC power adapter cable (5.5×2.1mm connector), 200mm servo extension cable, USB-A to USB-C cable, mouse pad |
 | Encoder | 12-bit magnetic encoder | 12-bit magnetic encoder | 12-bit magnetic encoder |
-| Weight | 883g | 663g | 791g |
+| Weight | 883g | 721g | 791g |
 | Recommended operating temperature | 0-40°C | 0-40°C | 0-40°C |
 | Button lock support | ✓ | × | - |
 | LeRobot support | ✓ | ✓ | ✓ |
