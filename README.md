@@ -13,7 +13,7 @@
 
 ---
 
-## 📖 项目简介（
+## 📖 项目简介
 了解 Star Arm 102 全系列：
 [Star Arm 102 机械臂 — 系列总览](https://fashionstar.com.cn/robot-arm/star-arm-102/)
 
