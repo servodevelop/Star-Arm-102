@@ -13,20 +13,18 @@
 
 ---
 
-## 📖 项目简介
+## 📖 项目简介（
+了解 Star Arm 102 全系列：
+[Star Arm 102 机械臂 — 系列总览](https://fashionstar.com.cn/robot-arm/star-arm-102/)
 
-<p align="center">
-  <img src="./Media/images/11.png" alt="Star-Arm-102 assembly overview" width="720">
-</p>
-
-StarArm 102 是一个 6+1 自由度机械臂遥操作控制项目，支持通过 **Leader 机械臂** 实时远程控制 **Follower 机械臂**。项目提供三种控制方式，适用于机器人研究、遥操作教学、AI训练数据采集等多种场景。
-
-Star Arm 102 项目包含两款可选 Leader arm（Star Arm 102-HD 与 Star Arm 102-LD）以及一款 Follower arm（Star Arm 102-FL），可根据不同遥操作需求进行组合。
-
-如需购买硬件，可通过以下渠道获取：
-
-- [独立站购买](https://store.fashionstar.com.hk/product/star-arm-102-leader/)：推荐中国大陆境外用户购买
+## 🛒 购买渠道
+- [Star Arm 102-LD — LeRobot 认证 Leader 主臂](https://fashionstar.com.cn/store/product/star-arm-102-ld/)
+- [Star Arm 102-HD — 一键悬停 Leader 主臂](https://fashionstar.com.cn/store/product/star-arm-102-hd/)
+- [Star Arm 102-FL — Follower 从臂](https://fashionstar.com.cn/store/product/star-arm-102-fl/)
 - [淘宝购买](https://item.taobao.com/item.htm?ft=t&id=1045277992605)：推荐中国大陆用户购买
+
+## 🔗 相关链接
+- [华馨京科技｜FashionStar 官网](https://fashionstar.com.cn/)
 
 ### ✨ 核心特性
 
