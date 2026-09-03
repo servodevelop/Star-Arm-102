@@ -23,10 +23,17 @@ StarArm 102 is a 6+1 DOF robotic arm teleoperation project. It supports real-tim
 
 The Star Arm 102 project includes two optional Leader arms, Star Arm 102-HD and Star Arm 102-LD, and one Follower arm, Star Arm 102-FL, so users can choose the combination that best fits their teleoperation needs.
 
-Hardware can be purchased through the following channels:
+Learn more about the full Star Arm 102 series:
+[Star Arm 102 robot arm — series overview](https://fashionstar.com.hk/robot-arm/star-arm-102/)
 
-- [Official Store](https://store.fashionstar.com.hk/product/star-arm-102-leader/): recommended for users outside mainland China
-- [Taobao](https://item.taobao.com/item.htm?ft=t&id=1045277992605): recommended for users in mainland China
+## 🛒 Where to Buy
+- [Star Arm 102-LD — LeRobot Certified Leader Arm](https://fashionstar.com.hk/store/product/star-arm-102-ld/)
+- [Star Arm 102-HD — Pose-Holding Leader Arm](https://fashionstar.com.hk/store/product/star-arm-102-hd/)
+- [Star Arm 102-FL — Follower Arm](https://fashionstar.com.hk/store/product/star-arm-102-fl/)
+
+
+## 🔗 Related Links
+- [Fashion Star Official Website](https://fashionstar.com.hk/)
 
 ### ✨ Key Features
 
