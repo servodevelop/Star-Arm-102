@@ -353,7 +353,8 @@ This project is open source under the [MIT License](LICENSE).
 
 ## 🔗 Related Links
 
-- [FashionStar Official Website](https://fashionrobo.com/)
+- [FashionStar Official Website](https://fashionstar.com.hk/)
+- [Star Arm 102 series overview](https://fashionstar.com.hk/robot-arm/star-arm-102/)
 - [LeRobot Framework](https://github.com/huggingface/lerobot)
 - [ROS 2 Documentation](https://docs.ros.org/en/humble/)
 - [MoveIt 2 Documentation](https://moveit.picknik.ai/humble/)
