@@ -348,7 +348,7 @@ sudo chmod 777 /dev/ttyUSB*
 
 ## 🔗 相关链接
 
-- [FashionStar 官网](https://fashionrobo.com/)
+- [华馨京科技｜FashionStar 官网](https://fashionrobo.com/)
 - [Lerobot 框架](https://github.com/huggingface/lerobot)
 - [ROS2 官方文档](https://docs.ros.org/en/humble/)
 - [MoveIt2 官方文档](https://moveit.picknik.ai/humble/)
