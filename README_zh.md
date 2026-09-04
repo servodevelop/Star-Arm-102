@@ -1,4 +1,4 @@
-# Star Arm 102 - 机械臂遥操作系统
+# Star Arm 102：开源机械臂开发资源
 <p align="right">
   <strong>Language / 语言:</strong>
   <a href="./README_zh.md">中文</a> |
@@ -14,6 +14,10 @@
 ---
 
 ## 📖 项目简介
+Star Arm 102 是一套面向遥操作与机器人开发的开源 6+1 自由度主从机械臂系统。本仓库汇集了使用该系统所需的代码与资源，包括 Python SDK 示例、ROS 2 Humble 软件包、LeRobot 集成、硬件文件和设置指南。
+
+你可以使用这些资源连接并控制机械臂，体验受支持的软件工作流程，并构建自己的机器人应用。
+
 了解 Star Arm 102 全系列：
 [Star Arm 102 机械臂 — 系列总览](https://fashionstar.com.cn/robot-arm/star-arm-102/)
 

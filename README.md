@@ -1,4 +1,4 @@
-# Star Arm 102 - Robotic Arm Teleoperation System
+# Star Arm 102: Open-Source Robotic Arm Development Resources
 <p align="right">
   <strong>Language / 语言:</strong>
   <a href="./README_zh.md">中文</a> |
@@ -19,9 +19,9 @@
   <img src="./Media/images/11.png" alt="Star-Arm-102 assembly overview" width="720">
 </p>
 
-StarArm 102 is a 6+1 DOF robotic arm teleoperation project. It supports real-time remote control of a **Follower robotic arm** through a **Leader robotic arm**. The project provides three control methods and is suitable for robotics research, teleoperation education, AI training data collection, and other scenarios.
+Star Arm 102 is an open-source 6+1 DOF leader–follower robotic arm system for teleoperation and robotics development. This repository brings together the code and resources needed to work with it, including Python SDK examples, ROS 2 Humble packages, LeRobot integrations, hardware files, and setup guides.
 
-The Star Arm 102 project includes two optional Leader arms, Star Arm 102-HD and Star Arm 102-LD, and one Follower arm, Star Arm 102-FL, so users can choose the combination that best fits their teleoperation needs.
+Use it to connect and control the arms, try supported software workflows, and build your own robotics applications.
 
 Learn more about the full Star Arm 102 series:
 [Star Arm 102 robot arm — series overview](https://fashionstar.com.hk/robot-arm/star-arm-102/)
