@@ -1,8 +1,8 @@
-# Star Arm 102 - 机械臂遥操作系统
+# Star Arm 102 - Robotic Arm Teleoperation System
 <p align="right">
   <strong>Language / 语言:</strong>
-  <a href="./README.md">中文</a> |
-  <a href="./README_EN.md">English</a>
+  <a href="./README_zh.md">中文</a> |
+  <a href="./README.md">English</a>
 </p>
 
 ![Programming Language](https://img.shields.io/badge/language-Python-blue?style=flat-square)
@@ -13,219 +13,224 @@
 
 ---
 
-## 📖 项目简介
-了解 Star Arm 102 全系列：
-[Star Arm 102 机械臂 — 系列总览](https://fashionstar.com.cn/robot-arm/star-arm-102/)
+## 📖 Project Overview
 
-## 🛒 购买渠道
-- [Star Arm 102-LD — LeRobot 认证 Leader 主臂](https://fashionstar.com.cn/store/product/star-arm-102-ld/)
-- [Star Arm 102-HD — 一键悬停 Leader 主臂](https://fashionstar.com.cn/store/product/star-arm-102-hd/)
-- [Star Arm 102-FL — Follower 从臂](https://fashionstar.com.cn/store/product/star-arm-102-fl/)
-- [淘宝购买](https://item.taobao.com/item.htm?ft=t&id=1045277992605)：推荐中国大陆用户购买
+<p align="center">
+  <img src="./Media/images/11.png" alt="Star-Arm-102 assembly overview" width="720">
+</p>
 
-## 🔗 相关链接
-- [华馨京科技｜FashionStar 官网](https://fashionstar.com.cn/)
+StarArm 102 is a 6+1 DOF robotic arm teleoperation project. It supports real-time remote control of a **Follower robotic arm** through a **Leader robotic arm**. The project provides three control methods and is suitable for robotics research, teleoperation education, AI training data collection, and other scenarios.
 
-### ✨ 核心特性
+The Star Arm 102 project includes two optional Leader arms, Star Arm 102-HD and Star Arm 102-LD, and one Follower arm, Star Arm 102-FL, so users can choose the combination that best fits their teleoperation needs.
 
-- 🔓 **开源 · 低成本 · 灵活获取**
-  
+Learn more about the full Star Arm 102 series:
+[Star Arm 102 robot arm — series overview](https://fashionstar.com.hk/robot-arm/star-arm-102/)
 
-完全开源的设计，降低学习与使用门槛
+## 🛒 Where to Buy
+- [Star Arm 102-LD — LeRobot Certified Leader Arm](https://fashionstar.com.hk/store/product/star-arm-102-ld/)
+- [Star Arm 102-HD — Pose-Holding Leader Arm](https://fashionstar.com.hk/store/product/star-arm-102-hd/)
+- [Star Arm 102-FL — Follower Arm](https://fashionstar.com.hk/store/product/star-arm-102-fl/)
 
-提供两种获取方式：购买预装整机（开箱即用），或自行打印组装（需打印并购买零件，适合教学与动手实践）
 
-- ⚙️ **机械臂构型科学**
-  
+## 🔗 Related Links
+- [Fashion Star Official Website](https://fashionstar.com.hk/)
 
-6个主动关节 + 1个末端执行器
+### ✨ Key Features
 
-关节构型严格满足 Pieper 准则，支持逆运动学解析法求解，算法透明、易于教学与二次开发
+- 🔓 **Open source · Low cost · Flexible access**
 
-- 🔗 **LD 型号：高兼容性遥操主手**
+Fully open-source design lowers the barrier to learning and use.
 
-Star Arm 102‑LD 不仅能丝滑遥操同系列 FL 型号
+Two access options are available: purchase a pre-assembled unit for immediate use, or print and assemble it yourself by preparing the printed parts and components. The DIY option is well suited for teaching and hands-on practice.
 
-还可直接兼容 reBot 及其他同构型或相似构型的机械臂
+- ⚙️ **Well-designed robotic arm configuration**
 
-一套主手，多臂通用，提供更丝滑的遥操体验
+6 active joints + 1 end effector.
 
-- 🔒 **HD 型号：支持一键锁定的增强主手**
+The joint configuration strictly satisfies the Pieper criterion and supports analytical inverse kinematics. The algorithm is transparent, making it easy to teach and extend.
 
-Star Arm 102-HD 是 Star Arm 102 系列即将推出的新主臂型号
+- 🔗 **LD model: highly compatible teleoperation leader arm**
 
-相比 LD 型号，HD 增加了一键锁定功能：按下锁定按键后，主臂可在当前姿态锁定，从臂同步进入锁定状态；再次按下按键后解除锁定
+Star Arm 102-LD can smoothly teleoperate the FL model in the same series.
 
-- 🕹️ **多平台兼容 · 即连即用**
-  
+It is also directly compatible with reBot and other robotic arms that have identical or similar kinematic configurations.
 
-支持Python SDK直接遥操
+One leader arm can work with multiple arms, providing a smoother teleoperation experience across different systems.
 
-深度兼容 LeRobot 与 ROS2 生态
+- 🔒 **HD model: enhanced leader arm with one-button locking**
 
-覆盖真实机器人应用全流程：数据采集 → 仿真模拟 → 模型训练 → 实物部署
+Star Arm 102-HD is an upcoming leader-arm model in the Star Arm 102 series.
 
-- 📚 **完整学习资源**
+Compared with the LD model, HD adds a one-button locking function: after the lock button is pressed, the leader arm holds its current pose and the follower arm enters the locked state at the same time; pressing the button again unlocks the system.
 
-提供从入门到进阶的教程、API 文档、示例代码
+- 🕹️ **Multi-platform compatibility · Plug and play**
 
-适合高校教学、科研实验及个人开发者自学
+Supports direct teleoperation through the Python SDK.
+
+Deeply compatible with the LeRobot and ROS 2 ecosystems.
+
+Covers the full workflow of real robotic applications: data collection → simulation → model training → physical deployment.
+
+- 📚 **Complete learning resources**
+
+Provides tutorials, API documentation, and example code from beginner to advanced levels.
+
+Suitable for university teaching, research experiments, and self-learning by individual developers.
 
 ---
 
-## 🔧 手臂规格
+## 🔧 Arm Specifications
 
-||Star Arm 102\-HD|Star Arm 102\-LD|Star Arm 102\-FL|
+|   | Star Arm 102-HD | Star Arm 102-LD | Star Arm 102-FL |
 |---|---|---|---|
-|臂展|420mm|420mm|420mm|
-|自由度|6\+1|6\+1|6\+1|
-|重复精度|\-|\-|±0\.5mm|
-|建议最大负载|\-|\-|500g|
-|关节范围<br>|关节 1: ±110°<br>关节 2: 0°\~180°<br>关节 3: 0°\~270°<br>关节 4: ±90°<br>关节 5: ±65°<br>关节 6: ±150°<br>手柄: 0\~90|关节 1: ±110°<br>关节 2: 0°\~180°<br>关节 3: 0°\~270°<br>关节 4: ±90°<br>关节 5: ±65°<br>关节 6: ±150°<br>手柄: 0\~90°|关节 1: ±110°<br>关节 2: 0°\~180°<br>关节 3: 0°\~270°<br>关节 4: ±90°<br>关节 5: ±65°<br>关节 6: ±150°<br>夹爪: 0\~90|
-|舵机配置|关节 1\-4（舵机 ID 0\-3）使用 RP8\-U45H\-M；<br>关节 5（舵机 ID 4）使用 RP8\-U45H\-M\-C029；<br>关节 6 与手柄关节（舵机 ID 5\-6）使用 RP8\-U45H\-M\-C028；|关节 1\-4（舵机 ID 0\-3）使用 RA8\-U01H\-M；<br>关节 5（舵机 ID 4）使用 RA8\-U02H\-M；<br>关节 6 与手柄关节（舵机 ID 5\-6）使用 RA8\-U03H\-M；|关节 1、4、7 与夹爪关节（舵机 ID 0、3、6）使用 RA8\-U35H\-M；<br>关节 2、3（舵机 ID 1\-2）使用 RX8\-U50H\-M；<br>关节 5（舵机 ID 4）使用 RA8\-U27H\-M-C005；<br>关节 6（舵机 ID 5）使用 RA8-U35H-M-C047；|
-|通讯集线器|UC\-01|UC\-01|UC\-01|
-|通信方式|UART|UART|UART|
-|电源规格|12V10A / XT30|12V3A / DC5521|12V10A / XT30|
-|配件|螺丝、螺纹胶、木工夹x2、备用 PCB（UC01）、DC 电源转接线（5\.5×2\.1mm 接头）、200mm 舵机延长线、USB\-A 转 USB\-C 线、鼠标垫、底托|螺丝、螺纹胶、木工夹x2、备用 PCB（UC01）、XT30 电源转接线、200mm 舵机延长线、USB\-A 转 USB\-C 线、鼠标垫、底托|螺丝、螺纹胶、木工夹x2、备用 PCB（UC01）、DC 电源转接线（5\.5×2\.1mm 接头）、200mm 舵机延长线、USB\-A 转 USB\-C 线、鼠标垫|
-|编码器|12\-bit magnetic encoder|12\-bit magnetic encoder|12\-bit magnetic encoder|
-|重量|883g|721g|791g|
-|推荐工作温度|0\-40℃|0\-40℃|0\-40℃|
-|支持按键锁定|✓ |×|\-|
-|支持Lerobot|✓ |✓ |✓ |
-|支持ROS 2 |✓ |✓ |✓ |
-|支持MoveIt |\-|\-|✓ |
-|支持Gazebo |\-|\-|✓ |
+| Arm span | 420mm | 420mm | 420mm |
+| DOF | 6+1 | 6+1 | 6+1 |
+| Repeatability | - | - | ±0.5mm |
+| Suggested maximum payload | - | - | 500g |
+| Joint range<br> | Joint 1: ±110°<br>Joint 2: 0°\~180°<br>Joint 3: 0°\~270°<br>Joint 4: ±90°<br>Joint 5: ±65°<br>Joint 6: ±150°<br>Handle: 0\~90° | Joint 1: ±110°<br>Joint 2: 0°\~180°<br>Joint 3: 0°\~270°<br>Joint 4: ±90°<br>Joint 5: ±65°<br>Joint 6: ±150°<br>Handle: 0\~90° | Joint 1: ±110°<br>Joint 2: 0°\~180°<br>Joint 3: 0°\~270°<br>Joint 4: ±90°<br>Joint 5: ±65°<br>Joint 6: ±150°<br>Gripper: 0\~90° |
+| Servo configuration | Joints 1-4 (servo IDs 0-3): RP8-U45H-M;<br>Joint 5 (servo ID 4): RP8-U45H-M-C029;<br>Joint 6 and handle joint (servo IDs 5-6): RP8-U45H-M-C028; | Joints 1-4 (servo IDs 0-3): RA8-U01H-M;<br>Joint 5 (servo ID 4): RA8-U02H-M;<br>Joint 6 and handle joint (servo IDs 5-6): RA8-U03H-M; | Joints 1, 4, 7, and gripper joint (servo IDs 0, 3, 6): RA8-U35H-M;<br>Joints 2 and 3 (servo IDs 1-2): RX8-U50H-M;<br>Joint 5 (servo ID 4): RA8-U27H-M-C005;<br>Joint 6 (servo ID 5): RA8-U35H-M-C047; |
+| Communication hub | UC-01 | UC-01 | UC-01 |
+| Communication method | UART | UART | UART |
+| Power supply | 12V10A / XT30 | 12V3A / DC5521 | 12V10A / XT30 |
+| Accessories | Screws, threadlocker, woodworking clamps x2, spare PCB (UC01), DC power adapter cable (5.5×2.1mm connector), 200mm servo extension cable, USB-A to USB-C cable, mouse pad, base support | Screws, threadlocker, woodworking clamps x2, spare PCB (UC01), XT30 power adapter cable, 200mm servo extension cable, USB-A to USB-C cable, mouse pad, base support | Screws, threadlocker, woodworking clamps x2, spare PCB (UC01), DC power adapter cable (5.5×2.1mm connector), 200mm servo extension cable, USB-A to USB-C cable, mouse pad |
+| Encoder | 12-bit magnetic encoder | 12-bit magnetic encoder | 12-bit magnetic encoder |
+| Weight | 883g | 721g | 791g |
+| Recommended operating temperature | 0-40°C | 0-40°C | 0-40°C |
+| Button lock support | ✓ | × | - |
+| LeRobot support | ✓ | ✓ | ✓ |
+| ROS 2 support | ✓ | ✓ | ✓ |
+| MoveIt support | - | - | ✓ |
+| Gazebo support | - | - | ✓ |
 
 ---
 
-## 🔧硬件资料
+## 🔧 Hardware Resources
 
 <p align="center">
   <img src="./Media/images/10.png" alt="Star-Arm-102 assembly overview" width="480">
 </p>
 
+- [Parts List](./Hardware/README.md): view the complete parts list, quantities, and accessories
 
-- [Parts List](./Hardware/README.md): 查看完整零件清单、数量和配件
+- [Engineering Drawings](./Hardware/cad/README.md): view assembly drawings and manufacturing drawings
 
-- [Engineering Drawings](./Hardware/cad/README.md): 查看总装图、和制造图纸
+- [Assembly Guide](./Hardware/assembly/README.md): view assembly sequence, notes, and reference images. This section is still being improved.
 
-- [Assembly Guide](./Hardware/assembly/README.md): 查看装配顺序、注意事项和配图说明(等待完善中)
+- [MakerWorld Models](https://makerworld.com.cn/zh/models/2366043-xing-bi-102-ld?from=search#profileId-2682765): download the 3D printable files for Star Arm 102-LD, which can be used to replace parts or assemble the robotic arm yourself
 
-- [MakerWorld Models](https://makerworld.com.cn/zh/models/2366043-xing-bi-102-ld?from=search#profileId-2682765): 下载Star Arm 102-LD的3D打印文件，可自行替换或者组装机械臂
-
-> Star Arm 102-HD 的锁定功能按键板固件与说明位于 `Star-Arm-102-dev-main` 工程中。按键板默认使用 ID 7，主机模式下可直接发送锁定 / 解锁控制；从机模式下可作为模拟舵机被主机轮询，返回 0.0° / 180.0° 表示解锁 / 锁定状态。
+> The firmware and documentation for the Star Arm 102-HD lock-button board are located in the `Star-Arm-102-dev-main` project. The button board uses ID 7 by default. In host mode, it can directly send lock / unlock commands. In slave mode, it can be polled by the host as a simulated servo and returns 0.0° / 180.0° to indicate unlocked / locked states.
 
 ---
 
-## 🚀 快速开始
+## 🚀 Quick Start
 
-### 环境要求
+### Requirements
 
-| 项目 | 要求 |
-|------|------|
-| 操作系统 | Ubuntu 22.04 |
-| ROS版本 | ROS2 Humble |
-| 硬件设备 | StarArm 102 机械臂 (Leader/HD + Follower) |
-| 驱动程序 | [CH340 USB驱动](https://www.wch.cn/downloads/CH341SER_EXE.html) |
+| Item | Requirement |
+|------|-------------|
+| Operating System | Ubuntu 22.04 |
+| ROS Version | ROS 2 Humble |
+| Hardware | StarArm 102 robotic arms (Leader/HD + Follower) |
+| Driver | [CH340 USB Driver](https://www.wch.cn/downloads/CH341SER_EXE.html) |
 
-### 安装步骤
+### Installation
 
-#### 方式一：Python裸机控制机械臂遥操（推荐新手）
+#### Method 1: Bare-metal teleoperation with Python SDK (recommended for beginners)
 
 ```bash
-# 1. 安装依赖
+# 1. Install dependencies
 pip install pyserial fashionstar-uart-sdk
 
-# 2. 运行程序
+# 2. Run the program
 sudo chmod 777 /dev/ttyUSB*
 python3 ./Python_SDK/stararm102_ro.py
 ```
 
-#### 方式二：ROS2 HUMBLE
+#### Method 2: ROS 2 Humble
 
 ```bash
-# 参考 ROS2_HUMBLE/README.md 配置说明
+# See ROS2_HUMBLE/README.md for configuration instructions
 ```
 
-#### 方式三：Lerobot 框架
+#### Method 3: LeRobot framework
 
 ```bash
-# 参考 Lerobot/README.md 配置说明
+# See Lerobot/README.md for configuration instructions
 ```
 
 ---
 
-## 📂 项目结构
+## 📂 Project Structure
 
 <details>
-<summary>展开查看项目结构</summary>
+<summary>Expand to view the project structure</summary>
 
 ```text
 Star-Arm-102/
-|-- .gitignore                               # Git 忽略规则
-|-- Hardware/                                # 硬件资料
-|   |-- assembly/                            # 装配说明
-|   |-- cad/                                 # CAD 模型与工程图纸说明
-|   |-- parts/                               # 零件清单与 BOM
-|   `-- README.md                            # 硬件总览
-|-- Lerobot/                                 # LeRobot 框架控制方式
-|   |-- lerobot-robot-stararm102/            # Follower 机器人配置
-|   |-- lerobot-teleoperator-stararm102/     # Leader 遥操作器
-|   |-- lerobot-stararm102/                  # 新版 StarArm102 LeRobot 插件包
-|   |   |-- examples/                        # 状态读取与主从回放示例
-|   |   |-- lerobot_teleoperator_stararm102/ # HD/FL 设备配置与驱动实现
-|   |   |-- pyproject.toml                   # Python 包配置
-|   |   `-- README.md                        # 插件包使用说明
-|   |-- media/                               # LeRobot 文档媒体资源
-|   |-- stararm102_en.md                     # LeRobot 使用文档（英文）
-|   |-- stararm102.md                        # LeRobot 使用文档
-|   `-- README.md                            # 使用步骤
-|-- Media/                                   # README 与文档使用的图片资源
-|   |-- images/                              # 图片资源
-|   `-- video/                               # 视频资源
-|-- Python_SDK/                              # Python SDK 控制方式
-|   |-- stararm102_ro.py                     # 主从控制程序，支持 LD/HD 配置
-|   |-- stararm102_ro_hover.py               # 悬停 / 锁定控制示例程序
-|   `-- PYTHON_SDK_GUIDE.md                  # Python SDK 详细使用文档
-|-- ROS2_HUMBLE/                             # ROS2 控制方式
+|-- .gitignore                               # Git ignore rules
+|-- Hardware/                                # Hardware resources
+|   |-- assembly/                            # Assembly instructions
+|   |-- cad/                                 # CAD models and engineering drawing documentation
+|   |-- parts/                               # Parts list and BOM
+|   `-- README.md                            # Hardware overview
+|-- Lerobot/                                 # LeRobot framework control workflow
+|   |-- lerobot-robot-stararm102/            # Follower robot configuration
+|   |-- lerobot-teleoperator-stararm102/     # Leader teleoperator
+|   |-- lerobot-stararm102/                  # New StarArm102 LeRobot plugin package
+|   |   |-- examples/                        # State reading and leader-follower replay examples
+|   |   |-- lerobot_teleoperator_stararm102/ # HD/FL device configuration and driver implementation
+|   |   |-- pyproject.toml                   # Python package configuration
+|   |   `-- README.md                        # Plugin package usage instructions
+|   |-- media/                               # Media assets for LeRobot documentation
+|   |-- stararm102_en.md                     # LeRobot usage documentation in English
+|   |-- stararm102.md                        # LeRobot usage documentation
+|   `-- README.md                            # Usage steps
+|-- Media/                                   # Image assets used by README files and documentation
+|   |-- images/                              # Image assets
+|   `-- video/                               # Video assets
+|-- Python_SDK/                              # Python SDK control workflow
+|   |-- stararm102_ro.py                     # Leader-follower control program with LD/HD configuration support
+|   |-- stararm102_ro_hover.py               # Hover / lock control example program
+|   `-- PYTHON_SDK_GUIDE.md                  # Detailed Python SDK usage documentation
+|-- ROS2_HUMBLE/                             # ROS 2 control workflow
 |   `-- src/
-|       |-- arm_moveit_read/                 # 位姿读取节点
-|       |-- arm_moveit_write/                # 位姿写入节点
-|       |-- arm_read_pose/                   # 实时位姿读取
-|       |-- robo_driver/                     # 机械臂硬件驱动节点
-|       |-- robo_interfaces/                 # 自定义 ROS2 接口
-|       |-- ros2_bag_recorder/               # 示教轨迹录制
-|       |-- stararm102_controller/           # 机械臂控制器
-|       |-- stararm102_description/          # 机械臂 URDF 模型描述
-|       |-- stararm102_gazebo/               # Gazebo 仿真环境配置
-|       `-- stararm102_moveit_config/        # MoveIt 2 运动规划配置
-|-- README.md                                # 中文说明文档
-`-- README_EN.md                             # English README
+|       |-- arm_moveit_read/                 # Pose reading node
+|       |-- arm_moveit_write/                # Pose writing node
+|       |-- arm_read_pose/                   # Real-time pose reading
+|       |-- robo_driver/                     # Robotic arm hardware driver node
+|       |-- robo_interfaces/                 # Custom ROS 2 interfaces
+|       |-- ros2_bag_recorder/               # Demonstration trajectory recording
+|       |-- stararm102_controller/           # Robotic arm controller
+|       |-- stararm102_description/          # Robotic arm URDF model description
+|       |-- stararm102_gazebo/               # Gazebo simulation environment configuration
+|       `-- stararm102_moveit_config/        # MoveIt 2 motion planning configuration
+|-- README.md                                # English README (default)
+`-- README_zh.md                             # Chinese README
 ```
 
 </details>
 
 ---
 
-## 🎯 控制方式对比
+## 🎯 Control Method Comparison
 
-| 特性 | Python SDK | ROS2 HUMBLE | Lerobot |
+| Feature | Python SDK | ROS 2 Humble | LeRobot |
 |------|------------|-------------|---------|
-| 难度 | ⭐ 简单 | ⭐⭐⭐ 中等 | ⭐⭐⭐⭐⭐ 复杂 |
-| 实时性 | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐ |
-| 扩展性 | ⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ |
-| 适用场景 | 快速测试、教学 | 机器人系统集成 | AI训练、研究 |
+| Difficulty | ⭐ Easy | ⭐⭐⭐ Medium | ⭐⭐⭐⭐⭐ Advanced |
+| Real-time performance | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐ |
+| Extensibility | ⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ |
+| Use cases | Quick testing, teaching | Robotic system integration | AI training, research |
 
 ---
 
-## 🔧 硬件连接
+## 🔧 Hardware Connection
 
-### 连接拓扑
+### Connection Topology
 
 ```bash
                     ┌─────────────────┐
                     │                 │
-                    │      计算机      │
+                    │    Computer     │
                     │ (Ubuntu 22.04)  │
                     └────────┬────────┘
                              │
@@ -239,117 +244,117 @@ Star-Arm-102/
        └─────────────┘               └───────────────┘
 ```
 
-### 设备识别
+### Device Detection
 
 ```bash
-# 查看所有 USB 设备
+# List all USB devices
 lsusb
 
-# 查看串口设备
+# List serial devices
 ls -l /dev/ttyUSB*
 
-# 赋予权限
+# Grant permissions
 sudo chmod 777 /dev/ttyUSB*
 ```
 
 ---
 
-## 📊 关节映射
+## 📊 Joint Mapping
 
-StarArm102 机械臂共有 7 个关节（6个自由度 + 1个旋转夹爪）。文档中的关节编号从 1 开始，代码与舵机总线中的舵机 ID 从 0 开始，两者映射如下：
+The StarArm 102 robotic arm has 7 joints in total: 6 DOF + 1 rotary gripper. The joint numbers used in the documentation start from 1, while the servo IDs used in code and on the servo bus start from 0. The mapping is shown below:
 
-| 功能关节 | 代码关节名 | 舵机 ID | 角度范围 | 说明 |
+| Functional joint | Code joint name | Servo ID | Angle range | Description |
 |------|------|------|----------|------|
-| 关节 1 | Joint1 | 0 | -110° ~ 110° | 底座旋转 |
-| 关节 2 | Joint2 | 1 | 0° ~ 180° | 肩部俯仰 |
-| 关节 3 | Joint3 | 2 | 0° ~ 270° | 肘部俯仰 |
-| 关节 4 | Joint4 | 3 | -90° ~ 90° | 手腕旋转 |
-| 关节 5 | Joint5 | 4 | -65° ~ 65° | 手腕偏航 |
-| 关节 6 | Joint6 | 5 | -150° ~ 150° | 手腕旋转 |
-| 夹爪 / 关节 7 | Gripper (joint7_left) | 6 | 0° ~ 90° | 旋转夹爪 |
+| Joint 1 | Joint1 | 0 | -110° ~ 110° | Base rotation |
+| Joint 2 | Joint2 | 1 | 0° ~ 180° | Shoulder pitch |
+| Joint 3 | Joint3 | 2 | 0° ~ 270° | Elbow pitch |
+| Joint 4 | Joint4 | 3 | -90° ~ 90° | Wrist rotation |
+| Joint 5 | Joint5 | 4 | -65° ~ 65° | Wrist yaw |
+| Joint 6 | Joint6 | 5 | -150° ~ 150° | Wrist rotation |
+| Gripper / Joint 7 | Gripper (joint7_left) | 6 | 0° ~ 90° | Rotary gripper |
 
-> 📝 **注意**：旋转夹爪通过 `joint7_left` 控制，`joint7_right` 为联动关节，自动反向同步。
-
----
-
-## ⚠️ 安全注意事项
-
-1. **操作前检查**：确保机械臂周围无障碍物，工作空间安全
-2. **急停控制**：程序运行时按 `Ctrl+C` 可立即停止
-3. **关节限制**：系统已自动设置安全角度限制，避免越界运动
-4. **电源管理**：确保机械臂供电稳定，避免电压波动
+> 📝 **Note**: The rotary gripper is controlled through `joint7_left`. `joint7_right` is a coupled joint and automatically synchronizes in the opposite direction.
 
 ---
 
-## 🐛 故障排除
+## ⚠️ Safety Notes
 
-### 常见问题
+1. **Check before operation**: Make sure there are no obstacles around the robotic arm and that the workspace is safe.
+2. **Emergency stop**: Press `Ctrl+C` while the program is running to stop immediately.
+3. **Joint limits**: Safety angle limits are configured automatically to prevent out-of-range motion.
+4. **Power management**: Ensure stable power supply to avoid voltage fluctuations.
 
-**Q1: 找不到 `/dev/ttyUSB0` 设备？**
+---
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+**Q1: Cannot find `/dev/ttyUSB0`?**
 
 ```bash
-# 检查 USB 设备
+# Check USB devices
 ls -l /dev/ttyUSB*
 
-# 检查 USB 设备信息
+# Check USB device information
 lsusb
 
-# 查看串口日志
+# View serial port logs
 sudo dmesg | grep ttyUSB
 
-# 如果被 brltty 占用，卸载它
+# If the device is occupied by brltty, remove it
 sudo apt remove brltty
 
-# 赋予权限
+# Grant permissions
 sudo chmod 777 /dev/ttyUSB*
 ```
 
-**Q2: 串口连接失败？**
+**Q2: Serial connection failed?**
 
-- 检查 USB 线是否松动
-- 确认机械臂电源已开启
-- 尝试更换 USB 端口
-- 检查驱动是否正常安装
+- Check whether the USB cable is loose.
+- Confirm that the robotic arm is powered on.
+- Try a different USB port.
+- Check whether the driver is installed correctly.
 
-**Q3: 控制频率过低？**
+**Q3: Control frequency is too low?**
 
-- 检查串口通信是否正常
-- 减少其他程序运行负载
-- 使用 USB 3.0 端口以提高速度
+- Check whether serial communication is working properly.
+- Reduce the load from other running programs.
+- Use a USB 3.0 port for better performance.
 
-**Q4: 机械臂连接失败？**
+**Q4: Robotic arm connection failed?**
 
-- 检查 USB 线连接是否松动
-- 确认机械臂电源已开启
-- 检查舵机通信状态
-- 尝试更换 USB 端口
-
----
-
-## 📖 详细文档
-
-选择你需要的控制方式查看详细文档：
-
-- 📘 **[Python SDK 详细文档](./Python_SDK/PYTHON_SDK_GUIDE.md)** - 推荐！最简单易用
-- 📗 **[ROS2 HUMBLE 详细文档](./ROS2_HUMBLE/README.md)** - 适用于机器人系统集成
-- 📙 **[Lerobot 详细文档](./Lerobot/README.md)** - 适用于AI训练和研究
-
-## 📄 许可证
-
-本项目基于 [MIT License](LICENSE) 开源。
+- Check whether the USB cable is loose.
+- Confirm that the robotic arm is powered on.
+- Check the servo communication status.
+- Try a different USB port.
 
 ---
 
-## 👥 致谢
+## 📖 Detailed Documentation
 
-- **感谢**：华馨京科技（FashionStar）提供硬件支持和 SDK
+Choose the control method you need and read the corresponding documentation:
+
+- 📘 **[Python SDK Documentation](./Python_SDK/PYTHON_SDK_GUIDE.md)** - Recommended, the easiest way to get started
+- 📗 **[ROS 2 Humble Documentation](./ROS2_HUMBLE/README.md)** - Suitable for robotic system integration
+- 📙 **[LeRobot Documentation](./Lerobot/README.md)** - Suitable for AI training and research
+
+## 📄 License
+
+This project is open source under the [MIT License](LICENSE).
 
 ---
 
-## 🔗 相关链接
+## 👥 Acknowledgements
 
-- [华馨京科技｜FashionStar 官网](https://fashionstar.com.cn/)
-- [Lerobot 框架](https://github.com/huggingface/lerobot)
-- [ROS2 官方文档](https://docs.ros.org/en/humble/)
-- [MoveIt2 官方文档](https://moveit.picknik.ai/humble/)
+- **Thanks to** FashionStar for hardware support and SDK resources.
 
+---
+
+## 🔗 Related Links
+
+- [FashionStar Official Website](https://fashionstar.com.hk/)
+- [Star Arm 102 series overview](https://fashionstar.com.hk/robot-arm/star-arm-102/)
+- [LeRobot Framework](https://github.com/huggingface/lerobot)
+- [ROS 2 Documentation](https://docs.ros.org/en/humble/)
+- [MoveIt 2 Documentation](https://moveit.picknik.ai/humble/)

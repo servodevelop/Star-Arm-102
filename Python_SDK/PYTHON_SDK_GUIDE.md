@@ -290,7 +290,7 @@ sudo chmod 777 /dev/ttyUSB*
 
 ## 📖 详细文档
 
-- [主项目 README](../README.md) - 项目总览
+- [主项目 README](../README_zh.md) - 项目总览
 - [ROS2 HUMBLE 使用文档](../ROS2_HUMBLE/README.md) - ROS2 控制方式
 - [Lerobot 使用文档](../Lerobot/README.md) - Lerobot 框架集成
 
