@@ -1,9 +1,20 @@
 # Star Arm 102: Open-Source Robotic Arm Development Resources
-<p align="right">
-  <strong>Language / 语言:</strong>
-  <a href="./README.md">English</a> |
-  <a href="./README_zh.md">中文</a>
-</p>
+[中文](README.zh.md)
+
+## Ecosystem
+
+Star-Arm-102 is the central repository for Fashion Star's Star Arm 102 robotic arm ecosystem, bringing together teleoperation, ROS 2, LeRobot integrations, and hardware resources.
+
+- 🔗 [Star Arm 102 Series Hub](https://fashionstar.com.hk/robot-arm/star-arm-102/)
+- 🐙 [Main Repo: Star-Arm-102](https://github.com/servodevelop/Star-Arm-102)
+
+## Related Repositories
+
+- [piper-mate](https://github.com/servodevelop/piper-mate) — Main repository for the PiPER-Mate robotic arm project and its teleoperation workflows.
+- [lerobot](https://github.com/servodevelop/lerobot) — Fashion Star's LeRobot framework integration fork for robotic arm learning and teleoperation.
+- [servo-canbus-sdk](https://github.com/servodevelop/servo-canbus-sdk) — CAN bus servo SDK with Python examples for Fashion Star CAN bus servos.
+- [servo-uart-rs485-sdk](https://github.com/servodevelop/servo-uart-rs485-sdk) — UART/RS485 servo SDK with serial-bus examples and development tools.
+- [Star Arm 102 Series Hub](https://fashionstar.com.hk/robot-arm/star-arm-102/) — Official series overview and product information.
 
 ![Programming Language](https://img.shields.io/badge/language-Python-blue?style=flat-square)
 ![Framework](https://img.shields.io/badge/framework-ROS2%20Humble-orange?style=flat-square)
@@ -205,7 +216,7 @@ Star-Arm-102/
 |       |-- stararm102_gazebo/               # Gazebo simulation environment configuration
 |       `-- stararm102_moveit_config/        # MoveIt 2 motion planning configuration
 |-- README.md                                # English README (default)
-`-- README_zh.md                             # Chinese README
+`-- README.zh.md                             # Chinese README
 ```
 
 </details>
