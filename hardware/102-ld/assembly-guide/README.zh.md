@@ -7,5 +7,3 @@
 [![Star Arm 102-LD 主体机械臂装配视频](../../../media/star-arm-102-ld-hd-assembly-preview.jpg)](https://www.youtube.com/watch?v=flTCgBx3K0M)
 
 **[▶ 观看 102-LD 主体机械臂装配指南 →](https://www.youtube.com/watch?v=flTCgBx3K0M)**
-
-✅ 主体机械臂装配指南已完成。

@@ -16,8 +16,6 @@ Click the preview below to watch the 102-FL assembly video on YouTube.
 
 [![Star Arm 102-FL assembly video](images/star-arm-102-fl-assembly-preview.jpg)](https://www.youtube.com/watch?v=9-ufaI8dwys)
 
-✅ Main arm assembly guide complete.
-
 <a id="flexible-gripper-assembly"></a>
 
 ## 🤏 Flexible Gripper Assembly

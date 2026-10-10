@@ -7,5 +7,3 @@ Follow Fashion Star’s video to assemble the main arm of your Star Arm 102-LD. 
 [![Star Arm 102-LD main arm assembly video](../../../media/star-arm-102-ld-hd-assembly-preview.jpg)](https://www.youtube.com/watch?v=flTCgBx3K0M)
 
 **[▶ Watch the 102-LD Main Arm Assembly Guide →](https://www.youtube.com/watch?v=flTCgBx3K0M)**
-
-✅ Main arm assembly guide complete.

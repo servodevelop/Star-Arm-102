@@ -16,8 +16,6 @@
 
 [![Star Arm 102-FL 装配视频](images/star-arm-102-fl-assembly-preview.jpg)](https://www.youtube.com/watch?v=9-ufaI8dwys)
 
-✅ 主体机械臂装配指南已完成。
-
 <a id="flexible-gripper-assembly"></a>
 
 ## 🤏 柔性夹爪装配
