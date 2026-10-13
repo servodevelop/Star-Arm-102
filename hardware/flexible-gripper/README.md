@@ -13,7 +13,7 @@
 
 | Directory | Description | Status |
 | --- | --- | --- |
-| [Assembly guide](../diy-assembly/102-fl/README.md#flexible-gripper-assembly) | Assembly and installation video | ✅ Video available |
+| [Assembly guide](../../docs/diy-assembly/README.md#flexible-gripper-assembly) | Assembly and installation video | ✅ Video available |
 | [step/](step/) | Part models in parts/; assemblies in assembly/ | ✅ 6 part models and 1 assembly available |
 | [printing/](printing/) | Print projects in 3mf/; individual print files in stl/ | — To be added |
 | [drawings/](drawings/) | PDF / DWG drawings | — To be added |

@@ -22,7 +22,7 @@
 
 | Directory | Description | Status |
 | --- | --- | --- |
-| [Assembly guide](../diy-assembly/102-fl/README.md) | Main arm assembly video | ✅ Complete |
+| [Assembly guide](../../docs/diy-assembly/README.md#102-fl) | Main arm assembly video | ✅ Complete |
 | [step/](step/) | Part models in parts/; whole-arm assemblies in assembly/ | ✅ Complete |
 | [printing/](printing/) | 3MF projects; STL: [View parts](printing/stl/) · [Download ZIP](printing/star-arm-102-fl-stl.zip) | ✅ Complete |
 | [drawings/](drawings/) | PDF / DWG drawings | ✅ Complete |

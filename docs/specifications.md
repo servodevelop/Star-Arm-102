@@ -1,6 +1,6 @@
 # Product overview and joint mapping
 
-[Home](../README.md) · [Hardware setup](hardware-setup.md)
+[Home](../README.md) · [Hardware setup](getting-started.md#connect)
 
 Star Arm 102 provides six arm joints and a gripper/handle channel. LD and HD are leaders; FL is the actuated follower. HD is the pose-holding leader, using high-torque RP8 coreless servos for stable demonstrations and extended data collection. Its button behavior depends on the software integration.
 

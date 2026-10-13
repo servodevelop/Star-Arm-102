@@ -35,6 +35,6 @@ English interface selected; 1920 × 1080 (16:9) desktop preview captured in Chro
 
 ## Before connecting
 
-Read the tool's connection requirements and the [hardware setup guide](../docs/hardware-setup.md). The web tools recommend Chrome or Edge with Web Serial support. Check the servo model, protocol, adapter, and power supply before choosing a servo tool.
+Read the tool's connection requirements and the [hardware setup guide](../docs/getting-started.md#connect). The web tools recommend Chrome or Edge with Web Serial support. Check the servo model, protocol, adapter, and power supply before choosing a servo tool.
 
 Tool applications, installers, and their dependencies are maintained outside this repository. This directory contains navigation only. Repository maintenance scripts are in [scripts](../scripts/README.md).

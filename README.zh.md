@@ -36,11 +36,11 @@
 - [📖 产品介绍](#introduction)
 - [🛒 购买入口](#where-to-buy)
 - [🚀 开始使用](docs/getting-started.zh.md)
-- [🔧 DIY 装配](hardware/diy-assembly/README.zh.md)
+- [🔧 DIY 装配](docs/diy-assembly/README.zh.md)
 - [🌐 跨品牌从臂兼容性](#cross-brand-pairings)
 - [🎮 连接主臂，体验虚拟从臂](#web-controller)
 - [🤖 运行第一个 AI 任务](#run-your-first-ai-task)
-- [⚙️ 硬件资源](hardware/README.zh.md)
+- [⚙️ 硬件资源](hardware/)
 - [🤗 LeRobot](lerobot/README.md)
 - [💬 自然语言控制](integrations/butterfly/README.zh-CN.md)
 - [🦾 ROS 2 Humble 应用](ros2-humble/README.zh.md)
@@ -199,10 +199,6 @@ Star-Arm-102/
 │   │   └── robot-description/
 │   ├── 102-hd/
 │   ├── 102-fl/
-│   ├── diy-assembly/
-│   │   ├── 102-ld/
-│   │   ├── 102-hd/
-│   │   └── 102-fl/
 │   ├── camera-module/
 │   └── flexible-gripper/
 ├── integrations/
@@ -220,7 +216,12 @@ Star-Arm-102/
 ├── ros2-humble/
 │   └── src/
 ├── tools/                                    网页控制与舵机配置工具
-├── docs/                                     入门、接线与排错指南
+├── docs/                                     入门、装配与排错指南
+│   ├── getting-started.md
+│   ├── getting-started.zh.md
+│   └── diy-assembly/
+│       ├── README.md
+│       └── README.zh.md
 ├── media/
 ├── scripts/
 ├── tests/

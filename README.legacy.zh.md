@@ -119,7 +119,7 @@ Star Arm 102-HD 是 Star Arm 102 系列即将推出的新主臂型号
 
 - [Engineering Drawings](./hardware/102-ld/drawings/): 查看总装图、和制造图纸
 
-- [Assembly Guide](./hardware/diy-assembly/102-ld/README.md): 查看装配顺序、注意事项和配图说明(等待完善中)
+- [Assembly Guide](docs/diy-assembly/README.md#102-ld): 查看装配顺序、注意事项和配图说明(等待完善中)
 
 - [MakerWorld Models](https://makerworld.com.cn/zh/models/2366043-xing-bi-102-ld?from=search#profileId-2682765): 下载Star Arm 102-LD的3D打印文件，可自行替换或者组装机械臂
 

@@ -22,7 +22,7 @@
 
 | 目录 | 内容 | 状态 |
 | --- | --- | --- |
-| [DIY 装配](../diy-assembly/102-hd/README.zh.md) | 主体装配视频（按说明替换 HD 舵机）及按钮接线照片 | ✅ 已完成 |
+| [DIY 装配](../../docs/diy-assembly/README.zh.md#102-hd) | 主体装配视频（按说明替换 HD 舵机）及按钮接线照片 | ✅ 已完成 |
 | [step/](step/) | parts/ 零件模型；assembly/ 共用装配模型 | ✅ 已完成 |
 | [printing/](printing/) | 3MF 打印项目；STL：[查看零件](printing/stl/) · [下载整套 ZIP](printing/star-arm-102-hd-stl.zip) | ✅ 已完成 |
 | [drawings/](../102-ld/drawings/) | LD/HD 共用主体图纸（PDF／DWG） | ✅ 已完成 |

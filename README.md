@@ -36,7 +36,7 @@
 - [📖 Introduction](#introduction)
 - [🛒 Where to Buy](#where-to-buy)
 - [🚀 Get Started](docs/getting-started.md)
-- [🔧 DIY Assembly](hardware/diy-assembly/README.md)
+- [🔧 DIY Assembly](docs/diy-assembly/README.md)
 - [🌐 Cross-Brand Follower Arm Compatibility](#cross-brand-pairings)
 - [🎮 Connect Your Leader to a Virtual Follower](#web-controller)
 - [🤖 Run Your First AI Task](#run-your-first-ai-task)
@@ -199,10 +199,6 @@ Star-Arm-102/
 │   │   └── robot-description/
 │   ├── 102-hd/
 │   ├── 102-fl/
-│   ├── diy-assembly/
-│   │   ├── 102-ld/
-│   │   ├── 102-hd/
-│   │   └── 102-fl/
 │   ├── camera-module/
 │   └── flexible-gripper/
 ├── integrations/
@@ -220,7 +216,12 @@ Star-Arm-102/
 ├── ros2-humble/
 │   └── src/
 ├── tools/                                    Web control and servo configuration tools
-├── docs/                                     Getting started, wiring, and troubleshooting
+├── docs/                                     Getting started, assembly, and troubleshooting
+│   ├── getting-started.md
+│   ├── getting-started.zh.md
+│   └── diy-assembly/
+│       ├── README.md
+│       └── README.zh.md
 ├── media/
 ├── scripts/
 ├── tests/

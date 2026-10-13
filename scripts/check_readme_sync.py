@@ -24,11 +24,7 @@ class HTMLAssets(HTMLParser):
 def canonical(target, source=None):
     # Language-specific targets may differ while referring to the same guide.
     target = unquote(target).split('#')[0]
-    # A directory entry and its localized README are the same reading destination.
-    if source is not None and target and ':' not in target:
-        destination = source.parent / target
-        if destination.is_dir() and (destination / 'README.md').is_file():
-            target = target.rstrip('/') + '/README.md'
+    # Directory browsing and README reading are distinct destinations.
     target = target.replace('README.zh-CN.md', 'README.md').replace('README.zh.md', 'README.md')
     return target.replace('handoff-review.zh.md', 'handoff-review.md').replace('getting-started.zh.md', 'getting-started.md')
 

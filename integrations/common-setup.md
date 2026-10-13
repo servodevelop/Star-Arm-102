@@ -4,7 +4,7 @@
 
 ## 1. Identify both arms
 
-Record the Star Arm 102-LD or HD revision and the exact follower model. For HD, also identify the button board and firmware. Read the leader's [hardware information](../hardware/README.md) and [wiring guide](../docs/hardware-setup.md); use the follower manufacturer's instructions for its power and connection requirements.
+Record the Star Arm 102-LD or HD revision and the exact follower model. For HD, also identify the button board and firmware. Read the leader's [hardware information](../hardware/README.md) and [wiring guide](../docs/getting-started.md#connect); use the follower manufacturer's instructions for its power and connection requirements.
 
 ## 2. Choose a documented implementation
 

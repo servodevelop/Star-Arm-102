@@ -57,7 +57,7 @@ ros2 launch stararm102_moveit_config demo.launch.py
 
 ## 连接真实 FL
 
-完成 [硬件配置与端口识别](../docs/hardware-setup.md)，关闭其他占用串口的程序。
+完成 [硬件配置与端口识别](../docs/getting-started.zh.md#connect)，关闭其他占用串口的程序。
 
 当前驱动在 [robo_driver.py](src/robo_driver/robo_driver/robo_driver.py) 中设置端口：构建前将 `SERVO_PORT_NAME` 改为 FL 的实际端口；默认值为 `/dev/ttyUSB0`，波特率为 `1000000`。修改后重新构建并加载工作区环境。不要假定 LeRobot 示例中的端口就是此驱动的默认端口。
 
@@ -124,6 +124,6 @@ ros2 launch stararm102_moveit_config gazebo_demo.launch.py
 | `arm_moveit_read`, `arm_moveit_write`, `arm_read_pose` | 位姿示例 |
 | `ros2_bag_recorder` | 示教轨迹记录 |
 
-串口访问权限见 [端口权限指南](../docs/hardware-setup.md#identify-serial-ports)。遇到 RViz 缩放问题时，可在重新打开前尝试 `export QT_AUTO_SCREEN_SCALE_FACTOR=0`。构建失败时，请在 [问题反馈](https://github.com/servodevelop/Star-Arm-102/issues/new/choose) 中提供失败的功能包及完整错误。
+串口访问权限见 [端口权限指南](../docs/getting-started.zh.md#identify-serial-ports)。遇到 RViz 缩放问题时，可在重新打开前尝试 `export QT_AUTO_SCREEN_SCALE_FACTOR=0`。构建失败时，请在 [问题反馈](https://github.com/servodevelop/Star-Arm-102/issues/new/choose) 中提供失败的功能包及完整错误。
 
 [历史中文资料（非当前操作指南）](legacy-guide.zh.md)

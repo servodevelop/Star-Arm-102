@@ -32,7 +32,7 @@ This verifies application flow only. It does not validate camera calibration, ph
 
 After checking [compatibility](compatibility.md), follow the partner's device setup and [coordinate conventions](https://github.com/butterfly-community/robot-arm/blob/08498c31c56cf339601851851225bf111f89c82d/docs/STARARM-102.md). Check actual joint feedback and camera data before requesting motion. Run only the intended control application against the servo port.
 
-Use the partner's camera-to-robot calibration process and the correct calibration-board dimensions. Recalibrate when the camera/robot mounting relationship changes. The process moves the arm; prepare a clear workspace and an accessible servo-power cutoff as described in the [hardware setup guide](../../docs/hardware-setup.md).
+Use the partner's camera-to-robot calibration process and the correct calibration-board dimensions. Recalibrate when the camera/robot mounting relationship changes. The process moves the arm; prepare a clear workspace and an accessible servo-power cutoff as described in the [hardware setup guide](../../docs/getting-started.md#connect).
 
 ## 5. Try one pick-and-place task
 

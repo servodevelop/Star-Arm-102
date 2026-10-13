@@ -22,7 +22,7 @@
 
 | Directory | Description | Status |
 | --- | --- | --- |
-| [Assembly guide](../diy-assembly/102-hd/README.md) | Main arm video with HD servo substitution and button wiring photo | ✅ Complete |
+| [Assembly guide](../../docs/diy-assembly/README.md#102-hd) | Main arm video with HD servo substitution and button wiring photo | ✅ Complete |
 | [step/](step/) | Part models in parts/; shared assembly in assembly/ | ✅ Complete |
 | [printing/](printing/) | 3MF projects; STL: [View parts](printing/stl/) · [Download ZIP](printing/star-arm-102-hd-stl.zip) | ✅ Complete |
 | [drawings/](../102-ld/drawings/) | Shared LD/HD body drawings (PDF / DWG) | ✅ Complete |

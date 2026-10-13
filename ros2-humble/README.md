@@ -57,7 +57,7 @@ In RViz, use the Motion Planning panel to select a planning group, move the inte
 
 ## Connect a real FL
 
-Complete [hardware setup and port identification](../docs/hardware-setup.md). Close other programs using the serial port.
+Complete [hardware setup and port identification](../docs/getting-started.md#connect). Close other programs using the serial port.
 
 The driver currently sets its port in [robo_driver.py](src/robo_driver/robo_driver/robo_driver.py): change `SERVO_PORT_NAME` to the FL port before building; its default is `/dev/ttyUSB0`, baud rate `1000000`. Rebuild and source the workspace after editing. Do not assume the port used in a LeRobot example is the driver's default.
 
@@ -124,6 +124,6 @@ ros2 launch stararm102_moveit_config gazebo_demo.launch.py
 | `arm_moveit_read`, `arm_moveit_write`, `arm_read_pose` | Pose examples |
 | `ros2_bag_recorder` | Teaching trajectory recording |
 
-For serial access, use the [port permissions guide](../docs/hardware-setup.md#identify-serial-ports). For an RViz scaling issue, try `export QT_AUTO_SCREEN_SCALE_FACTOR=0` before reopening RViz. If a build fails, include the failed package and complete error in a [support issue](https://github.com/servodevelop/Star-Arm-102/issues/new/choose).
+For serial access, use the [port permissions guide](../docs/getting-started.md#identify-serial-ports). For an RViz scaling issue, try `export QT_AUTO_SCREEN_SCALE_FACTOR=0` before reopening RViz. If a build fails, include the failed package and complete error in a [support issue](https://github.com/servodevelop/Star-Arm-102/issues/new/choose).
 
 [Historical Chinese material (not the current operating guide)](legacy-guide.zh.md)

@@ -13,4 +13,4 @@
 
 - Keep product- or guide-specific images in an `images/` directory alongside the relevant documentation. Store homepage and shared images under root `media/`. Do not list image storage directories in customer resource tables or create empty image placeholders. Keep runtime assets such as URDF meshes inside their packages.
 
-- Chinese reading-navigation links must point to the target Chinese document when available (including README.zh-CN.md where applicable); otherwise use English. Preserve explicit English language switches and directory links used to browse source/data files. GitHub directory pages do not retain the previously selected language.
+- Keep corresponding English and Chinese navigation targets consistent in kind: when English links to a directory, Chinese must link to the same directory rather than its README. When English links directly to a document, Chinese must use its Chinese counterpart when available (including README.zh-CN.md where applicable), otherwise English. Preserve explicit English language switches. GitHub directory pages do not retain the previously selected language.

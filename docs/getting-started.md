@@ -4,7 +4,7 @@
 
 This guide starts with an assembled Star Arm 102. Connect your equipment, try the digital twin, then move on to real-arm teleoperation and your first AI task. You can start with a single arm.
 
-> **Arm not assembled yet?** Start with the [DIY assembly guide](../hardware/diy-assembly/README.md), then return here to connect your equipment.
+> **Building an arm, reassembling joints or replacing a servo?** Follow [DIY assembly, configuration and calibration](diy-assembly/README.md) and confirm the applicable setup and zero calibration are complete before continuing. An assembled, configured and calibrated arm can start here.
 
 **Contents:**
 
@@ -20,13 +20,86 @@ This guide starts with an assembled Star Arm 102. Connect your equipment, try th
 
 Check your model label: **LD** is a hand-guided leader, **HD** is a pose-holding leader, and **FL** is a follower. Use the model label rather than appearance alone.
 
-Fix the base and prepare the supplied power adapter, USB data cable and computer. Switch off power before changing servo or power connections. Each arm needs its own matching supply; USB carries data and does not replace servo power.
+- **LD / HD + FL:** follow the steps below for each arm's UC-01 and power supply.
+- **LD / HD + another brand:** select the follower in the [cross-brand directory](../integrations/) and follow that manufacturer's power, adapter and wiring requirements.
+- **One arm:** connect the device you have; a leader can drive a virtual follower, while FL alone can start with a communication check.
 
-- **LD / HD + FL:** follow the [hardware wiring guide](hardware-setup.md). Connect each arm's UC-01 to the computer and identify the leader and follower ports separately.
-- **LD / HD + another brand:** select your follower in the [cross-brand directory](../integrations/) and follow its connection requirements. Use that manufacturer's power and adapter instructions.
-- **One arm:** connect only the device you have. A leader can be used with a virtual follower in step 2. For FL alone, begin with the [communication check](../python-sdk/README.md#check-communication-without-commanding-motion).
+<a id="power-and-contents"></a>
 
-**Ready to continue:** the computer detects the connected device and you know which port belongs to it. Cameras are not needed for the initial communication check.
+### Power and contents
+
+Check the supplied adapter, arm label, and order packing list. Existing repository specifications list:
+
+| Model | Listed power specification | Connector listed for the arm |
+| --- | --- | --- |
+| 102-LD | 12 V / 3 A | DC5521 |
+| 102-HD | 12 V / 5 A | XT30 |
+| 102-FL | 12 V / 10 A | XT30 |
+
+These values are carried forward from the product specifications, not newly measured. Earlier accessory lists describe spare adapter cables separately; do not select a supply by the spare cable alone. If your supplied hardware differs, confirm the revision with Fashion Star before connecting power. Do not use a reBot follower's supply for a 102 leader.
+
+Prepare a stable desk, base clamps, USB data cables, and the correct independent power supply for each arm. Check your order for cameras and mounts: a bare arm is not a complete two-camera ACT setup.
+
+<a id="connect-the-arms"></a>
+
+### Connect the arms
+
+1. Switch off power before connecting or changing servo/power cables.
+2. Fix the bases and clear the reachable area. Support the arms when torque is off; joints can move under gravity.
+3. Connect each arm's servo bus to its own UC-01 hub as supplied. Use the supplied wiring; do not infer pin polarity from a photo.
+4. Connect each hub to the computer with a USB data cable.
+5. Connect the matching supply to each arm and power on.
+
+```text
+                    Ubuntu computer
+                    /             \
+                 USB               USB
+                  |                 |
+             Leader UC-01      Follower UC-01
+                  |                 |
+               LD / HD             FL
+                  |                 |
+           Matching supply    Matching supply
+```
+
+USB provides the data connection; it does not replace the servo power supply. A single FL uses only the right-hand branch. The ACT demo additionally connects two cameras to the computer.
+
+<a id="identify-serial-ports"></a>
+
+### Identify serial ports
+
+Connect one arm at a time and run:
+
+```bash
+python3 -m serial.tools.list_ports -v
+```
+
+This command requires `pyserial`, installed by the [Python setup](../python-sdk/README.md). On Ubuntu you can also inspect:
+
+```bash
+ls -l /dev/serial/by-id/
+ls -l /dev/ttyUSB* /dev/ttyACM*
+```
+
+Some adapters do not expose a unique by-ID path. Label the cables and record which port belongs to each arm. Numbering can change after reconnection. The examples use `/dev/ttyUSB0` for the leader and `/dev/ttyUSB1` for FL; replace them with your actual ports.
+
+For Ubuntu serial permissions:
+
+```bash
+sudo usermod -aG dialout "$USER"
+```
+
+Log out and back in, then check `id -nG`. For a temporary session, grant access only to the identified device, for example `sudo chmod a+rw /dev/ttyUSB0`. Do not change permissions on every USB device.
+
+**Success:** both ports are visible and accessible. Continue with the [communication check](../python-sdk/README.md#check-communication-without-commanding-motion).
+
+<a id="reference-pose-and-stopping"></a>
+
+### Reference pose and stopping
+
+Before direct Python teleoperation, place both arms in their matching physical zero/reference poses. The script resets multi-turn counts on connection; it does not run LeRobot calibration. If the reference pose for your hardware revision is unclear, confirm it before commanding motion. For LeRobot, follow the selected plugin's calibration prompts instead.
+
+`Ctrl+C` requests program termination; it is not a hardware emergency stop and does not guarantee torque removal or immediate motion cancellation. Know how to switch off servo power while keeping clear of moving parts. Never rely on unplugging USB to stop the arm. On unexpected movement or feedback errors, stop the session and check the setup before restarting.
 
 <a id="digital-twin"></a>
 

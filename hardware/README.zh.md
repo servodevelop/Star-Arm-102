@@ -5,12 +5,12 @@
 **目录：**
 
 - [🔧 产品规格](#product-specifications)
-- [🛠️ DIY 装配](diy-assembly/README.zh.md)
+- [🛠️ DIY 装配](../docs/diy-assembly/)
 - [📂 目录结构](#directory-structure)
 
-按型号查看详情：**[102-LD](102-ld/README.zh.md)** · **[102-HD](102-hd/README.zh.md)** · **[102-FL](102-fl/README.zh.md)**。
+按型号查看详情：**[102-LD](102-ld/)** · **[102-HD](102-hd/)** · **[102-FL](102-fl/)**。
 
-配件：**[摄像头模组](camera-module/README.zh.md)** · **[柔性夹爪](flexible-gripper/README.zh.md)**。
+配件：**[摄像头模组](camera-module/)** · **[柔性夹爪](flexible-gripper/)**。
 
 <a id="product-specifications"></a>
 
@@ -57,15 +57,11 @@ hardware/
 │       └── star-arm-102-ld-hd-urdf.zip
 ├── 102-hd/
 ├── 102-fl/
-├── diy-assembly/
-│   ├── 102-ld/
-│   ├── 102-hd/
-│   └── 102-fl/
 ├── camera-module/
 └── flexible-gripper/
 ```
 
-`step/assembly/` 存放 CAD 装配模型；`diy-assembly/` 按型号集中存放客户装配说明。每个型号均在自身的 robot-description 目录提供 ROS 1 源码与完整 ZIP：[LD](102-ld/robot-description/)、[HD](102-hd/robot-description/)、[FL](102-fl/robot-description/)。LD 与 HD 包含相同模型。
+`step/assembly/` 存放 CAD 装配模型；装配、PID 设置与零位校准集中在 [DIY 装配指南](../docs/diy-assembly/README.zh.md)。每个型号均在自身的 robot-description 目录提供 ROS 1 源码与完整 ZIP：[LD](102-ld/robot-description/)、[HD](102-hd/robot-description/)、[FL](102-fl/robot-description/)。LD 与 HD 包含相同模型。
 
 ## 许可
 

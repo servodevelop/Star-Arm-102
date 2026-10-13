@@ -40,7 +40,7 @@ cd lerobot/lerobot-stararm102
 
 These versions define a reproducible candidate environment for this guide; hardware validation is tracked in [validation](../../docs/validation.md). Do not install the 0.0.1 leader plugin in this environment. Example scripts below run from this package directory. Use the regular install shown above: a default editable install can import successfully while remaining invisible to LeRobot 0.4.1's plugin discovery. Reinstall after changing package source.
 
-Complete [hardware preparation](../../docs/hardware-setup.md) and [communication checks](../../python-sdk/README.md#check-communication-without-commanding-motion) before calibration. Connecting this plugin can unlock joints and reset multi-turn counts. `Ctrl+C` is not a hardware emergency stop.
+Complete [hardware preparation](../../docs/getting-started.md#connect) and [communication checks](../../python-sdk/README.md#check-communication-without-commanding-motion) before calibration. Connecting this plugin can unlock joints and reset multi-turn counts. `Ctrl+C` is not a hardware emergency stop.
 
 ## Registered Teleoperator
 

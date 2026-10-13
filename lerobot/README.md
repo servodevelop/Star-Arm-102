@@ -68,7 +68,7 @@ lerobot-teleoperate \
   --robot.id=customer_stararm102_follower
 ```
 
-Move one joint slowly through a small range, then check the gripper. Stop if direction or alignment is wrong. `Ctrl+C` exits the process; it is not a hardware emergency stop. See [stopping guidance](../docs/hardware-setup.md#reference-pose-and-stopping).
+Move one joint slowly through a small range, then check the gripper. Stop if direction or alignment is wrong. `Ctrl+C` exits the process; it is not a hardware emergency stop. See [stopping guidance](../docs/getting-started.md#reference-pose-and-stopping).
 
 <a id="page-section-4"></a>
 

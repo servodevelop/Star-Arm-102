@@ -30,7 +30,7 @@ python -m pip install -r python-sdk/requirements.txt
 
 If you already cloned the repository, enter that checkout instead. Commands below run from the repository root. Reactivate `.venv-python` in a new terminal.
 
-Read [power, wiring, and serial-port identification](../docs/hardware-setup.md) before continuing. Replace the example ports with your actual devices.
+Read [power, wiring, and serial-port identification](../docs/getting-started.md#connect) before continuing. Replace the example ports with your actual devices.
 
 <a id="page-section-2"></a>
 
@@ -53,7 +53,7 @@ python python-sdk/check_connection.py --port /dev/ttyUSB0 --ids 7
 
 ## Start teleoperation
 
-Secure both bases, clear the motion area, and place both arms in their matching physical reference poses. See [reference pose and stopping](../docs/hardware-setup.md#reference-pose-and-stopping). This script unlocks joints and resets multi-turn counts on connection; it can command the follower immediately. It does not load LeRobot calibration.
+Secure both bases, clear the motion area, and place both arms in their matching physical reference poses. See [reference pose and stopping](../docs/getting-started.md#reference-pose-and-stopping). This script unlocks joints and resets multi-turn counts on connection; it can command the follower immediately. It does not load LeRobot calibration.
 
 **LD leader:**
 

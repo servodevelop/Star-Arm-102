@@ -13,7 +13,7 @@
 
 | 目录 | 内容 | 状态 |
 | --- | --- | --- |
-| [装配指南](../diy-assembly/102-fl/README.zh.md#camera-module-assembly) | 装配与安装视频 | — 视频待上线 |
+| [装配指南](../../docs/diy-assembly/README.zh.md#camera-module-assembly) | 装配与安装视频 | — 视频待上线 |
 | [step/](step/) | parts/ 零件模型；assembly/ 装配模型 | ✅ 已提供 3 个 STEP 文件<br>— 装配模型待提供 |
 | [printing/](printing/) | 3mf/ 打印项目；stl/ 独立打印文件 | — 待提供 |
 | [drawings/](drawings/) | PDF／DWG 图纸 | — 待提供 |

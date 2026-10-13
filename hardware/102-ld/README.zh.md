@@ -22,7 +22,7 @@
 
 | 目录 | 内容 | 状态 |
 | --- | --- | --- |
-| [DIY 装配](../diy-assembly/102-ld/README.zh.md) | 主体机械臂装配视频 | ✅ 已完成 |
+| [DIY 装配](../../docs/diy-assembly/README.zh.md#102-ld) | 主体机械臂装配视频 | ✅ 已完成 |
 | [step/](step/) | parts/ 零件模型；assembly/ 共用装配模型 | ✅ 已完成 |
 | [printing/](printing/) | 3MF 打印项目；STL：[查看零件](printing/stl/) · [下载整套 ZIP](printing/star-arm-102-ld-stl.zip) | ✅ 已完成 |
 | [drawings/](drawings/) | PDF／DWG 图纸 | ✅ 已完成 |

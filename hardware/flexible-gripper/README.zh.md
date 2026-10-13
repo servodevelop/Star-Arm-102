@@ -13,7 +13,7 @@
 
 | 目录 | 内容 | 状态 |
 | --- | --- | --- |
-| [装配指南](../diy-assembly/102-fl/README.zh.md#flexible-gripper-assembly) | 装配与安装视频 | ✅ 视频已提供 |
+| [装配指南](../../docs/diy-assembly/README.zh.md#flexible-gripper-assembly) | 装配与安装视频 | ✅ 视频已提供 |
 | [step/](step/) | parts/ 零件模型；assembly/ 装配模型 | ✅ 已提供 6 个零件模型及 1 个装配模型 |
 | [printing/](printing/) | 3mf/ 打印项目；stl/ 独立打印文件 | — 待提供 |
 | [drawings/](drawings/) | PDF／DWG 图纸 | — 待提供 |
