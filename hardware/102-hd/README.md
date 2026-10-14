@@ -34,40 +34,42 @@
 
 The table below lists **31 assembly items** for 102-HD. Missing images are marked pending.
 
-Printed-part names match the STEP, STL, and individual 3MF filenames. Print settings in this BOM are references pending physical print validation.
+Printed-part identifiers in Model / Specification match the STEP, STL, and individual 3MF filenames (without extensions). Print settings in this BOM are references pending physical print validation.
 
-| No. | SKU | Name / Model | Image | Description | Quantity |
-| :---: | --- | --- | :---: | --- | :---: |
-| 1 |  | RP8-U45H-M | <img src="images/rp8-u45h-m.webp" alt="RP8-U45H-M" width="90"> | UART Bus Servo/12V/45kg-cm/118rpm/<br>Dual-shaft/Coreless Motor/12-bit Magnetic Absolute Encoder/25T | 4 |
-| 2 |  | RP8-U45H-M-C028 | <img src="images/rp8-u45h-m-c028.webp" alt="RP8-U45H-M-C028" width="90"> | UART Bus Servo/12V/45kg-cm/118rpm/<br>Dual-shaft Housing (Flat Bottom Cover, No Rear Output Shaft)/Coreless Motor/12-bit Magnetic Absolute Encoder/25T | 2 |
-| 3 |  | RP8-U45H-M-C029 | <img src="images/rp8-u45h-m-c029.webp" alt="RP8-U45H-M-C029" width="90"> | UART Bus Servo/12V/45kg-cm/118rpm/<br>Dual-shaft Housing (Flat Bottom Cover, No Rear Output Shaft)/Coreless Motor/12-bit Magnetic Absolute Encoder/D-Type Shaft | 1 |
-| 4 | 01.03.03000131 | star-arm-102-base-bottom | <img src="images/star-arm-102-base-bottom.png" alt="star-arm-102-base-bottom" width="90"> | PLA 3D printed part (ivory); wall loops: 2; infill density: 15% | 1 |
-| 5 |  | star-arm-102-base-top | <img src="images/star-arm-102-base-top.png" alt="star-arm-102-base-top" width="90"> | PLA 3D printed part (ivory); settings vary by region; see 3MF | 1 |
-| 6 | 01.03.03000133 | star-arm-102-link1 | <img src="images/star-arm-102-link1.png" alt="star-arm-102-link1" width="90"> | PLA 3D printed part (ivory); wall loops: 5; infill density: 50% | 1 |
-| 7 | 01.03.03000134 | star-arm-102-link2 | <img src="images/star-arm-102-link2.png" alt="star-arm-102-link2" width="90"> | PLA 3D printed part (ivory); wall loops: 2; infill density: 10% | 1 |
-| 8 | 01.03.03000135 | star-arm-102-link3 | <img src="images/star-arm-102-link3.png" alt="star-arm-102-link3" width="90"> | PLA 3D printed part (ivory + black); settings vary by region; see 3MF | 1 |
-| 9 | 01.03.03000136 | star-arm-102-link4 | <img src="images/star-arm-102-link4.png" alt="star-arm-102-link4" width="90"> | PLA 3D printed part (ivory); wall loops: 2; infill density: 15% | 1 |
-| 10 | 01.03.03000137 | star-arm-102-link5 | <img src="images/star-arm-102-link5.png" alt="star-arm-102-link5" width="90"> | PLA 3D printed part (ivory); wall loops: 2; infill density: 15% | 1 |
-| 11 | 01.03.03000138 | star-arm-102-link6-handle | <img src="images/star-arm-102-link6-handle.png" alt="star-arm-102-link6-handle" width="90"> | PLA 3D printed part (ivory); wall loops: 5; infill density: 15% | 1 |
-| 12 | 01.03.03000139 | star-arm-102-handle | <img src="images/star-arm-102-handle.png" alt="star-arm-102-handle" width="90"> | PLA 3D printed part (ivory); wall loops: 2; infill density: 15% | 1 |
-| 13 | 01.03.03000140 | star-arm-102-finger-ring-left | <img src="images/star-arm-102-finger-ring-left.png" alt="star-arm-102-finger-ring-left" width="90"> | PLA 3D printed part (ivory); wall loops: 2; infill density: 15% | 1 |
-| 14 | 01.03.03000141 | star-arm-102-finger-ring-right | <img src="images/star-arm-102-finger-ring-right.png" alt="star-arm-102-finger-ring-right" width="90"> | PLA 3D printed part (ivory); wall loops: 2; infill density: 15% | 1 |
-| 15 |  | hd-button-cover | <img src="images/hd-button-cover.png" alt="hd-button-cover" width="90"> | PLA 3D printed part (ivory); wall loops: 2; infill density: 15% | 1 |
-| 16 |  | hd-button-base | <img src="images/hd-button-base.png" alt="hd-button-base" width="90"> | PLA 3D printed part (ivory); wall loops: 2; infill density: 15% | 1 |
-| 17 | 03.01.00000107 | UC-01 board | <img src="../../media/uc-01-primary.webp" alt="UC-01" width="90"> | XT30 connector | 1 |
-| 18 |  | UK-01 board | <a href="images/uk-01-board.webp"><img src="images/uk-01-board.webp" alt="UK-01 board" width="90"></a> | With socket | 1 |
-| 19 | 01.08.05000012 | Thrust needle roller bearing | <img src="../../media/axk2035-2as-bearing.png" alt="AXK2035+2AS thrust needle roller bearing" width="90"> | AXK2035+2AS; inner diameter 20 mm, outer diameter 35 mm, thickness 4 mm | 1 |
-| 20 | 01.01.17000102 | PH2.0 120 mm servo cable | <a href="../../media/ph-3y-servo-cable-120mm.png"><img src="../../media/ph-3y-servo-cable-120mm.png" alt="PH2.0 120 mm servo cable" width="90"></a> | Black silicone-insulated ribbon cable with black braided sleeving; PH2.0 connectors (PH-3Y), reversed pin order between ends; 60 × Ø0.08 mm strands per conductor (approx. 22 AWG); length 120 mm | 6 |
-| 21 | 01.01.17000101 | PH2.0 200 mm servo cable | <a href="../../media/ph-3y-servo-cable-200mm.png"><img src="../../media/ph-3y-servo-cable-200mm.png" alt="PH2.0 200 mm servo cable" width="90"></a> | Black silicone-insulated ribbon cable with black braided sleeving; PH2.0 connectors (PH-3Y), reversed pin order between ends; 60 × Ø0.08 mm strands per conductor (approx. 22 AWG); length 200 mm | 2 |
-| 22 | 01.06.01000167 | M3 × 10 socket-head cap screw | Pending | Black finish, property class 12.9 | 1 |
-| 23 | 01.06.01000183 | M3 × 22 socket-head cap screw | Pending | Black finish | 4 |
-| 24 |  | M3 × 10 Phillips screw | Pending | Black finish, hardened | 1 |
-| 25 | 01.06.01000060 | PB2.0 × 5 Phillips self-tapping screw | Pending | Black finish, hardened | 46 |
-| 26 | 01.06.01000079 | M2 × 4.5 Phillips pan-head screw | Pending | Black finish, pre-applied threadlocker | 35 |
-| 27 |  | M2 × 10 hex socket screw | Pending | Black finish | 8 |
-| 28 | 01.06.01000184 | M2 × 8 socket-head cap screw | Pending | Black finish | 8 |
-| 29 |  | 3 × 12 mm Phillips flat-head self-tapping screw | Pending | Silver finish | 2 |
-| 30 | 01.06.01000086 | M3 locknut | Pending | Black finish | 5 |
-| 31 |  | M3 washer | Pending | Stainless steel | 1 |
+Screw images are AI-generated illustrations; refer to the table text for specifications. Click an image to enlarge it.
+
+| No. | Part Name | Model / Specification | Image | Description | Quantity | SKU |
+| :---: | --- | --- | :---: | --- | :---: | --- |
+| 1 | UART bus servo | RP8-U45H-M | <img src="images/rp8-u45h-m.webp" alt="RP8-U45H-M" width="90"> | 12V; 45kg-cm; 118rpm; Dual-shaft; Coreless Motor; 12-bit Magnetic Absolute Encoder; 25T | 4 |  |
+| 2 | UART bus servo | RP8-U45H-M-C028 | <img src="images/rp8-u45h-m-c028.webp" alt="RP8-U45H-M-C028" width="90"> | 12V; 45kg-cm; 118rpm; Dual-shaft Housing (Flat Bottom Cover, No Rear Output Shaft); Coreless Motor; 12-bit Magnetic Absolute Encoder; 25T | 2 |  |
+| 3 | UART bus servo | RP8-U45H-M-C029 | <img src="images/rp8-u45h-m-c029.webp" alt="RP8-U45H-M-C029" width="90"> | 12V; 45kg-cm; 118rpm; Dual-shaft Housing (Flat Bottom Cover, No Rear Output Shaft); Coreless Motor; 12-bit Magnetic Absolute Encoder; D-Type Shaft | 1 |  |
+| 4 | Base bottom plate | star-arm-102-base-bottom | <img src="images/star-arm-102-base-bottom.png" alt="star-arm-102-base-bottom" width="90"> | Ivory, PLA 3D printed part; wall loops: 2; infill density: 15% | 1 | 01.03.03000131 |
+| 5 | Base top plate | star-arm-102-base-top | <img src="images/star-arm-102-base-top.png" alt="star-arm-102-base-top" width="90"> | Ivory, PLA 3D printed part; settings vary by region; see 3MF | 1 |  |
+| 6 | Link 1 | star-arm-102-link1 | <img src="images/star-arm-102-link1.png" alt="star-arm-102-link1" width="90"> | Ivory, PLA 3D printed part; wall loops: 5; infill density: 50% | 1 | 01.03.03000133 |
+| 7 | Link 2 | star-arm-102-link2 | <img src="images/star-arm-102-link2.png" alt="star-arm-102-link2" width="90"> | Ivory, PLA 3D printed part; wall loops: 2; infill density: 10% | 1 | 01.03.03000134 |
+| 8 | Link 3 | star-arm-102-link3 | <img src="images/star-arm-102-link3.png" alt="star-arm-102-link3" width="90"> | Ivory + black, PLA 3D printed part; settings vary by region; see 3MF | 1 | 01.03.03000135 |
+| 9 | Link 4 | star-arm-102-link4 | <img src="images/star-arm-102-link4.png" alt="star-arm-102-link4" width="90"> | Ivory, PLA 3D printed part; wall loops: 2; infill density: 15% | 1 | 01.03.03000136 |
+| 10 | Link 5 | star-arm-102-link5 | <img src="images/star-arm-102-link5.png" alt="star-arm-102-link5" width="90"> | Ivory, PLA 3D printed part; wall loops: 2; infill density: 15% | 1 | 01.03.03000137 |
+| 11 | Link 6 (handle) | star-arm-102-link6-handle | <img src="images/star-arm-102-link6-handle.png" alt="star-arm-102-link6-handle" width="90"> | Ivory, PLA 3D printed part; wall loops: 5; infill density: 15% | 1 | 01.03.03000138 |
+| 12 | Handle | star-arm-102-handle | <img src="images/star-arm-102-handle.png" alt="star-arm-102-handle" width="90"> | Ivory, PLA 3D printed part; wall loops: 2; infill density: 15% | 1 | 01.03.03000139 |
+| 13 | Left finger ring | star-arm-102-finger-ring-left | <img src="images/star-arm-102-finger-ring-left.png" alt="star-arm-102-finger-ring-left" width="90"> | Ivory, PLA 3D printed part; wall loops: 2; infill density: 15% | 1 | 01.03.03000140 |
+| 14 | Right finger ring | star-arm-102-finger-ring-right | <img src="images/star-arm-102-finger-ring-right.png" alt="star-arm-102-finger-ring-right" width="90"> | Ivory, PLA 3D printed part; wall loops: 2; infill density: 15% | 1 | 01.03.03000141 |
+| 15 | Button cover | hd-button-cover | <img src="images/hd-button-cover.png" alt="hd-button-cover" width="90"> | Ivory, PLA 3D printed part; wall loops: 2; infill density: 15% | 1 |  |
+| 16 | Button base | hd-button-base | <img src="images/hd-button-base.png" alt="hd-button-base" width="90"> | Ivory, PLA 3D printed part; wall loops: 2; infill density: 15% | 1 |  |
+| 17 | Circuit board | UC-01 | <img src="../../media/uc-01-primary.webp" alt="UC-01" width="90"> | XT30 connector | 1 | 03.01.00000107 |
+| 18 | Button board | UK-01 | <a href="images/uk-01-board.webp"><img src="images/uk-01-board.webp" alt="UK-01 board" width="90"></a> | With socket | 1 |  |
+| 19 | Thrust needle roller bearing | AXK2035+2AS | <img src="../../media/axk2035-2as-bearing.png" alt="AXK2035+2AS thrust needle roller bearing" width="90"> | inner diameter 20 mm, outer diameter 35 mm, thickness 4 mm | 1 | 01.08.05000012 |
+| 20 | Servo cable | PH2.0 (PH-3Y)<br>120 mm | <a href="../../media/ph-3y-servo-cable-120mm.png"><img src="../../media/ph-3y-servo-cable-120mm.png" alt="PH2.0 120 mm servo cable" width="90"></a> | Black silicone-insulated ribbon cable with black braided sleeving; reversed pin order between ends; 60 × Ø0.08 mm strands per conductor (approx. 22 AWG) | 6 | 01.01.17000102 |
+| 21 | Servo cable | PH2.0 (PH-3Y)<br>200 mm | <a href="../../media/ph-3y-servo-cable-200mm.png"><img src="../../media/ph-3y-servo-cable-200mm.png" alt="PH2.0 200 mm servo cable" width="90"></a> | Black silicone-insulated ribbon cable with black braided sleeving; reversed pin order between ends; 60 × Ø0.08 mm strands per conductor (approx. 22 AWG) | 2 | 01.01.17000101 |
+| 22 | Socket-head cap screw | M3 × 10 | <a href="../../media/fasteners/m3-10-socket-head-cap-screw.png"><img src="../../media/fasteners/m3-10-socket-head-cap-screw.png" alt="M3 × 10 socket-head cap screw illustration" width="90"></a> | Black finish, property class 12.9 | 1 | 01.06.01000167 |
+| 23 | Socket-head cap screw | M3 × 22 | <a href="../../media/fasteners/m3-22-socket-head-cap-screw.png"><img src="../../media/fasteners/m3-22-socket-head-cap-screw.png" alt="M3 × 22 socket-head cap screw illustration" width="90"></a> | Black finish | 4 | 01.06.01000183 |
+| 24 | Phillips screw | M3 × 10 | Pending | Black finish, hardened | 1 |  |
+| 25 | Phillips self-tapping screw | PB2.0 × 5 | Pending | Black finish, hardened | 46 | 01.06.01000060 |
+| 26 | Phillips pan-head screw | M2 × 4.5 | <a href="../../media/fasteners/m2-4-5-phillips-pan-head-screw.png"><img src="../../media/fasteners/m2-4-5-phillips-pan-head-screw.png" alt="M2 × 4.5 Phillips pan-head screw illustration" width="90"></a> | Black finish, pre-applied threadlocker | 35 | 01.06.01000079 |
+| 27 | Hex socket screw | M2 × 10 | Pending | Black finish | 8 |  |
+| 28 | Socket-head cap screw | M2 × 8 | <a href="../../media/fasteners/m2-8-socket-head-cap-screw.png"><img src="../../media/fasteners/m2-8-socket-head-cap-screw.png" alt="M2 × 8 socket-head cap screw illustration" width="90"></a> | Black finish | 8 | 01.06.01000184 |
+| 29 | Phillips flat-head self-tapping screw | 3 × 12 mm | <a href="../../media/fasteners/3-12-phillips-flat-head-self-tapping-screw.png"><img src="../../media/fasteners/3-12-phillips-flat-head-self-tapping-screw.png" alt="3 × 12 mm Phillips flat-head self-tapping screw illustration" width="90"></a> | Silver finish | 2 |  |
+| 30 | Locknut | M3 | Pending | Black finish | 5 | 01.06.01000086 |
+| 31 | Washer | M3 | Pending | Stainless steel | 1 |  |
 
 Found an error in these resources or need help? Contact our [Support Hub](https://fashionstar.com.hk/support/) with your model and the relevant file or item.

@@ -34,38 +34,40 @@
 
 下表列出 102-FL 的 **29 项装机物料**；无图片的条目标为待补。
 
-打印件名称与 STEP、STL 及独立 3MF 文件名一致。BOM 中的打印参数仅供参考，尚未完成实物打印验证。link1 的 BOM 参数为壁数 5／填充 50%，而原 3MF 为壁数 2／填充 15%，打印前需确认。
+打印件的“型号／规格”与 STEP、STL 及独立 3MF 的文件名主体一致（不含扩展名）。BOM 中的打印参数仅供参考，尚未完成实物打印验证。link1 的 BOM 参数为壁数 5／填充 50%，而原 3MF 为壁数 2／填充 15%，打印前需确认。
 
-| 序号 | SKU | 名称／型号 | 图片 | 描述 | 数量 |
-| :---: | --- | --- | :---: | --- | :---: |
-| 1 | 02.06.00000195 | RX8-U50H-M | <img src="images/rx8-u50h-m-primary.webp" alt="RX8-U50H-M" width="90"> | UART 总线舵机/12V/50kg-cm/70rpm/<br>双轴/无刷电机/12 位磁性绝对值编码器/25T | 2 |
-| 2 |  | RA8-U35H-M | <img src="images/ra8-u35h-m.webp" alt="RA8-U35H-M" width="90"> | UART 总线舵机/12V/35kg-cm/55rpm/<br>双轴/有刷铁芯电机/12 位磁性绝对值编码器/25T | 3 |
-| 3 |  | RA8-U35H-M-C047 | <img src="images/ra8-u35h-m-c047.webp" alt="RA8-U35H-M-C047" width="90"> | UART 总线舵机/12V/35kg-cm/55rpm/<br>双轴款壳体（平面下盖，无后输出轴）/有刷铁芯电机/12 位磁性绝对值编码器/25T | 1 |
-| 4 | 02.06.00000306 | RA8-U27H-M-C005 | <img src="images/ra8-u27h-m-c005.webp" alt="RA8-U27H-M-C005" width="90"> | UART 总线舵机/12V/25kg-cm/72rpm/<br>双轴款壳体（平面下盖，无后输出轴）/有刷铁芯电机/12 位磁性绝对值编码器/D 型轴 | 1 |
-| 5 | 01.03.03000131 | star-arm-102-base-bottom | <img src="images/star-arm-102-base-bottom.png" alt="star-arm-102-base-bottom" width="90"> | PLA 3D 打印件（象牙白）；壁数：2；填充密度：15% | 1 |
-| 6 |  | star-arm-102-base-top | <img src="images/star-arm-102-base-top.png" alt="star-arm-102-base-top" width="90"> | PLA 3D 打印件（象牙白）；分区域参数，详见 3MF | 1 |
-| 7 |  | star-arm-102-link1 | <img src="images/star-arm-102-link1.png" alt="star-arm-102-link1" width="90"> | PLA 3D 打印件（象牙白）；壁数：5；填充密度：50% | 1 |
-| 8 | 01.03.03000134 | star-arm-102-link2 | <img src="images/star-arm-102-link2.png" alt="star-arm-102-link2" width="90"> | PLA 3D 打印件（象牙白）；壁数：2；填充密度：10% | 1 |
-| 9 | 01.03.03000135 | star-arm-102-link3 | <img src="images/star-arm-102-link3.png" alt="star-arm-102-link3" width="90"> | PLA 3D 打印件（象牙白＋黑色）；分区域参数，详见 3MF | 1 |
-| 10 | 01.03.03000136 | star-arm-102-link4 | <img src="images/star-arm-102-link4.png" alt="star-arm-102-link4" width="90"> | PLA 3D 打印件（象牙白）；壁数：2；填充密度：15% | 1 |
-| 11 | 01.03.03000137 | star-arm-102-link5 | <img src="images/star-arm-102-link5.png" alt="star-arm-102-link5" width="90"> | PLA 3D 打印件（象牙白）；壁数：2；填充密度：15% | 1 |
-| 12 |  | star-arm-102-link6-gripper | <img src="images/star-arm-102-link6-gripper.png" alt="star-arm-102-link6-gripper" width="90"> | PLA 3D 打印件（象牙白）；壁数：4；填充密度：15% | 1 |
-| 13 |  | star-arm-102-gripper-body | <img src="images/star-arm-102-gripper-body.png" alt="star-arm-102-gripper-body" width="90"> | PLA 3D 打印件（象牙白）；壁数：4；填充密度：15% | 1 |
-| 14 |  | star-arm-102-fingertip-left | <img src="images/star-arm-102-fingertip-left.png" alt="star-arm-102-fingertip-left" width="90"> | PLA 3D 打印件（象牙白）；壁数：4；填充密度：15% | 1 |
-| 15 |  | star-arm-102-fingertip-right | <img src="images/star-arm-102-fingertip-right.png" alt="star-arm-102-fingertip-right" width="90"> | PLA 3D 打印件（象牙白）；壁数：4；填充密度：15% | 1 |
-| 16 | 01.08.05000012 | 滚针轴承 | <img src="../../media/axk2035-2as-bearing.png" alt="AXK2035+2AS 滚针轴承" width="90"> | AXK2035+2AS；内径 20 mm，外径 35 mm，厚度 4 mm | 1 |
-| 17 | 03.01.00000107 | PCBA | <img src="../../media/uc-01-primary.webp" alt="UC-01" width="90"> | UC-01 XT30 | 1 |
-| 18 | 01.01.17000102 | PH2.0 120 mm 舵机连接线 | <a href="../../media/ph-3y-servo-cable-120mm.png"><img src="../../media/ph-3y-servo-cable-120mm.png" alt="PH2.0 120 mm 舵机连接线" width="90"></a> | 黑色硅胶绝缘排线，外覆黑色编织护套；PH2.0 接头（PH-3Y），两端线序反向；每根导体 60 × Ø0.08 mm（约 22 AWG）；长度 120 mm | 4 |
-| 19 | 01.01.17000101 | PH2.0 200 mm 舵机连接线 | <a href="../../media/ph-3y-servo-cable-200mm.png"><img src="../../media/ph-3y-servo-cable-200mm.png" alt="PH2.0 200 mm 舵机连接线" width="90"></a> | 黑色硅胶绝缘排线，外覆黑色编织护套；PH2.0 接头（PH-3Y），两端线序反向；每根导体 60 × Ø0.08 mm（约 22 AWG）；长度 200 mm | 3 |
-| 20 | 01.06.01000167 | M3 × 10 内六角圆柱头螺钉 | 待补 | 黑色表面，强度等级 12.9 | 1 |
-| 21 | 01.06.01000183 | M3 × 22 内六角圆柱头螺钉 | 待补 | 黑色表面 | 4 |
-| 22 |  | M3 × 10 十字槽螺钉 | 待补 | 黑色表面，加硬 | 1 |
-| 23 | 01.06.01000060 | PB2.0 × 5 十字槽自攻螺钉 | 待补 | 黑色表面，加硬 | 30 |
-| 24 | 01.06.01000079 | M2 × 4.5 十字槽盘头螺钉 | 待补 | 黑色表面，螺纹预涂锁固胶 | 47 |
-| 25 |  | M2 × 10 内六角螺钉 | 待补 | 黑色表面 | 8 |
-| 26 | 01.06.01000184 | M2 × 8 内六角圆柱头螺钉 | 待补 | 黑色表面 | 16 |
-| 27 |  | 3 × 12 mm 十字槽沉头自攻螺钉 | 待补 | 银色表面 | 2 |
-| 28 | 01.06.01000086 | M3 防松螺母 | 待补 | 黑色表面 | 6 |
-| 29 | 01.06.01000188 | 垫片 | 待补 | M3*6*0.5 | 2 |
+螺钉图片为 AI 生成的外观示意图，规格以表格文字为准；点击图片可放大查看。
+
+| 序号 | 品名 | 型号／规格 | 图片 | 描述 | 数量 | SKU |
+| :---: | --- | --- | :---: | --- | :---: | --- |
+| 1 | UART 总线舵机 | RX8-U50H-M | <img src="images/rx8-u50h-m-primary.webp" alt="RX8-U50H-M" width="90"> | 12V；50kg-cm；70rpm；双轴；无刷电机；12 位磁性绝对值编码器；25T | 2 | 02.06.00000195 |
+| 2 | UART 总线舵机 | RA8-U35H-M | <img src="images/ra8-u35h-m.webp" alt="RA8-U35H-M" width="90"> | 12V；35kg-cm；55rpm；双轴；有刷铁芯电机；12 位磁性绝对值编码器；25T | 3 |  |
+| 3 | UART 总线舵机 | RA8-U35H-M-C047 | <img src="images/ra8-u35h-m-c047.webp" alt="RA8-U35H-M-C047" width="90"> | 12V；35kg-cm；55rpm；双轴款壳体（平面下盖，无后输出轴）；有刷铁芯电机；12 位磁性绝对值编码器；25T | 1 |  |
+| 4 | UART 总线舵机 | RA8-U27H-M-C005 | <img src="images/ra8-u27h-m-c005.webp" alt="RA8-U27H-M-C005" width="90"> | 12V；25kg-cm；72rpm；双轴款壳体（平面下盖，无后输出轴）；有刷铁芯电机；12 位磁性绝对值编码器；D 型轴 | 1 | 02.06.00000306 |
+| 5 | 基座底板 | star-arm-102-base-bottom | <img src="images/star-arm-102-base-bottom.png" alt="star-arm-102-base-bottom" width="90"> | 象牙白，PLA 3D 打印件；壁数：2；填充密度：15% | 1 | 01.03.03000131 |
+| 6 | 基座顶板 | star-arm-102-base-top | <img src="images/star-arm-102-base-top.png" alt="star-arm-102-base-top" width="90"> | 象牙白，PLA 3D 打印件；分区域参数，详见 3MF | 1 |  |
+| 7 | 第一连杆 | star-arm-102-link1 | <img src="images/star-arm-102-link1.png" alt="star-arm-102-link1" width="90"> | 象牙白，PLA 3D 打印件；壁数：5；填充密度：50% | 1 |  |
+| 8 | 第二连杆 | star-arm-102-link2 | <img src="images/star-arm-102-link2.png" alt="star-arm-102-link2" width="90"> | 象牙白，PLA 3D 打印件；壁数：2；填充密度：10% | 1 | 01.03.03000134 |
+| 9 | 第三连杆 | star-arm-102-link3 | <img src="images/star-arm-102-link3.png" alt="star-arm-102-link3" width="90"> | 象牙白＋黑色，PLA 3D 打印件；分区域参数，详见 3MF | 1 | 01.03.03000135 |
+| 10 | 第四连杆 | star-arm-102-link4 | <img src="images/star-arm-102-link4.png" alt="star-arm-102-link4" width="90"> | 象牙白，PLA 3D 打印件；壁数：2；填充密度：15% | 1 | 01.03.03000136 |
+| 11 | 第五连杆 | star-arm-102-link5 | <img src="images/star-arm-102-link5.png" alt="star-arm-102-link5" width="90"> | 象牙白，PLA 3D 打印件；壁数：2；填充密度：15% | 1 | 01.03.03000137 |
+| 12 | 第六连杆（夹爪端） | star-arm-102-link6-gripper | <img src="images/star-arm-102-link6-gripper.png" alt="star-arm-102-link6-gripper" width="90"> | 象牙白，PLA 3D 打印件；壁数：4；填充密度：15% | 1 |  |
+| 13 | 夹爪主体 | star-arm-102-gripper-body | <img src="images/star-arm-102-gripper-body.png" alt="star-arm-102-gripper-body" width="90"> | 象牙白，PLA 3D 打印件；壁数：4；填充密度：15% | 1 |  |
+| 14 | 左指尖 | star-arm-102-fingertip-left | <img src="images/star-arm-102-fingertip-left.png" alt="star-arm-102-fingertip-left" width="90"> | 象牙白，PLA 3D 打印件；壁数：4；填充密度：15% | 1 |  |
+| 15 | 右指尖 | star-arm-102-fingertip-right | <img src="images/star-arm-102-fingertip-right.png" alt="star-arm-102-fingertip-right" width="90"> | 象牙白，PLA 3D 打印件；壁数：4；填充密度：15% | 1 |  |
+| 16 | 推力滚针轴承 | AXK2035+2AS | <img src="../../media/axk2035-2as-bearing.png" alt="AXK2035+2AS 滚针轴承" width="90"> | 内径 20 mm，外径 35 mm，厚度 4 mm | 1 | 01.08.05000012 |
+| 17 | 电路板 | UC-01 | <img src="../../media/uc-01-primary.webp" alt="UC-01" width="90"> | XT30 接口 | 1 | 03.01.00000107 |
+| 18 | 舵机连接线 | PH2.0 (PH-3Y)<br>120 mm | <a href="../../media/ph-3y-servo-cable-120mm.png"><img src="../../media/ph-3y-servo-cable-120mm.png" alt="PH2.0 120 mm 舵机连接线" width="90"></a> | 黑色硅胶绝缘排线，外覆黑色编织护套；两端线序反向；每根导体 60 × Ø0.08 mm（约 22 AWG） | 4 | 01.01.17000102 |
+| 19 | 舵机连接线 | PH2.0 (PH-3Y)<br>200 mm | <a href="../../media/ph-3y-servo-cable-200mm.png"><img src="../../media/ph-3y-servo-cable-200mm.png" alt="PH2.0 200 mm 舵机连接线" width="90"></a> | 黑色硅胶绝缘排线，外覆黑色编织护套；两端线序反向；每根导体 60 × Ø0.08 mm（约 22 AWG） | 3 | 01.01.17000101 |
+| 20 | 内六角圆柱头螺钉 | M3 × 10 | <a href="../../media/fasteners/m3-10-socket-head-cap-screw.png"><img src="../../media/fasteners/m3-10-socket-head-cap-screw.png" alt="M3 × 10 内六角圆柱头螺钉示意图" width="90"></a> | 黑色表面，强度等级 12.9 | 1 | 01.06.01000167 |
+| 21 | 内六角圆柱头螺钉 | M3 × 22 | <a href="../../media/fasteners/m3-22-socket-head-cap-screw.png"><img src="../../media/fasteners/m3-22-socket-head-cap-screw.png" alt="M3 × 22 内六角圆柱头螺钉示意图" width="90"></a> | 黑色表面 | 4 | 01.06.01000183 |
+| 22 | 十字槽螺钉 | M3 × 10 | 待补 | 黑色表面，加硬 | 1 |  |
+| 23 | 十字槽自攻螺钉 | PB2.0 × 5 | 待补 | 黑色表面，加硬 | 30 | 01.06.01000060 |
+| 24 | 十字槽盘头螺钉 | M2 × 4.5 | <a href="../../media/fasteners/m2-4-5-phillips-pan-head-screw.png"><img src="../../media/fasteners/m2-4-5-phillips-pan-head-screw.png" alt="M2 × 4.5 十字槽盘头螺钉示意图" width="90"></a> | 黑色表面，螺纹预涂锁固胶 | 47 | 01.06.01000079 |
+| 25 | 内六角螺钉 | M2 × 10 | 待补 | 黑色表面 | 8 |  |
+| 26 | 内六角圆柱头螺钉 | M2 × 8 | <a href="../../media/fasteners/m2-8-socket-head-cap-screw.png"><img src="../../media/fasteners/m2-8-socket-head-cap-screw.png" alt="M2 × 8 内六角圆柱头螺钉示意图" width="90"></a> | 黑色表面 | 16 | 01.06.01000184 |
+| 27 | 十字槽沉头自攻螺钉 | 3 × 12 mm | <a href="../../media/fasteners/3-12-phillips-flat-head-self-tapping-screw.png"><img src="../../media/fasteners/3-12-phillips-flat-head-self-tapping-screw.png" alt="3 × 12 mm 十字槽沉头自攻螺钉示意图" width="90"></a> | 银色表面 | 2 |  |
+| 28 | 防松螺母 | M3 | 待补 | 黑色表面 | 6 | 01.06.01000086 |
+| 29 | 垫片 | M3<br>3 × 6 × 0.5 mm | 待补 | — | 2 | 01.06.01000188 |
 
 发现资料错误或需要帮助？请通过 [Support 支持中心](https://fashionstar.com.hk/support/) 联系我们，并注明型号及对应文件或条目。
