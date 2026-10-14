@@ -36,7 +36,7 @@
 
 打印件的“型号／规格”与 STEP、STL 及独立 3MF 的文件名主体一致（不含扩展名）。BOM 中的打印参数仅供参考，尚未完成实物打印验证。link1 的 BOM 参数为壁数 5／填充 50%，而原 3MF 为壁数 2／填充 15%，打印前需确认。
 
-螺钉图片为 AI 生成的外观示意图，规格以表格文字为准；点击图片可放大查看。
+紧固件图片为 AI 生成的外观示意图，规格以表格文字为准；点击图片可放大查看。
 
 | 序号 | 品名 | 型号／规格 | 图片 | 描述 | 数量 |
 | :---: | --- | --- | :---: | --- | :---: |
@@ -59,15 +59,15 @@
 | 17 | 电路板 | UC-01 | <img src="../../media/uc-01-primary.webp" alt="UC-01" width="90"> | XT30 接口 | 1 |
 | 18 | 舵机连接线 | PH2.0 (PH-3Y)<br>120 mm | <a href="../../media/ph-3y-servo-cable-120mm.png"><img src="../../media/ph-3y-servo-cable-120mm.png" alt="PH2.0 120 mm 舵机连接线" width="90"></a> | 黑色硅胶绝缘排线，外覆黑色编织护套；两端线序反向；每根导体 60 × Ø0.08 mm（约 22 AWG） | 4 |
 | 19 | 舵机连接线 | PH2.0 (PH-3Y)<br>200 mm | <a href="../../media/ph-3y-servo-cable-200mm.png"><img src="../../media/ph-3y-servo-cable-200mm.png" alt="PH2.0 200 mm 舵机连接线" width="90"></a> | 黑色硅胶绝缘排线，外覆黑色编织护套；两端线序反向；每根导体 60 × Ø0.08 mm（约 22 AWG） | 3 |
-| 20 | 内六角圆柱头螺钉 | M3 × 10 | <a href="../../media/fasteners/m3-10-socket-head-cap-screw.png"><img src="../../media/fasteners/m3-10-socket-head-cap-screw.png" alt="M3 × 10 内六角圆柱头螺钉示意图" width="90"></a> | 黑色表面，强度等级 12.9 | 1 |
-| 21 | 内六角圆柱头螺钉 | M3 × 22 | <a href="../../media/fasteners/m3-22-socket-head-cap-screw.png"><img src="../../media/fasteners/m3-22-socket-head-cap-screw.png" alt="M3 × 22 内六角圆柱头螺钉示意图" width="90"></a> | 黑色表面 | 4 |
-| 22 | 十字槽盘头螺钉 | M3 × 10 | 待补 | 黑色表面，加硬 | 1 |
-| 23 | 十字槽自攻螺钉 | PB2.0 × 5 | 待补 | 黑色表面，加硬 | 30 |
-| 24 | 十字槽盘头螺钉 | M2 × 4.5 | <a href="../../media/fasteners/m2-4-5-phillips-pan-head-screw.png"><img src="../../media/fasteners/m2-4-5-phillips-pan-head-screw.png" alt="M2 × 4.5 十字槽盘头螺钉示意图" width="90"></a> | 黑色表面，螺纹预涂锁固胶 | 47 |
-| 25 | 内六角圆柱头螺钉 | M2 × 10 | 待补 | 黑色表面 | 8 |
-| 26 | 内六角圆柱头螺钉 | M2 × 8 | <a href="../../media/fasteners/m2-8-socket-head-cap-screw.png"><img src="../../media/fasteners/m2-8-socket-head-cap-screw.png" alt="M2 × 8 内六角圆柱头螺钉示意图" width="90"></a> | 黑色表面 | 16 |
-| 27 | 十字槽沉头自攻螺钉 | 3 × 12 mm | <a href="../../media/fasteners/3-12-phillips-flat-head-self-tapping-screw.png"><img src="../../media/fasteners/3-12-phillips-flat-head-self-tapping-screw.png" alt="3 × 12 mm 十字槽沉头自攻螺钉示意图" width="90"></a> | 银色表面 | 2 |
-| 28 | 螺母 | M3 | 待补 | 黑色表面 | 6 |
-| 29 | 垫片 | M3（3 × 6 × 0.5 mm） | 待补 | 不锈钢 | 2 |
+| 20 | 内六角圆柱头螺钉 | M3 × 22 | <a href="../../media/fasteners/m3-22-socket-head-cap-screw.png"><img src="../../media/fasteners/m3-22-socket-head-cap-screw.png" alt="M3 × 22 内六角圆柱头螺钉示意图" width="90"></a> | 黑色表面 | 4 |
+| 21 | 内六角圆柱头螺钉 | M3 × 10 | <a href="../../media/fasteners/m3-10-socket-head-cap-screw.png"><img src="../../media/fasteners/m3-10-socket-head-cap-screw.png" alt="M3 × 10 内六角圆柱头螺钉示意图" width="90"></a> | 黑色表面，强度等级 12.9 | 1 |
+| 22 | 内六角圆柱头螺钉 | M2 × 10 | <a href="../../media/fasteners/m2-10-socket-head-cap-screw.png"><img src="../../media/fasteners/m2-10-socket-head-cap-screw.png" alt="M2 × 10 内六角圆柱头螺钉示意图" width="90"></a> | 黑色表面 | 8 |
+| 23 | 内六角圆柱头螺钉 | M2 × 8 | <a href="../../media/fasteners/m2-8-socket-head-cap-screw.png"><img src="../../media/fasteners/m2-8-socket-head-cap-screw.png" alt="M2 × 8 内六角圆柱头螺钉示意图" width="90"></a> | 黑色表面 | 16 |
+| 24 | 十字槽沉头自攻螺钉 | 3 × 12 mm | <a href="../../media/fasteners/3-12-phillips-flat-head-self-tapping-screw.png"><img src="../../media/fasteners/3-12-phillips-flat-head-self-tapping-screw.png" alt="3 × 12 mm 十字槽沉头自攻螺钉示意图" width="90"></a> | 银色表面 | 2 |
+| 25 | 十字槽盘头螺钉 | M3 × 10 | <a href="../../media/fasteners/m3-10-phillips-pan-head-screw.png"><img src="../../media/fasteners/m3-10-phillips-pan-head-screw.png" alt="M3 × 10 十字槽盘头螺钉示意图" width="90"></a> | 黑色表面，加硬 | 1 |
+| 26 | 十字槽盘头自攻螺钉 | PB2.0 × 5 | <a href="../../media/fasteners/pb2-5-phillips-pan-head-self-tapping-screw.png"><img src="../../media/fasteners/pb2-5-phillips-pan-head-self-tapping-screw.png" alt="PB2.0 × 5 十字槽盘头自攻螺钉示意图" width="90"></a> | 黑色表面，加硬 | 30 |
+| 27 | 十字槽盘头螺钉 | M2 × 4.5 | <a href="../../media/fasteners/m2-4-5-phillips-pan-head-screw.png"><img src="../../media/fasteners/m2-4-5-phillips-pan-head-screw.png" alt="M2 × 4.5 十字槽盘头螺钉示意图" width="90"></a> | 黑色表面；靠近末端的约 2/3 螺纹段预涂蓝色锁固胶 | 47 |
+| 28 | 螺母 | M3 | <a href="../../media/fasteners/m3-nut.png"><img src="../../media/fasteners/m3-nut.png" alt="M3 螺母示意图" width="90"></a> | 黑色表面 | 6 |
+| 29 | 垫片 | M3（3 × 6 × 0.5 mm） | <a href="../../media/fasteners/m3-6-0-5-stainless-washer.png"><img src="../../media/fasteners/m3-6-0-5-stainless-washer.png" alt="M3（3 × 6 × 0.5 mm） 垫片示意图" width="90"></a> | 不锈钢 | 2 |
 
 发现资料错误或需要帮助？请通过 [Support 支持中心](https://fashionstar.com.hk/support/) 联系我们，并注明型号及对应文件或条目。

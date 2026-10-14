@@ -36,7 +36,7 @@ The table below lists **29 assembly items** for 102-FL. Missing images are marke
 
 Printed-part identifiers in Model / Specification match the STEP, STL, and individual 3MF filenames (without extensions). Print settings in this BOM are references pending physical print validation. The BOM specifies 5 wall loops / 50% infill for link1, while the supplied 3MF uses 2 / 15%; confirm before printing.
 
-Screw images are AI-generated illustrations; refer to the table text for specifications. Click an image to enlarge it.
+Fastener images are AI-generated illustrations; refer to the table text for specifications. Click an image to enlarge it.
 
 | No. | Part Name | Model / Specification | Image | Description | Quantity |
 | :---: | --- | --- | :---: | --- | :---: |
@@ -59,15 +59,15 @@ Screw images are AI-generated illustrations; refer to the table text for specifi
 | 17 | Circuit board | UC-01 | <img src="../../media/uc-01-primary.webp" alt="UC-01" width="90"> | XT30 connector | 1 |
 | 18 | Servo cable | PH2.0 (PH-3Y)<br>120 mm | <a href="../../media/ph-3y-servo-cable-120mm.png"><img src="../../media/ph-3y-servo-cable-120mm.png" alt="PH2.0 120 mm servo cable" width="90"></a> | Black silicone-insulated ribbon cable with black braided sleeving; reversed pin order between ends; 60 × Ø0.08 mm strands per conductor (approx. 22 AWG) | 4 |
 | 19 | Servo cable | PH2.0 (PH-3Y)<br>200 mm | <a href="../../media/ph-3y-servo-cable-200mm.png"><img src="../../media/ph-3y-servo-cable-200mm.png" alt="PH2.0 200 mm servo cable" width="90"></a> | Black silicone-insulated ribbon cable with black braided sleeving; reversed pin order between ends; 60 × Ø0.08 mm strands per conductor (approx. 22 AWG) | 3 |
-| 20 | Socket-head cap screw | M3 × 10 | <a href="../../media/fasteners/m3-10-socket-head-cap-screw.png"><img src="../../media/fasteners/m3-10-socket-head-cap-screw.png" alt="M3 × 10 socket-head cap screw illustration" width="90"></a> | Black finish, property class 12.9 | 1 |
-| 21 | Socket-head cap screw | M3 × 22 | <a href="../../media/fasteners/m3-22-socket-head-cap-screw.png"><img src="../../media/fasteners/m3-22-socket-head-cap-screw.png" alt="M3 × 22 socket-head cap screw illustration" width="90"></a> | Black finish | 4 |
-| 22 | Phillips pan-head screw | M3 × 10 | Pending | Black finish, hardened | 1 |
-| 23 | Phillips self-tapping screw | PB2.0 × 5 | Pending | Black finish, hardened | 30 |
-| 24 | Phillips pan-head screw | M2 × 4.5 | <a href="../../media/fasteners/m2-4-5-phillips-pan-head-screw.png"><img src="../../media/fasteners/m2-4-5-phillips-pan-head-screw.png" alt="M2 × 4.5 Phillips pan-head screw illustration" width="90"></a> | Black finish, pre-applied threadlocker | 47 |
-| 25 | Socket-head cap screw | M2 × 10 | Pending | Black finish | 8 |
-| 26 | Socket-head cap screw | M2 × 8 | <a href="../../media/fasteners/m2-8-socket-head-cap-screw.png"><img src="../../media/fasteners/m2-8-socket-head-cap-screw.png" alt="M2 × 8 socket-head cap screw illustration" width="90"></a> | Black finish | 16 |
-| 27 | Phillips flat-head self-tapping screw | 3 × 12 mm | <a href="../../media/fasteners/3-12-phillips-flat-head-self-tapping-screw.png"><img src="../../media/fasteners/3-12-phillips-flat-head-self-tapping-screw.png" alt="3 × 12 mm Phillips flat-head self-tapping screw illustration" width="90"></a> | Silver finish | 2 |
-| 28 | Nut | M3 | Pending | Black finish | 6 |
-| 29 | Washer | M3 (3 × 6 × 0.5 mm) | Pending | Stainless steel | 2 |
+| 20 | Socket-head cap screw | M3 × 22 | <a href="../../media/fasteners/m3-22-socket-head-cap-screw.png"><img src="../../media/fasteners/m3-22-socket-head-cap-screw.png" alt="M3 × 22 socket-head cap screw illustration" width="90"></a> | Black finish | 4 |
+| 21 | Socket-head cap screw | M3 × 10 | <a href="../../media/fasteners/m3-10-socket-head-cap-screw.png"><img src="../../media/fasteners/m3-10-socket-head-cap-screw.png" alt="M3 × 10 socket-head cap screw illustration" width="90"></a> | Black finish, property class 12.9 | 1 |
+| 22 | Socket-head cap screw | M2 × 10 | <a href="../../media/fasteners/m2-10-socket-head-cap-screw.png"><img src="../../media/fasteners/m2-10-socket-head-cap-screw.png" alt="M2 × 10 Socket-head cap screw illustration" width="90"></a> | Black finish | 8 |
+| 23 | Socket-head cap screw | M2 × 8 | <a href="../../media/fasteners/m2-8-socket-head-cap-screw.png"><img src="../../media/fasteners/m2-8-socket-head-cap-screw.png" alt="M2 × 8 socket-head cap screw illustration" width="90"></a> | Black finish | 16 |
+| 24 | Phillips flat-head self-tapping screw | 3 × 12 mm | <a href="../../media/fasteners/3-12-phillips-flat-head-self-tapping-screw.png"><img src="../../media/fasteners/3-12-phillips-flat-head-self-tapping-screw.png" alt="3 × 12 mm Phillips flat-head self-tapping screw illustration" width="90"></a> | Silver finish | 2 |
+| 25 | Phillips pan-head screw | M3 × 10 | <a href="../../media/fasteners/m3-10-phillips-pan-head-screw.png"><img src="../../media/fasteners/m3-10-phillips-pan-head-screw.png" alt="M3 × 10 Phillips pan-head screw illustration" width="90"></a> | Black finish, hardened | 1 |
+| 26 | Phillips pan-head self-tapping screw | PB2.0 × 5 | <a href="../../media/fasteners/pb2-5-phillips-pan-head-self-tapping-screw.png"><img src="../../media/fasteners/pb2-5-phillips-pan-head-self-tapping-screw.png" alt="PB2.0 × 5 Phillips pan-head self-tapping screw illustration" width="90"></a> | Black finish, hardened | 30 |
+| 27 | Phillips pan-head screw | M2 × 4.5 | <a href="../../media/fasteners/m2-4-5-phillips-pan-head-screw.png"><img src="../../media/fasteners/m2-4-5-phillips-pan-head-screw.png" alt="M2 × 4.5 Phillips pan-head screw illustration" width="90"></a> | Black finish; blue pre-applied threadlocker on the lower two-thirds of the threaded shank (toward the tip) | 47 |
+| 28 | Nut | M3 | <a href="../../media/fasteners/m3-nut.png"><img src="../../media/fasteners/m3-nut.png" alt="M3 Nut illustration" width="90"></a> | Black finish | 6 |
+| 29 | Washer | M3 (3 × 6 × 0.5 mm) | <a href="../../media/fasteners/m3-6-0-5-stainless-washer.png"><img src="../../media/fasteners/m3-6-0-5-stainless-washer.png" alt="M3 (3 × 6 × 0.5 mm) Washer illustration" width="90"></a> | Stainless steel | 2 |
 
 Found an error in these resources or need help? Contact our [Support Hub](https://fashionstar.com.hk/support/) with your model and the relevant file or item.
