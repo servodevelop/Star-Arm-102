@@ -34,38 +34,38 @@
 
 下表列出 102-FL 的 **29 项装机物料**；无图片的条目标为待补。
 
-打印件名称与 STEP、STL 及独立 3MF 文件名一致。备注中的打印参数仅供参考，尚未完成实物打印验证。link1 的 BOM 参数为壁数 5／填充 50%，而原 3MF 为壁数 2／填充 15%，打印前需确认。
+打印件名称与 STEP、STL 及独立 3MF 文件名一致。BOM 中的打印参数仅供参考，尚未完成实物打印验证。link1 的 BOM 参数为壁数 5／填充 50%，而原 3MF 为壁数 2／填充 15%，打印前需确认。
 
-| 序号 | 名称 | 图片 | 描述 | 数量 | 备注 |
-| :---: | --- | :---: | --- | :---: | --- |
-| 1 | RX8-U50H-M | <img src="images/rx8-u50h-m-primary.webp" alt="RX8-U50H-M" width="90"> | UART 总线舵机/12V/50kg-cm/70rpm/<br>双轴/无刷电机/12 位磁性绝对值编码器/25T | 2 | Firmware V330 |
-| 2 | RA8-U35H-M | <img src="images/ra8-u35h-m.webp" alt="RA8-U35H-M" width="90"> | UART 总线舵机/12V/35kg-cm/55rpm/<br>双轴/有刷铁芯电机/12 位磁性绝对值编码器/25T | 3 | Firmware V225 |
-| 3 | RA8-U35H-M-C047 | <img src="images/ra8-u35h-m-c047.webp" alt="RA8-U35H-M-C047" width="90"> | UART 总线舵机/12V/35kg-cm/55rpm/<br>双轴款壳体（平面下盖，无后输出轴）/有刷铁芯电机/12 位磁性绝对值编码器/25T | 1 | Firmware V225 |
-| 4 | RA8-U27H-M-C005 | <img src="images/ra8-u27h-m-c005.webp" alt="RA8-U27H-M-C005" width="90"> | UART 总线舵机/12V/25kg-cm/72rpm/<br>双轴款壳体（平面下盖，无后输出轴）/有刷铁芯电机/12 位磁性绝对值编码器/D 型轴 | 1 | Firmware V225 |
-| 5 | star-arm-102-base-bottom | <img src="images/star-arm-102-base-bottom.png" alt="star-arm-102-base-bottom" width="90"> | PLA 3D 打印件（象牙白） | 1 | 壁数 2；填充 15% |
-| 6 | star-arm-102-base-top | <img src="images/star-arm-102-base-top.png" alt="star-arm-102-base-top" width="90"> | PLA 3D 打印件（象牙白） | 1 | 分区域参数，详见 3MF |
-| 7 | star-arm-102-link1 | <img src="images/star-arm-102-link1.png" alt="star-arm-102-link1" width="90"> | PLA 3D 打印件（象牙白） | 1 | 壁数 5；填充 50% |
-| 8 | star-arm-102-link2 | <img src="images/star-arm-102-link2.png" alt="star-arm-102-link2" width="90"> | PLA 3D 打印件（象牙白） | 1 | 壁数 2；填充 10% |
-| 9 | star-arm-102-link3 | <img src="images/star-arm-102-link3.png" alt="star-arm-102-link3" width="90"> | PLA 3D 打印件（象牙白＋黑色） | 1 | 分区域参数，详见 3MF |
-| 10 | star-arm-102-link4 | <img src="images/star-arm-102-link4.png" alt="star-arm-102-link4" width="90"> | PLA 3D 打印件（象牙白） | 1 | 壁数 2；填充 15% |
-| 11 | star-arm-102-link5 | <img src="images/star-arm-102-link5.png" alt="star-arm-102-link5" width="90"> | PLA 3D 打印件（象牙白） | 1 | 壁数 2；填充 15% |
-| 12 | star-arm-102-link6-gripper | <img src="images/star-arm-102-link6-gripper.png" alt="star-arm-102-link6-gripper" width="90"> | PLA 3D 打印件（象牙白） | 1 | 壁数 4；填充 15% |
-| 13 | star-arm-102-gripper-body | <img src="images/star-arm-102-gripper-body.png" alt="star-arm-102-gripper-body" width="90"> | PLA 3D 打印件（象牙白） | 1 | 壁数 4；填充 15% |
-| 14 | star-arm-102-fingertip-left | <img src="images/star-arm-102-fingertip-left.png" alt="star-arm-102-fingertip-left" width="90"> | PLA 3D 打印件（象牙白） | 1 | 壁数 4；填充 15% |
-| 15 | star-arm-102-fingertip-right | <img src="images/star-arm-102-fingertip-right.png" alt="star-arm-102-fingertip-right" width="90"> | PLA 3D 打印件（象牙白） | 1 | 壁数 4；填充 15% |
-| 16 | 滚针轴承 | <img src="../../media/axk2035-2as-bearing.png" alt="AXK2035+2AS 滚针轴承" width="90"> | AXK2035+2AS；内径 20 mm，外径 35 mm，厚度 4 mm | 1 | 装机件 |
-| 17 | PCBA | <img src="../../media/uc-01-primary.webp" alt="UC-01" width="90"> | UC-01 XT30 | 1 | 装机件 |
-| 18 | 线材 | <a href="../../media/ph-3y-servo-cable-120mm.png"><img src="../../media/ph-3y-servo-cable-120mm.png" alt="PH-3Y 120 mm 舵机连接线" width="90"></a> | PH-3Y 双头反向60芯 0.08 黑色硅胶排线L=120 mm  黑色编织线 | 4 | 装机件 |
-| 19 | 线材 | <a href="../../media/ph-3y-servo-cable-200mm.png"><img src="../../media/ph-3y-servo-cable-200mm.png" alt="PH-3Y 200 mm 舵机连接线" width="90"></a> | PH-3Y 双头反向60芯 0.08 黑色硅胶排线L=200 mm  黑色编织线 | 3 | 装机件 |
-| 20 | 螺丝 | 待补 | HSCS M3*10 12.9级内六角圆柱头螺钉 | 1 | 装机件 |
-| 21 | 螺丝 | 待补 | M3*22黑色内六角 | 4 | 装机件 |
-| 22 | 螺丝 | 待补 | M3*10加硬包黑十字槽螺杆 | 1 | 装机件 |
-| 23 | 螺丝 | 待补 | PB2.0*5 自攻十字槽加硬包黑沉头螺杆 | 30 | 装机件 |
-| 24 | 螺丝 | 待补 | M2*4.5 预点胶十字槽螺杆黑色沉头 | 47 | 装机件 |
-| 25 | 螺丝 | 待补 | M2*10 黑色内六角 | 8 | 装机件 |
-| 26 | 螺丝 | 待补 | M2*8 黑色内六角 | 16 | 装机件 |
-| 27 | 螺丝 | 待补 | M3*12自攻十字槽螺杆 | 2 | 装机件 |
-| 28 | 螺母 | 待补 | M3防松螺母 黑色 | 6 | 装机件 |
-| 29 | 垫片 | 待补 | M3*6*0.5 | 2 | 装机件 |
+| 序号 | SKU | 名称／型号 | 图片 | 描述 | 数量 | 备注 |
+| :---: | --- | --- | :---: | --- | :---: | --- |
+| 1 | 02.06.00000195 | RX8-U50H-M | <img src="images/rx8-u50h-m-primary.webp" alt="RX8-U50H-M" width="90"> | UART 总线舵机/12V/50kg-cm/70rpm/<br>双轴/无刷电机/12 位磁性绝对值编码器/25T | 2 | — |
+| 2 |  | RA8-U35H-M | <img src="images/ra8-u35h-m.webp" alt="RA8-U35H-M" width="90"> | UART 总线舵机/12V/35kg-cm/55rpm/<br>双轴/有刷铁芯电机/12 位磁性绝对值编码器/25T | 3 | — |
+| 3 |  | RA8-U35H-M-C047 | <img src="images/ra8-u35h-m-c047.webp" alt="RA8-U35H-M-C047" width="90"> | UART 总线舵机/12V/35kg-cm/55rpm/<br>双轴款壳体（平面下盖，无后输出轴）/有刷铁芯电机/12 位磁性绝对值编码器/25T | 1 | — |
+| 4 | 02.06.00000306 | RA8-U27H-M-C005 | <img src="images/ra8-u27h-m-c005.webp" alt="RA8-U27H-M-C005" width="90"> | UART 总线舵机/12V/25kg-cm/72rpm/<br>双轴款壳体（平面下盖，无后输出轴）/有刷铁芯电机/12 位磁性绝对值编码器/D 型轴 | 1 | — |
+| 5 | 01.03.03000131 | star-arm-102-base-bottom | <img src="images/star-arm-102-base-bottom.png" alt="star-arm-102-base-bottom" width="90"> | PLA 3D 打印件（象牙白）；壁数：2；填充密度：15% | 1 | — |
+| 6 |  | star-arm-102-base-top | <img src="images/star-arm-102-base-top.png" alt="star-arm-102-base-top" width="90"> | PLA 3D 打印件（象牙白） | 1 | 分区域参数，详见 3MF |
+| 7 |  | star-arm-102-link1 | <img src="images/star-arm-102-link1.png" alt="star-arm-102-link1" width="90"> | PLA 3D 打印件（象牙白）；壁数：5；填充密度：50% | 1 | — |
+| 8 | 01.03.03000134 | star-arm-102-link2 | <img src="images/star-arm-102-link2.png" alt="star-arm-102-link2" width="90"> | PLA 3D 打印件（象牙白）；壁数：2；填充密度：10% | 1 | — |
+| 9 | 01.03.03000135 | star-arm-102-link3 | <img src="images/star-arm-102-link3.png" alt="star-arm-102-link3" width="90"> | PLA 3D 打印件（象牙白＋黑色） | 1 | 分区域参数，详见 3MF |
+| 10 | 01.03.03000136 | star-arm-102-link4 | <img src="images/star-arm-102-link4.png" alt="star-arm-102-link4" width="90"> | PLA 3D 打印件（象牙白）；壁数：2；填充密度：15% | 1 | — |
+| 11 | 01.03.03000137 | star-arm-102-link5 | <img src="images/star-arm-102-link5.png" alt="star-arm-102-link5" width="90"> | PLA 3D 打印件（象牙白）；壁数：2；填充密度：15% | 1 | — |
+| 12 |  | star-arm-102-link6-gripper | <img src="images/star-arm-102-link6-gripper.png" alt="star-arm-102-link6-gripper" width="90"> | PLA 3D 打印件（象牙白）；壁数：4；填充密度：15% | 1 | — |
+| 13 |  | star-arm-102-gripper-body | <img src="images/star-arm-102-gripper-body.png" alt="star-arm-102-gripper-body" width="90"> | PLA 3D 打印件（象牙白）；壁数：4；填充密度：15% | 1 | — |
+| 14 |  | star-arm-102-fingertip-left | <img src="images/star-arm-102-fingertip-left.png" alt="star-arm-102-fingertip-left" width="90"> | PLA 3D 打印件（象牙白）；壁数：4；填充密度：15% | 1 | — |
+| 15 |  | star-arm-102-fingertip-right | <img src="images/star-arm-102-fingertip-right.png" alt="star-arm-102-fingertip-right" width="90"> | PLA 3D 打印件（象牙白）；壁数：4；填充密度：15% | 1 | — |
+| 16 | 01.08.05000012 | 滚针轴承 | <img src="../../media/axk2035-2as-bearing.png" alt="AXK2035+2AS 滚针轴承" width="90"> | AXK2035+2AS；内径 20 mm，外径 35 mm，厚度 4 mm | 1 | 装机件 |
+| 17 | 03.01.00000107 | PCBA | <img src="../../media/uc-01-primary.webp" alt="UC-01" width="90"> | UC-01 XT30 | 1 | 装机件 |
+| 18 | 01.01.17000102 | 线材 | <a href="../../media/ph-3y-servo-cable-120mm.png"><img src="../../media/ph-3y-servo-cable-120mm.png" alt="PH-3Y 120 mm 舵机连接线" width="90"></a> | PH-3Y 接头，两端线序反向；黑色硅胶绝缘排线，外覆黑色编织护套；每根导体 60 × Ø0.08 mm（约 22 AWG）；长度 120 mm | 4 | 装机件 |
+| 19 | 01.01.17000101 | 线材 | <a href="../../media/ph-3y-servo-cable-200mm.png"><img src="../../media/ph-3y-servo-cable-200mm.png" alt="PH-3Y 200 mm 舵机连接线" width="90"></a> | PH-3Y 接头，两端线序反向；黑色硅胶绝缘排线，外覆黑色编织护套；每根导体 60 × Ø0.08 mm（约 22 AWG）；长度 200 mm | 3 | 装机件 |
+| 20 | 01.06.01000167 | 螺丝 | 待补 | HSCS M3*10 12.9级内六角圆柱头螺钉 | 1 | 装机件 |
+| 21 | 01.06.01000183 | 螺丝 | 待补 | M3*22黑色内六角 | 4 | 装机件 |
+| 22 |  | 螺丝 | 待补 | M3*10加硬包黑十字槽螺杆 | 1 | 装机件 |
+| 23 | 01.06.01000060 | 螺丝 | 待补 | PB2.0*5 自攻十字槽加硬包黑沉头螺杆 | 30 | 装机件 |
+| 24 | 01.06.01000079 | 螺丝 | 待补 | M2*4.5 预点胶十字槽螺杆黑色沉头 | 47 | 装机件 |
+| 25 |  | 螺丝 | 待补 | M2*10 黑色内六角 | 8 | 装机件 |
+| 26 | 01.06.01000184 | 螺丝 | 待补 | M2*8 黑色内六角 | 16 | 装机件 |
+| 27 |  | 螺丝 | 待补 | M3*12自攻十字槽螺杆 | 2 | 装机件 |
+| 28 | 01.06.01000086 | 螺母 | 待补 | M3防松螺母 黑色 | 6 | 装机件 |
+| 29 | 01.06.01000188 | 垫片 | 待补 | M3*6*0.5 | 2 | 装机件 |
 
 发现资料错误或需要帮助？请通过 [Support 支持中心](https://fashionstar.com.hk/support/) 联系我们，并注明型号及对应文件或条目。
