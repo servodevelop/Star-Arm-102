@@ -54,8 +54,8 @@ Printed-part names match the STEP, STL, and individual 3MF filenames. Print sett
 | 14 | star-arm-102-finger-ring-right | <img src="images/star-arm-102-finger-ring-right.png" alt="star-arm-102-finger-ring-right" width="90"> | PLA 3D printed part (ivory) | 1 | 2 wall loops; 15% infill |
 | 15 | Thrust needle roller bearing | <img src="../../media/axk2035-2as-bearing.png" alt="AXK2035+2AS thrust needle roller bearing" width="90"> | AXK2035+2AS; inner diameter 20 mm, outer diameter 35 mm, thickness 4 mm | 1 | Installed part |
 | 16 | UC-01 board | <img src="../../media/uc-01-primary.webp" alt="UC-01" width="90"> | DC power lead: 0.75 mm², 5.5 × 2.1 mm female, 0.15 m | 1 | Installed part |
-| 17 | 120 mm servo cable | Pending | PH-3Y, reverse-wired ends, black braided silicone cable | 5 | Installed part |
-| 18 | 200 mm servo cable | Pending | PH-3Y, reverse-wired ends, black braided silicone cable | 2 | Installed part |
+| 17 | 120 mm servo cable | <a href="../../media/ph-3y-servo-cable-120mm.png"><img src="../../media/ph-3y-servo-cable-120mm.png" alt="PH-3Y 120 mm servo cable" width="90"></a> | PH-3Y, reverse-wired ends, black braided silicone cable | 5 | Installed part |
+| 18 | 200 mm servo cable | <a href="../../media/ph-3y-servo-cable-200mm.png"><img src="../../media/ph-3y-servo-cable-200mm.png" alt="PH-3Y 200 mm servo cable" width="90"></a> | PH-3Y, reverse-wired ends, black braided silicone cable | 2 | Installed part |
 | 19 | M3 × 10 socket-head screw | Pending | HSCS, grade 12.9 | 1 | Installed part |
 | 20 | M3 × 22 socket-head screw | Pending | Black finish | 4 | Installed part |
 | 21 | M3 × 10 Phillips screw | Pending | Hardened, black finish | 1 | Installed part |
