@@ -55,12 +55,12 @@ Printed-part names match the STEP, STL, and individual 3MF filenames. Print sett
 | 15 |  | star-arm-102-fingertip-right | <img src="images/star-arm-102-fingertip-right.png" alt="star-arm-102-fingertip-right" width="90"> | PLA 3D printed part (ivory); wall loops: 4; infill density: 15% | 1 |
 | 16 | 01.08.05000012 | Thrust needle roller bearing | <img src="../../media/axk2035-2as-bearing.png" alt="AXK2035+2AS thrust needle roller bearing" width="90"> | AXK2035+2AS; inner diameter 20 mm, outer diameter 35 mm, thickness 4 mm | 1 |
 | 17 | 03.01.00000107 | UC-01 board | <img src="../../media/uc-01-primary.webp" alt="UC-01" width="90"> | XT30 connector | 1 |
-| 18 | 01.01.17000102 | 120 mm servo cable | <a href="../../media/ph-3y-servo-cable-120mm.png"><img src="../../media/ph-3y-servo-cable-120mm.png" alt="PH-3Y 120 mm servo cable" width="90"></a> | PH-3Y connectors, reversed pin order between ends; black silicone-insulated ribbon cable with black braided sleeving; 60 × Ø0.08 mm strands per conductor (approx. 22 AWG); length 120 mm | 4 |
-| 19 | 01.01.17000101 | 200 mm servo cable | <a href="../../media/ph-3y-servo-cable-200mm.png"><img src="../../media/ph-3y-servo-cable-200mm.png" alt="PH-3Y 200 mm servo cable" width="90"></a> | PH-3Y connectors, reversed pin order between ends; black silicone-insulated ribbon cable with black braided sleeving; 60 × Ø0.08 mm strands per conductor (approx. 22 AWG); length 200 mm | 3 |
-| 20 | 01.06.01000167 | M3 × 10 socket-head cap screw | Pending | Property class 12.9, black finish | 1 |
+| 18 | 01.01.17000102 | PH2.0 120 mm servo cable | <a href="../../media/ph-3y-servo-cable-120mm.png"><img src="../../media/ph-3y-servo-cable-120mm.png" alt="PH2.0 120 mm servo cable" width="90"></a> | Black silicone-insulated ribbon cable with black braided sleeving; PH2.0 connectors (PH-3Y), reversed pin order between ends; 60 × Ø0.08 mm strands per conductor (approx. 22 AWG); length 120 mm | 4 |
+| 19 | 01.01.17000101 | PH2.0 200 mm servo cable | <a href="../../media/ph-3y-servo-cable-200mm.png"><img src="../../media/ph-3y-servo-cable-200mm.png" alt="PH2.0 200 mm servo cable" width="90"></a> | Black silicone-insulated ribbon cable with black braided sleeving; PH2.0 connectors (PH-3Y), reversed pin order between ends; 60 × Ø0.08 mm strands per conductor (approx. 22 AWG); length 200 mm | 3 |
+| 20 | 01.06.01000167 | M3 × 10 socket-head cap screw | Pending | Black finish, property class 12.9 | 1 |
 | 21 | 01.06.01000183 | M3 × 22 socket-head cap screw | Pending | Black finish | 4 |
-| 22 |  | M3 × 10 Phillips screw | Pending | Hardened, black finish | 1 |
-| 23 | 01.06.01000060 | PB2.0 × 5 Phillips self-tapping screw | Pending | Hardened, black finish | 30 |
+| 22 |  | M3 × 10 Phillips screw | Pending | Black finish, hardened | 1 |
+| 23 | 01.06.01000060 | PB2.0 × 5 Phillips self-tapping screw | Pending | Black finish, hardened | 30 |
 | 24 | 01.06.01000079 | M2 × 4.5 Phillips pan-head screw | Pending | Black finish, pre-applied threadlocker | 47 |
 | 25 |  | M2 × 10 hex socket screw | Pending | Black finish | 8 |
 | 26 | 01.06.01000184 | M2 × 8 socket-head cap screw | Pending | Black finish | 16 |
