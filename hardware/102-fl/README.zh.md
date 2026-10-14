@@ -36,7 +36,7 @@
 
 打印件的“型号／规格”与 STEP、STL 及独立 3MF 的文件名主体一致（不含扩展名）。BOM 中的打印参数仅供参考，尚未完成实物打印验证。link1 的 BOM 参数为壁数 5／填充 50%，而原 3MF 为壁数 2／填充 15%，打印前需确认。
 
-紧固件图片为 AI 生成的外观示意图，规格以表格文字为准；点击图片可放大查看。
+打印件图片由对应的 STEP 模型渲染生成。紧固件图片为 AI 生成的外观示意图，规格以表格文字为准；点击图片可放大查看。
 
 | 序号 | 品名 | 型号／规格 | 图片 | 描述 | 数量 |
 | :---: | --- | --- | :---: | --- | :---: |
@@ -44,21 +44,21 @@
 | 2 | UART 总线舵机 | RA8-U35H-M | <img src="images/ra8-u35h-m.webp" alt="RA8-U35H-M" width="90"> | 12V；35kg-cm；55rpm；双轴；有刷铁芯电机；12 位磁性绝对值编码器；25T | 3 |
 | 3 | UART 总线舵机 | RA8-U35H-M-C047 | <img src="images/ra8-u35h-m-c047.webp" alt="RA8-U35H-M-C047" width="90"> | 12V；35kg-cm；55rpm；双轴款壳体（平面下盖，无后输出轴）；有刷铁芯电机；12 位磁性绝对值编码器；25T | 1 |
 | 4 | UART 总线舵机 | RA8-U27H-M-C005 | <img src="images/ra8-u27h-m-c005.webp" alt="RA8-U27H-M-C005" width="90"> | 12V；25kg-cm；72rpm；双轴款壳体（平面下盖，无后输出轴）；有刷铁芯电机；12 位磁性绝对值编码器；D 型轴 | 1 |
-| 5 | 基座底板 | star-arm-102-base-bottom | <img src="images/star-arm-102-base-bottom.png" alt="star-arm-102-base-bottom" width="90"> | 象牙白，PLA 3D 打印件；壁数：2；填充密度：15% | 1 |
-| 6 | 基座顶板 | star-arm-102-base-top | <img src="images/star-arm-102-base-top.png" alt="star-arm-102-base-top" width="90"> | 象牙白，PLA 3D 打印件；分区域参数，详见 3MF | 1 |
-| 7 | 第一连杆 | star-arm-102-link1 | <img src="images/star-arm-102-link1.png" alt="star-arm-102-link1" width="90"> | 象牙白，PLA 3D 打印件；壁数：5；填充密度：50% | 1 |
-| 8 | 第二连杆 | star-arm-102-link2 | <img src="images/star-arm-102-link2.png" alt="star-arm-102-link2" width="90"> | 象牙白，PLA 3D 打印件；壁数：2；填充密度：10% | 1 |
-| 9 | 第三连杆 | star-arm-102-link3 | <img src="images/star-arm-102-link3.png" alt="star-arm-102-link3" width="90"> | 象牙白＋黑色，PLA 3D 打印件；分区域参数，详见 3MF | 1 |
-| 10 | 第四连杆 | star-arm-102-link4 | <img src="images/star-arm-102-link4.png" alt="star-arm-102-link4" width="90"> | 象牙白，PLA 3D 打印件；壁数：2；填充密度：15% | 1 |
-| 11 | 第五连杆 | star-arm-102-link5 | <img src="images/star-arm-102-link5.png" alt="star-arm-102-link5" width="90"> | 象牙白，PLA 3D 打印件；壁数：2；填充密度：15% | 1 |
-| 12 | 第六连杆（夹爪端） | star-arm-102-link6-gripper | <img src="images/star-arm-102-link6-gripper.png" alt="star-arm-102-link6-gripper" width="90"> | 象牙白，PLA 3D 打印件；壁数：4；填充密度：15% | 1 |
-| 13 | 夹爪主体 | star-arm-102-gripper-body | <img src="images/star-arm-102-gripper-body.png" alt="star-arm-102-gripper-body" width="90"> | 象牙白，PLA 3D 打印件；壁数：4；填充密度：15% | 1 |
-| 14 | 左指尖 | star-arm-102-fingertip-left | <img src="images/star-arm-102-fingertip-left.png" alt="star-arm-102-fingertip-left" width="90"> | 象牙白，PLA 3D 打印件；壁数：4；填充密度：15% | 1 |
-| 15 | 右指尖 | star-arm-102-fingertip-right | <img src="images/star-arm-102-fingertip-right.png" alt="star-arm-102-fingertip-right" width="90"> | 象牙白，PLA 3D 打印件；壁数：4；填充密度：15% | 1 |
+| 5 | 基座底板 | star-arm-102-base-bottom | <a href="images/star-arm-102-base-bottom.png"><img src="images/star-arm-102-base-bottom.png" alt="star-arm-102-base-bottom" width="90"></a> | 象牙白，PLA 3D 打印件；壁数：2；填充密度：15% | 1 |
+| 6 | 基座顶板 | star-arm-102-base-top | <a href="images/star-arm-102-base-top.png"><img src="images/star-arm-102-base-top.png" alt="star-arm-102-base-top" width="90"></a> | 象牙白，PLA 3D 打印件；分区域参数，详见 3MF | 1 |
+| 7 | 第一连杆 | star-arm-102-link1 | <a href="images/star-arm-102-link1.png"><img src="images/star-arm-102-link1.png" alt="star-arm-102-link1" width="90"></a> | 象牙白，PLA 3D 打印件；壁数：5；填充密度：50% | 1 |
+| 8 | 第二连杆 | star-arm-102-link2 | <a href="images/star-arm-102-link2.png"><img src="images/star-arm-102-link2.png" alt="star-arm-102-link2" width="90"></a> | 象牙白，PLA 3D 打印件；壁数：2；填充密度：10% | 1 |
+| 9 | 第三连杆 | star-arm-102-link3 | <a href="images/star-arm-102-link3.png"><img src="images/star-arm-102-link3.png" alt="star-arm-102-link3" width="90"></a> | 象牙白＋黑色，PLA 3D 打印件；分区域参数，详见 3MF | 1 |
+| 10 | 第四连杆 | star-arm-102-link4 | <a href="images/star-arm-102-link4.png"><img src="images/star-arm-102-link4.png" alt="star-arm-102-link4" width="90"></a> | 象牙白，PLA 3D 打印件；壁数：2；填充密度：15% | 1 |
+| 11 | 第五连杆 | star-arm-102-link5 | <a href="images/star-arm-102-link5.png"><img src="images/star-arm-102-link5.png" alt="star-arm-102-link5" width="90"></a> | 象牙白，PLA 3D 打印件；壁数：2；填充密度：15% | 1 |
+| 12 | 第六连杆（夹爪端） | star-arm-102-link6-gripper | <a href="images/star-arm-102-link6-gripper.png"><img src="images/star-arm-102-link6-gripper.png" alt="star-arm-102-link6-gripper" width="90"></a> | 象牙白，PLA 3D 打印件；壁数：4；填充密度：15% | 1 |
+| 13 | 夹爪主体 | star-arm-102-gripper-body | <a href="images/star-arm-102-gripper-body.png"><img src="images/star-arm-102-gripper-body.png" alt="star-arm-102-gripper-body" width="90"></a> | 象牙白，PLA 3D 打印件；壁数：4；填充密度：15% | 1 |
+| 14 | 左指尖 | star-arm-102-fingertip-left | <a href="images/star-arm-102-fingertip-left.png"><img src="images/star-arm-102-fingertip-left.png" alt="star-arm-102-fingertip-left" width="90"></a> | 象牙白，PLA 3D 打印件；壁数：4；填充密度：15% | 1 |
+| 15 | 右指尖 | star-arm-102-fingertip-right | <a href="images/star-arm-102-fingertip-right.png"><img src="images/star-arm-102-fingertip-right.png" alt="star-arm-102-fingertip-right" width="90"></a> | 象牙白，PLA 3D 打印件；壁数：4；填充密度：15% | 1 |
 | 16 | 推力滚针轴承 | AXK2035+2AS | <img src="../../media/axk2035-2as-bearing.png" alt="AXK2035+2AS 滚针轴承" width="90"> | 内径 20 mm，外径 35 mm，厚度 4 mm | 1 |
 | 17 | 电路板 | UC-01 | <img src="../../media/uc-01-primary.webp" alt="UC-01" width="90"> | XT30 接口 | 1 |
-| 18 | 舵机连接线 | PH2.0 (PH-3Y)<br>120 mm | <a href="../../media/ph-3y-servo-cable-120mm.png"><img src="../../media/ph-3y-servo-cable-120mm.png" alt="PH2.0 120 mm 舵机连接线" width="90"></a> | 黑色硅胶绝缘排线，外覆黑色编织护套；两端线序反向；每根导体 60 × Ø0.08 mm（约 22 AWG） | 4 |
-| 19 | 舵机连接线 | PH2.0 (PH-3Y)<br>200 mm | <a href="../../media/ph-3y-servo-cable-200mm.png"><img src="../../media/ph-3y-servo-cable-200mm.png" alt="PH2.0 200 mm 舵机连接线" width="90"></a> | 黑色硅胶绝缘排线，外覆黑色编织护套；两端线序反向；每根导体 60 × Ø0.08 mm（约 22 AWG） | 3 |
+| 18 | 舵机连接线 | PH2.0 (PH-3Y)<br>120 mm | <a href="../../media/ph-3y-servo-cable-120mm.png"><img src="../../media/ph-3y-servo-cable-120mm-thumbnail.png" alt="PH2.0 120 mm 舵机连接线" width="90"></a> | 黑色硅胶绝缘排线，外覆黑色编织护套；两端线序反向；每根导体 60 × Ø0.08 mm（约 22 AWG） | 4 |
+| 19 | 舵机连接线 | PH2.0 (PH-3Y)<br>200 mm | <a href="../../media/ph-3y-servo-cable-200mm.png"><img src="../../media/ph-3y-servo-cable-200mm-thumbnail.png" alt="PH2.0 200 mm 舵机连接线" width="90"></a> | 黑色硅胶绝缘排线，外覆黑色编织护套；两端线序反向；每根导体 60 × Ø0.08 mm（约 22 AWG） | 3 |
 | 20 | 内六角圆柱头螺钉 | M3 × 22 | <a href="../../media/fasteners/m3-22-socket-head-cap-screw.png"><img src="../../media/fasteners/m3-22-socket-head-cap-screw.png" alt="M3 × 22 内六角圆柱头螺钉示意图" width="90"></a> | 黑色表面 | 4 |
 | 21 | 内六角圆柱头螺钉 | M3 × 10 | <a href="../../media/fasteners/m3-10-socket-head-cap-screw.png"><img src="../../media/fasteners/m3-10-socket-head-cap-screw.png" alt="M3 × 10 内六角圆柱头螺钉示意图" width="90"></a> | 黑色表面，强度等级 12.9 | 1 |
 | 22 | 内六角圆柱头螺钉 | M2 × 10 | <a href="../../media/fasteners/m2-10-socket-head-cap-screw.png"><img src="../../media/fasteners/m2-10-socket-head-cap-screw.png" alt="M2 × 10 内六角圆柱头螺钉示意图" width="90"></a> | 黑色表面 | 8 |
