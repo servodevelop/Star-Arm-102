@@ -60,13 +60,13 @@ Printed-part names match the STEP, STL, and individual 3MF filenames. Print sett
 | 20 | 01.01.17000102 | 120 mm servo cable | <a href="../../media/ph-3y-servo-cable-120mm.png"><img src="../../media/ph-3y-servo-cable-120mm.png" alt="PH-3Y 120 mm servo cable" width="90"></a> | PH-3Y connectors, reversed pin order between ends; black silicone-insulated ribbon cable with black braided sleeving; 60 × Ø0.08 mm strands per conductor (approx. 22 AWG); length 120 mm | 6 | Installed part |
 | 21 | 01.01.17000101 | 200 mm servo cable | <a href="../../media/ph-3y-servo-cable-200mm.png"><img src="../../media/ph-3y-servo-cable-200mm.png" alt="PH-3Y 200 mm servo cable" width="90"></a> | PH-3Y connectors, reversed pin order between ends; black silicone-insulated ribbon cable with black braided sleeving; 60 × Ø0.08 mm strands per conductor (approx. 22 AWG); length 200 mm | 2 | Installed part |
 | 22 | 01.06.01000167 | M3 × 10 socket-head screw | Pending | HSCS, grade 12.9 | 1 | Installed part |
-| 23 | 01.06.01000183 | M3 × 22 socket-head screw | Pending | Black finish | 4 | Installed part |
+| 23 | 01.06.01000183 | M3 × 22 socket-head cap screw | Pending | Black finish | 4 | Installed part |
 | 24 |  | M3 × 10 Phillips screw | Pending | Hardened, black finish | 1 | Installed part |
-| 25 | 01.06.01000060 | PB2.0 × 5 self-tapping screw | Pending | Phillips countersunk, hardened, black finish | 46 | Installed part |
-| 26 | 01.06.01000079 | M2 × 4.5 Phillips screw | Pending | Countersunk, black finish, pre-applied threadlocker | 35 | Installed part |
+| 25 | 01.06.01000060 | PB2.0 × 5 Phillips self-tapping screw | Pending | Hardened, black finish | 46 | Installed part |
+| 26 | 01.06.01000079 | M2 × 4.5 Phillips pan-head screw | Pending | Black finish, pre-applied threadlocker | 35 | Installed part |
 | 27 |  | M2 × 10 socket-head screw | Pending | Black finish | 8 | Installed part |
-| 28 | 01.06.01000184 | M2 × 8 socket-head screw | Pending | Black finish | 8 | Installed part |
-| 29 |  | M3 × 12 self-tapping screw | Pending | Phillips head | 2 | Installed part |
+| 28 | 01.06.01000184 | M2 × 8 socket-head cap screw | Pending | Black finish | 8 | Installed part |
+| 29 |  | 3 × 12 mm Phillips flat-head self-tapping screw | Pending | Silver finish | 2 | Installed part |
 | 30 | 01.06.01000086 | M3 locknut | Pending | Black finish | 5 | Installed part |
 | 31 |  | M3 washer | Pending | Stainless steel | 1 | Installed part |
 
