@@ -61,13 +61,13 @@ Screw images are AI-generated illustrations; refer to the table text for specifi
 | 19 | Servo cable | PH2.0 (PH-3Y)<br>200 mm | <a href="../../media/ph-3y-servo-cable-200mm.png"><img src="../../media/ph-3y-servo-cable-200mm.png" alt="PH2.0 200 mm servo cable" width="90"></a> | Black silicone-insulated ribbon cable with black braided sleeving; reversed pin order between ends; 60 × Ø0.08 mm strands per conductor (approx. 22 AWG) | 3 |
 | 20 | Socket-head cap screw | M3 × 10 | <a href="../../media/fasteners/m3-10-socket-head-cap-screw.png"><img src="../../media/fasteners/m3-10-socket-head-cap-screw.png" alt="M3 × 10 socket-head cap screw illustration" width="90"></a> | Black finish, property class 12.9 | 1 |
 | 21 | Socket-head cap screw | M3 × 22 | <a href="../../media/fasteners/m3-22-socket-head-cap-screw.png"><img src="../../media/fasteners/m3-22-socket-head-cap-screw.png" alt="M3 × 22 socket-head cap screw illustration" width="90"></a> | Black finish | 4 |
-| 22 | Phillips screw | M3 × 10 | Pending | Black finish, hardened | 1 |
+| 22 | Phillips pan-head screw | M3 × 10 | Pending | Black finish, hardened | 1 |
 | 23 | Phillips self-tapping screw | PB2.0 × 5 | Pending | Black finish, hardened | 30 |
 | 24 | Phillips pan-head screw | M2 × 4.5 | <a href="../../media/fasteners/m2-4-5-phillips-pan-head-screw.png"><img src="../../media/fasteners/m2-4-5-phillips-pan-head-screw.png" alt="M2 × 4.5 Phillips pan-head screw illustration" width="90"></a> | Black finish, pre-applied threadlocker | 47 |
-| 25 | Hex socket screw | M2 × 10 | Pending | Black finish | 8 |
+| 25 | Socket-head cap screw | M2 × 10 | Pending | Black finish | 8 |
 | 26 | Socket-head cap screw | M2 × 8 | <a href="../../media/fasteners/m2-8-socket-head-cap-screw.png"><img src="../../media/fasteners/m2-8-socket-head-cap-screw.png" alt="M2 × 8 socket-head cap screw illustration" width="90"></a> | Black finish | 16 |
 | 27 | Phillips flat-head self-tapping screw | 3 × 12 mm | <a href="../../media/fasteners/3-12-phillips-flat-head-self-tapping-screw.png"><img src="../../media/fasteners/3-12-phillips-flat-head-self-tapping-screw.png" alt="3 × 12 mm Phillips flat-head self-tapping screw illustration" width="90"></a> | Silver finish | 2 |
-| 28 | Locknut | M3 | Pending | Black finish | 6 |
-| 29 | Washer | M3<br>3 × 6 × 0.5 mm | Pending | — | 2 |
+| 28 | Nut | M3 | Pending | Black finish | 6 |
+| 29 | Washer | M3 (3 × 6 × 0.5 mm) | Pending | Stainless steel | 2 |
 
 Found an error in these resources or need help? Contact our [Support Hub](https://fashionstar.com.hk/support/) with your model and the relevant file or item.

@@ -61,13 +61,13 @@
 | 19 | 舵机连接线 | PH2.0 (PH-3Y)<br>200 mm | <a href="../../media/ph-3y-servo-cable-200mm.png"><img src="../../media/ph-3y-servo-cable-200mm.png" alt="PH2.0 200 mm 舵机连接线" width="90"></a> | 黑色硅胶绝缘排线，外覆黑色编织护套；两端线序反向；每根导体 60 × Ø0.08 mm（约 22 AWG） | 3 |
 | 20 | 内六角圆柱头螺钉 | M3 × 10 | <a href="../../media/fasteners/m3-10-socket-head-cap-screw.png"><img src="../../media/fasteners/m3-10-socket-head-cap-screw.png" alt="M3 × 10 内六角圆柱头螺钉示意图" width="90"></a> | 黑色表面，强度等级 12.9 | 1 |
 | 21 | 内六角圆柱头螺钉 | M3 × 22 | <a href="../../media/fasteners/m3-22-socket-head-cap-screw.png"><img src="../../media/fasteners/m3-22-socket-head-cap-screw.png" alt="M3 × 22 内六角圆柱头螺钉示意图" width="90"></a> | 黑色表面 | 4 |
-| 22 | 十字槽螺钉 | M3 × 10 | 待补 | 黑色表面，加硬 | 1 |
+| 22 | 十字槽盘头螺钉 | M3 × 10 | 待补 | 黑色表面，加硬 | 1 |
 | 23 | 十字槽自攻螺钉 | PB2.0 × 5 | 待补 | 黑色表面，加硬 | 30 |
 | 24 | 十字槽盘头螺钉 | M2 × 4.5 | <a href="../../media/fasteners/m2-4-5-phillips-pan-head-screw.png"><img src="../../media/fasteners/m2-4-5-phillips-pan-head-screw.png" alt="M2 × 4.5 十字槽盘头螺钉示意图" width="90"></a> | 黑色表面，螺纹预涂锁固胶 | 47 |
-| 25 | 内六角螺钉 | M2 × 10 | 待补 | 黑色表面 | 8 |
+| 25 | 内六角圆柱头螺钉 | M2 × 10 | 待补 | 黑色表面 | 8 |
 | 26 | 内六角圆柱头螺钉 | M2 × 8 | <a href="../../media/fasteners/m2-8-socket-head-cap-screw.png"><img src="../../media/fasteners/m2-8-socket-head-cap-screw.png" alt="M2 × 8 内六角圆柱头螺钉示意图" width="90"></a> | 黑色表面 | 16 |
 | 27 | 十字槽沉头自攻螺钉 | 3 × 12 mm | <a href="../../media/fasteners/3-12-phillips-flat-head-self-tapping-screw.png"><img src="../../media/fasteners/3-12-phillips-flat-head-self-tapping-screw.png" alt="3 × 12 mm 十字槽沉头自攻螺钉示意图" width="90"></a> | 银色表面 | 2 |
-| 28 | 防松螺母 | M3 | 待补 | 黑色表面 | 6 |
-| 29 | 垫片 | M3<br>3 × 6 × 0.5 mm | 待补 | — | 2 |
+| 28 | 螺母 | M3 | 待补 | 黑色表面 | 6 |
+| 29 | 垫片 | M3（3 × 6 × 0.5 mm） | 待补 | 不锈钢 | 2 |
 
 发现资料错误或需要帮助？请通过 [Support 支持中心](https://fashionstar.com.hk/support/) 联系我们，并注明型号及对应文件或条目。
