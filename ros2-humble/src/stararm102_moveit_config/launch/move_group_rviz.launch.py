@@ -15,6 +15,16 @@ from launch_ros.parameter_descriptions import ParameterValue
 def generate_launch_description():
     moveit_config = MoveItConfigsBuilder("stararm102_description", package_name="stararm102_moveit_config").to_moveit_configs()
 
+    # The hardware driver exposes GripperCommand; simulation uses a trajectory controller.
+    hand_controller = moveit_config.trajectory_execution[
+        "moveit_simple_controller_manager"
+    ]["hand_controller"]
+    hand_controller.update(
+        type="GripperCommand",
+        action_ns="gripper_cmd",
+        command_joint="joint7_left",
+    )
+
     ld = LaunchDescription()
 
     generate_move_group_launch(ld, moveit_config)
