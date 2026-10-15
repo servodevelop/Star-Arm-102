@@ -146,7 +146,7 @@ sudo usermod -aG dialout "$USER"
 
 ## 📚 进阶与帮助
 
-- **采集示范数据与训练：** [LeRobot](../lerobot/README.md)；HD 按钮集成见 [HD／FL 配置](../lerobot/lerobot-stararm102/README.md)。
+- **采集示范数据与训练：** [LeRobot 完整教程](../lerobot/README.zh.md)，包含 LD／HD 配置、软件校准、相机、采集、回放、ACT 训练与评估。
 - **开发 ROS 2 应用：** [ROS 2 Humble](../ros2-humble/)。
 - **选择兼容的软件：** [兼容性指南](compatibility.md)。只安装所选流程所需的环境；面向客户的 Python 示例以 Ubuntu 22.04 为目标平台。
 - **遇到问题？** 先查看[故障排查](troubleshooting.md)。[提交 Issue](https://github.com/servodevelop/Star-Arm-102/issues/new/choose) 时，请附上型号、运行环境、执行命令和完整报错。

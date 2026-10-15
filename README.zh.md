@@ -7,7 +7,7 @@
 
 <p align="center">
   <a href="docs/specifications.md"><img src="https://img.shields.io/badge/DOF-6%2B1-16A085?style=flat-square" alt="6 arm joints plus 1 gripper"></a>
-  <a href="lerobot/README.md"><img src="https://img.shields.io/badge/LeRobot-Integration-FFD21E?style=flat-square&amp;logo=huggingface&amp;logoColor=FFD21E" alt="LeRobot integration"></a>
+  <a href="lerobot/README.zh.md"><img src="https://img.shields.io/badge/LeRobot-Integration-FFD21E?style=flat-square&amp;logo=huggingface&amp;logoColor=FFD21E" alt="LeRobot integration"></a>
   <a href="python-sdk/README.md"><img src="https://img.shields.io/badge/Python-SDK-3776AB?style=flat-square&amp;logo=python&amp;logoColor=white" alt="Python SDK"></a>
   <a href="ros2-humble/README.zh.md"><img src="https://img.shields.io/badge/ROS_2-Humble-22314E?style=flat-square&amp;logo=ros&amp;logoColor=white" alt="ROS 2 Humble"></a>
   <a href="lerobot/examples/act_pick/README.zh.md"><img src="https://img.shields.io/badge/ACT-Pretrained_Model-8B5CF6?style=flat-square" alt="ACT pretrained model"></a>
@@ -41,7 +41,7 @@
 - [🎮 连接主臂，体验虚拟从臂](#web-controller)
 - [🤖 运行第一个 AI 任务](#run-your-first-ai-task)
 - [⚙️ 硬件资源](hardware/)
-- [🤗 LeRobot](lerobot/README.md)
+- [🤗 LeRobot 遥操作与训练](lerobot/README.zh.md)
 - [💬 自然语言控制](integrations/butterfly/README.zh-CN.md)
 - [🦾 ROS 2 Humble 应用](ros2-humble/README.zh.md)
 - [🐍 Python SDK](python-sdk/README.md)
@@ -154,7 +154,7 @@ Star Arm 102 是 **[Fashion Star](https://fashionstar.com.hk/)** 开发的开源
   <a href="https://github.com/user-attachments/assets/6774384d-f437-4aa9-a364-cd66eba965f7"><strong>▶ 观看 ACT 积木放置演示</strong></a>
 </p>
 
-**[在你的机械臂上运行演示 →](lerobot/examples/act_pick/README.zh.md)**
+**[体验现成 ACT 模型 →](lerobot/examples/act_pick/README.zh.md)** · **[采集数据，训练自己的任务 →](lerobot/README.zh.md)**
 
 指南将带你完成所需硬件、双相机配置、校准和任务场景的准备。
 
@@ -208,6 +208,8 @@ Star-Arm-102/
 │   ├── lumos-touch/
 │   └── butterfly/                            自然语言控制应用
 ├── lerobot/
+│   ├── README.md
+│   ├── README.zh.md
 │   ├── examples/act_pick/
 │   ├── lerobot-robot-stararm102/
 │   ├── lerobot-teleoperator-stararm102/

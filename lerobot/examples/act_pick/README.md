@@ -9,9 +9,9 @@
 - [🤖 Model card](#page-section-3)
 - [🧩 Match the scene](#page-section-4)
 
-**Run a supplied policy before training your own.** This example uses a Star Arm 102-FL and two cameras to place a block in the center of a prepared workspace.
+**Try a supplied policy without retraining.** This example uses a Star Arm 102-FL and two cameras to place a block in the center of a prepared workspace.
 
-**[Run the model](inference.md) · [Download the release](https://github.com/servodevelop/Star-Arm-102/releases/tag/act-pick-v1.0.0) · [Training next steps](training.md)**
+**[Run the model](inference.md) · [Download the release](https://github.com/servodevelop/Star-Arm-102/releases/tag/act-pick-v1.0.0) · [Train your own task](../../README.md#record)**
 
 <a id="page-section-1"></a>
 

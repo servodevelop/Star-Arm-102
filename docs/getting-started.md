@@ -146,7 +146,7 @@ Follow the demo's environment and calibration instructions, and start with one t
 
 ## 📚 Next steps and help
 
-- **Record demonstrations and train:** [LeRobot](../lerobot/README.md); for HD button integration, see the [HD / FL setup](../lerobot/lerobot-stararm102/README.md).
+- **Record demonstrations and train:** the [complete LeRobot tutorial](../lerobot/README.md) covers LD/HD setup, software calibration, cameras, recording, replay, ACT training, and evaluation.
 - **Develop ROS 2 applications:** [ROS 2 Humble](../ros2-humble/).
 - **Choose compatible software:** [Compatibility guide](compatibility.md). Install only the environment required by your chosen workflow; customer Python examples target Ubuntu 22.04.
 - **Need help?** Start with [troubleshooting](troubleshooting.md). When [reporting an issue](https://github.com/servodevelop/Star-Arm-102/issues/new/choose), include your model, environment, command and full error message.

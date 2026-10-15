@@ -9,9 +9,9 @@
 - [🤖 模型信息](#page-section-3)
 - [🧩 复现工作场景](#page-section-4)
 
-**先运行已有策略，再训练自己的任务。** 本示例使用 Star Arm 102-FL 和两台相机，将积木放到预先布置的工作区中心。
+**无需重新训练，先体验现成策略。** 本示例使用 Star Arm 102-FL 和两台相机，将积木放到预先布置的工作区中心。
 
-**[运行模型](inference.md) · [下载发布版本](https://github.com/servodevelop/Star-Arm-102/releases/tag/act-pick-v1.0.0) · [后续训练](training.md)**
+**[运行模型](inference.md) · [下载发布版本](https://github.com/servodevelop/Star-Arm-102/releases/tag/act-pick-v1.0.0) · [训练自己的任务](../../README.zh.md#record)**
 
 <a id="watch-the-demo"></a>
 

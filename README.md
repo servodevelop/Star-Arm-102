@@ -41,7 +41,7 @@
 - [🎮 Connect Your Leader to a Virtual Follower](#web-controller)
 - [🤖 Run Your First AI Task](#run-your-first-ai-task)
 - [⚙️ Hardware Resources](hardware/)
-- [🤗 LeRobot](lerobot/README.md)
+- [🤗 LeRobot Teleoperation & Training](lerobot/README.md)
 - [💬 Natural Language Control](integrations/butterfly/README.md)
 - [🦾 ROS 2 Humble Applications](ros2-humble/README.md)
 - [🐍 Python SDK](python-sdk/README.md)
@@ -154,7 +154,7 @@ Watch Star Arm 102-FL pick up and place a block using our pretrained ACT model. 
   <a href="https://github.com/user-attachments/assets/6774384d-f437-4aa9-a364-cd66eba965f7"><strong>▶ Watch the ACT block-placement demo</strong></a>
 </p>
 
-**[Run the Demo on Your Arm →](lerobot/examples/act_pick/README.md)**
+**[Try the Pretrained ACT Model →](lerobot/examples/act_pick/README.md)** · **[Collect Data and Train Your Own Task →](lerobot/README.md)**
 
 The guide walks you through the required hardware, two-camera setup, calibration, and workspace preparation.
 
@@ -208,6 +208,8 @@ Star-Arm-102/
 │   ├── lumos-touch/
 │   └── butterfly/                            Natural-language control application
 ├── lerobot/
+│   ├── README.md
+│   ├── README.zh.md
 │   ├── examples/act_pick/
 │   ├── lerobot-robot-stararm102/
 │   ├── lerobot-teleoperator-stararm102/

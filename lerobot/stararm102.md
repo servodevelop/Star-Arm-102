@@ -1,4 +1,4 @@
-> 历史中文补充教程：当前安装与两代插件的选择请从 [LeRobot 入口](README.md) 开始。
+> 历史版本教程：以下命令面向旧版插件，不适用于重构后的 HD／FL 集成。新任务请使用[完整中文教程](README.zh.md)；现成模型请使用 [ACT 发布指南](examples/act_pick/README.zh.md)。
 
 # 如何搭建具身智能LeRobot-starai系列机械臂并完成自定义抓取任务
 

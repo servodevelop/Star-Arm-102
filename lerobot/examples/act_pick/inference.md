@@ -103,7 +103,16 @@ The task string describes the recording; it does not teach this ACT model a diff
 
 ## Optional leader for later trials
 
-First calibrate a compatible leader in this same release environment using the [LeRobot guide](../../README.md#calibrate-the-ld-leader-and-fl-follower). After a successful first trial, add these options to the recording command when you need leader control during reset intervals:
+First calibrate a compatible LD leader in this same release environment. Support the arm, follow the reference-pose and range-recording prompts, and reuse this calibration ID later. Do not use the refactored tutorial's device types with the released model.
+
+```bash
+lerobot-calibrate \
+  --teleop.type=lerobot_teleoperator_stararm102 \
+  --teleop.port=/dev/ttyUSB0 \
+  --teleop.id=customer_stararm102_leader
+```
+
+After a successful first trial, add these options to the recording command when you need leader control during reset intervals:
 
 ```text
 --teleop.type=lerobot_teleoperator_stararm102

@@ -2,13 +2,13 @@
 
 [Try the supplied policy first](inference.md) · [Choose a LeRobot integration](../../README.md)
 
-Phase one provides an English path to the released model and a starting point for collecting your own task. A complete step-by-step training course belongs to the later Wiki phase.
+To collect a new dataset and train your own task, follow the [complete LeRobot tutorial](../../README.md#record). This page explains how that workflow relates to the supplied ACT release.
 
 ## What is available now
 
 - The released 100,000-step ACT checkpoint and [scene photographs](README.md).
-- [Calibration and teleoperation](../../README.md) for the release-compatible plugins.
-- A [recording and starter training example](../../lerobot-stararm102/README.md#record-your-own-demonstrations) for the refactored HD/FL integration. Its dataset has different joint features and is not interchangeable with the released model.
+- [Calibration and inference](inference.md) for the release-compatible plugins.
+- A [recording, data review, and training workflow](../../README.md#record) for the refactored HD/FL integration. Its dataset has different joint features and is not interchangeable with the released model.
 
 The archive includes `train_config.json`: 100,000 steps, batch size 8, seed 1000, four data workers, ACT chunk size 100, and AdamW learning rate `1e-5`. It also contains the policy configuration and normalization processors. The dataset path in that file points to the original training machine; it is not a downloadable dataset URL.
 
@@ -25,6 +25,6 @@ The release does not include the training dataset, a complete software environme
 
 For the general workflow, see the [official LeRobot documentation](https://huggingface.co/docs/lerobot/). Match commands to the LeRobot version you installed.
 
-## Later Wiki course
+## Continue with your own task
 
-The next documentation phase should supply illustrated recording steps, dataset review, a complete tested training command, checkpoint selection, failure analysis, and repeatable evaluation. It should link back to the versioned code and model instructions in this repository.
+Follow [recording](../../README.md#record), [review and replay](../../README.md#replay), [ACT training](../../README.md#train), and [evaluation](../../README.md#evaluate) in order. The refactored workflow still needs end-to-end hardware validation; completing this documentation does not establish training performance.

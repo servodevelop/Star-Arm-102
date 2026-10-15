@@ -1,4 +1,4 @@
-> Historical English integration guide. For the current installation paths, start with [LeRobot setup](README.md). Do not combine commands across plugin generations. Product descriptions below may refer to earlier hardware.
+> Historical integration guide for the older plugins, not the refactored HD/FL integration. For a new task use the [complete tutorial](README.md); for the supplied model use the [ACT release guide](examples/act_pick/README.md). Product descriptions below may refer to earlier hardware.
 
 # How to use the LeRobot-starai robotic arm in Lerobot
 
