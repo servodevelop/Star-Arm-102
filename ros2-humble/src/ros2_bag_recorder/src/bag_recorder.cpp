@@ -25,10 +25,8 @@ std::vector<std::string> joint_name = {
 
 double jointstate2servoangle(size_t servo_id, double joint_state)
 {
-  if (servo_id < 6)
+  if (servo_id < 7)
     return joint_state * (180.0 / 3.1415926);
-  else if (servo_id == 6)
-    return -(joint_state * (180.0 / 3.1415926));
   else
     return 0.0;
 }
