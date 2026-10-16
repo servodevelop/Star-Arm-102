@@ -89,8 +89,8 @@ class uservo_ex:
         if servo_id in range(6):
             return cls.degrees_to_radians(servo_angle)
         elif servo_id == 6:
-            # Joint7 axis was flipped in URDF, so invert the gripper feedback too.
-            return -cls.degrees_to_radians(servo_angle)
+            # Positive servo angles match the URDF gripper opening range [0, 1.57].
+            return cls.degrees_to_radians(servo_angle)
 
     # 设置角度（指定转速） / Send angle commands with specified speed
     def set_angle_by_interval(self, size, command_data_list):
