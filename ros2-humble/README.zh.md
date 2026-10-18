@@ -214,8 +214,8 @@ ros2 launch stararm102_moveit_config gazebo_demo.launch.py
 运行中的演示画面应与以下截图类似：
 
 <p align="center">
-  <img src="media/gazebo-demo-1.png" alt="Gazebo 演示画面 1" width="720"><br>
-  <em>Gazebo 演示画面 1</em>
+  <img src="media/virtual-arm-demo-1.png" alt="MoveIt 虚拟机械臂 RViz 演示画面" width="720"><br>
+  <em>虚拟机械臂 RViz 演示画面</em>
 </p>
 
 <p align="center">
