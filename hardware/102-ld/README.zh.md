@@ -15,6 +15,7 @@
 
 - [📂 资源目录](#resources)
 - [📋 物料清单](#bill-of-materials)
+- [🔢 关节与舵机 ID 对照](../../docs/specifications.zh.md#joint-ids-and-names)
 
 <a id="resources"></a>
 

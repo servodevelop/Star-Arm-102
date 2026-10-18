@@ -73,6 +73,8 @@ BOM、CAD（STEP）、URDF 与 3D 打印文件：[102-LD](../../hardware/102-ld/
 
 ## 🎯 零位校准
 
+校准前先按[关节与舵机 ID 对照表](../specifications.zh.md#joint-ids-and-names)核对各关节：J1–J6 对应 ID 0–5，手柄／夹爪为 ID 6；HD 按钮板为 ID 7。更换舵机后也应保持该映射。
+
 LD、HD、FL 均需使用正确的参考姿态和零位定义。本节适用于 DIY 装配、拆装关节或更换舵机后的校准。
 
 **零位姿态图片与设置步骤待补充。** 在说明补齐前，请通过 [Fashion Star 支持](https://fashionstar.com.hk/support/) 确认当前硬件版本的校准方法。

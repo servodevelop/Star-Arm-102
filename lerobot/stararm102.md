@@ -1,15 +1,19 @@
-> 历史版本教程：以下命令面向旧版插件，不适用于重构后的 HD／FL 集成。新任务请使用[完整中文教程](README.zh.md)；现成模型请使用 [ACT 发布指南](examples/act_pick/README.zh.md)。
+> 历史版本教程：以下命令面向旧版插件，不适用于重构后的 HD／FL 集成。新任务请使用[完整中文教程](README.zh.md)；现成模型请使用 [ACT 发布指南](examples/act_pick/README.zh.md)。下方产品描述可能对应早期硬件。
 
-# 如何搭建具身智能LeRobot-starai系列机械臂并完成自定义抓取任务
+# 搭建 LeRobot-starai 机械臂并训练自定义抓取任务
+
+[← LeRobot](README.zh.md)　|　<sub>[English](stararm102_en.md) / **简体中文**</sub>
+
+https://github.com/user-attachments/assets/dcbd27da-9e24-4562-b682-ff3212f6ac4a
 
 ## 产品介绍
 
 1. **开源 & 便于二次开发**
-   本系列舵机由[华馨京科技](https://fashionrobo.com/)提供，是一套开源、便于二次开发的6+1自由度机器臂解决方案。
+   本系列机械臂由[华馨京科技](https://fashionrobo.com/)提供，是一套开源、便于二次开发的6+1自由度机器臂解决方案。
 2. **支持 LeRobot 平台集成**
    专为与 [LeRobot 平台](https://github.com/huggingface/lerobot) 集成而设计。该平台提供 PyTorch 模型、数据集与工具，面向现实机器人任务的模仿学习（包括数据采集、仿真、训练与部署）。
 3. **丰富的学习资源**
-   提供全面的开源学习资源，包括环境搭建，安装与调试与自定义夹取任务案例帮助用户快速上手并开发机器人应用。
+   提供全面的开源学习资源，包括装配与校准指南，以及自定义抓取任务示例，帮助用户快速上手并开发机器人应用。
 4. **兼容 Nvidia 平台**
    支持通过 reComputer Mini J4012 Orin NX 16GB 平台进行部署。
 
@@ -21,7 +25,7 @@
 
 ## 初始环境搭建
 
-For Ubuntu X86:
+适用于 Ubuntu x86：
 
 - Ubuntu 22.04
 - CUDA 12+
@@ -61,10 +65,10 @@ For Ubuntu X86:
     conda create -y -n lerobot python=3.10 && conda activate lerobot
     ```
 
-3. 克隆 LeRobot 仓库：
+3. 将 LeRobot 仓库克隆到 `~/lerobot`，供后续命令使用：
 
     ```bash
-    git clone https://github.com/servodevelop/lerobot.git
+    git clone https://github.com/servodevelop/lerobot.git ~/lerobot
     ```
 
 4. 使用 miniconda 时，在环境中安装 ffmpeg：
@@ -89,20 +93,22 @@ For Ubuntu X86:
 
     对于 Jetson Jetpack 设备（请确保在执行此步骤前按照[此链接教程](https://github.com/Seeed-Projects/reComputer-Jetson-for-Beginners/tree/main/3-Basic-Tools-and-Getting-Started/3.5-Pytorch)第 5 步安装了 Pytorch-gpu 和 Torchvision）：
 
+    以下依赖安装顺序适用于 JetPack 6.0+；NumPy 版本须与 Torchvision 保持兼容。
+
     ```bash
-    conda install -y -c conda-forge "opencv>=4.10.0.84"  # 通过 conda 安装 OpenCV 和其他依赖，仅适用于 Jetson Jetpack 6.0+
-    conda remove opencv   # 卸载 OpenCV
-    pip3 install opencv-python==4.10.0.84  # 使用 pip3 安装指定版本 OpenCV
+    conda install -y -c conda-forge "opencv>=4.10.0.84"
+    conda remove opencv
+    pip3 install opencv-python==4.10.0.84
     conda install -y -c conda-forge ffmpeg
     conda uninstall numpy
-    pip3 install numpy==1.26.0  # 该版本需与 torchvision 兼容
+    pip3 install numpy==1.26.0
     ```
 
 6. 安装Fashionstar电机依赖：
 
     ```bash
-    pip install lerobot_teleoperator_stararm102   #使用 pip 安装StarArm102_leader
-    pip install lerobot_robot_stararm102    #使用 pip 安装StarArm102_follower
+    pip install lerobot_teleoperator_stararm102
+    pip install lerobot_robot_stararm102
     ```
 
 7. 检查 Pytorch 和 Torchvision
@@ -170,11 +176,15 @@ lerobot-find-port
 
 ## 校准
 
-如果是第一次校准，请对每个关节左右转动到极限位置。
+### 首次校准
 
-如果是重新校准，按照命令提示输入字母c后按Enter键。
+请按下方表格，将各关节转动到对应位置；无机械限位的关节按参考角度操作。
 
-下面是参考值,通常情况下，真实的限位参考值的±10°范围内。
+### 重新校准
+
+按照命令提示输入字母 `c` 后按 Enter 键。
+
+下表为参考值；原教程给出的实际限位偏差范围为参考值的 ±10°。这些值仅适用于匹配的旧版硬件与插件，不应作为当前 LD／HD／FL 的通用限位。
 
 | 舵机ID  | 角度下限参考值 | 角度上限参考值 | 备注                               |
 | ------- | -------------: | -------------: | ---------------------------------- |
@@ -222,10 +232,7 @@ lerobot-teleoperate \
     --teleop.id=my_awesome_stararm102_leader_arm
 ```
 
-远程操作命令将自动检测下列参数:
-
-1. 识别任何缺失的校准并启动校准程序。
-2. 连接机器人和远程操作设备并开始远程操作。
+遥操作命令会检测缺失的校准，必要时启动校准程序，再连接机器人与主臂。
 
 程序启动后，悬停按钮依旧生效。
 
@@ -235,11 +242,13 @@ https://github.com/user-attachments/assets/82650b56-96be-4151-9260-2ed6ab8b133f
 
 在插入您的两个 USB 摄像头后，运行以下脚本以检查摄像头的端口号，切记摄像头避免插在USB Hub上，USB Hub速率太慢会导致读不到图像数据。
 
+Intel RealSense 相机请将 `opencv` 替换为 `realsense`。
+
 ```bash
-lerobot-find-cameras opencv # or realsense for Intel Realsense cameras
+lerobot-find-cameras opencv
 ```
 
-终端将打印出以下信息。以我的笔记本为例，笔记本摄像头为Camera0和Camera1，index_or_path分别为2和4。
+终端将打印出以下信息。例如，下方两个采集设备的 index_or_path 分别为 2 和 4。
 
 ```markdown
 --- Detected Cameras ---
@@ -282,16 +291,6 @@ lerobot-teleoperate \
     --teleop.port=/dev/ttyUSB0 \
     --teleop.id=my_awesome_stararm102_leader_arm \
     --display_data=true
-# new
-# lerobot-teleoperate \
-#     --robot.type=lerobot_robot_stararm102 \
-#     --robot.port=/dev/ttyUSB1 \
-#     --robot.id=my_awesome_stararm102_follower_arm \
-#     --robot.cameras="{ front: {type: opencv, index_or_path: 2, width: 640, height: 480, fps: 30, fourcc: "MJPG"}}" \
-#     --teleop.type=lerobot_teleoperator_stararm102 \
-#     --teleop.port=/dev/ttyUSB0 \
-#     --teleop.id=my_awesome_stararm102_leader_arm \
-#     --display_data=true
 ```
 
 ## 数据集制作采集
@@ -328,41 +327,14 @@ lerobot-record \
     --dataset.single_task="Grab the black cube"
 ```
 
-### 记录功能
+### 录制控制
 
-- record提供了一套用于在机器人操作过程中捕获和管理数据的工具:
-
-#### 1.数据存储
-
-- 数据使用 `LeRobotDataset` 格式存储，并在录制过程中存储在磁盘上。
-
-#### 2.检查点和恢复
-
-- 记录期间会自动创建检查点。
-- 如果出现问题，可以通过使用 重新运行相同的命令来恢复。恢复录制时，必须设置为**要录制的额外剧集数**，而不是数据集中的目标总剧集数！`--resume=true` `--dataset.num_episodes`
-- 要从头开始录制，请**手动删除**数据集目录。
-
-#### 3.记录参数
-
-使用命令行参数设置数据记录流：
-
---dataset.episode_time_s=60每个数据记录插曲的持续时间(默认值:60秒)。
---dataset.reset_time_s=60每集后重置环境的持续时间(默认:60秒)。
---dataset.num_episodes=50记录的总集数(默认值:50秒)。
-
-#### 4.录制期间的键盘控制
-
-使用键盘快捷键控制数据记录流：
-
-- 按**右方向键(→)** ： 提前停止当前情节或重置时间,然后移动到下一个。
-- 按**左方向键(←)** ：取消当前插曲并重新录制。
-- 按**ESC**：立即停止会话,编码视频并上传数据集。
-
->[!TIP]
->
->在 Linux 上,如果左右箭头键和转义键在数据记录过程中没有任何效果,请确保已设置$DISPLAY环境变量。参见 pynput 限制。
->
->一旦你熟悉了数据记录,你就可以创建一个更大的数据集进行训练。一个好的开始任务是抓住一个物体在不同的位置,并把它放在一个垃圾箱。我们建议录制至少50集,每个地点10集。保持相机固定,并在整个录音中保持一致的抓握行为。还要确保你操纵的对象在相机上可见。一个好的经验法则是,你应该能够只看相机图像自己完成任务。
+- 数据以 `LeRobotDataset` 格式保存到磁盘。保留完整的数据集目录，并等待保存结束。
+- 继续录制时，在原命令中增加 `--resume=true`。通过已安装版本的帮助确认 `--dataset.num_episodes` 是否表示新增回合数，不要直接把它当作目标总数。重新采集请使用新的数据集名称。
+- `--dataset.episode_time_s` 控制每回合时长，`--dataset.reset_time_s` 控制复位间隔，`--dataset.num_episodes` 控制回合数。上方示例分别为 30 秒、30 秒、10 个回合。
+- 键盘监听正常时，右方向键结束当前阶段，左方向键请求重录，Esc 结束会话。等待编码与保存完成；是否上传取决于 `--dataset.push_to_hub`（此示例禁用上传）。
+- Linux 下未收到按键事件时，检查桌面会话及 `DISPLAY`。这些按键不是硬件急停。
+- 从简单任务开始，固定相机，确保物体可见，并保持示范动作一致。先检查少量回合，再扩大采集；所需数量取决于任务及场景变化。
 
 ## 重播一个回合
 
@@ -374,7 +346,7 @@ lerobot-replay \
     --robot.port=/dev/ttyUSB1 \
     --robot.id=my_awesome_stararm102_follower_arm \
     --dataset.repo_id=starai/record-test \
-    --dataset.episode=1 # choose the episode you want to replay
+    --dataset.episode=1
 ```
 
 ## 训练
@@ -393,8 +365,8 @@ lerobot-train \
 ```
 
 1. 我们提供了数据集作为参数。`dataset.repo_id=starai/record-test`
-2. 我们为 .这将从 [`configuration_act.py`](https://github.com/huggingface/lerobot/blob/main/src/lerobot/policies/act/configuration_act.py) 加载配置。重要的是，此策略将自动适应机器人的电机状态、电机动作和相机的数量已保存在您的数据集中。`policy.type=act` `laptop` `phone`
-3. 我们提供了使用[权重和偏差](https://docs.wandb.ai/quickstart)来可视化训练图。这是可选的，但如果您使用它，请确保您已通过运行 登录。`wandb.enable=true` `wandb login`
+2. `policy.type=act` 从 [`configuration_act.py`](https://github.com/huggingface/lerobot/blob/main/src/lerobot/policies/act/configuration_act.py) 加载 ACT 配置；策略输入与输出应匹配数据集中的关节和相机字段。
+3. 可选用 [Weights & Biases](https://docs.wandb.ai/quickstart) 查看训练曲线；启用 `wandb.enable=true` 前先运行 `wandb login`。
 
 要从某个检查点恢复训练。
 
@@ -418,39 +390,22 @@ lerobot-record  \
   --dataset.repo_id=starai/eval_record-test \
   --dataset.single_task="Put lego brick into the transparent box" \
   --policy.path=outputs/train/act_stararm102_test/checkpoints/last/pretrained_model
-  # <- Teleop optional if you want to teleoperate in between episodes \
-  # --teleop.type=lerobot_teleoperator_stararm102 \
-  # --teleop.port=/dev/ttyUSB0 \
-  # --teleop.id=my_awesome_stararm102_leader_arm \
 ```
 
 ## FAQ
 
-- 如果使用本文档教程，请git clone本文档推荐的github仓库`https://github.com/servodevelop/lerobot.git`。
-
-- 如果遥操作正常，而带Camera的遥操作无法显示图像界面，请参考[这里](https://github.com/huggingface/lerobot/pull/757/files)
-
-- 如果在数据集遥操作过程中出现libtiff的问题，请更新libtiff版本。
-
-  ```bash
-  conda install libtiff==4.5.0  #for Ubuntu 22.04 is libtiff==4.5.1
-  ```
-
-- 执行完安装LeRobot可能会自动卸载gpu版本的pytorch，所以需要在手动安装torch-gpu。
-
-- 对于Jetson，请先安装[Pytorch和Torchvsion](https://github.com/Seeed-Projects/reComputer-Jetson-for-Beginners/blob/main/3-Basic-Tools-and-Getting-Started/3.3-Pytorch-and-Tensorflow/README.md#installing-pytorch-on-recomputer-nvidia-jetson)再执行`conda install -y -c conda-forge ffmpeg`,否则编译torchvision的时候会出现ffmpeg版本不匹配的问题。
-
-- 在3060的8G笔记本上训练ACT的50组数据的时间大概为6小时，在4090和A100的电脑上训练50组数据时间大概为2~3小时。
-
-- 数据采集过程中要确保摄像头位置和角度和环境光线的稳定，并且减少摄像头采集到过多的不稳定背景和行人，否则部署的环境变化过大会导致机械臂无法正常抓取。
-
-- 数据采集命令的num-episodes要确保采集数据足够，不可中途手动暂停，因为在数据采集结束后才会计算数据的均值和方差，这在训练中是必要的数据。
-
-- 如果程序提示无法读取USB摄像头图像数据，请确保USB摄像头不是接在Hub上的，USB摄像头必须直接接入设备，确保图像传输速率快。
+- 此历史教程使用 `https://github.com/servodevelop/lerobot.git`。其中的命令不能替代当前教程指定版本的环境配置。
+- 遥操作正常但相机画面无法显示时，参考[上游相机显示修订](https://github.com/huggingface/lerobot/pull/757/files)，并与已安装版本对照。
+- 出现 libtiff 错误时，检查已安装的依赖版本。原教程建议 libtiff 4.5.0，Ubuntu 22.04 使用 4.5.1；修改已有环境前先确认兼容性。
+- 安装 LeRobot 后重新检查 CUDA 可用性，因为依赖解析可能替换 GPU 版 PyTorch。
+- Jetson 应先安装兼容的 [PyTorch 和 Torchvision](https://github.com/Seeed-Projects/reComputer-Jetson-for-Beginners/blob/main/3-Basic-Tools-and-Getting-Started/3.3-Pytorch-and-Tensorflow/README.md#installing-pytorch-on-recomputer-nvidia-jetson)，再安装 FFmpeg，避免原教程提到的构建版本不匹配。
+- 训练时长取决于 GPU、数据集及参数；历史耗时示例不能证明当前性能。
+- 数据采集与部署时，保持相机位置、角度、光照和背景一致。等待保存与数据集统计处理结束后再开始训练。
+- USB 相机经过集线器无法采集时，尝试直连，并检查共享 USB 带宽。
 
 ## 参考文档
 
-矽递科技英文Wiki文档：[How to use the SO10xArm robotic arm in Lerobot | Seeed Studio Wiki]([如何在 Lerobot 中使用 SO100/101Arm 机器人手臂 | Seeed Studio Wiki](https://wiki.seeedstudio.com/cn/lerobot_so100m/))
+Seeed Wiki：[SO-100/101 LeRobot 教程（英文）](https://wiki.seeedstudio.com/lerobot_so100m/)
 
 Huggingface Project:[Lerobot](https://github.com/huggingface/lerobot/tree/main)
 

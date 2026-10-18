@@ -15,6 +15,7 @@
 
 - [📂 Resources](#resources)
 - [📋 Bill of Materials](#bill-of-materials)
+- [🔢 Joint and servo ID mapping](../../docs/specifications.md#joint-ids-and-names)
 
 <a id="resources"></a>
 
@@ -65,7 +66,7 @@ Printed-part images are rendered from the corresponding STEP models. Fastener im
 | 23 | Phillips flat-head self-tapping screw | 3 × 12 mm | <a href="../../media/fasteners/3-12-phillips-flat-head-self-tapping-screw.png"><img src="../../media/fasteners/3-12-phillips-flat-head-self-tapping-screw.png" alt="3 × 12 mm Phillips flat-head self-tapping screw illustration" width="90"></a> | Silver finish | 2 |
 | 24 | Phillips pan-head screw | M3 × 10 | <a href="../../media/fasteners/m3-10-phillips-pan-head-screw.png"><img src="../../media/fasteners/m3-10-phillips-pan-head-screw.png" alt="M3 × 10 Phillips pan-head screw illustration" width="90"></a> | Black finish, hardened | 1 |
 | 25 | Phillips pan-head self-tapping screw | PB2.0 × 5 | <a href="../../media/fasteners/pb2-5-phillips-pan-head-self-tapping-screw.png"><img src="../../media/fasteners/pb2-5-phillips-pan-head-self-tapping-screw.png" alt="PB2.0 × 5 Phillips pan-head self-tapping screw illustration" width="90"></a> | Black finish, hardened | 39 |
-| 26 | Phillips pan-head screw | M2 × 4.5 | <a href="../../media/fasteners/m2-4-5-phillips-pan-head-screw.png"><img src="../../media/fasteners/m2-4-5-phillips-pan-head-screw.png" alt="M2 × 4.5 Phillips pan-head screw illustration" width="90"></a> | Black finish; blue pre-applied threadlocker on the lower two-thirds of the threaded shank (toward the tip) | 35 |
+| 26 | Phillips pan-head screw | M2 × 4.5 | <a href="../../media/fasteners/m2-4-5-phillips-pan-head-screw.png"><img src="../../media/fasteners/m2-4-5-phillips-pan-head-screw.png" alt="M2 × 4.5 Phillips pan-head screw illustration" width="90"></a> | Black finish; blue pre-applied threadlocker on approximately the lower two-thirds of the threaded shank (toward the tip) | 35 |
 | 27 | Nut | M3 | <a href="../../media/fasteners/m3-nut.png"><img src="../../media/fasteners/m3-nut.png" alt="M3 Nut illustration" width="90"></a> | Black finish | 5 |
 | 28 | Washer | M3 (3 × 6 × 0.5 mm) | <a href="../../media/fasteners/m3-6-0-5-stainless-washer.png"><img src="../../media/fasteners/m3-6-0-5-stainless-washer.png" alt="M3 (3 × 6 × 0.5 mm) Washer illustration" width="90"></a> | Stainless steel | 1 |
 

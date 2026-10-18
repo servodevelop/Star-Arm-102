@@ -8,11 +8,31 @@ This guide starts with an assembled Star Arm 102. Connect your equipment, try th
 
 **Contents:**
 
+- [🔢 Understand joints and servo IDs](#joint-ids)
 - [🔌 Connect your arm](#connect)
 - [🎮 Try the digital twin](#digital-twin)
 - [🦾 Teleoperate real arms](#teleoperation)
 - [🤖 Run your first AI task](#ai-task)
 - [📚 Next steps and help](#next-steps)
+
+<a id="joint-ids"></a>
+
+## 🔢 Understand joints and servo IDs
+
+**Joint numbers and servo bus IDs use different numbering.** J1 maps to ID 0, and so on; the handle/gripper uses ID 6. ID 7 belongs to the HD button board, not a seventh servo. Keep the existing servo IDs 0–6; do not renumber them to 1–7.
+
+| Mechanical joint | Servo ID |
+| --- | ---: |
+| J1 | 0 |
+| J2 | 1 |
+| J3 | 2 |
+| J4 | 3 |
+| J5 | 4 |
+| J6 | 5 |
+| Handle (LD/HD) or gripper (FL) | 6 |
+| HD button board | 7 |
+
+This mapping applies separately to each 102-LD, 102-HD and 102-FL. Leader and follower use the same ID range on separate buses through their own UC-01 adapters. [See the full software-name mapping](specifications.md#joint-ids-and-names).
 
 <a id="connect"></a>
 

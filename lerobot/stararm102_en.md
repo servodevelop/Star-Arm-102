@@ -1,13 +1,15 @@
 > Historical integration guide for the older plugins, not the refactored HD/FL integration. For a new task use the [complete tutorial](README.md); for the supplied model use the [ACT release guide](examples/act_pick/README.md). Product descriptions below may refer to earlier hardware.
 
-# How to use the LeRobot-starai robotic arm in Lerobot
+# Set up the LeRobot-starai arm and train a custom grasping task
+
+[← LeRobot](README.md)　|　<sub>**English** / [简体中文](stararm102.md)</sub>
 
 https://github.com/user-attachments/assets/dcbd27da-9e24-4562-b682-ff3212f6ac4a
 
 ## Products Introduction
 
 1. **Open-Source & Developer-Friendly**
-   It is an open-source, developer-friendly 6+1 DoF robotic arm solution from [Fishion Star Technology Limited](https://fashionrobo.com/).
+   It is an open-source, developer-friendly 6+1 DoF robotic arm solution from [Fashion Star Technology Limited](https://fashionrobo.com/).
 2. **Integration with LeRobot**
    Designed for integration with [LeRobot Platform](https://github.com/huggingface/lerobot) , which provides PyTorch models, datasets, and tools for imitation learning in real-world robotic tasks — including data collection, simulation, training, and deployment.
 3. **Comprehensive Learning Resources**
@@ -18,7 +20,7 @@ https://github.com/user-attachments/assets/dcbd27da-9e24-4562-b682-ff3212f6ac4a
 ## Main Features
 
 - Ready to Go — No Assembly Required. Just Unbox and Dive into the World of AI.
-- 6+1 Degrees of Freedom and a 470mm Reach — Built for Versatility and Precision.
+- 6+1 Degrees of Freedom and a 420mm Reach — Built for Versatility and Precision.
 - Parallel Gripper with 66mm Maximum Opening — Modular Fingertips for Quick-Replace Flexibility.
 
 ## Initial Environment Setup
@@ -28,7 +30,7 @@ For Ubuntu X86:
 - Ubuntu 22.04
 - CUDA 12+
 - Python 3.10
-- Troch 2.6
+- Torch 2.6
 
 ## Installation
 
@@ -63,7 +65,13 @@ For Ubuntu X86:
     conda create -y -n lerobot python=3.10 && conda activate lerobot
     ```
 
-3. When using miniconda, install ffmpeg in your environment:
+3. Clone the LeRobot repository into `~/lerobot` for the commands below:
+
+    ```bash
+    git clone https://github.com/servodevelop/lerobot.git ~/lerobot
+    ```
+
+4. When using miniconda, install ffmpeg in your environment:
 
     ```bash
     conda install ffmpeg -c conda-forge
@@ -77,7 +85,7 @@ For Ubuntu X86:
     conda install ffmpeg=7.1.1 -c conda-forge
     ```
 
-4. Install LeRobot:
+5. Install LeRobot:
 
     ```bash
     cd ~/lerobot && pip install -e .
@@ -85,23 +93,25 @@ For Ubuntu X86:
 
     For Jetson Jetpack devices (please ensure that Pytorch-gpu and Torchvision have been installed following Step 5 of [this tutorial](https://github.com/Seeed-Projects/reComputer-Jetson-for-Beginners/tree/main/3-Basic-Tools-and-Getting-Started/3.5-Pytorch) before proceeding with this step):
 
+    The following dependency sequence is for JetPack 6.0+; the NumPy version must remain compatible with Torchvision.
+
     ```bash
-    conda install -y -c conda-forge "opencv>=4.10.0.84"  # Install OpenCV and other dependencies via conda, only for Jetson Jetpack 6.0+
-    conda remove opencv   # Uninstall OpenCV
-    pip3 install opencv-python==4.10.0.84  # Install the specified version of OpenCV using pip3
+    conda install -y -c conda-forge "opencv>=4.10.0.84"
+    conda remove opencv
+    pip3 install opencv-python==4.10.0.84
     conda install -y -c conda-forge ffmpeg
     conda uninstall numpy
-    pip3 install numpy==1.26.0  # This version needs to be compatible with torchvision
+    pip3 install numpy==1.26.0
     ```
 
-5. Install Fashionstar Motor Dependencies:
+6. Install Fashionstar Motor Dependencies:
 
-     ```bash
-    pip install lerobot_teleoperator_stararm102    # Install StarArm102_leader via pip
-    pip install lerobot_robot_stararm102    # Install StarArm102_follower via pip
+    ```bash
+    pip install lerobot_teleoperator_stararm102
+    pip install lerobot_robot_stararm102
     ```
 
-6. Check Pytorch and Torchvision
+7. Check Pytorch and Torchvision
 
     Since installing the lerobot environment via pip will uninstall the original Pytorch and Torchvision and install the CPU versions of Pytorch and Torchvision, you need to perform a check in Python.
 
@@ -110,13 +120,11 @@ For Ubuntu X86:
     print(torch.cuda.is_available())
     ```
 
-    If the result is False, you need to reinstall Pytorch and Torchvision according to the [official website tutorial](https://fashionrobo.com/).
+    If the result is False, you need to reinstall Pytorch and Torchvision according to the [official website tutorial](https://pytorch.org/index.html).
 
-### Unboxing
+### Wiring
 
 https://github.com/user-attachments/assets/56130bd9-21ee-4ae4-9cac-3817ac4d659f
-
-UC-01 debuging board switch：
 
 ### Configure arm port
 
@@ -170,13 +178,13 @@ For example：
 
 ### For Initial Calibration
 
-Please rotate each joint left and right to the corresponding positions.
+Move each joint to the corresponding positions in the table below; use the reference angles for joints without mechanical stops.
 
 ### For Re-Calibration
 
 Follow the on-screen prompt: enter the letter "c" and press the Enter key.
 
-Below are the reference values. Under normal circumstances, the actual limit reference values should fall within the range of **±10°** of these references.
+The original guide gives the reference values below with an expected limit deviation of ±10°. They apply only to the matching older hardware and plugin, not as universal limits for current LD/HD/FL arms.
 
 | Servo ID | Lower Angle Limit | Upper Angle Limit | Notes                               |
 | -------- | -----------------: | -----------------: | ----------------------------------- |
@@ -224,7 +232,9 @@ lerobot-teleoperate \
     --teleop.id=my_awesome_stararm102_leader_arm
 ```
 
-After the program starts, the Hover Lock Technology remains functional.
+The teleoperation command detects missing calibration and starts calibration when needed, then connects the robot and teleoperator.
+
+After the program starts, the hover-lock button remains functional.
 
 ## Add cameras
 
@@ -232,11 +242,13 @@ https://github.com/user-attachments/assets/82650b56-96be-4151-9260-2ed6ab8b133f
 
 After inserting your two USB cameras, run the following script to check the port numbers of the cameras. It is important to remember that the camera must not be connected to a USB Hub; instead, it should be plugged directly into the device. The slower speed of a USB Hub may result in the inability to read image data.
 
+Use `realsense` instead of `opencv` for Intel RealSense cameras.
+
 ```bash
-lerobot-find-cameras opencv # or realsense for Intel Realsense cameras
+lerobot-find-cameras opencv
 ```
 
-The terminal will print out the following information. For example, the laptop camera is `index 2`, and the USB camera is `index 4`.
+The terminal will print out the following information. For example, the two capture devices below have index_or_path values 2 and 4.
 
 ```markdown
 --- Detected Cameras ---
@@ -287,7 +299,7 @@ https://github.com/user-attachments/assets/8bb25714-783a-4f29-83dd-58b457aed80c
 
 > [!TIP]
 >
-> Use the features of Hugging Face Hub to upload your dataset, and please refer to the following official article link.
+> Use the features of Hugging Face Hub to upload your dataset, and please refer to the following official article link. Uploading is outside the scope of this tutorial.
 >
 > [lmitation Learning for Robots](https://huggingface.co/docs/lerobot/il_robots?teleoperate_koch_camera=Command)
 >
@@ -315,7 +327,18 @@ lerobot-record \
     --dataset.single_task="Grab the black cube"
 ```
 
+### Recording controls
+
+- Data is saved to disk in `LeRobotDataset` format. Keep the dataset directory intact and wait for saving to finish.
+- To append recordings, rerun the command with `--resume=true`. Check the installed version's help for whether `--dataset.num_episodes` counts additional episodes; do not assume it is a target total. Use a new dataset name for a fresh recording.
+- `--dataset.episode_time_s` controls episode duration, `--dataset.reset_time_s` the reset interval, and `--dataset.num_episodes` the episode count. The example above uses 30 seconds, 30 seconds, and 10 episodes.
+- With a working keyboard listener, Right Arrow ends the current interval, Left Arrow requests a re-record, and Escape ends the session. Wait for encoding and saving; upload depends on `--dataset.push_to_hub` (disabled in this example).
+- On Linux, check the desktop session and `DISPLAY` if keyboard events are not received. These keys are not a hardware emergency stop.
+- Start with a simple task. Keep cameras fixed, the object visible, and demonstrations consistent. Review a few episodes before collecting a larger dataset; the required number depends on the task and scene variation.
+
 ## Replay an episode
+
+Replay recorded actions to check motion repeatability.
 
 ```bash
 lerobot-replay \
@@ -323,7 +346,7 @@ lerobot-replay \
     --robot.port=/dev/ttyUSB1 \
     --robot.id=my_awesome_stararm102_follower_arm \
     --dataset.repo_id=starai/record-test \
-    --dataset.episode=1 # choose the episode you want to replay
+    --dataset.episode=1
 ```
 
 ## Train
@@ -341,11 +364,15 @@ lerobot-train \
   --policy.repo_id=starai/my_policy
 ```
 
+1. `dataset.repo_id=starai/record-test` selects the dataset.
+2. `policy.type=act` loads ACT settings from [`configuration_act.py`](https://github.com/huggingface/lerobot/blob/main/src/lerobot/policies/act/configuration_act.py); policy inputs and outputs must match the joint and camera fields in the dataset.
+3. Optionally use [Weights & Biases](https://docs.wandb.ai/quickstart) to view training curves; run `wandb login` before enabling `wandb.enable=true`.
+
 To resume training from a checkpoint
 
 ```bash
 lerobot-train \
-  --config_path=outputs/train/act_viola_test/checkpoints/last/pretrained_model/train_config.json \
+  --config_path=outputs/train/act_stararm102_test/checkpoints/last/pretrained_model/train_config.json \
   --resume=true
 ```
 
@@ -363,11 +390,18 @@ lerobot-record  \
   --dataset.repo_id=starai/eval_record-test \
   --dataset.single_task="Put lego brick into the transparent box" \
   --policy.path=outputs/train/act_stararm102_test/checkpoints/last/pretrained_model
-  # <- Teleop optional if you want to teleoperate in between episodes \
-  # --teleop.type=lerobot_teleoperator_stararm102 \
-  # --teleop.port=/dev/ttyUSB0 \
-  # --teleop.id=my_awesome_stararm102_leader_arm \
 ```
+
+## FAQ
+
+- This historical tutorial uses `https://github.com/servodevelop/lerobot.git`. Its commands are not a substitute for the versioned environment in the current tutorial.
+- If teleoperation works but the camera display does not, see the [upstream camera-display change](https://github.com/huggingface/lerobot/pull/757/files) and compare it with your installed revision.
+- For a libtiff error, check the installed dependency versions. The original guide suggested libtiff 4.5.0, or 4.5.1 on Ubuntu 22.04; confirm compatibility before changing an existing environment.
+- Recheck CUDA availability after installing LeRobot, because dependency resolution may replace the GPU PyTorch build.
+- On Jetson, install compatible [PyTorch and Torchvision](https://github.com/Seeed-Projects/reComputer-Jetson-for-Beginners/blob/main/3-Basic-Tools-and-Getting-Started/3.3-Pytorch-and-Tensorflow/README.md#installing-pytorch-on-recomputer-nvidia-jetson) before FFmpeg to avoid the build-version mismatch described in the original guide.
+- Training time depends on GPU, dataset, and settings; the historical timing examples do not establish current performance.
+- Keep camera positions, angles, lighting, and the background consistent between data collection and deployment. Let saving and dataset-statistics processing finish before training.
+- If USB camera capture fails through a hub, try connecting directly and check shared USB bandwidth.
 
 ## Reference Documentation
 

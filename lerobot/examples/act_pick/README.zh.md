@@ -62,6 +62,6 @@
 
 [开始安装并进行首次运行 →](inference.md)
 
-原始 [中文客户指南（DOCX）](docs/Star_Arm_102_ACT_客户运行指南.docx) 作为补充资料保留。当前命令以推理指南为准。
+原始 [中文客户指南（DOCX）](docs/Star_Arm_102_ACT_客户运行指南.docx) 作为补充资料保留。当前命令以英文推理指南为准。
 
 [历史中文资料（非当前操作指南）](legacy-guide.zh.md)

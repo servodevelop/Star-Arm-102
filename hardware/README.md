@@ -5,6 +5,7 @@
 **Contents:**
 
 - [🔧 Specifications](#product-specifications)
+- [🔢 Joint and servo ID mapping](../docs/specifications.md#joint-ids-and-names)
 - [🛠️ DIY Assembly](../docs/diy-assembly/)
 - [📂 Directory Structure](#directory-structure)
 
@@ -29,6 +30,8 @@ Accessories: **[Camera Module](camera-module/)** · **[Flexible Gripper](flexibl
 | Arm weight | 764g | 934g | 865g |
 | Communication | UART / UC-01 | UART / UC-01 | UART / UC-01 |
 | Operating Temperature | 0–40°C | 0–40°C | 0–40°C |
+
+Joints 1–6 (J1–J6) above map to servo IDs 0–5; the handle/gripper maps to ID 6. The HD button board uses ID 7. [Joint and servo ID mapping](../docs/specifications.md#joint-ids-and-names).
 
 <a id="directory-structure"></a>
 

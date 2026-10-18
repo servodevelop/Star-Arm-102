@@ -6,6 +6,6 @@
 
 模型包含六个旋转臂关节，以及一个主动夹爪手指和一个通过 mimic 跟随的手指。请核对启动文件使用的具体 URDF 中的限位和轴向；不要将夹爪直线位移单位直接代入旋转关节值。
 
-参见 [各接口的关节命名](../../../docs/specifications.md#joint-ids-and-names)。实物驱动初始化及舵机数值转换在 `robo_driver` 中实现，不在本描述包中。
+参见 [各接口的关节命名](../../../docs/specifications.zh.md#joint-ids-and-names)。实物驱动初始化及舵机数值转换在 `robo_driver` 中实现，不在本描述包中。
 
 [历史中文资料（非当前操作指南）](legacy-guide.zh.md)

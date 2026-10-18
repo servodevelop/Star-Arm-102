@@ -11,7 +11,7 @@ Plan motion with MoveIt 2, test in Gazebo, or record and replay a hand-guided tr
 | Test motion in a physics simulation | [Gazebo simulation](#gazebo) | No |
 | Guide the arm by hand and repeat the motion | [Teaching and replay](#teaching) | Yes |
 
-**Validation:** this draft is checked against the repository source. Ubuntu/ROS build, simulation, and physical-arm acceptance remain pending. The real gripper has a known interface mismatch described below. See the [validation record](../docs/validation.md).
+**Validation:** this draft is checked against the repository source. Ubuntu/ROS build, simulation, and physical-arm acceptance remain pending. The real-gripper launch now aligns the action interface; physical execution still needs validation as described below. See the [validation record](../docs/validation.md).
 
 **Contents:**
 
@@ -111,6 +111,8 @@ ros2 launch stararm102_moveit_config demo.launch.py
 
 **Goal:** plan a small arm movement and execute it on a 102-FL. Complete the virtual-arm exercise first.
 
+Before startup, check the [joint and servo ID mapping](../docs/specifications.md#joint-ids-and-names): `joint1`–`joint6` map to IDs 0–5, and `joint7_left` maps to gripper ID 6. The number in a joint name is not its bus ID.
+
 ### Configure the port and start the driver
 
 In [robo_driver.py](src/robo_driver/robo_driver/robo_driver.py), set `SERVO_PORT_NAME` to the actual FL port; the current default is `/dev/ttyUSB0` at `1000000` baud. The port is a source constant, not a supported launch argument. Rebuild and source the workspace after editing.
@@ -135,7 +137,7 @@ ros2 launch stararm102_moveit_config actual_robot_demo.launch.py
 
 Confirm that `joint1`–`joint6` and `joint7_left` have feedback and that RViz matches the physical pose. Select `arm`, plan a small reachable movement, review the path, then execute. Check direction and actual motion before attempting a larger move.
 
-**Known gripper limitation:** [MoveIt configuration](src/stararm102_moveit_config/config/moveit_controllers.yaml) requests `/hand_controller/follow_joint_trajectory` (`FollowJointTrajectory`), while the [real bridge](src/stararm102_controller/stararm102_controller/stararm102_controller.py) exposes `/hand_controller/gripper_cmd` (`GripperCommand`). The interfaces must be aligned and bench-tested before documenting real gripper execution as working. A successful virtual gripper test does not resolve this mismatch.
+**Real-gripper interface:** the shared [MoveIt configuration](src/stararm102_moveit_config/config/moveit_controllers.yaml) uses `FollowJointTrajectory` for simulation. The [real-arm launch](src/stararm102_moveit_config/launch/move_group_rviz.launch.py) overrides the hand controller to `GripperCommand`, `action_ns=gripper_cmd`, and `command_joint=joint7_left`, matching the [real bridge](src/stararm102_controller/stararm102_controller/stararm102_controller.py) at `/hand_controller/gripper_cmd`. This resolves the configuration mismatch in source; gripper direction, range, and execution still require a bench test. A successful virtual test does not establish physical acceptance.
 
 **Success:** feedback matches the real pose and the arm executes the reviewed small trajectory in the intended direction. Real gripper acceptance is a separate pending check.
 
@@ -269,7 +271,7 @@ ros2 launch stararm102_moveit_config moveit_write_read.launch.py
 ros2 run arm_moveit_write topic_publisher
 ```
 
-Use either the standalone pose reader or the combined read/write launch, not both. Real gripper commands remain subject to the [interface limitation](#real-arm).
+Use either the standalone pose reader or the combined read/write launch, not both. Check the [real-gripper interface and pending validation](#real-arm) before using gripper commands on hardware.
 
 **Success:** the reader reports a pose matching the model, targets are received, and each intended plan completes. A published message alone is not proof of execution. Stop the target publisher first, then the example nodes and the selected MoveIt mode.
 
@@ -282,7 +284,7 @@ These names describe the current code under its default namespace. Inspect the r
 | `/joint_states` | `sensor_msgs/msg/JointState` | Joint feedback; revolute positions in radians |
 | `/set_angle_topic` | `robo_interfaces/msg/SetAngle` | Low-level servo targets; degrees and time in milliseconds |
 | `/arm_controller/follow_joint_trajectory` | `control_msgs/action/FollowJointTrajectory` | Real arm trajectory bridge |
-| `/hand_controller/gripper_cmd` | `control_msgs/action/GripperCommand` | Real bridge endpoint; MoveIt gripper configuration does not currently match |
+| `/hand_controller/gripper_cmd` | `control_msgs/action/GripperCommand` | Real bridge endpoint; selected by the real-arm launch override |
 | `/real_position_orientation` | `robo_interfaces/msg/PositionOrientation` | Pose-reader output; position and quaternion |
 | `/position_orientation_topic` | `robo_interfaces/msg/PositionOrientation` | Target for the pose-write example |
 | `/gripper_command_topic` | `robo_interfaces/msg/GripperCommand` | `open` / `close` target for the pose-write example |
@@ -299,7 +301,7 @@ These names describe the current code under its default namespace. Inspect the r
 | Serial port missing, denied or busy | Actual device path, [permissions](../docs/getting-started.md#identify-serial-ports), other serial programs |
 | RViz model missing or pose incorrect | `robot_description`, TF, fixed frame and the source of `/joint_states` |
 | Plan fails | Reachable target, orientation, current state, joint limits and planning-scene collisions |
-| Plan succeeds but the real arm does not move | Driver logs, feedback, action names and controller connection; gripper mismatch noted above |
+| Plan succeeds but the real arm does not move | Driver logs, feedback, action names and controller connection; for the gripper, check the real-arm launch override above |
 | Gazebo starts twice or controllers fail | Use only the combined launch, check old processes and Classic dependencies |
 | Simulation is static or state becomes stale | Simulation pause state, `/clock`, active controllers and `use_sim_time` |
 | Bag is empty | Live `/joint_states`, recognized joint names, Enter to start, saved-message count |

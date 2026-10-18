@@ -36,6 +36,8 @@ Read [power, wiring, and serial-port identification](../docs/getting-started.md#
 
 ## Check communication without commanding motion
 
+Use the [joint and servo ID mapping](../docs/specifications.md#joint-ids-and-names) to identify each response: J1–J6 use IDs 0–5; the handle/gripper uses ID 6. ID 7 is the HD button board, not a seventh servo.
+
 ```bash
 python python-sdk/check_connection.py --port /dev/ttyUSB0
 python python-sdk/check_connection.py --port /dev/ttyUSB1

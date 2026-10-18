@@ -92,6 +92,8 @@ export STARARM_FOLLOWER_ID=stararm102_follower
 export STARARM_BUTTON=false
 ```
 
+关节编号、舵机通信 ID 与 LeRobot 字段的关系见[完整映射表](../docs/specifications.zh.md#joint-ids-and-names)。`STARARM_LEADER_ID`／`STARARM_FOLLOWER_ID` 是校准名称，不会改变舵机 ID。
+
 通过[通信检查](../python-sdk/README.md#check-communication-without-commanding-motion)确认 ID 0–6 均有响应，再关闭检查程序和其他串口工具。权限不足时检查串口设备所属组及用户权限。不要让多个程序同时占用同一端口。
 
 <a id="calibration"></a>
@@ -277,7 +279,7 @@ lerobot-train \
 | `save_freq=1000` | 定期保存检查点，方便比较 |
 | `eval_freq=0` | 不执行周期性的环境评估；训练损失不等于任务成功率 |
 
-**完成标志：** 损失值正常、未出现 NaN，检查点文件成功保存。完整保留 `pretrained_model` 目录中的权重、配置和处理器，并同时保存训练配置、数据集、校准和环境记录。最后一个检查点只是待评估候选，不一定是效果最好的模型。
+**完成标志：** 损失值保持有限、未出现 NaN 或无穷值，检查点文件成功保存。完整保留 `pretrained_model` 目录中的权重、配置和处理器，并同时保存训练配置、数据集、校准和环境记录。最后一个检查点只是待评估候选，不一定是效果最好的模型。
 
 <a id="evaluate"></a>
 

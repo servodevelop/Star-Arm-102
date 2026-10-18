@@ -5,6 +5,7 @@
 **目录：**
 
 - [🔧 产品规格](#product-specifications)
+- [🔢 关节与舵机 ID 对照](../docs/specifications.zh.md#joint-ids-and-names)
 - [🛠️ DIY 装配](../docs/diy-assembly/)
 - [📂 目录结构](#directory-structure)
 
@@ -29,6 +30,8 @@
 | 本机重量 | 764g | 934g | 865g |
 | 通信方式 | UART / UC-01 | UART / UC-01 | UART / UC-01 |
 | 工作温度 | 0–40°C | 0–40°C | 0–40°C |
+
+表中的关节 1–6（J1–J6）对应舵机 ID 0–5，手柄／夹爪对应 ID 6；HD 按钮板使用 ID 7。 [关节与舵机 ID 对照](../docs/specifications.zh.md#joint-ids-and-names)。
 
 <a id="directory-structure"></a>
 

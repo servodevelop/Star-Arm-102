@@ -1,4 +1,4 @@
-"""Check structure of current bilingual READMEs; translation meaning needs review."""
+"""Check bilingual documentation structure; translation meaning needs review."""
 from collections import Counter
 from html.parser import HTMLParser
 from pathlib import Path
@@ -26,7 +26,24 @@ def canonical(target, source=None):
     target = unquote(target).split('#')[0]
     # Directory browsing and README reading are distinct destinations.
     target = target.replace('README.zh-CN.md', 'README.md').replace('README.zh.md', 'README.md')
-    return target.replace('handoff-review.zh.md', 'handoff-review.md').replace('getting-started.zh.md', 'getting-started.md')
+    target = target.replace('.zh.md', '.md')
+    # The older LeRobot guide predates the *.zh.md convention.
+    return re.sub(r'(^|/)stararm102\.md$', r'\1stararm102_en.md', target)
+
+def document_pairs(root):
+    pairs = set()
+    for zh in list(root.rglob('*.zh.md')) + list(root.rglob('README.zh-CN.md')):
+        if any(p.startswith('.') for p in zh.relative_to(root).parts):
+            continue
+        en = zh.with_name(zh.name.replace('.zh-CN.md', '.md').replace('.zh.md', '.md'))
+        # Explicitly labeled Chinese-only historical resources are not translations.
+        if en.exists() or zh.name in ('README.zh.md', 'README.zh-CN.md'):
+            pairs.add((en, zh))
+    legacy_en = root / 'lerobot/stararm102_en.md'
+    legacy_zh = root / 'lerobot/stararm102.md'
+    if legacy_en.exists() or legacy_zh.exists():
+        pairs.add((legacy_en, legacy_zh))
+    return sorted(pairs)
 
 def signature(path):
     text = path.read_text()
@@ -66,14 +83,11 @@ def signature(path):
             'tables': tables, 'links': {canonical(x, path) for x in links if canonical(x, path)}}
 
 def main():
-    pairs = sorted(set(ROOT.rglob('README.zh.md')) | set(ROOT.rglob('README.zh-CN.md')))
+    pairs = document_pairs(ROOT)
     errors = []
-    for zh in pairs:
-        if any(p.startswith('.') for p in zh.relative_to(ROOT).parts):
-            continue
-        en = zh.with_name('README.md')
-        if not en.exists():
-            errors.append(f'{zh.relative_to(ROOT)}: missing English README')
+    for en, zh in pairs:
+        if not en.exists() or not zh.exists():
+            errors.append(f'{zh.relative_to(ROOT)}: missing bilingual counterpart')
             continue
         a, b = signature(en), signature(zh)
         for field in a:
@@ -83,7 +97,7 @@ def main():
                     detail = f'; EN only: {a[field] - b[field]}; ZH only: {b[field] - a[field]}'
                 errors.append(f'{zh.relative_to(ROOT)}: mismatched {field}{detail}')
     print('\n'.join(errors)) if errors else None
-    print(f'Checked {len(pairs)} bilingual README pairs; {len(errors)} structural errors.')
+    print(f'Checked {len(pairs)} bilingual documentation pairs; {len(errors)} structural errors.')
     print('Manual review is required for translation meaning and synchronized factual changes.')
     return bool(errors)
 

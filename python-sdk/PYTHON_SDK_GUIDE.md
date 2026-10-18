@@ -1,6 +1,8 @@
 # Python teleoperation reference
 
-For installation and the first run, use the [Python quick start](README.md). [Chinese supplementary guide](PYTHON_SDK_GUIDE.zh.md).
+[← Python SDK](README.md)　|　<sub>**English** / [简体中文](PYTHON_SDK_GUIDE.zh.md)</sub>
+
+For installation and the first run, use the [Python quick start](README.md).
 
 ## Ports and options
 

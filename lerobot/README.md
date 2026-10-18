@@ -92,6 +92,8 @@ export STARARM_FOLLOWER_ID=stararm102_follower
 export STARARM_BUTTON=false
 ```
 
+See the [full mapping](../docs/specifications.md#joint-ids-and-names) for joint numbers, servo bus IDs and LeRobot fields. `STARARM_LEADER_ID` / `STARARM_FOLLOWER_ID` are calibration names; they do not change servo IDs.
+
 Confirm IDs 0–6 respond using the [communication check](../python-sdk/README.md#check-communication-without-commanding-motion), then close that process and other serial tools. If access is denied, check serial-device group permissions. Do not open the same port in multiple applications.
 
 <a id="calibration"></a>

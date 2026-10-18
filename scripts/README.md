@@ -5,7 +5,7 @@
 These scripts are for repository contributors. For customer-facing robot and servo tools, see the [tool directory](../tools/README.md).
 
 - `check_docs.py`: check local file and image links in Markdown. Remote URLs and heading fragments are not checked.
-- `check_readme_sync.py`: check section structure, table dimensions, images, code blocks, and link targets across existing English/Chinese README pairs. Translation meaning still requires human review.
+- `check_readme_sync.py`: check section structure, table dimensions, images, code blocks, and link targets across existing English/Chinese document pairs, including READMEs, Getting Started, the Python reference, and the older LeRobot guide. Chinese-only historical resources are not treated as translations. Translation meaning still requires human review.
 - `requirements-docs.txt`: Python dependencies for the documentation check.
 
 Run from the repository root with Python 3.10 or newer:

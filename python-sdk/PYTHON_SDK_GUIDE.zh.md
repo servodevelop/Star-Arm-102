@@ -1,320 +1,41 @@
-> 中文补充资料：保留原有使用说明。当前版本与英文入口中的兼容性说明为准。
+# Python 遥操作参考
 
-# Python SDK - StarArm 102 机械臂控制
+[← Python SDK](README.md)　|　<sub>[English](PYTHON_SDK_GUIDE.md) / **简体中文**</sub>
 
-![Python](https://img.shields.io/badge/language-Python-blue?style=flat-square)
-![Framework](https://img.shields.io/badge/framework-fashionstar--uart--sdk-green?style=flat-square)
-![OS](https://img.shields.io/badge/OS-Ubuntu%2022.04-purple?style=flat-square)
+安装与首次运行请参阅 [Python 快速开始](README.md)。
 
----
+## 端口与选项
 
-## 📖 简介
+| 选项 | 默认值 | 含义 |
+| --- | --- | --- |
+| `--leader-port` | `/dev/ttyUSB2` | 主臂串口；新配置应始终显式指定 |
+| `--follower-port` | `/dev/ttyUSB3` | FL 串口；多台 FL 时重复指定此选项 |
+| `--leader-type` / `--leader_type` | `102LD` | `102LD` 或 `102HD` |
+| `--button_enable` / `--button_disable` | 随型号而定 | 覆盖按钮处理设置；两者互斥 |
+| `--button true` / `--button false` | 随型号而定 | 另一种按钮设置覆盖方式 |
+| `--button_id` | `7` | 按钮板 ID，与关节 ID 0–6 分开 |
+| `--filtered_size` | `1` | 移动平均窗口大小；须为正整数 |
 
-Python SDK 是 StarArm 102 机械臂的 Python 控制接口，提供简单易用的 Python API 用于机械臂的实时控制。该 SDK 支持主从遥操作模式，可通过 UART 串口直接控制机械臂舵机。
+为兼容已有脚本，保留历史默认端口。快速开始中显式指定的 USB0／USB1 是示例端口。波特率由 `SERVO_BAUDRATE` 设置，为 `1,000,000`。
 
-### ✨ 核心特性
+## 控制行为
 
-- 🤖 **主从遥操作**：支持 Leader 机械臂实时控制 Follower 机械臂
-- ⚡ **高实时性**：支持 100Hz+ 的控制频率
-- 🎯 **多关节控制**：同时控制 7 个舵机关节
-- 🔒 **HD 锁定状态扩展**：Star Arm 102-HD 可通过锁定功能按键板提供锁定 / 解锁状态
-- 📊 **性能监控**：实时显示控制频率
-- 🔧 **简单易用**：基于 Python，无需复杂配置
+`main(args)` 打开指定串口、解锁各机械臂、重置多圈计数，读取主臂 ID 0–6 的角度，再向各台 FL 发送目标。臂关节角度采用移动平均滤波。手柄／夹爪通道乘以 1.5 后限制在 0–90 度，不参与移动平均；增大滤波窗口会增加延迟。
 
----
+这是直接控制示例，不会加载 LeRobot 校准文件、规划无碰撞路径或重新设定机械零位。启动前将两台机械臂置于正确的参考姿态。实机验收项目见[验证记录](../docs/validation.md)。
 
-## 🚀 快速开始
+## HD 按钮行为
 
-### 环境要求
+HD 模式启用 ID 7。当前脚本根据按钮板报告的锁定状态锁住主臂关节 0–5，并在状态改变后解锁。从臂仍持续接收角度目标；夹爪不在主臂关节锁定循环中。这与重构后 LeRobot 插件可选的输出动作冻结行为不同。
 
-| 项目 | 要求 |
-|------|------|
-| 操作系统 | Ubuntu 22.04 |
-| Python 版本 | Python 3.8+ |
-| 硬件设备 | StarArm 102 机械臂 (Leader + Follower) |
-| 串口设备 | 2个 USB 转串口设备 |
+按钮用于遥操作控制，不是硬件急停。在任务中依赖此功能前，请先确认对应板卡版本的实际行为。
 
-### 安装依赖
+## 通信检查工具
 
-```bash
-# 安装 Python 依赖包
-pip install pyserial fashionstar-uart-sdk
-```
+`check_connection.py` 打开一个串口并查询指定 ID。全部响应时退出码为 `0`，存在未响应设备时为 `1`，参数无效或串口错误时为 `2`。该工具不发送扭矩、原点或位置指令。
 
-### 硬件连接
+## 其他脚本
 
-1. **连接 Leader 机械臂**：
-   - 使用 USB 线将 Leader 机械臂连接到计算机
-   - 确认端口号（默认为 `/dev/ttyUSB0`）
+目录中保留实验和配置脚本以兼容已有用途。运行前请阅读其串口常量与写入操作。不要通过写入参数的脚本排查 USB 未连接的问题。
 
-2. **连接 Follower 机械臂**：
-   - 使用 USB 线将 Follower 机械臂连接到计算机
-   - 确认端口号（默认为 `/dev/ttyUSB1`）
-
-3. **检查 USB 设备**：
-
-```bash
-# 查看所有串口设备
-ls -l /dev/ttyUSB*
-
-# 如果没有权限，赋予读写权限
-sudo chmod 777 /dev/ttyUSB*
-```
-
----
-
-## 📂 项目结构
-
-```bash
-python-sdk/
-├── stararm102_ro.py       # 主从控制程序
-└── PYTHON_SDK_GUIDE.md    # 本文档
-```
-
----
-
-## 💻 使用说明
-
-### 基本使用
-
-#### 1. 配置串口参数
-
-编辑 `stararm102_ro.py` 文件，修改以下参数：
-
-```python
-SERVO_BAUDRATE = 1000000          # 舵机通信波特率
-LEADER_PORT_NAME = "/dev/ttyUSB0" # Leader 机械臂端口号
-FOLLOWER_PORT_NAME_Arr = ["/dev/ttyUSB1"]  # follower端口号
-```
-
-#### 2. 运行主从控制程序
-
-```bash
-# 赋予 USB 设备权限
-sudo chmod 777 /dev/ttyUSB*
-
-# 运行控制程序
-python3 stararm102_ro.py
-```
-
-#### 3. 程序功能
-
-程序启动后，将执行以下操作：
-
-1. **初始化串口连接**：
-   - 建立 Leader 机械臂的 UART 连接
-   - 建立 Follower 机械臂的 UART 连接
-
-2. **读取 Leader 状态**：
-   - 实时读取 Leader 机械臂各关节角度
-   - 支持 7 个舵机（ID: 0-6）
-
-3. **控制 Follower 运动**：
-   - 将 Leader 关节角度转换为 Follower 控制指令
-   - 通过多圈角度间隔控制方式发送指令
-
-4. **性能监控**：
-   - 每秒显示当前运行频率（Hz）
-   - 控制频率通常在 200Hz 左右
-
-#### 4. 停止程序
-
-按 `Ctrl+C` 终止程序运行
-
----
-
-## 🔧 API 说明
-
-### 主要函数
-
-#### `main(args=None)`
-
-主控制函数
-
-**功能**：
-
-- 初始化 Leader 和 Follower 串口连接
-- 实时读取 Leader 关节角度
-- 控制 Follower 跟随 Leader 运动
-- 显示运行频率
-
-**参数**：无
-
-### 舵机控制参数
-
-| 参数 | 值 | 说明 |
-|------|-----|------|
-| `SERVO_BAUDRATE` | 1000000 | 舵机通信波特率 |
-| `LEADER_PORT_NAME` | /dev/ttyUSB0 | Leader 端口号 |
-| `FOLLOWER_PORT_NAME` | /dev/ttyUSB1 | Follower 端口号 |
-| `servo_ids` | [0,1,2,3,4,5,6] | 舵机 ID 列表 |
-
-### Star Arm 102-HD 锁定功能按键板
-
-Star Arm 102-HD 相比 LD 型号增加了一键锁定功能。按下锁定按键后，主臂会在当前姿态锁定，并让从臂同步进入锁定状态；再次按下按键后解除锁定。
-
-#### 通过修改 `stararm102_ro.py` 开启按键功能
-
-`stararm102_ro.py` 默认按照 Star Arm 102-LD 使用，不启用按键板。如果你使用的是 Star Arm 102-HD，需要编辑 `python-sdk/stararm102_ro.py`，在 `main(args)` 函数开头找到默认配置：
-
-```python
-# 默认（102LD）
-button_enable = False
-button_id = 7
-filtered_size = 30
-```
-
-将 `button_enable` 改为 `True`：
-
-```python
-# Star Arm 102-HD
-button_enable = True
-button_id = 7
-filtered_size = 30
-```
-
-保存后正常运行：
-
-```bash
-python3 stararm102_ro.py
-```
-
-按键板默认 ID 为 `7`。如果你的按键板 ID 不是 `7`，请同步修改 `button_id` 的值。
-
-也可以不改源码，直接通过启动参数开启 HD 配置：
-
-```bash
-python3 stararm102_ro.py --leader_type 102HD
-```
-
----
-
-## 📊 控制流程
-
-```bash
-┌─────────────┐
-│  Leader     │
-│  机械臂      │
-└──────┬──────┘
-       │ 读取角度
-       ▼
-┌──────────────────┐
-│   UART 串口通信   │
-│ (/dev/ttyUSB0)   │
-└──────┬───────────┘
-       │
-       ▼
-┌──────────────────┐
-│  Python 控制程序  │
-│  - 数据处理       │
-│  - 角度转换       │
-└──────┬───────────┘
-       │ 发送指令
-       ▼
-┌──────────────────┐
-│   UART 串口通信   │
-│ (/dev/ttyUSB1)   │
-└──────┬───────────┘
-       │
-       ▼
-┌─────────────┐
-│  Follower   │
-│  机械臂      │
-└─────────────┘
-```
-
----
-
-## 🛡️ 安全注意事项
-
-1. **操作前检查**：
-   - 确保 USB 连接稳定
-   - 确认机械臂周围无障碍物
-   - 检查电源供电是否正常
-
-2. **急停控制**：
-   - 按 `Ctrl+C` 请求退出程序；这不是硬件急停
-   - 如遇异常运动，应在保持安全距离的情况下关闭伺服电源；拔掉 USB 不保证停止运动
-
-3. **关节限制**：
-   - 确保 Leader 机械臂在安全角度范围内操作
-   - 避免快速大幅度移动
-
-4. **电源管理**：
-   - 使用稳定的 12V 电源
-   - 避免电压波动
-
----
-
-## 🐛 故障排除
-
-### 常见问题
-
-**Q1: 找不到 `/dev/ttyUSB0` 设备？**
-
-```bash
-# 检查 USB 设备
-ls -l /dev/ttyUSB*
-
-# 检查 USB 设备信息
-lsusb
-
-# 查看串口日志
-sudo dmesg | grep ttyUSB
-
-# 如果被 brltty 占用，卸载它
-sudo apt remove brltty
-
-# 赋予权限
-sudo chmod 777 /dev/ttyUSB*
-```
-
-**Q2: 串口连接失败？**
-
-- 检查 USB 线是否松动
-- 确认端口号是否正确
-- 尝试更换 USB 端口
-- 检查驱动是否正常安装
-
-**Q3: 控制频率过低？**
-
-- 检查串口通信是否正常
-- 减少其他程序运行负载
-- 使用 USB 3.0 端口以提高速度
-
-**Q4: Follower 机械臂不跟随 Leader？**
-
-- 检查 Follower 端口号配置
-- 确认舵机 ID 设置正确
-- 检查串口通信波特率
-
----
-
-## 📖 详细文档
-
-- [主项目 README](../README.zh.md) - 项目总览
-- [ROS2 HUMBLE 使用文档](../ros2-humble/README.zh.md) - ROS2 控制方式
-- [Lerobot 使用文档](../lerobot/README.md) - Lerobot 框架集成
-
----
-
-## 🔗 相关链接
-
-- [FashionStar UART SDK](https://github.com/servodevelop/servo-uart-rs485-sdk/)
-- [华馨京科技官网](https://fashionrobo.com/)
-
----
-
-## 📄 许可证
-
-各组件的许可证及待确认范围见 [许可证说明](../LICENSE.md)。
-
----
-
-## 👥 致谢
-
-- **感谢**：华馨京科技提供硬件支持和 SDK
-
----
-
-**祝您使用愉快！如有问题，欢迎提交 Issue。**
+[UART SDK 源码](https://github.com/servodevelop/servo-uart-rs485-sdk) · [故障排查](../docs/troubleshooting.md)

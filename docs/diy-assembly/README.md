@@ -73,6 +73,8 @@ Follow [power, wiring and serial-port identification](../getting-started.md#conn
 
 ## 🎯 Zero Calibration
 
+Before calibration, check each joint against the [joint and servo ID mapping](../specifications.md#joint-ids-and-names): J1–J6 use IDs 0–5, the handle/gripper uses ID 6, and the HD button board uses ID 7. Preserve this mapping after servo replacement.
+
 LD, HD and FL each need the correct reference pose and zero definition. This section applies after DIY assembly, joint reassembly or servo replacement.
 
 **Reference-pose images and the zero-setting procedure are coming soon.** Until they are available, confirm the method for your hardware revision with [Fashion Star Support](https://fashionstar.com.hk/support/).

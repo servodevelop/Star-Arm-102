@@ -11,7 +11,7 @@
 | 在物理仿真环境中测试运动 | [Gazebo 仿真](#gazebo) | 否 |
 | 手动示范，再让机械臂重复动作 | [拖动示教与回放](#teaching) | 是 |
 
-**验证状态：** 本初稿已按仓库源码核对；Ubuntu／ROS 构建、仿真及实机验收仍待完成。真机夹爪存在已知接口不一致，详见下文。[验证记录](../docs/validation.md)。
+**验证状态：** 本初稿已按仓库源码核对；Ubuntu／ROS 构建、仿真及实机验收仍待完成。真机启动配置已对齐夹爪动作接口，实际执行仍需按下文完成验证。[验证记录](../docs/validation.md)。
 
 **目录：**
 
@@ -109,7 +109,9 @@ ros2 launch stararm102_moveit_config demo.launch.py
 
 ## MoveIt 2：真实机械臂
 
-**目标：** 规划一段小范围运动，再由 102-FL 执行。建议先完成虚拟机械臂练习。
+**目标：** 规划一段小范围运动，再由 102-FL 执行。先完成虚拟机械臂练习。
+
+启动前请核对[关节与舵机 ID 映射](../docs/specifications.zh.md#joint-ids-and-names)：`joint1`–`joint6` 对应 ID 0–5，`joint7_left` 对应夹爪 ID 6；名称中的数字不是通信 ID。
 
 ### 配置端口并启动驱动
 
@@ -135,7 +137,7 @@ ros2 launch stararm102_moveit_config actual_robot_demo.launch.py
 
 确认 `joint1`–`joint6` 和 `joint7_left` 有反馈，且 RViz 姿态与实物一致。选择 `arm`，规划一段小范围、可到达的运动，检查路径后再执行。确认方向及实际运动正确，再扩大范围。
 
-**夹爪已知限制：** [MoveIt 配置](src/stararm102_moveit_config/config/moveit_controllers.yaml)请求 `/hand_controller/follow_joint_trajectory`（`FollowJointTrajectory`），但[实物桥接节点](src/stararm102_controller/stararm102_controller/stararm102_controller.py)提供的是 `/hand_controller/gripper_cmd`（`GripperCommand`）。需要统一接口并完成实机测试，才能将真机夹爪执行标为可用。虚拟夹爪测试成功并不能解决这个不一致。
+**真机夹爪接口：** 共享的 [MoveIt 配置](src/stararm102_moveit_config/config/moveit_controllers.yaml)使用仿真所需的 `FollowJointTrajectory`。[真机启动文件](src/stararm102_moveit_config/launch/move_group_rviz.launch.py)将夹爪控制器覆盖为 `GripperCommand`、`action_ns=gripper_cmd`、`command_joint=joint7_left`，与[实物桥接节点](src/stararm102_controller/stararm102_controller/stararm102_controller.py)的 `/hand_controller/gripper_cmd` 对齐。这已在源码配置层面解决接口不一致；夹爪方向、范围和执行仍需实机测试。虚拟测试成功不代表实物验收通过。
 
 **成功标志：** 反馈与实物姿态一致，手臂按预览轨迹小幅运动，方向符合预期。真机夹爪需单独完成后续验收。
 
@@ -269,7 +271,7 @@ ros2 launch stararm102_moveit_config moveit_write_read.launch.py
 ros2 run arm_moveit_write topic_publisher
 ```
 
-单独的位姿读取节点与组合读写启动二选一，不要重复启动。真机夹爪仍受前述[接口限制](#real-arm)影响。
+单独的位姿读取节点与组合读写启动二选一，不要重复启动。向实物发送夹爪指令前，请核对[真机夹爪接口及待完成验证](#real-arm)。
 
 **成功标志：** 读取位姿与模型对应，目标被接收，各次预期规划完成。仅显示消息已发布不等于实物已经执行。退出时先停止目标发布器，再停止示例节点和所选 MoveIt 模式。
 
@@ -282,7 +284,7 @@ ros2 run arm_moveit_write topic_publisher
 | `/joint_states` | `sensor_msgs/msg/JointState` | 关节反馈；转动关节位置单位为弧度 |
 | `/set_angle_topic` | `robo_interfaces/msg/SetAngle` | 底层舵机目标；角度单位为度，时间单位为毫秒 |
 | `/arm_controller/follow_joint_trajectory` | `control_msgs/action/FollowJointTrajectory` | 真机手臂轨迹桥接 |
-| `/hand_controller/gripper_cmd` | `control_msgs/action/GripperCommand` | 实物桥接端点；当前 MoveIt 夹爪配置与其不匹配 |
+| `/hand_controller/gripper_cmd` | `control_msgs/action/GripperCommand` | 实物桥接端点；由真机启动文件的覆盖配置选用 |
 | `/real_position_orientation` | `robo_interfaces/msg/PositionOrientation` | 位姿读取输出；位置与四元数 |
 | `/position_orientation_topic` | `robo_interfaces/msg/PositionOrientation` | 位姿写入示例的目标输入 |
 | `/gripper_command_topic` | `robo_interfaces/msg/GripperCommand` | 位姿写入示例的 `open`／`close` 目标 |
@@ -299,7 +301,7 @@ ros2 run arm_moveit_write topic_publisher
 | 串口不存在、权限不足或被占用 | 实际设备路径、[权限](../docs/getting-started.zh.md#identify-serial-ports)、其他串口程序 |
 | RViz 模型不显示或姿态错误 | `robot_description`、TF、固定坐标系和 `/joint_states` 来源 |
 | 规划失败 | 目标可达性、朝向、当前状态、关节限位和规划场景碰撞 |
-| 规划成功但实物不动 | 驱动日志、反馈、动作名称与控制器连接；夹爪另见前述接口不一致 |
+| 规划成功但实物不动 | 驱动日志、反馈、动作名称与控制器连接；夹爪另查前述真机启动覆盖配置 |
 | Gazebo 重复启动或控制器失败 | 仅使用组合入口，检查残留进程和 Classic 依赖 |
 | 仿真不动或状态过期 | 是否暂停、`/clock`、控制器 active 状态与 `use_sim_time` |
 | bag 为空 | 实时 `/joint_states`、匹配的关节名称、是否按 Enter 开始、保存消息数 |
