@@ -214,8 +214,8 @@ This single launch already includes Gazebo, robot spawning, controllers, MoveIt 
 The running demo should look like these screenshots:
 
 <p align="center">
-  <img src="media/gazebo-demo-1.png" alt="Gazebo demo view 1" width="720"><br>
-  <em>Gazebo demo view 1</em>
+  <img src="media/virtual-arm-demo-1.png" alt="MoveIt virtual arm demo in RViz" width="720"><br>
+  <em>Virtual arm demo in RViz</em>
 </p>
 
 <p align="center">
