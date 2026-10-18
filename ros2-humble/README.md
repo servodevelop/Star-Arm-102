@@ -90,6 +90,12 @@ Gazebo-specific dependencies are listed in the [Gazebo section](#gazebo).
 
 **Goal:** learn target selection, planning and execution without connecting hardware. Stop the real driver and Gazebo first.
 
+**Every new terminal:** enter the workspace and load the current workspace environment.
+
+```bash
+source install/setup.bash
+```
+
 ```bash
 ros2 launch stararm102_moveit_config demo.launch.py
 ```
@@ -99,6 +105,13 @@ ros2 launch stararm102_moveit_config demo.launch.py
 3. Move the interactive goal marker a small distance to a reachable pose.
 4. Click **Plan** and inspect the preview. If planning fails, reduce the move or change the target orientation.
 5. Click **Execute** after a successful plan. The mock arm follows the trajectory. The `hand` group provides the virtual gripper's `open` / `close` named states.
+
+The demo should look like this in RViz:
+
+<p align="center">
+  <img src="media/virtual-arm-demo.png" alt="MoveIt virtual arm demo in RViz" width="720"><br>
+  <em>Virtual arm demo in RViz</em>
+</p>
 
 **Success:** the model displays correctly, planning succeeds, and the virtual arm reaches the target. This verifies the virtual path only; it does not establish real-arm accuracy or Gazebo dynamics.
 
@@ -118,6 +131,12 @@ Before startup, check the [joint and servo ID mapping](../docs/specifications.md
 In [robo_driver.py](src/robo_driver/robo_driver/robo_driver.py), set `SERVO_PORT_NAME` to the actual FL port; the current default is `/dev/ttyUSB0` at `1000000` baud. The port is a source constant, not a supported launch argument. Rebuild and source the workspace after editing.
 
 **Startup moves the arm:** the driver resets multi-turn counts and, with the default `lock=enable`, sends initial joint targets. Secure the base and confirm the hardware reference pose before connecting. Support the arm during torque release and keep servo power control accessible. `Ctrl+C` does not guarantee a hardware stop or torque release.
+
+**Every new terminal:** enter the workspace and load the current workspace environment.
+
+```bash
+source install/setup.bash
+```
 
 Terminal 1 — driver and trajectory bridge:
 
@@ -150,12 +169,20 @@ Confirm that `joint1`–`joint6` and `joint7_left` have feedback and that RViz m
 
 **Goal:** execute a planned movement in a physics simulation. This repository uses **Gazebo Classic** (`gazebo_ros` / `gazebo_ros2_control`), not the newer `ros_gz` integration. Use the Humble environment above and stop real hardware and the standalone MoveIt demo.
 
-Install the additional dependencies, rebuild if necessary, and source the workspace:
+Install the additional dependencies and rebuild if necessary:
 
 ```bash
 sudo apt install gazebo ros-humble-gazebo-ros-pkgs ros-humble-gazebo-ros2-control
 colcon build
+```
+
+**Every new terminal:** enter the workspace and load the current workspace environment.
+
+```bash
 source install/setup.bash
+```
+
+```bash
 ros2 launch stararm102_moveit_config gazebo_demo.launch.py
 ```
 
@@ -164,12 +191,42 @@ This single launch already includes Gazebo, robot spawning, controllers, MoveIt 
 1. Wait for the model to spawn and the controllers to load. If the simulation is paused, start it in Gazebo.
 2. In another sourced terminal, inspect controllers and simulation time:
 
-```bash
-ros2 control list_controllers
-ros2 topic echo /clock --once
-```
+   ```bash
+   ros2 control list_controllers
+   ros2 topic echo /clock --once
+   ```
 
-3. Expect `joint_state_broadcaster`, `arm_controller` and `hand_controller` to be active. Select `arm` in RViz, choose a small target, plan and execute.
+   Expected output — all three controllers report `active`, and the simulation clock advances:
+
+   ```text
+   joint_state_broadcaster/JointStateBroadcaster          active
+   arm_controller          joint_trajectory_controller/JointTrajectoryController  active
+   hand_controller         joint_trajectory_controller/JointTrajectoryController  active
+   clock:
+     sec: 106
+     nanosec: 200000000
+   ```
+
+   The broadcaster publishes joint feedback; the two trajectory controllers execute planned arm and gripper motion. If any controller is `inactive`, or `/clock` stays at zero, the simulation is paused or the controllers have not finished loading.
+
+3. Select `arm` in RViz, choose a small target, plan and execute.
+
+The running demo should look like these screenshots:
+
+<p align="center">
+  <img src="media/gazebo-demo-1.png" alt="Gazebo demo view 1" width="720"><br>
+  <em>Gazebo demo view 1</em>
+</p>
+
+<p align="center">
+  <img src="media/gazebo-demo-2.png" alt="Gazebo demo view 2" width="720"><br>
+  <em>Gazebo demo view 2</em>
+</p>
+
+<p align="center">
+  <img src="media/gazebo-demo-3.png" alt="Gazebo demo view 3" width="720"><br>
+  <em>Gazebo demo view 3</em>
+</p>
 
 **Success:** Gazebo and RViz show corresponding movement, controllers are active, and simulation time advances. Dynamics and contact results depend on the model's inertias, collision geometry and physics settings; they are not a physical validation of the arm.
 
@@ -185,7 +242,13 @@ The recorder converts `/joint_states` into `robo_interfaces/msg/SetAngle` comman
 
 ### Unlock and record
 
-Stop normal control, Gazebo, virtual joint-state publishers and any programs sending targets. Configure the FL port as in [real-arm setup](#real-arm). Support the arm before starting terminal 1:
+Stop normal control, Gazebo, virtual joint-state publishers and any programs sending targets. Configure the FL port as in [real-arm setup](#real-arm). Support the arm before starting terminal 1.
+
+**Every new terminal:** enter the workspace and load the current workspace environment.
+
+```bash
+source install/setup.bash
+```
 
 ```bash
 ros2 run robo_driver driver --ros-args -p lock:=disable
