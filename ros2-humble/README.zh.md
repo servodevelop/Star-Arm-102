@@ -90,6 +90,12 @@ Gazebo 所需的额外依赖见 [Gazebo 章节](#gazebo)。
 
 **目标：** 不连接实物，先熟悉目标设置、轨迹规划与执行。开始前停止真实驱动和 Gazebo。
 
+**每次开启新的终端**：进入工作空间并且加载当前工作区环境。
+
+```bash
+source install/setup.bash
+```
+
 ```bash
 ros2 launch stararm102_moveit_config demo.launch.py
 ```
@@ -99,6 +105,13 @@ ros2 launch stararm102_moveit_config demo.launch.py
 3. 小幅拖动目标交互标记，设置一个可到达的位姿。
 4. 点击 **Plan**，检查轨迹预览。规划失败时，缩小移动幅度或调整目标朝向。
 5. 规划成功后点击 **Execute**，模拟机械臂随轨迹运动。虚拟夹爪可通过 `hand` 规划组的 `open`／`close` 命名状态体验。
+
+RViz 中的演示画面应与以下截图类似：
+
+<p align="center">
+  <img src="media/virtual-arm-demo.png" alt="MoveIt 虚拟机械臂 RViz 演示画面" width="720"><br>
+  <em>虚拟机械臂 RViz 演示画面</em>
+</p>
 
 **成功标志：** 模型正确显示、规划成功、虚拟机械臂到达目标。这仅验证虚拟路径，不代表实物精度或 Gazebo 动力学已经验证。
 
@@ -118,6 +131,12 @@ ros2 launch stararm102_moveit_config demo.launch.py
 在 [robo_driver.py](src/robo_driver/robo_driver/robo_driver.py) 中，将 `SERVO_PORT_NAME` 改为 FL 实际串口；当前默认 `/dev/ttyUSB0`，波特率 `1000000`。端口目前是源码常量，不能直接当作启动参数传入。修改后重新构建并加载工作区环境。
 
 **启动会下发运动目标：** 驱动会重置多圈计数，并在默认 `lock=enable` 时发送初始关节目标。连接前固定底座、确认硬件参考姿态；释放扭矩时托住机械臂，并确保可切断舵机电源。`Ctrl+C` 不保证硬件立即停止或释放扭矩。
+
+**每次开启新的终端**：进入工作空间并且加载当前工作区环境。
+
+```bash
+source install/setup.bash
+```
 
 终端 1——启动驱动与轨迹桥接节点：
 
@@ -150,12 +169,20 @@ ros2 launch stararm102_moveit_config actual_robot_demo.launch.py
 
 **目标：** 在物理仿真中执行规划轨迹。本仓库使用 **Gazebo Classic**（`gazebo_ros`／`gazebo_ros2_control`），不是新版 `ros_gz` 集成。沿用前面的 Humble 环境，并停止真实驱动及独立的 MoveIt 虚拟演示。
 
-安装额外依赖，必要时重新构建，并加载工作区：
+安装额外依赖，必要时重新构建：
 
 ```bash
 sudo apt install gazebo ros-humble-gazebo-ros-pkgs ros-humble-gazebo-ros2-control
 colcon build
+```
+
+**每次开启新的终端**：进入工作空间并且加载当前工作区环境。
+
+```bash
 source install/setup.bash
+```
+
+```bash
 ros2 launch stararm102_moveit_config gazebo_demo.launch.py
 ```
 
@@ -164,12 +191,42 @@ ros2 launch stararm102_moveit_config gazebo_demo.launch.py
 1. 等待模型出现和控制器加载；若仿真暂停，在 Gazebo 中开始运行。
 2. 在另一已加载环境的终端检查控制器和仿真时钟：
 
-```bash
-ros2 control list_controllers
-ros2 topic echo /clock --once
-```
+   ```bash
+   ros2 control list_controllers
+   ros2 topic echo /clock --once
+   ```
 
-3. 应能看到 `joint_state_broadcaster`、`arm_controller` 和 `hand_controller` 处于 active 状态。在 RViz 选择 `arm`，设置小范围目标，规划并执行。
+   预期输出——三个控制器都显示 `active`，且仿真时钟持续推进：
+
+   ```text
+   joint_state_broadcaster/JointStateBroadcaster          active
+   arm_controller          joint_trajectory_controller/JointTrajectoryController  active
+   hand_controller         joint_trajectory_controller/JointTrajectoryController  active
+   clock:
+     sec: 106
+     nanosec: 200000000
+   ```
+
+   关节状态广播器发布关节反馈，另外两个轨迹控制器负责执行规划好的手臂和夹爪运动。若任一控制器显示 `inactive`，或 `/clock` 数值一直为零，说明仿真处于暂停状态或控制器尚未加载完成。
+
+3. 在 RViz 选择 `arm`，设置小范围目标，规划并执行。
+
+运行中的演示画面应与以下截图类似：
+
+<p align="center">
+  <img src="media/gazebo-demo-1.png" alt="Gazebo 演示画面 1" width="720"><br>
+  <em>Gazebo 演示画面 1</em>
+</p>
+
+<p align="center">
+  <img src="media/gazebo-demo-2.png" alt="Gazebo 演示画面 2" width="720"><br>
+  <em>Gazebo 演示画面 2</em>
+</p>
+
+<p align="center">
+  <img src="media/gazebo-demo-3.png" alt="Gazebo 演示画面 3" width="720"><br>
+  <em>Gazebo 演示画面 3</em>
+</p>
 
 **成功标志：** Gazebo 与 RViz 中运动对应，控制器正常启用，仿真时间持续推进。动力学与接触结果取决于模型惯量、碰撞几何及物理设置，并不等同于实物验证。
 
@@ -185,7 +242,13 @@ ros2 topic echo /clock --once
 
 ### 解锁并录制
 
-先停止正常控制、Gazebo、虚拟关节状态发布器和其他目标发布程序。按[真机设置](#real-arm)配置 FL 端口。托住机械臂后，在终端 1 启动：
+先停止正常控制、Gazebo、虚拟关节状态发布器和其他目标发布程序。按[真机设置](#real-arm)配置 FL 端口。托住机械臂后，在终端 1 启动。
+
+**每次开启新的终端**：进入工作空间并且加载当前工作区环境。
+
+```bash
+source install/setup.bash
+```
 
 ```bash
 ros2 run robo_driver driver --ros-args -p lock:=disable
