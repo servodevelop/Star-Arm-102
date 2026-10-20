@@ -33,9 +33,9 @@
 
 ## 物料清单
 
-下表列出 102-LD 的 **28 项装机物料**；无图片的条目标为待补。
+下表列出 102-LD 的 **29 项装机物料**；无图片的条目标为待补。
 
-打印件的“型号／规格”与 STEP、STL 的文件名主体一致（不含扩展名）。本表不再记录打印参数：请从 [printing/stl/](printing/stl/) 取 STL，按自己的机型与耗材切片，层高、壁数、填充率随机型与材料而定。
+打印件的“型号／规格”栏填写零件标识。除连杆 6 外，标识与所提供的 STEP、STL 文件名主体一致（不含扩展名）；连杆 6 的现有文件名为 `star-arm-102-link6-handle`。手柄支撑托目前提供 STEP 模型。本表不再记录打印参数：请从 [printing/stl/](printing/stl/) 取 STL，按自己的机型与耗材切片，层高、壁数、填充率随机型与材料而定。
 
 打印件图片由对应的 STEP 模型渲染生成。紧固件图片为 AI 生成的外观示意图，规格以表格文字为准；点击图片可放大查看。
 
@@ -46,28 +46,29 @@
 | 3 | UART 总线舵机 | RA8-U03H-M | <img src="images/ra8-u03h-m.webp" alt="RA8-U03H-M" width="90"> | 12V；双轴款壳体（平面下盖，无后输出轴）；无电机（无扭矩输出）；12 位磁性绝对值编码器；25T | 2 |
 | 4 | 基座底板 | star-arm-102-base-bottom | <a href="images/star-arm-102-base-bottom.png"><img src="images/star-arm-102-base-bottom.png" alt="star-arm-102-base-bottom" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
 | 5 | 基座顶板 | star-arm-102-base-top | <a href="images/star-arm-102-base-top.png"><img src="images/star-arm-102-base-top.png" alt="star-arm-102-base-top" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
-| 6 | 第一连杆 | star-arm-102-link1 | <a href="images/star-arm-102-link1.png"><img src="images/star-arm-102-link1.png" alt="star-arm-102-link1" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
-| 7 | 第二连杆 | star-arm-102-link2 | <a href="images/star-arm-102-link2.png"><img src="images/star-arm-102-link2.png" alt="star-arm-102-link2" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
-| 8 | 第三连杆 | star-arm-102-link3 | <a href="images/star-arm-102-link3.png"><img src="images/star-arm-102-link3.png" alt="star-arm-102-link3" width="90"></a> | 象牙白＋黑色，PLA 3D 打印件 | 1 |
-| 9 | 第四连杆 | star-arm-102-link4 | <a href="images/star-arm-102-link4.png"><img src="images/star-arm-102-link4.png" alt="star-arm-102-link4" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
-| 10 | 第五连杆 | star-arm-102-link5 | <a href="images/star-arm-102-link5.png"><img src="images/star-arm-102-link5.png" alt="star-arm-102-link5" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
-| 11 | 第六连杆（手柄端） | star-arm-102-link6-handle | <a href="images/star-arm-102-link6-handle.png"><img src="images/star-arm-102-link6-handle.png" alt="star-arm-102-link6-handle" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
+| 6 | 连杆 1 | star-arm-102-link1 | <a href="images/star-arm-102-link1.png"><img src="images/star-arm-102-link1.png" alt="star-arm-102-link1" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
+| 7 | 连杆 2 | star-arm-102-link2 | <a href="images/star-arm-102-link2.png"><img src="images/star-arm-102-link2.png" alt="star-arm-102-link2" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
+| 8 | 连杆 3 | star-arm-102-link3 | <a href="images/star-arm-102-link3.png"><img src="images/star-arm-102-link3.png" alt="star-arm-102-link3" width="90"></a> | 象牙白＋黑色，PLA 3D 打印件 | 1 |
+| 9 | 连杆 4 | star-arm-102-link4 | <a href="images/star-arm-102-link4.png"><img src="images/star-arm-102-link4.png" alt="star-arm-102-link4" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
+| 10 | 连杆 5 | star-arm-102-link5 | <a href="images/star-arm-102-link5.png"><img src="images/star-arm-102-link5.png" alt="star-arm-102-link5" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
+| 11 | 连杆 6 | star-arm-102-link6 | <a href="images/star-arm-102-link6-handle.png"><img src="images/star-arm-102-link6-handle.png" alt="star-arm-102-link6-handle" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
 | 12 | 手柄 | star-arm-102-handle | <a href="images/star-arm-102-handle.png"><img src="images/star-arm-102-handle.png" alt="star-arm-102-handle" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
-| 13 | 左指环 | star-arm-102-finger-ring-left | <a href="images/star-arm-102-finger-ring-left.png"><img src="images/star-arm-102-finger-ring-left.png" alt="star-arm-102-finger-ring-left" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
-| 14 | 右指环 | star-arm-102-finger-ring-right | <a href="images/star-arm-102-finger-ring-right.png"><img src="images/star-arm-102-finger-ring-right.png" alt="star-arm-102-finger-ring-right" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
-| 15 | 推力滚针轴承 | AXK2035+2AS | <img src="../../media/axk2035-2as-bearing.png" alt="AXK2035+2AS 滚针轴承" width="90"> | 内径 20 mm，外径 35 mm，厚度 4 mm | 1 |
-| 16 | TTL/USB 舵机转接板 | UC-01 | <img src="../../media/uc-01-primary.webp" alt="UC-01" width="90"> | USB Type-C；半双工／全双工转换；3.3 V／5 V TTL 电平可切换；输入电压 6–15 V；2 个 PH2.0 舵机接口；反接保护<br>DC 电源线：0.75 mm²，5.5 × 2.1 mm 母头，0.15 m | 1 |
-| 17 | 舵机连接线 | PH2.0 (PH-3Y)<br>120 mm | <a href="../../media/ph-3y-servo-cable-120mm.png"><img src="../../media/ph-3y-servo-cable-120mm-thumbnail.png" alt="PH2.0 120 mm 舵机连接线" width="90"></a> | 黑色硅胶绝缘排线，外覆黑色编织护套；两端线序反向；每根导体 60 × Ø0.08 mm（约 22 AWG） | 5 |
-| 18 | 舵机连接线 | PH2.0 (PH-3Y)<br>200 mm | <a href="../../media/ph-3y-servo-cable-200mm.png"><img src="../../media/ph-3y-servo-cable-200mm-thumbnail.png" alt="PH2.0 200 mm 舵机连接线" width="90"></a> | 黑色硅胶绝缘排线，外覆黑色编织护套；两端线序反向；每根导体 60 × Ø0.08 mm（约 22 AWG） | 2 |
-| 19 | 内六角圆柱头螺钉 | M3 × 22 | <a href="../../media/fasteners/m3-22-socket-head-cap-screw.png"><img src="../../media/fasteners/m3-22-socket-head-cap-screw.png" alt="M3 × 22 内六角圆柱头螺钉示意图" width="90"></a> | 黑色表面 | 4 |
-| 20 | 内六角圆柱头螺钉 | M3 × 10 | <a href="../../media/fasteners/m3-10-socket-head-cap-screw.png"><img src="../../media/fasteners/m3-10-socket-head-cap-screw.png" alt="M3 × 10 内六角圆柱头螺钉示意图" width="90"></a> | 黑色表面，强度等级 12.9 | 1 |
-| 21 | 内六角圆柱头螺钉 | M2 × 10 | <a href="../../media/fasteners/m2-10-socket-head-cap-screw.png"><img src="../../media/fasteners/m2-10-socket-head-cap-screw.png" alt="M2 × 10 内六角圆柱头螺钉示意图" width="90"></a> | 黑色表面 | 8 |
-| 22 | 内六角圆柱头螺钉 | M2 × 8 | <a href="../../media/fasteners/m2-8-socket-head-cap-screw.png"><img src="../../media/fasteners/m2-8-socket-head-cap-screw.png" alt="M2 × 8 内六角圆柱头螺钉示意图" width="90"></a> | 黑色表面 | 16 |
-| 23 | 十字槽沉头自攻螺钉 | 3 × 12 mm | <a href="../../media/fasteners/3-12-phillips-flat-head-self-tapping-screw.png"><img src="../../media/fasteners/3-12-phillips-flat-head-self-tapping-screw.png" alt="3 × 12 mm 十字槽沉头自攻螺钉示意图" width="90"></a> | 银色表面，尖尾 | 2 |
-| 24 | 十字槽盘头机牙螺钉 | M3 × 10 | <a href="../../media/fasteners/m3-10-phillips-pan-head-screw.png"><img src="../../media/fasteners/m3-10-phillips-pan-head-screw.png" alt="M3 × 10 十字槽盘头机牙螺钉示意图" width="90"></a> | 黑色表面，加硬 | 1 |
-| 25 | 十字槽盘头自攻螺钉 | 2 × 5 mm | <a href="../../media/fasteners/2-5-phillips-pan-head-blunt-point-self-tapping-screw.png"><img src="../../media/fasteners/2-5-phillips-pan-head-blunt-point-self-tapping-screw.png" alt="2 × 5 mm 十字槽盘头自攻螺钉示意图" width="90"></a> | 黑色表面，加硬，平尾 | 39 |
-| 26 | 十字槽盘头机牙螺钉 | M2 × 4.5 | <a href="../../media/fasteners/m2-4-5-phillips-pan-head-screw.png"><img src="../../media/fasteners/m2-4-5-phillips-pan-head-screw.png" alt="M2 × 4.5 十字槽盘头机牙螺钉示意图" width="90"></a> | 黑色表面；靠近末端的约 2/3 螺纹段预涂蓝色锁固胶 | 35 |
-| 27 | 螺母 | M3 | <a href="../../media/fasteners/m3-nut.png"><img src="../../media/fasteners/m3-nut.png" alt="M3 螺母示意图" width="90"></a> | 黑色表面 | 5 |
-| 28 | 垫片 | M3（3 × 6 × 0.5 mm） | <a href="../../media/fasteners/m3-6-0-5-stainless-washer.png"><img src="../../media/fasteners/m3-6-0-5-stainless-washer.png" alt="M3（3 × 6 × 0.5 mm） 垫片示意图" width="90"></a> | 不锈钢 | 1 |
+| 13 | 手柄支撑托 | [star-arm-102-handle-support](step/parts/star-arm-102-handle-support.step) | <a href="images/star-arm-102-handle-support.png"><img src="images/star-arm-102-handle-support.png" alt="手柄支撑托" width="90"></a> | 3D 打印件，置于手柄下方提供支撑 | 1 |
+| 14 | 左指环 | star-arm-102-finger-ring-left | <a href="images/star-arm-102-finger-ring-left.png"><img src="images/star-arm-102-finger-ring-left.png" alt="star-arm-102-finger-ring-left" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
+| 15 | 右指环 | star-arm-102-finger-ring-right | <a href="images/star-arm-102-finger-ring-right.png"><img src="images/star-arm-102-finger-ring-right.png" alt="star-arm-102-finger-ring-right" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
+| 16 | 推力滚针轴承 | AXK2035+2AS | <img src="../../media/axk2035-2as-bearing.png" alt="AXK2035+2AS 滚针轴承" width="90"> | 内径 20 mm，外径 35 mm，厚度 4 mm | 1 |
+| 17 | TTL/USB 舵机转接板 | UC-01 | <img src="../../media/uc-01-primary.webp" alt="UC-01" width="90"> | USB Type-C；半双工／全双工转换；3.3 V／5 V TTL 电平可切换；输入电压 6–15 V；2 个 PH2.0 舵机接口；反接保护<br>DC 电源线：0.75 mm²，5.5 × 2.1 mm 母头，0.15 m | 1 |
+| 18 | 舵机连接线 | PH2.0 (PH-3Y)<br>120 mm | <a href="../../media/ph-3y-servo-cable-120mm.png"><img src="../../media/ph-3y-servo-cable-120mm-thumbnail.png" alt="PH2.0 120 mm 舵机连接线" width="90"></a> | 黑色硅胶绝缘排线，外覆黑色编织护套；两端线序反向；每根导体 60 × Ø0.08 mm（约 22 AWG） | 5 |
+| 19 | 舵机连接线 | PH2.0 (PH-3Y)<br>200 mm | <a href="../../media/ph-3y-servo-cable-200mm.png"><img src="../../media/ph-3y-servo-cable-200mm-thumbnail.png" alt="PH2.0 200 mm 舵机连接线" width="90"></a> | 黑色硅胶绝缘排线，外覆黑色编织护套；两端线序反向；每根导体 60 × Ø0.08 mm（约 22 AWG） | 2 |
+| 20 | 内六角圆柱头螺钉 | M3 × 22 | <a href="../../media/fasteners/m3-22-socket-head-cap-screw.png"><img src="../../media/fasteners/m3-22-socket-head-cap-screw.png" alt="M3 × 22 内六角圆柱头螺钉示意图" width="90"></a> | 黑色表面 | 4 |
+| 21 | 内六角圆柱头螺钉 | M3 × 10 | <a href="../../media/fasteners/m3-10-socket-head-cap-screw.png"><img src="../../media/fasteners/m3-10-socket-head-cap-screw.png" alt="M3 × 10 内六角圆柱头螺钉示意图" width="90"></a> | 黑色表面，强度等级 12.9 | 1 |
+| 22 | 内六角圆柱头螺钉 | M2 × 10 | <a href="../../media/fasteners/m2-10-socket-head-cap-screw.png"><img src="../../media/fasteners/m2-10-socket-head-cap-screw.png" alt="M2 × 10 内六角圆柱头螺钉示意图" width="90"></a> | 黑色表面 | 8 |
+| 23 | 内六角圆柱头螺钉 | M2 × 8 | <a href="../../media/fasteners/m2-8-socket-head-cap-screw.png"><img src="../../media/fasteners/m2-8-socket-head-cap-screw.png" alt="M2 × 8 内六角圆柱头螺钉示意图" width="90"></a> | 黑色表面 | 16 |
+| 24 | 十字槽沉头自攻螺钉 | 3 × 12 mm | <a href="../../media/fasteners/3-12-phillips-flat-head-self-tapping-screw.png"><img src="../../media/fasteners/3-12-phillips-flat-head-self-tapping-screw.png" alt="3 × 12 mm 十字槽沉头自攻螺钉示意图" width="90"></a> | 银色表面，尖尾 | 2 |
+| 25 | 十字槽盘头机牙螺钉 | M3 × 10 | <a href="../../media/fasteners/m3-10-phillips-pan-head-screw.png"><img src="../../media/fasteners/m3-10-phillips-pan-head-screw.png" alt="M3 × 10 十字槽盘头机牙螺钉示意图" width="90"></a> | 黑色表面，加硬 | 1 |
+| 26 | 十字槽盘头自攻螺钉 | 2 × 5 mm | <a href="../../media/fasteners/2-5-phillips-pan-head-blunt-point-self-tapping-screw.png"><img src="../../media/fasteners/2-5-phillips-pan-head-blunt-point-self-tapping-screw.png" alt="2 × 5 mm 十字槽盘头自攻螺钉示意图" width="90"></a> | 黑色表面，加硬，平尾 | 39 |
+| 27 | 十字槽盘头机牙螺钉 | M2 × 4.5 | <a href="../../media/fasteners/m2-4-5-phillips-pan-head-screw.png"><img src="../../media/fasteners/m2-4-5-phillips-pan-head-screw.png" alt="M2 × 4.5 十字槽盘头机牙螺钉示意图" width="90"></a> | 黑色表面；靠近末端的约 2/3 螺纹段预涂蓝色锁固胶 | 35 |
+| 28 | 螺母 | M3 | <a href="../../media/fasteners/m3-nut.png"><img src="../../media/fasteners/m3-nut.png" alt="M3 螺母示意图" width="90"></a> | 黑色表面 | 5 |
+| 29 | 垫片 | M3（3 × 6 × 0.5 mm） | <a href="../../media/fasteners/m3-6-0-5-stainless-washer.png"><img src="../../media/fasteners/m3-6-0-5-stainless-washer.png" alt="M3（3 × 6 × 0.5 mm） 垫片示意图" width="90"></a> | 不锈钢 | 1 |
 
 发现资料错误或需要帮助？请通过 [Support 支持中心](https://fashionstar.com.hk/support/) 联系我们，并注明型号及对应文件或条目。

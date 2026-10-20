@@ -35,7 +35,7 @@
 
 The table below lists **29 assembly items** for 102-FL. Missing images are marked pending.
 
-Printed-part identifiers in Model / Specification match the STEP and STL filenames (without extensions). Print settings are not recorded here: take the STL from [printing/stl/](printing/stl/) and slice it for your own printer, because layer height, wall count and infill depend on the machine and filament used.
+For printed parts, Model / Specification lists the part identifier. Except for Link 6, identifiers match the supplied STEP and STL filenames (without extensions); existing Link 6 files are named `star-arm-102-link6-gripper`. Print settings are not recorded here: take the STL from [printing/stl/](printing/stl/) and slice it for your own printer, because layer height, wall count and infill depend on the machine and filament used.
 
 Printed-part images are rendered from the corresponding STEP models. Fastener images are AI-generated illustrations; refer to the table text for specifications. Click an image to enlarge it.
 
@@ -52,7 +52,7 @@ Printed-part images are rendered from the corresponding STEP models. Fastener im
 | 9 | Link 3 | star-arm-102-link3 | <a href="images/star-arm-102-link3.png"><img src="images/star-arm-102-link3.png" alt="star-arm-102-link3" width="90"></a> | Ivory + black, PLA 3D printed part | 1 |
 | 10 | Link 4 | star-arm-102-link4 | <a href="images/star-arm-102-link4.png"><img src="images/star-arm-102-link4.png" alt="star-arm-102-link4" width="90"></a> | Ivory, PLA 3D printed part | 1 |
 | 11 | Link 5 | star-arm-102-link5 | <a href="images/star-arm-102-link5.png"><img src="images/star-arm-102-link5.png" alt="star-arm-102-link5" width="90"></a> | Ivory, PLA 3D printed part | 1 |
-| 12 | Link 6 (gripper) | star-arm-102-link6-gripper | <a href="images/star-arm-102-link6-gripper.png"><img src="images/star-arm-102-link6-gripper.png" alt="star-arm-102-link6-gripper" width="90"></a> | Ivory, PLA 3D printed part | 1 |
+| 12 | Link 6 | star-arm-102-link6 | <a href="images/star-arm-102-link6-gripper.png"><img src="images/star-arm-102-link6-gripper.png" alt="star-arm-102-link6-gripper" width="90"></a> | Ivory, PLA 3D printed part | 1 |
 | 13 | Gripper body | star-arm-102-gripper-body | <a href="images/star-arm-102-gripper-body.png"><img src="images/star-arm-102-gripper-body.png" alt="star-arm-102-gripper-body" width="90"></a> | Ivory, PLA 3D printed part | 1 |
 | 14 | Left fingertip | star-arm-102-fingertip-left | <a href="images/star-arm-102-fingertip-left.png"><img src="images/star-arm-102-fingertip-left.png" alt="star-arm-102-fingertip-left" width="90"></a> | Ivory, PLA 3D printed part | 1 |
 | 15 | Right fingertip | star-arm-102-fingertip-right | <a href="images/star-arm-102-fingertip-right.png"><img src="images/star-arm-102-fingertip-right.png" alt="star-arm-102-fingertip-right" width="90"></a> | Ivory, PLA 3D printed part | 1 |

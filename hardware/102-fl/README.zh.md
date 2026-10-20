@@ -35,7 +35,7 @@
 
 下表列出 102-FL 的 **29 项装机物料**；无图片的条目标为待补。
 
-打印件的“型号／规格”与 STEP、STL 的文件名主体一致（不含扩展名）。本表不再记录打印参数：请从 [printing/stl/](printing/stl/) 取 STL，按自己的机型与耗材切片，层高、壁数、填充率随机型与材料而定。
+打印件的“型号／规格”栏填写零件标识。除连杆 6 外，标识与所提供的 STEP、STL 文件名主体一致（不含扩展名）；连杆 6 的现有文件名为 `star-arm-102-link6-gripper`。本表不再记录打印参数：请从 [printing/stl/](printing/stl/) 取 STL，按自己的机型与耗材切片，层高、壁数、填充率随机型与材料而定。
 
 打印件图片由对应的 STEP 模型渲染生成。紧固件图片为 AI 生成的外观示意图，规格以表格文字为准；点击图片可放大查看。
 
@@ -47,12 +47,12 @@
 | 4 | UART 总线舵机 | RA8-U27H-M-C005 | <img src="images/ra8-u27h-m-c005.webp" alt="RA8-U27H-M-C005" width="90"> | 12V；25kg-cm；72rpm；双轴款壳体（平面下盖，无后输出轴）；有刷铁芯电机；12 位磁性绝对值编码器；D 型轴 | 1 |
 | 5 | 基座底板 | star-arm-102-base-bottom | <a href="images/star-arm-102-base-bottom.png"><img src="images/star-arm-102-base-bottom.png" alt="star-arm-102-base-bottom" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
 | 6 | 基座顶板 | star-arm-102-base-top | <a href="images/star-arm-102-base-top.png"><img src="images/star-arm-102-base-top.png" alt="star-arm-102-base-top" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
-| 7 | 第一连杆 | star-arm-102-link1 | <a href="images/star-arm-102-link1.png"><img src="images/star-arm-102-link1.png" alt="star-arm-102-link1" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
-| 8 | 第二连杆 | star-arm-102-link2 | <a href="images/star-arm-102-link2.png"><img src="images/star-arm-102-link2.png" alt="star-arm-102-link2" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
-| 9 | 第三连杆 | star-arm-102-link3 | <a href="images/star-arm-102-link3.png"><img src="images/star-arm-102-link3.png" alt="star-arm-102-link3" width="90"></a> | 象牙白＋黑色，PLA 3D 打印件 | 1 |
-| 10 | 第四连杆 | star-arm-102-link4 | <a href="images/star-arm-102-link4.png"><img src="images/star-arm-102-link4.png" alt="star-arm-102-link4" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
-| 11 | 第五连杆 | star-arm-102-link5 | <a href="images/star-arm-102-link5.png"><img src="images/star-arm-102-link5.png" alt="star-arm-102-link5" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
-| 12 | 第六连杆（夹爪端） | star-arm-102-link6-gripper | <a href="images/star-arm-102-link6-gripper.png"><img src="images/star-arm-102-link6-gripper.png" alt="star-arm-102-link6-gripper" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
+| 7 | 连杆 1 | star-arm-102-link1 | <a href="images/star-arm-102-link1.png"><img src="images/star-arm-102-link1.png" alt="star-arm-102-link1" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
+| 8 | 连杆 2 | star-arm-102-link2 | <a href="images/star-arm-102-link2.png"><img src="images/star-arm-102-link2.png" alt="star-arm-102-link2" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
+| 9 | 连杆 3 | star-arm-102-link3 | <a href="images/star-arm-102-link3.png"><img src="images/star-arm-102-link3.png" alt="star-arm-102-link3" width="90"></a> | 象牙白＋黑色，PLA 3D 打印件 | 1 |
+| 10 | 连杆 4 | star-arm-102-link4 | <a href="images/star-arm-102-link4.png"><img src="images/star-arm-102-link4.png" alt="star-arm-102-link4" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
+| 11 | 连杆 5 | star-arm-102-link5 | <a href="images/star-arm-102-link5.png"><img src="images/star-arm-102-link5.png" alt="star-arm-102-link5" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
+| 12 | 连杆 6 | star-arm-102-link6 | <a href="images/star-arm-102-link6-gripper.png"><img src="images/star-arm-102-link6-gripper.png" alt="star-arm-102-link6-gripper" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
 | 13 | 夹爪主体 | star-arm-102-gripper-body | <a href="images/star-arm-102-gripper-body.png"><img src="images/star-arm-102-gripper-body.png" alt="star-arm-102-gripper-body" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
 | 14 | 左指尖 | star-arm-102-fingertip-left | <a href="images/star-arm-102-fingertip-left.png"><img src="images/star-arm-102-fingertip-left.png" alt="star-arm-102-fingertip-left" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
 | 15 | 右指尖 | star-arm-102-fingertip-right | <a href="images/star-arm-102-fingertip-right.png"><img src="images/star-arm-102-fingertip-right.png" alt="star-arm-102-fingertip-right" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
