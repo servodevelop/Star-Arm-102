@@ -82,6 +82,10 @@ Run the port finder and follow its unplug/replug instructions for one USB adapte
 lerobot-find-port
 ```
 
+![Port finder terminal output](images/find-port.png)
+
+Example: the tool identifies a USB adapter at `/dev/ttyUSB0`; use the port reported for your own arm.
+
 Set these values once in the terminal. Replace both port paths with your results. The IDs are **calibration names**, not the servo bus IDs. Reuse them for the same physical arms. A new terminal needs the environment activated and these variables set again.
 
 ```bash
@@ -117,6 +121,14 @@ lerobot-calibrate \
   --robot.id="$STARARM_FOLLOWER_ID"
 ```
 
+![Leader calibration terminal output](images/calibrate-leader.png)
+
+Leader example: the terminal lists the recorded joint ranges and saved calibration file.
+
+![Follower calibration terminal output](images/calibrate-follower.png)
+
+Follower example: the terminal lists its own joint ranges and saved calibration file. Actual results depend on the physical arms; these screenshots are for reference only.
+
 1. Support the arm while the program unlocks it. At the prompt, place it in the confirmed zero pose and close the gripper/leader handle as instructed.
 2. Confirm the pose, then record each joint's available motion range, including the gripper. Do not force mechanical stops.
 3. Save the calibration and note the path printed by the program. Repeat for the other arm.
@@ -141,6 +153,10 @@ lerobot-teleoperate \
   --fps=30
 ```
 
+![Teleoperation terminal output](images/teleoperation.png)
+
+Example: the terminal reports both arms connected and displays the running loop rate.
+
 Move one joint slowly through a small range and check the follower direction; then check all other joints and the gripper. Stop if there is a jump, reversed movement, or unexpected limit. Only proceed to coordinated movements once each joint behaves correctly.
 
 **HD button:** after verifying the ID 7 board and lock/unlock behavior, set the variable below and rerun teleoperation. The implementation reads angles near 0° as unlocked and near 180° as locked; by default it freezes outgoing action while locked. This is pose holding, not an emergency stop. LD must keep `false`.
@@ -159,6 +175,10 @@ export STARARM_BUTTON=true
 lerobot-find-cameras opencv
 ```
 
+![Camera finder terminal output](images/find-cameras.png)
+
+Example: the tool reports a camera at `/dev/video0` and saves a preview image; use your own detected device and preview.
+
 Review the saved preview images to identify the actual capture devices. This new-task example uses `first_person` for the wrist view and `third_person` for the external view, both at 640 × 480 and 30 FPS. Replace indices 0 and 2. Camera names and views must stay consistent from recording through inference.
 
 ```bash
@@ -176,6 +196,10 @@ lerobot-teleoperate \
   --fps=30 \
   --display_data=true
 ```
+
+![Rerun viewer with a camera preview and joint action curves](images/camera-viewer.png)
+
+Example: the viewer shows a camera preview and joint action curves during teleoperation.
 
 **Success:** both live views are correctly assigned, stable, and show the object and placement area during movement. Fix camera mounts, exposure, and orientation before collection. The supplied ACT model instead requires `up` and `front` with its documented scene; do not substitute these new-task camera names.
 
