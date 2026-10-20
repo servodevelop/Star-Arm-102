@@ -50,10 +50,8 @@ hardware/
 │   │   ├── assembly/
 │   │   └── parts/
 │   ├── printing/
-│   │   ├── star-arm-102-ld-complete-print-project.3mf
 │   │   ├── star-arm-102-ld-stl.zip
-│   │   ├── stl/
-│   │   └── 3mf/
+│   │   └── stl/
 │   ├── drawings/
 │   └── robot-description/
 │       ├── stararm102_ld_hd_description/

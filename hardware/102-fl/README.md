@@ -25,7 +25,7 @@
 | --- | --- | --- |
 | [Assembly guide](../../docs/diy-assembly/README.md#102-fl) | Main arm assembly video | ✅ Complete |
 | [step/](step/) | Part models in parts/; whole-arm assemblies in assembly/ | ✅ Complete |
-| [printing/](printing/) | 3MF projects; STL: [View parts](printing/stl/) · [Download ZIP](printing/star-arm-102-fl-stl.zip) | ✅ Complete |
+| [printing/](printing/) | STL: [View parts](printing/stl/) · [Download ZIP](printing/star-arm-102-fl-stl.zip) | ✅ Complete |
 | [drawings/](drawings/) | PDF / DWG drawings | ✅ Complete |
 | [robot-description/](robot-description/) | URDF model: [Browse source](robot-description/) · [Download ZIP](robot-description/star-arm-102-fl-urdf.zip) | ✅ Complete |
 
@@ -35,7 +35,7 @@
 
 The table below lists **29 assembly items** for 102-FL. Missing images are marked pending.
 
-Printed-part identifiers in Model / Specification match the STEP, STL, and individual 3MF filenames (without extensions). Print settings in this BOM are references pending physical print validation. The BOM specifies 5 wall loops / 50% infill for link1, while the supplied 3MF uses 2 / 15%; confirm before printing.
+Printed-part identifiers in Model / Specification match the STEP and STL filenames (without extensions). Print settings are not recorded here: take the STL from [printing/stl/](printing/stl/) and slice it for your own printer, because layer height, wall count and infill depend on the machine and filament used.
 
 Printed-part images are rendered from the corresponding STEP models. Fastener images are AI-generated illustrations; refer to the table text for specifications. Click an image to enlarge it.
 
@@ -45,17 +45,17 @@ Printed-part images are rendered from the corresponding STEP models. Fastener im
 | 2 | UART bus servo | RA8-U35H-M | <img src="images/ra8-u35h-m.webp" alt="RA8-U35H-M" width="90"> | 12V; 35kg-cm; 55rpm; Dual-shaft; Brushed Core Motor; 12-bit Magnetic Absolute Encoder; 25T | 3 |
 | 3 | UART bus servo | RA8-U35H-M-C047 | <img src="images/ra8-u35h-m-c047.webp" alt="RA8-U35H-M-C047" width="90"> | 12V; 35kg-cm; 55rpm; Dual-shaft Housing (Flat Bottom Cover, No Rear Output Shaft); Brushed Core Motor; 12-bit Magnetic Absolute Encoder; 25T | 1 |
 | 4 | UART bus servo | RA8-U27H-M-C005 | <img src="images/ra8-u27h-m-c005.webp" alt="RA8-U27H-M-C005" width="90"> | 12V; 25kg-cm; 72rpm; Dual-shaft Housing (Flat Bottom Cover, No Rear Output Shaft); Brushed Core Motor; 12-bit Magnetic Absolute Encoder; D-Type Shaft | 1 |
-| 5 | Base bottom plate | star-arm-102-base-bottom | <a href="images/star-arm-102-base-bottom.png"><img src="images/star-arm-102-base-bottom.png" alt="star-arm-102-base-bottom" width="90"></a> | Ivory, PLA 3D printed part; wall loops: 2; infill density: 15% | 1 |
-| 6 | Base top plate | star-arm-102-base-top | <a href="images/star-arm-102-base-top.png"><img src="images/star-arm-102-base-top.png" alt="star-arm-102-base-top" width="90"></a> | Ivory, PLA 3D printed part; settings vary by region; see 3MF | 1 |
-| 7 | Link 1 | star-arm-102-link1 | <a href="images/star-arm-102-link1.png"><img src="images/star-arm-102-link1.png" alt="star-arm-102-link1" width="90"></a> | Ivory, PLA 3D printed part; wall loops: 5; infill density: 50% | 1 |
-| 8 | Link 2 | star-arm-102-link2 | <a href="images/star-arm-102-link2.png"><img src="images/star-arm-102-link2.png" alt="star-arm-102-link2" width="90"></a> | Ivory, PLA 3D printed part; wall loops: 2; infill density: 15% | 1 |
-| 9 | Link 3 | star-arm-102-link3 | <a href="images/star-arm-102-link3.png"><img src="images/star-arm-102-link3.png" alt="star-arm-102-link3" width="90"></a> | Ivory + black, PLA 3D printed part; settings vary by region; see 3MF | 1 |
-| 10 | Link 4 | star-arm-102-link4 | <a href="images/star-arm-102-link4.png"><img src="images/star-arm-102-link4.png" alt="star-arm-102-link4" width="90"></a> | Ivory, PLA 3D printed part; wall loops: 2; infill density: 15% | 1 |
-| 11 | Link 5 | star-arm-102-link5 | <a href="images/star-arm-102-link5.png"><img src="images/star-arm-102-link5.png" alt="star-arm-102-link5" width="90"></a> | Ivory, PLA 3D printed part; wall loops: 2; infill density: 15% | 1 |
-| 12 | Link 6 (gripper) | star-arm-102-link6-gripper | <a href="images/star-arm-102-link6-gripper.png"><img src="images/star-arm-102-link6-gripper.png" alt="star-arm-102-link6-gripper" width="90"></a> | Ivory, PLA 3D printed part; wall loops: 4; infill density: 15% | 1 |
-| 13 | Gripper body | star-arm-102-gripper-body | <a href="images/star-arm-102-gripper-body.png"><img src="images/star-arm-102-gripper-body.png" alt="star-arm-102-gripper-body" width="90"></a> | Ivory, PLA 3D printed part; wall loops: 4; infill density: 15% | 1 |
-| 14 | Left fingertip | star-arm-102-fingertip-left | <a href="images/star-arm-102-fingertip-left.png"><img src="images/star-arm-102-fingertip-left.png" alt="star-arm-102-fingertip-left" width="90"></a> | Ivory, PLA 3D printed part; wall loops: 4; infill density: 15% | 1 |
-| 15 | Right fingertip | star-arm-102-fingertip-right | <a href="images/star-arm-102-fingertip-right.png"><img src="images/star-arm-102-fingertip-right.png" alt="star-arm-102-fingertip-right" width="90"></a> | Ivory, PLA 3D printed part; wall loops: 4; infill density: 15% | 1 |
+| 5 | Base bottom plate | star-arm-102-base-bottom | <a href="images/star-arm-102-base-bottom.png"><img src="images/star-arm-102-base-bottom.png" alt="star-arm-102-base-bottom" width="90"></a> | Ivory, PLA 3D printed part | 1 |
+| 6 | Base top plate | star-arm-102-base-top | <a href="images/star-arm-102-base-top.png"><img src="images/star-arm-102-base-top.png" alt="star-arm-102-base-top" width="90"></a> | Ivory, PLA 3D printed part | 1 |
+| 7 | Link 1 | star-arm-102-link1 | <a href="images/star-arm-102-link1.png"><img src="images/star-arm-102-link1.png" alt="star-arm-102-link1" width="90"></a> | Ivory, PLA 3D printed part | 1 |
+| 8 | Link 2 | star-arm-102-link2 | <a href="images/star-arm-102-link2.png"><img src="images/star-arm-102-link2.png" alt="star-arm-102-link2" width="90"></a> | Ivory, PLA 3D printed part | 1 |
+| 9 | Link 3 | star-arm-102-link3 | <a href="images/star-arm-102-link3.png"><img src="images/star-arm-102-link3.png" alt="star-arm-102-link3" width="90"></a> | Ivory + black, PLA 3D printed part | 1 |
+| 10 | Link 4 | star-arm-102-link4 | <a href="images/star-arm-102-link4.png"><img src="images/star-arm-102-link4.png" alt="star-arm-102-link4" width="90"></a> | Ivory, PLA 3D printed part | 1 |
+| 11 | Link 5 | star-arm-102-link5 | <a href="images/star-arm-102-link5.png"><img src="images/star-arm-102-link5.png" alt="star-arm-102-link5" width="90"></a> | Ivory, PLA 3D printed part | 1 |
+| 12 | Link 6 (gripper) | star-arm-102-link6-gripper | <a href="images/star-arm-102-link6-gripper.png"><img src="images/star-arm-102-link6-gripper.png" alt="star-arm-102-link6-gripper" width="90"></a> | Ivory, PLA 3D printed part | 1 |
+| 13 | Gripper body | star-arm-102-gripper-body | <a href="images/star-arm-102-gripper-body.png"><img src="images/star-arm-102-gripper-body.png" alt="star-arm-102-gripper-body" width="90"></a> | Ivory, PLA 3D printed part | 1 |
+| 14 | Left fingertip | star-arm-102-fingertip-left | <a href="images/star-arm-102-fingertip-left.png"><img src="images/star-arm-102-fingertip-left.png" alt="star-arm-102-fingertip-left" width="90"></a> | Ivory, PLA 3D printed part | 1 |
+| 15 | Right fingertip | star-arm-102-fingertip-right | <a href="images/star-arm-102-fingertip-right.png"><img src="images/star-arm-102-fingertip-right.png" alt="star-arm-102-fingertip-right" width="90"></a> | Ivory, PLA 3D printed part | 1 |
 | 16 | Thrust needle roller bearing | AXK2035+2AS | <img src="../../media/axk2035-2as-bearing.png" alt="AXK2035+2AS thrust needle roller bearing" width="90"> | inner diameter 20 mm, outer diameter 35 mm, thickness 4 mm | 1 |
 | 17 | TTL/USB Servo Adapter | UC-01 | <img src="../../media/uc-01-primary.webp" alt="UC-01" width="90"> | USB Type-C; half-/full-duplex conversion; selectable 3.3 V / 5 V TTL levels; 6–15 V input; 2 × PH2.0 servo ports; reverse-polarity protection<br>XT30 connector | 1 |
 | 18 | Servo cable | PH2.0 (PH-3Y)<br>120 mm | <a href="../../media/ph-3y-servo-cable-120mm.png"><img src="../../media/ph-3y-servo-cable-120mm-thumbnail.png" alt="PH2.0 120 mm servo cable" width="90"></a> | Black silicone-insulated ribbon cable with black braided sleeving; reversed pin order between ends; 60 × Ø0.08 mm strands per conductor (approx. 22 AWG) | 4 |

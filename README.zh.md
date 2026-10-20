@@ -191,10 +191,8 @@ Star-Arm-102/
 │   │   │   ├── assembly/
 │   │   │   └── parts/
 │   │   ├── printing/
-│   │   │   ├── star-arm-102-ld-complete-print-project.3mf
 │   │   │   ├── star-arm-102-ld-stl.zip
-│   │   │   ├── stl/
-│   │   │   └── 3mf/
+│   │   │   └── stl/
 │   │   ├── drawings/
 │   │   └── robot-description/
 │   ├── 102-hd/
