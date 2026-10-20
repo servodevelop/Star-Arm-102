@@ -35,7 +35,7 @@
 
 The table below lists **32 assembly items** for 102-HD. Missing images are marked pending.
 
-For printed parts, Model / Specification lists the part identifier. Except for Link 6, identifiers match the supplied STEP and STL filenames (without extensions); existing Link 6 files are named `star-arm-102-link6-handle`. The handle support is currently provided as a STEP model. Print settings are not recorded here: take the STL from [printing/stl/](printing/stl/) and slice it for your own printer, because layer height, wall count and infill depend on the machine and filament used.
+For printed parts, Model / Specification lists the part identifier, matching the supplied STEP and STL filenames (without extensions). The handle support is currently provided as a STEP model. Print settings are not recorded here: take the STL from [printing/stl/](printing/stl/) and slice it for your own printer, because layer height, wall count and infill depend on the machine and filament used.
 
 Printed-part images are rendered from the corresponding STEP models. Fastener images are AI-generated illustrations; refer to the table text for specifications. Click an image to enlarge it.
 
@@ -51,7 +51,7 @@ Printed-part images are rendered from the corresponding STEP models. Fastener im
 | 8 | Link 3 | star-arm-102-link3 | <a href="images/star-arm-102-link3.png"><img src="images/star-arm-102-link3.png" alt="star-arm-102-link3" width="90"></a> | Ivory + black, PLA 3D printed part | 1 |
 | 9 | Link 4 | star-arm-102-link4 | <a href="images/star-arm-102-link4.png"><img src="images/star-arm-102-link4.png" alt="star-arm-102-link4" width="90"></a> | Ivory, PLA 3D printed part | 1 |
 | 10 | Link 5 | star-arm-102-link5 | <a href="images/star-arm-102-link5.png"><img src="images/star-arm-102-link5.png" alt="star-arm-102-link5" width="90"></a> | Ivory, PLA 3D printed part | 1 |
-| 11 | Link 6 | star-arm-102-link6 | <a href="images/star-arm-102-link6-handle.png"><img src="images/star-arm-102-link6-handle.png" alt="star-arm-102-link6-handle" width="90"></a> | Ivory, PLA 3D printed part | 1 |
+| 11 | Link 6 | star-arm-102-link6 | <a href="images/star-arm-102-link6.png"><img src="images/star-arm-102-link6.png" alt="star-arm-102-link6" width="90"></a> | Ivory, PLA 3D printed part | 1 |
 | 12 | Handle | star-arm-102-handle | <a href="images/star-arm-102-handle.png"><img src="images/star-arm-102-handle.png" alt="star-arm-102-handle" width="90"></a> | Ivory, PLA 3D printed part | 1 |
 | 13 | Handle support | [star-arm-102-handle-support](step/parts/star-arm-102-handle-support.step) | <a href="images/star-arm-102-handle-support.png"><img src="images/star-arm-102-handle-support.png" alt="Handle support" width="90"></a> | 3D printed part; supports the handle from below | 1 |
 | 14 | Left finger ring | star-arm-102-finger-ring-left | <a href="images/star-arm-102-finger-ring-left.png"><img src="images/star-arm-102-finger-ring-left.png" alt="star-arm-102-finger-ring-left" width="90"></a> | Ivory, PLA 3D printed part | 1 |
