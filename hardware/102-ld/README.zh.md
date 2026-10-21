@@ -25,7 +25,7 @@
 | --- | --- | --- |
 | [DIY 装配](../../docs/diy-assembly/README.zh.md#102-ld) | 主体机械臂装配视频 | ✅ 已完成 |
 | [step/](step/) | parts/ 零件模型；assembly/ 共用装配模型 | ✅ 已完成 |
-| [stl/](stl/) | [下载整套 STL（12 个打印件）](stl/downloads/star-arm-102-ld-stl.zip?raw=true) · [浏览单个 STL](stl/) | ✅ 已完成 |
+| [stl/](stl/) | [下载整套 STL（12 个打印件）](stl/downloads/star-arm-102-ld-stl-2026-10-21.zip?raw=true) · [浏览单个 STL](stl/) | ✅ 已完成 |
 | [drawings/](drawings/) | PDF／DWG 图纸 | ✅ 已完成 |
 | [robot-description/](robot-description/) | URDF 模型：[浏览源码](robot-description/) · [下载 ZIP](robot-description/star-arm-102-ld-hd-urdf.zip) | ✅ 已完成 |
 
