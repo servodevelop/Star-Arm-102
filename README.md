@@ -191,8 +191,9 @@ Star-Arm-102/
 │   │   │   ├── assembly/
 │   │   │   └── parts/
 │   │   ├── stl/
-│   │   │   ├── *.stl
-│   │   │   └── star-arm-102-ld-stl.zip
+│   │   │   ├── downloads/
+│   │   │   │   └── star-arm-102-ld-stl.zip
+│   │   │   └── *.stl
 │   │   ├── drawings/
 │   │   └── robot-description/
 │   ├── 102-hd/
