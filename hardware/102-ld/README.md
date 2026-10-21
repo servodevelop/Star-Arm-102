@@ -37,7 +37,7 @@ The table below lists **29 assembly items** for 102-LD. Missing images are marke
 
 For printed parts, the part name identifies the component. English names in the assembly tree, such as `Link 1`, correspond to the English BOM’s Part Name column.
 
-For printed parts, Model / Specification / Part Identifier lists the part identifier, matching the supplied STEP and STL filenames (without extensions). For example, `Link 1` uses the identifier `star-arm-102-link1`. The `star-arm-102-` prefix identifies the product series when files are downloaded separately. All 12 printed parts, including the handle support, are available as STEP and STL files. The STL ZIP contains the same 12 files as the printing/stl/ directory.
+For printed parts, Model / Specification / Part Identifier lists the part identifier, matching the supplied STEP and STL filenames (without extensions). For example, `Link 1` uses the identifier `star-arm-102-link1`. The `star-arm-102-` prefix identifies the product series when files are downloaded separately. All 12 printed parts, including the handle rest, are available as STEP and STL files. The STL ZIP contains the same 12 files as the printing/stl/ directory.
 
 Print settings are not recorded here: take the STL from [printing/stl/](printing/stl/) and slice it for your own printer, because layer height, wall count and infill depend on the machine and filament used.
 
@@ -57,7 +57,7 @@ Printed-part images are rendered from the corresponding STEP models. Fastener im
 | 10 | Link 5 | star-arm-102-link5 | <a href="images/star-arm-102-link5.png"><img src="images/star-arm-102-link5.png" alt="star-arm-102-link5" width="90"></a> | Ivory, PLA 3D printed part | 1 |
 | 11 | Link 6 | star-arm-102-link6 | <a href="images/star-arm-102-link6.png"><img src="images/star-arm-102-link6.png" alt="star-arm-102-link6" width="90"></a> | Ivory, PLA 3D printed part | 1 |
 | 12 | Handle | star-arm-102-handle | <a href="images/star-arm-102-handle.png"><img src="images/star-arm-102-handle.png" alt="star-arm-102-handle" width="90"></a> | Ivory, PLA 3D printed part | 1 |
-| 13 | Handle support | star-arm-102-handle-support | <a href="images/star-arm-102-handle-support.png"><img src="images/star-arm-102-handle-support.png" alt="Handle support" width="90"></a> | Ivory, PLA 3D printed part | 1 |
+| 13 | Handle rest | star-arm-102-handle-rest | <a href="images/star-arm-102-handle-rest.png"><img src="images/star-arm-102-handle-rest.png" alt="Handle rest" width="90"></a> | Ivory, PLA 3D printed part | 1 |
 | 14 | Left finger ring | star-arm-102-finger-ring-left | <a href="images/star-arm-102-finger-ring-left.png"><img src="images/star-arm-102-finger-ring-left.png" alt="star-arm-102-finger-ring-left" width="90"></a> | Ivory, PLA 3D printed part | 1 |
 | 15 | Right finger ring | star-arm-102-finger-ring-right | <a href="images/star-arm-102-finger-ring-right.png"><img src="images/star-arm-102-finger-ring-right.png" alt="star-arm-102-finger-ring-right" width="90"></a> | Ivory, PLA 3D printed part | 1 |
 | 16 | Thrust needle roller bearing | AXK2035+2AS | <img src="../../media/axk2035-2as-bearing.png" alt="AXK2035+2AS thrust needle roller bearing" width="90"> | inner diameter 20 mm, outer diameter 35 mm, thickness 4 mm | 1 |

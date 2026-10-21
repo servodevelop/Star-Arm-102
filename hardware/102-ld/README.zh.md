@@ -37,7 +37,7 @@
 
 打印件按品名识别。装配树中的英文名称（如 `Link 1`）与英文版 BOM 的品名对应，中文版对应“连杆 1”。
 
-打印件的“型号／规格／零件标识”栏填写零件标识，与所提供的 STEP、STL 文件名主体一致（不含扩展名）。例如，“连杆 1”的零件标识为 `star-arm-102-link1`；`star-arm-102-` 前缀用于在文件单独下载后识别所属产品系列。全部 12 个打印件（含手柄支撑托）均提供 STEP 和 STL 文件；STL 下载 ZIP 与 printing/stl/ 目录包含相同的 12 个文件。
+打印件的“型号／规格／零件标识”栏填写零件标识，与所提供的 STEP、STL 文件名主体一致（不含扩展名）。例如，“连杆 1”的零件标识为 `star-arm-102-link1`；`star-arm-102-` 前缀用于在文件单独下载后识别所属产品系列。全部 12 个打印件（含手柄托）均提供 STEP 和 STL 文件；STL 下载 ZIP 与 printing/stl/ 目录包含相同的 12 个文件。
 
 本表不再记录打印参数：请从 [printing/stl/](printing/stl/) 取 STL，按自己的机型与耗材切片，层高、壁数、填充率随机型与材料而定。
 
@@ -57,7 +57,7 @@
 | 10 | 连杆 5 | star-arm-102-link5 | <a href="images/star-arm-102-link5.png"><img src="images/star-arm-102-link5.png" alt="star-arm-102-link5" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
 | 11 | 连杆 6 | star-arm-102-link6 | <a href="images/star-arm-102-link6.png"><img src="images/star-arm-102-link6.png" alt="star-arm-102-link6" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
 | 12 | 手柄 | star-arm-102-handle | <a href="images/star-arm-102-handle.png"><img src="images/star-arm-102-handle.png" alt="star-arm-102-handle" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
-| 13 | 手柄支撑托 | star-arm-102-handle-support | <a href="images/star-arm-102-handle-support.png"><img src="images/star-arm-102-handle-support.png" alt="手柄支撑托" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
+| 13 | 手柄托 | star-arm-102-handle-rest | <a href="images/star-arm-102-handle-rest.png"><img src="images/star-arm-102-handle-rest.png" alt="手柄托" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
 | 14 | 左指环 | star-arm-102-finger-ring-left | <a href="images/star-arm-102-finger-ring-left.png"><img src="images/star-arm-102-finger-ring-left.png" alt="star-arm-102-finger-ring-left" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
 | 15 | 右指环 | star-arm-102-finger-ring-right | <a href="images/star-arm-102-finger-ring-right.png"><img src="images/star-arm-102-finger-ring-right.png" alt="star-arm-102-finger-ring-right" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
 | 16 | 推力滚针轴承 | AXK2035+2AS | <img src="../../media/axk2035-2as-bearing.png" alt="AXK2035+2AS 滚针轴承" width="90"> | 内径 20 mm，外径 35 mm，厚度 4 mm | 1 |
