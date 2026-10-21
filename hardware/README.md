@@ -37,7 +37,7 @@ Joints 1–6 (J1–J6) above map to servo IDs 0–5; the handle/gripper maps to 
 
 ## Directory structure
 
-The LD layout is expanded below. HD and FL use the same resource categories, with model-specific files and inline BOMs. Individual files are omitted.
+The LD layout is expanded below; its STL files and download ZIP are in stl/. HD and FL currently keep their STL files in printing/stl/ and download ZIPs in printing/. Each model has its own files and inline BOM. Individual part files are omitted.
 
 ```text
 hardware/
@@ -49,9 +49,9 @@ hardware/
 │   ├── step/
 │   │   ├── assembly/
 │   │   └── parts/
-│   ├── printing/
-│   │   ├── star-arm-102-ld-stl.zip
-│   │   └── stl/
+│   ├── stl/
+│   │   ├── *.stl
+│   │   └── star-arm-102-ld-stl.zip
 │   ├── drawings/
 │   └── robot-description/
 │       ├── stararm102_ld_hd_description/

@@ -190,9 +190,9 @@ Star-Arm-102/
 │   │   ├── step/
 │   │   │   ├── assembly/
 │   │   │   └── parts/
-│   │   ├── printing/
-│   │   │   ├── star-arm-102-ld-stl.zip
-│   │   │   └── stl/
+│   │   ├── stl/
+│   │   │   ├── *.stl
+│   │   │   └── star-arm-102-ld-stl.zip
 │   │   ├── drawings/
 │   │   └── robot-description/
 │   ├── 102-hd/

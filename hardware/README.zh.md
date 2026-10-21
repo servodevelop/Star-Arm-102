@@ -37,7 +37,7 @@
 
 ## 目录结构
 
-下方展开 LD 的目录。HD 和 FL 使用相同资源分类，各自提供型号对应文件和页内 BOM。省略具体文件。
+下方展开 LD 的目录，STL 文件和下载 ZIP 均位于 stl/。HD 和 FL 目前仍将 STL 文件放在 printing/stl/，下载 ZIP 放在 printing/。各型号提供对应文件和页内 BOM，省略具体零件文件。
 
 ```text
 hardware/
@@ -49,9 +49,9 @@ hardware/
 │   ├── step/
 │   │   ├── assembly/
 │   │   └── parts/
-│   ├── printing/
-│   │   ├── star-arm-102-ld-stl.zip
-│   │   └── stl/
+│   ├── stl/
+│   │   ├── *.stl
+│   │   └── star-arm-102-ld-stl.zip
 │   ├── drawings/
 │   └── robot-description/
 │       ├── stararm102_ld_hd_description/

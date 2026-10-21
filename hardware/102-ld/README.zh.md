@@ -25,7 +25,7 @@
 | --- | --- | --- |
 | [DIY 装配](../../docs/diy-assembly/README.zh.md#102-ld) | 主体机械臂装配视频 | ✅ 已完成 |
 | [step/](step/) | parts/ 零件模型；assembly/ 共用装配模型 | ✅ 已完成 |
-| [printing/](printing/) | STL：[查看零件](printing/stl/) · [下载整套 ZIP](printing/star-arm-102-ld-stl.zip) | ✅ 已完成 |
+| [stl/](stl/) | 3D 打印文件：[查看零件](stl/) · [下载整套 ZIP](stl/star-arm-102-ld-stl.zip) | ✅ 已完成 |
 | [drawings/](drawings/) | PDF／DWG 图纸 | ✅ 已完成 |
 | [robot-description/](robot-description/) | URDF 模型：[浏览源码](robot-description/) · [下载 ZIP](robot-description/star-arm-102-ld-hd-urdf.zip) | ✅ 已完成 |
 
@@ -37,9 +37,9 @@
 
 打印件按品名识别。装配树中的英文名称（如 `Link 1`）与英文版 BOM 的品名对应，中文版对应“连杆 1”。
 
-打印件的“型号／规格／零件标识”栏填写零件标识，与所提供的 STEP、STL 文件名主体一致（不含扩展名）。例如，“连杆 1”的零件标识为 `star-arm-102-link1`；`star-arm-102-` 前缀用于在文件单独下载后识别所属产品系列。全部 12 个打印件（含手柄托）均提供 STEP 和 STL 文件；STL 下载 ZIP 与 printing/stl/ 目录包含相同的 12 个文件。
+打印件的“型号／规格／零件标识”栏填写零件标识，与所提供的 STEP、STL 文件名主体一致（不含扩展名）。例如，“连杆 1”的零件标识为 `star-arm-102-link1`；`star-arm-102-` 前缀用于在文件单独下载后识别所属产品系列。全部 12 个打印件（含手柄托）均提供 STEP 和 STL 文件；STL 下载 ZIP 与 stl/ 目录包含相同的 12 个文件。
 
-本表不再记录打印参数：请从 [printing/stl/](printing/stl/) 取 STL，按自己的机型与耗材切片，层高、壁数、填充率随机型与材料而定。
+本表不再记录打印参数：请从 [stl/](stl/) 取 STL，按自己的机型与耗材切片，层高、壁数、填充率随机型与材料而定。
 
 打印件图片由对应的 STEP 模型渲染生成。紧固件图片为 AI 生成的外观示意图，规格以表格文字为准；点击图片可放大查看。
 
