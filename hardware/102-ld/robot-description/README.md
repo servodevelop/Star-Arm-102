@@ -4,11 +4,13 @@
 
 Leader handle and finger-ring geometry for LD/HD. Mass and inertia differences for HD servos have not been validated.
 
-[Download complete ZIP](star-arm-102-ld-hd-urdf.zip) · [Browse source package](stararm102_ld_hd_description/)
+[Download complete ZIP](downloads/star-arm-102-ld-hd-urdf-2026-10-21.zip?raw=true) · [Browse source package](stararm102-ld-hd-description/)
 
 This is a **ROS 1 / catkin** package. The ZIP and source directory contain the same files. Keep the whole package together because the URDF references its meshes.
 
-Place `stararm102_ld_hd_description/` in your catkin workspace’s `src/`, build and source the workspace, then run:
+The directory name uses hyphens; the ROS package name remains `stararm102_ld_hd_description`, as used by the launch command and mesh references.
+
+Place `stararm102-ld-hd-description/` in your catkin workspace’s `src/`, build and source the workspace, then run:
 
 ```bash
 roslaunch stararm102_ld_hd_description display.launch

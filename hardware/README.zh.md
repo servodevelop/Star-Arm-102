@@ -55,8 +55,9 @@ hardware/
 │   │   └── *.stl
 │   ├── drawings/
 │   └── robot-description/
-│       ├── stararm102_ld_hd_description/
-│       └── star-arm-102-ld-hd-urdf.zip
+│       ├── downloads/
+│       │   └── star-arm-102-ld-hd-urdf-2026-10-21.zip
+│       └── stararm102-ld-hd-description/
 ├── 102-hd/
 ├── 102-fl/
 ├── camera-module/

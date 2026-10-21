@@ -4,11 +4,13 @@
 
 主臂手柄与指环结构，供 LD/HD 使用。HD 舵机差异对应的质量与惯量尚未验证。
 
-[下载完整 ZIP](star-arm-102-ld-hd-urdf.zip) · [浏览源码目录](stararm102_ld_hd_description/)
+[下载完整 ZIP](downloads/star-arm-102-ld-hd-urdf-2026-10-21.zip?raw=true) · [浏览源码目录](stararm102-ld-hd-description/)
 
 这是 **ROS 1 / catkin** 软件包。ZIP 与源码目录包含相同文件；请保留整个软件包目录，URDF 需要读取其中的网格。
 
-将 `stararm102_ld_hd_description/` 放入 catkin 工作空间的 `src/`，构建并加载工作空间环境后运行：
+目录名使用连字符；ROS 包名仍为 `stararm102_ld_hd_description`，启动命令和网格引用均使用此包名。
+
+将 `stararm102-ld-hd-description/` 放入 catkin 工作空间的 `src/`，构建并加载工作空间环境后运行：
 
 ```bash
 roslaunch stararm102_ld_hd_description display.launch
