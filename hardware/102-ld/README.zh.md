@@ -35,11 +35,15 @@
 
 下表列出 102-LD 的 **29 项装机物料**；无图片的条目标为待补。
 
-打印件的“型号／规格”栏填写零件标识，与所提供的 STEP、STL 文件名主体一致（不含扩展名）。手柄支撑托目前提供 STEP 模型。本表不再记录打印参数：请从 [printing/stl/](printing/stl/) 取 STL，按自己的机型与耗材切片，层高、壁数、填充率随机型与材料而定。
+打印件按品名识别。装配树中的英文名称（如 `Link 1`）与英文版 BOM 的品名对应，中文版对应“连杆 1”。
+
+打印件的“型号／规格／零件标识”栏填写零件标识，与所提供的 STEP、STL 文件名主体一致（不含扩展名）。例如，“连杆 1”的零件标识为 `star-arm-102-link1`；`star-arm-102-` 前缀用于在文件单独下载后识别所属产品系列。全部 12 个打印件（含手柄支撑托）均提供 STEP 和 STL 文件；STL 下载 ZIP 与 printing/stl/ 目录包含相同的 12 个文件。
+
+本表不再记录打印参数：请从 [printing/stl/](printing/stl/) 取 STL，按自己的机型与耗材切片，层高、壁数、填充率随机型与材料而定。
 
 打印件图片由对应的 STEP 模型渲染生成。紧固件图片为 AI 生成的外观示意图，规格以表格文字为准；点击图片可放大查看。
 
-| 序号 | 品名 | 型号／规格 | 图片 | 描述 | 数量 |
+| 序号 | 品名 | 型号／规格／零件标识 | 图片 | 描述 | 数量 |
 | :---: | --- | --- | :---: | --- | :---: |
 | 1 | UART 总线舵机 | RA8-U01H-M | <img src="images/ra8-u01h-m.webp" alt="RA8-U01H-M" width="90"> | 12V；双轴；无电机（无扭矩输出）；12 位磁性绝对值编码器；25T | 4 |
 | 2 | UART 总线舵机 | RA8-U02H-M | <img src="images/ra8-u02h-m.webp" alt="RA8-U02H-M" width="90"> | 12V；双轴款壳体（平面下盖，无后输出轴）；无电机（无扭矩输出）；12 位磁性绝对值编码器；D 型轴 | 1 |
@@ -53,7 +57,7 @@
 | 10 | 连杆 5 | star-arm-102-link5 | <a href="images/star-arm-102-link5.png"><img src="images/star-arm-102-link5.png" alt="star-arm-102-link5" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
 | 11 | 连杆 6 | star-arm-102-link6 | <a href="images/star-arm-102-link6.png"><img src="images/star-arm-102-link6.png" alt="star-arm-102-link6" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
 | 12 | 手柄 | star-arm-102-handle | <a href="images/star-arm-102-handle.png"><img src="images/star-arm-102-handle.png" alt="star-arm-102-handle" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
-| 13 | 手柄支撑托 | [star-arm-102-handle-support](step/parts/star-arm-102-handle-support.step) | <a href="images/star-arm-102-handle-support.png"><img src="images/star-arm-102-handle-support.png" alt="手柄支撑托" width="90"></a> | 3D 打印件，置于手柄下方提供支撑 | 1 |
+| 13 | 手柄支撑托 | star-arm-102-handle-support | <a href="images/star-arm-102-handle-support.png"><img src="images/star-arm-102-handle-support.png" alt="手柄支撑托" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
 | 14 | 左指环 | star-arm-102-finger-ring-left | <a href="images/star-arm-102-finger-ring-left.png"><img src="images/star-arm-102-finger-ring-left.png" alt="star-arm-102-finger-ring-left" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
 | 15 | 右指环 | star-arm-102-finger-ring-right | <a href="images/star-arm-102-finger-ring-right.png"><img src="images/star-arm-102-finger-ring-right.png" alt="star-arm-102-finger-ring-right" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
 | 16 | 推力滚针轴承 | AXK2035+2AS | <img src="../../media/axk2035-2as-bearing.png" alt="AXK2035+2AS 滚针轴承" width="90"> | 内径 20 mm，外径 35 mm，厚度 4 mm | 1 |
