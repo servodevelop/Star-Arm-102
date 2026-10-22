@@ -6,14 +6,14 @@ Two leaders each control one 102-FL follower: **leader 1 → follower 1** and **
 
 | Program | Leader behavior | Default filter window |
 | --- | --- | ---: |
-| `stararm102_dual.py` | Normal following, with optional HD button behavior | 1 |
-| `stararm102_dual_hover.py` | Normal following plus automatic HD leader hold after about one quiet second | 60 |
+| `stararm102_dual.py` | Normal following, with optional HD button behavior | 25 |
+| `stararm102_dual_hover.py` | Normal following plus automatic HD leader hold after about one quiet second | 25 |
 
 The hover program reuses serial checks and process management from `stararm102_dual.py`. Both programs need only the dual-arm scripts kept in this directory. These instructions use Ubuntu 22.04.
 
 ## Install
 
-Prepare four arms, their matching UC-01 adapters, USB data cables, and servo power supplies. Secure the bases and clear the motion area. USB carries data; it does not power the servos. Wire everything with power off. Place each leader and follower in matching physical reference poses before control.
+Prepare four arms, their matching UC-01 adapters, USB data cables, and servo power supplies. Secure the bases and clear the motion area. USB carries data; it does not power the servos. Wire everything with power off. Both leaders and followers move to the same reference pose on startup; clear their entire paths before control.
 
 From the project directory:
 
@@ -53,7 +53,7 @@ If an ID does not respond, check the port mapping, servo power, and bus wiring. 
 
 ## Run normal or hover control
 
-Secure the bases, clear the workspace, and check both reference poses. Normal mode:
+Secure the bases and clear the workspace, including the paths to the startup pose. Normal mode:
 
 ```bash
 python stararm102_dual.py --leader-1-port /dev/ttyUSB0 --follower-1-port /dev/ttyUSB1 --leader-2-port /dev/ttyUSB2 --follower-2-port /dev/ttyUSB3
@@ -67,13 +67,13 @@ python stararm102_dual_hover.py --leader-1-port /dev/ttyUSB0 --follower-1-port /
 
 Both leaders default to 102-LD. Add the relevant `--leader-N-type 102HD` for an HD leader. On the first run, test one joint at a time with small, slow movements; verify that each follower matches only its own leader, then check the grippers. Stop if alignment or direction is wrong.
 
-Both programs unlock the arms and reset multi-turn counts on startup, so followers may move immediately. `Ctrl+C` requests both processes to stop. **This is not a hardware emergency stop.** Use the hardware power-off procedure for unexpected motion. These programs do not calibrate mechanical zero or plan collision-free paths.
+Both programs unlock the arms, reset multi-turn counts, and command all four arms to `[-5.4, 39.4, -55.6, -19.6, 6.3, 0.8, 1.5]` degrees (servo IDs 0–6) with a 4-second motion interval. After that interval, IDs 0–6 on all four arms enter 3000 mW damping mode for 3 seconds, then unlock before following begins. The startup pose is a servo-angle target, not a calibration step. On exit, both arms receive `stop_on_control_mode(id, 0x12, power)` for IDs 0–6. Leader joints use 500 mW; follower joints use 2000 mW by default; both grippers use 500 mW. No exit position target is sent. Damping and descent speed depend on servo firmware, load and friction; support the arms and clear the area before stopping. Stop mode `0x12` requires brushless magnetic-encoder servo firmware V316 or later. `Ctrl+C` requests both processes to stop. **This is not a hardware emergency stop.** Use the hardware power-off procedure for unexpected motion. These programs do not calibrate mechanical zero or plan collision-free paths.
 
 ## Normal and hover behavior
 
 Normal mode continuously reads servo IDs 0–6 from each leader and sends targets to its follower. It multiplies the gripper angle by 1.5, clamps it to 0–90 degrees, and leaves it out of the moving average. HD button behavior is included.
 
-Hover mode keeps the same follower control. On an **HD leader**, if the six arm joints' summed filtered change stays at or below 0.1 degrees for about one second, the program sends a current-position hold command. After automatic hold, it sends an unlock command when the summed actual-angle change exceeds 5 degrees. The gripper is excluded. The default filter window is 60, which can add following delay. Physical testing showed **no usable hold on LD leaders**: a lock log means a command was sent, not that LD joints physically held position.
+Hover mode keeps the same follower control. On an **HD leader**, if the six arm joints' summed filtered change stays at or below 0.1 degrees for about one second, the program sends a current-position hold command. After automatic hold, it sends an unlock command when the summed actual-angle change exceeds 5 degrees. The gripper is excluded. The default filter window is 25, which can add following delay. Physical testing showed **no usable hold on LD leaders**: a lock log means a command was sent, not that LD joints physically held position.
 
 **The hold command targets the HD leader, not the follower.** The follower continues receiving target angles. Each press of the HD button board toggles hold: one press locks the leader's six arm joints, and the next releases them. The board reports this state at ID 7; the code locks on value `180` and unlocks on other values. Button hold takes priority over automatic hold, whose quiet timer restarts after release.
 
@@ -87,6 +87,7 @@ Hover mode keeps the same follower control. On an **HD leader**, if the six arm 
 | `--leader-N-button-enable` / `--leader-N-button-disable` | Explicitly enable or disable its button board |
 | `--leader-N-button-id ID` | Button board ID; default is 7 |
 | `--pair-N-filtered-size K` | Override that program's filter window for pair N |
+| `--pair-N-follower-damping-power-mw P` | Follower arm-joint damping on exit; default 2000 mW, allowed 1–6000 mW |
 | `--check-only` | Query devices without starting control |
 
 Replace `N` with `1` or `2`. Run either program with `--help` for its full options.
@@ -94,7 +95,7 @@ Replace `N` with `1` or `2`. Run either program with `--help` for its full optio
 Both dual-arm programs follow the same sequence:
 
 1. Reject duplicate ports and query servo IDs 0–6 on all four arms, plus an enabled button board. `--check-only` exits here.
-2. Start **one independent control process per pair**. Each process opens only its pair's ports, reads its leader, and controls its follower. Hover mode also checks automatic hold on that leader; physical hold is supported on HD.
-3. Watch both processes. If either exits or you press `Ctrl+C`, stop the other pair.
+2. Start **one independent control process per pair**. Each process opens only its pair's ports, moves both arms to the startup pose, damps both arms for 3 seconds and unlocks them, then reads its leader and controls its follower. Hover mode also checks automatic hold on that leader; physical hold is supported on HD.
+3. Watch both processes. If either exits or you press `Ctrl+C`, stop the other pair and set damping on both arms in each pair.
 
 Runtime files are `stararm102_dual.py`, `stararm102_dual_hover.py`, and `requirements.txt`. `check_connection.py` helps diagnose one arm; `set-param.py` is a separate parameter-setting tool and is not used during dual-arm control.

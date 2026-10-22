@@ -109,5 +109,5 @@ def run_hover_pair(args, number):
 
 if __name__ == "__main__":
     # Reuse normal-mode checks and workers, replacing only the pair runner.
-    # The 60-sample default can be overridden for either pair.
-    sys.exit(dual.main(pair_runner=run_hover_pair, default_filter=60))
+    # The 25-sample default can be overridden for either pair.
+    sys.exit(dual.main(pair_runner=run_hover_pair, default_filter=25))

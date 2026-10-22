@@ -21,6 +21,13 @@ import serial
 
 BAUDRATE = 1_000_000  # Servo bus baud rate in bits per second.
 SERVO_IDS = tuple(range(7))  # IDs 0-5 are arm joints; ID 6 is the gripper.
+REFERENCE_ANGLES = (-5.4, 39.4, -55.6, -19.6, 6.3, 0.8, 1.5)
+STARTUP_INTERVAL_MS = 4000
+STARTUP_DAMPING_POWER_MW = 3000
+STARTUP_DAMPING_SECONDS = 3
+LEADER_DAMPING_POWER_MW = 500
+FOLLOWER_DAMPING_POWER_MW = 2000
+GRIPPER_DAMPING_POWER_MW = 500
 
 
 def positive_int(value):
@@ -34,8 +41,16 @@ def positive_int(value):
     return number
 
 
-def build_parser(default_filter=1):
-    """Build options for both pairs; hover mode uses a different filter default."""
+def damping_power(value):
+    """Limit the configurable follower damping power to a practical range."""
+    number = positive_int(value)
+    if number > 6000:
+        raise argparse.ArgumentTypeError("must be at most 6000 mW")
+    return number
+
+
+def build_parser(default_filter=25):
+    """Build options for both pairs."""
     parser = argparse.ArgumentParser(description=__doc__)
     for number in (1, 2):
         # Number each pair's options so leader and follower ports stay paired.
@@ -50,6 +65,9 @@ def build_parser(default_filter=1):
                             default=7, metavar="ID")
         parser.add_argument(f"--pair-{number}-filtered-size", type=positive_int,
                             default=default_filter)
+        parser.add_argument(f"--pair-{number}-follower-damping-power-mw", type=damping_power,
+                            default=FOLLOWER_DAMPING_POWER_MW,
+                            help="follower arm-joint damping on exit in mW (default: 2000)")
     parser.add_argument("--check-only", action="store_true",
                         help="ping all four arms; do not unlock or command motion")
     return parser
@@ -98,30 +116,53 @@ def check_connections(args):
 
 @contextmanager
 def open_pair(args, number):
-    """Open and initialize one pair; close both serial ports on exit.
-
-    Unlock the leader, reset its multi-turn count, check an optional button,
-    then unlock the follower and reset its count. Set matching reference poses
-    before calling this function.
-    """
-    
+    """Move both arms to the reference pose and stop in damping mode on exit."""
 
     leader_port = pair_value(args, number, "leader")
     follower_port = pair_value(args, number, "follower")
     with serial.Serial(leader_port, baudrate=BAUDRATE, timeout=0) as leader_uart:
         leader = uservo.UartServoManager(leader_uart)
-        # 0xff is the broadcast ID; 0x10/0x00 selects the unlock mode.
-        leader.stop_on_control_mode(0xff, 0x10, 0x00)
-        leader.reset_multi_turn_angle(0xff)
-        if button_enabled(args, number):
-            button_id = getattr(args, f"leader_{number}_button_id")
-            if not leader.ping(button_id):
-                raise RuntimeError(f"{leader_port}: button ID {button_id} did not respond")
         with serial.Serial(follower_port, baudrate=BAUDRATE, timeout=0) as follower_uart:
             follower = uservo.UartServoManager(follower_uart)
-            follower.stop_on_control_mode(0xff, 0x10, 0x00)
-            follower.reset_multi_turn_angle(0xff)
-            yield leader, follower
+            try:
+                if button_enabled(args, number):
+                    button_id = getattr(args, f"leader_{number}_button_id")
+                    if not leader.ping(button_id):
+                        raise RuntimeError(f"{leader_port}: button ID {button_id} did not respond")
+                for bus in (leader, follower):
+                    bus.stop_on_control_mode(0xff, 0x10, 0x00)
+                    bus.reset_multi_turn_angle(0xff)
+                print(f"Pair {number}: moving both arms to reference pose.", flush=True)
+                send_angles(leader, REFERENCE_ANGLES, STARTUP_INTERVAL_MS)
+                send_angles(follower, REFERENCE_ANGLES, STARTUP_INTERVAL_MS)
+                time.sleep(STARTUP_INTERVAL_MS / 1000 + 0.2)
+                print(f"Pair {number}: damping both arms for {STARTUP_DAMPING_SECONDS} seconds.",
+                      flush=True)
+                for bus in (leader, follower):
+                    for servo_id in SERVO_IDS:
+                        bus.stop_on_control_mode(servo_id, 0x12, STARTUP_DAMPING_POWER_MW)
+                time.sleep(STARTUP_DAMPING_SECONDS)
+                for bus in (leader, follower):
+                    bus.stop_on_control_mode(0xff, 0x10, 0x00)
+                yield leader, follower
+            finally:
+                # No exit target: stop in damping mode and let the arms settle.
+                previous_handler = signal.signal(signal.SIGINT, signal.SIG_IGN)
+                try:
+                    follower_power = getattr(args, f"pair_{number}_follower_damping_power_mw")
+                    print(f"Pair {number}: stopping both arms in damping mode.", flush=True)
+                    for kind, bus in (("leader", leader), ("follower", follower)):
+                        for servo_id in SERVO_IDS:
+                            power = (GRIPPER_DAMPING_POWER_MW if servo_id == 6 else
+                                     LEADER_DAMPING_POWER_MW if kind == "leader" else
+                                     follower_power)
+                            try:
+                                bus.stop_on_control_mode(servo_id, 0x12, power)
+                            except Exception as exc:
+                                print(f"Pair {number} {kind} ID {servo_id}: damping stop failed: {exc}",
+                                      file=sys.stderr, flush=True)
+                finally:
+                    signal.signal(signal.SIGINT, previous_handler)
 
 
 class ButtonState:
@@ -164,11 +205,11 @@ def filtered_angles(buffer, angles):
     return result
 
 
-def send_angles(follower, angles):
-    """Pack seven target angles and send them to this pair's follower."""
+def send_angles(follower, angles, interval_ms=100):
+    """Pack seven target angles and send them with a motion interval."""
     # Encode angles in tenths of a degree; retain the existing command fields.
     commands = [struct.pack("<BlLHHH", servo_id, int(angles[servo_id] * 10),
-                            100, 50, 50, 0) for servo_id in SERVO_IDS]
+                            interval_ms, 50, 50, 0) for servo_id in SERVO_IDS]
     follower.send_sync_multiturnanglebyinterval(14, 7, commands)
 
 
@@ -248,7 +289,7 @@ def run_pairs(args, pair_runner):
         stop_processes(processes)
 
 
-def main(argv=None, *, pair_runner=run_pair, default_filter=1):
+def main(argv=None, *, pair_runner=run_pair, default_filter=25):
     """Check communications first, then exit or start both control workers."""
     parser = build_parser(default_filter)
     args = parser.parse_args(argv)
