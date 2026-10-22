@@ -1,0 +1,2 @@
+pyserial==3.5
+fashionstar-uart-sdk==1.3.12
