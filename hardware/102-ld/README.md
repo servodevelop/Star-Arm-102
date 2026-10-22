@@ -26,8 +26,8 @@
 | [Assembly guide](../../docs/diy-assembly/README.md#102-ld) | Main arm assembly video | ✅ Complete |
 | [step/](step/) | Part models in parts/; shared assembly in assembly/ | ✅ Complete |
 | [stl/](stl/) | [Download all STL files (12 parts)](stl/downloads/star-arm-102-ld-stl-2026-10-21.zip?raw=true) · [Browse individual STL files](stl/) | ✅ Complete |
-| [drawings/](drawings/) | PDF / DWG drawings | ✅ Complete |
-| [robot-description/](robot-description/) | URDF model: [Download complete URDF package](robot-description/downloads/star-arm-102-ld-hd-urdf-2026-10-21.zip?raw=true) · [Browse source](robot-description/stararm102-ld-hd-description/) | ✅ Complete |
+| [CAD Drawings](drawings/) | PDF / DWG drawings | ✅ Complete |
+| [URDF Models](urdf/) | [Download complete URDF package](urdf/downloads/star-arm-102-ld-hd-urdf-2026-10-21.zip?raw=true) · [Browse source](urdf/stararm102-ld-hd-description/) | ✅ Complete |
 
 <a id="bill-of-materials"></a>
 

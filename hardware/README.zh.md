@@ -54,7 +54,7 @@ hardware/
 │   │   │   └── star-arm-102-ld-stl-2026-10-21.zip
 │   │   └── *.stl
 │   ├── drawings/
-│   └── robot-description/
+│   └── urdf/
 │       ├── downloads/
 │       │   └── star-arm-102-ld-hd-urdf-2026-10-21.zip
 │       └── stararm102-ld-hd-description/
@@ -64,7 +64,7 @@ hardware/
 └── flexible-gripper/
 ```
 
-`step/assembly/` 存放 CAD 装配模型；装配、PID 设置与零位校准集中在 [DIY 装配指南](../docs/diy-assembly/README.zh.md)。每个型号均在自身的 robot-description 目录提供 ROS 1 源码与完整 ZIP：[LD](102-ld/robot-description/)、[HD](102-hd/robot-description/)、[FL](102-fl/robot-description/)。LD 与 HD 包含相同模型。
+`step/assembly/` 存放 CAD 装配模型；装配、PID 设置与零位校准集中在 [DIY 装配指南](../docs/diy-assembly/README.zh.md)。各型号的 ROS 1 源码与完整 ZIP：[LD](102-ld/urdf/)、[HD](102-hd/robot-description/)、[FL](102-fl/robot-description/)。LD 与 HD 包含相同模型。
 
 ## 许可
 

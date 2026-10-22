@@ -54,7 +54,7 @@ hardware/
 │   │   │   └── star-arm-102-ld-stl-2026-10-21.zip
 │   │   └── *.stl
 │   ├── drawings/
-│   └── robot-description/
+│   └── urdf/
 │       ├── downloads/
 │       │   └── star-arm-102-ld-hd-urdf-2026-10-21.zip
 │       └── stararm102-ld-hd-description/
@@ -64,7 +64,7 @@ hardware/
 └── flexible-gripper/
 ```
 
-`step/assembly/` contains CAD assemblies; assembly, PID setup and zero calibration are covered in the [DIY assembly guide](../docs/diy-assembly/README.md). Each model provides its ROS 1 source package and complete ZIP in its own robot-description directory: [LD](102-ld/robot-description/), [HD](102-hd/robot-description/), [FL](102-fl/robot-description/). LD and HD contain the same model.
+`step/assembly/` contains CAD assemblies; assembly, PID setup and zero calibration are covered in the [DIY assembly guide](../docs/diy-assembly/README.md). Each model provides its ROS 1 source package and complete ZIP: [LD](102-ld/urdf/), [HD](102-hd/robot-description/), [FL](102-fl/robot-description/). LD and HD contain the same model.
 
 ## Licensing
 
