@@ -35,7 +35,7 @@
 
 下表列出 102-HD 的 **32 项装机物料**；无图片的条目标为待补。
 
-打印件的“型号／规格”栏填写零件标识，与所提供的 STEP、STL 文件名主体一致（不含扩展名）。手柄支撑托目前提供 STEP 模型。本表不再记录打印参数：请从 [printing/stl/](printing/stl/) 取 STL，按自己的机型与耗材切片，层高、壁数、填充率随机型与材料而定。
+打印件的“型号／规格”栏填写零件标识，与所提供的 STEP、STL 文件名主体一致（不含扩展名）。手柄托目前提供 STEP 模型。本表不再记录打印参数：请从 [printing/stl/](printing/stl/) 取 STL，按自己的机型与耗材切片，层高、壁数、填充率随机型与材料而定。
 
 打印件图片由对应的 STEP 模型渲染生成。紧固件图片为 AI 生成的外观示意图，规格以表格文字为准；点击图片可放大查看。
 
@@ -53,7 +53,7 @@
 | 10 | 连杆 5 | star-arm-102-link5 | <a href="images/star-arm-102-link5.png"><img src="images/star-arm-102-link5.png" alt="star-arm-102-link5" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
 | 11 | 连杆 6 | star-arm-102-link6 | <a href="images/star-arm-102-link6.png"><img src="images/star-arm-102-link6.png" alt="star-arm-102-link6" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
 | 12 | 手柄 | star-arm-102-handle | <a href="images/star-arm-102-handle.png"><img src="images/star-arm-102-handle.png" alt="star-arm-102-handle" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
-| 13 | 手柄支撑托 | [star-arm-102-handle-support](step/parts/star-arm-102-handle-support.step) | <a href="images/star-arm-102-handle-support.png"><img src="images/star-arm-102-handle-support.png" alt="手柄支撑托" width="90"></a> | 3D 打印件，置于手柄下方提供支撑 | 1 |
+| 13 | 手柄托 | star-arm-102-handle-rest | <a href="images/star-arm-102-handle-rest.png"><img src="images/star-arm-102-handle-rest.png" alt="手柄托" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
 | 14 | 左指环 | star-arm-102-finger-ring-left | <a href="images/star-arm-102-finger-ring-left.png"><img src="images/star-arm-102-finger-ring-left.png" alt="star-arm-102-finger-ring-left" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
 | 15 | 右指环 | star-arm-102-finger-ring-right | <a href="images/star-arm-102-finger-ring-right.png"><img src="images/star-arm-102-finger-ring-right.png" alt="star-arm-102-finger-ring-right" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
 | 16 | HD 按钮上盖 | hd-button-cover | <a href="images/hd-button-cover.png"><img src="images/hd-button-cover.png" alt="hd-button-cover" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
