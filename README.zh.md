@@ -195,7 +195,7 @@ Star-Arm-102/
 │   │   │   │   └── star-arm-102-ld-stl-2026-10-21.zip
 │   │   │   └── *.stl
 │   │   ├── drawings/
-│   │   └── robot-description/
+│   │   └── urdf/
 │   ├── 102-hd/
 │   ├── 102-fl/
 │   ├── camera-module/
