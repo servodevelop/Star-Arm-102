@@ -15,7 +15,7 @@
 | --- | --- | --- |
 | [Assembly guide](../../docs/diy-assembly/README.md#camera-module-assembly) | Assembly and installation video | — Video coming soon |
 | [step/](step/) | Part models in parts/; assemblies in assembly/ | ✅ 3 STEP files available<br>— Assembly model to be added |
-| [printing/](printing/) | Individual print files in stl/ | — To be added |
+| [stl/](stl/) | Individual STL print files | ✅ Available |
 | [drawings/](drawings/) | PDF / DWG drawings | — To be added |
 | [robot-description/](robot-description/) | URDF and meshes | — To be added |
 

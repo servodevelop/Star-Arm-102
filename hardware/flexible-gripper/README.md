@@ -15,7 +15,7 @@
 | --- | --- | --- |
 | [Assembly guide](../../docs/diy-assembly/README.md#flexible-gripper-assembly) | Assembly and installation video | ✅ Video available |
 | [step/](step/) | Part models in parts/; assemblies in assembly/ | ✅ 6 part models and 1 assembly available |
-| [printing/](printing/) | Individual print files in stl/ | — To be added |
+| [stl/](stl/) | Individual STL print files | ✅ Available |
 | [drawings/](drawings/) | PDF / DWG drawings | — To be added |
 | [robot-description/](robot-description/) | URDF and meshes | — To be added |
 

@@ -15,7 +15,7 @@
 | --- | --- | --- |
 | [装配指南](../../docs/diy-assembly/README.zh.md#camera-module-assembly) | 装配与安装视频 | — 视频待上线 |
 | [step/](step/) | parts/ 零件模型；assembly/ 装配模型 | ✅ 已提供 3 个 STEP 文件<br>— 装配模型待提供 |
-| [printing/](printing/) | stl/ 独立打印文件 | — 待提供 |
+| [stl/](stl/) | 独立 STL 打印文件 | ✅ 已提供 |
 | [drawings/](drawings/) | PDF／DWG 图纸 | — 待提供 |
 | [robot-description/](robot-description/) | URDF 和网格 | — 待提供 |
 
