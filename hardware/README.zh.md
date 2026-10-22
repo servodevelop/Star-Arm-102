@@ -37,7 +37,7 @@
 
 ## 目录结构
 
-下方展开 LD 的目录，单个 STL 文件位于 stl/，整套下载 ZIP 位于 stl/downloads/。HD 和 FL 目前仍将 STL 文件放在 printing/stl/，下载 ZIP 放在 printing/。各型号提供对应文件和页内 BOM，省略具体零件文件。
+三个型号的目录结构一致：单个 STL 文件位于 stl/，整套下载 ZIP 位于 stl/downloads/。下方展开 LD 的目录。各型号提供对应文件和页内 BOM，省略具体零件文件。
 
 ```text
 hardware/

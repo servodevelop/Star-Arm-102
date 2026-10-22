@@ -37,7 +37,7 @@ Joints 1–6 (J1–J6) above map to servo IDs 0–5; the handle/gripper maps to 
 
 ## Directory structure
 
-The LD layout is expanded below; its individual STL files are in stl/ and the complete ZIP is in stl/downloads/. HD and FL currently keep their STL files in printing/stl/ and download ZIPs in printing/. Each model has its own files and inline BOM. Individual part files are omitted.
+All three models share the same layout: individual STL files in stl/ and the complete download ZIP in stl/downloads/. The LD layout is expanded below. Each model has its own files and inline BOM. Individual part files are omitted.
 
 ```text
 hardware/

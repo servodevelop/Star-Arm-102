@@ -25,7 +25,7 @@
 | --- | --- | --- |
 | [DIY 装配](../../docs/diy-assembly/README.zh.md#102-hd) | 主体装配视频（按说明替换 HD 舵机）及按钮接线照片 | ✅ 已完成 |
 | [step/](step/) | parts/ 零件模型；assembly/ 共用装配模型 | ✅ 已完成 |
-| [printing/](printing/) | STL：[查看零件](printing/stl/) · [下载整套 ZIP](printing/star-arm-102-hd-stl.zip) | ✅ 已完成 |
+| [stl/](stl/) | [下载整套 STL（14 个打印件）](stl/downloads/star-arm-102-hd-stl-2026-10-22.zip?raw=true) · [浏览单个 STL](stl/) | ✅ 已完成 |
 | [drawings/](../102-ld/drawings/) | LD/HD 共用主体图纸（PDF／DWG） | ✅ 已完成 |
 | [robot-description/](robot-description/) | URDF 模型：[浏览源码](robot-description/) · [下载 ZIP](robot-description/star-arm-102-ld-hd-urdf.zip) | ✅ 已完成 |
 
@@ -35,7 +35,7 @@
 
 下表列出 102-HD 的 **32 项装机物料**；无图片的条目标为待补。
 
-打印件的“型号／规格”栏填写零件标识，与所提供的 STEP、STL 文件名主体一致（不含扩展名）。全部 14 个打印件（含手柄托）均提供 STEP 和 STL 文件；STL 下载 ZIP 与 printing/stl/ 目录包含相同的 14 个文件。本表不再记录打印参数：请从 [printing/stl/](printing/stl/) 取 STL，按自己的机型与耗材切片，层高、壁数、填充率随机型与材料而定。
+打印件的“型号／规格”栏填写零件标识，与所提供的 STEP、STL 文件名主体一致（不含扩展名）。全部 14 个打印件（含手柄托）均提供 STEP 和 STL 文件；STL 下载 ZIP 与 stl/ 目录包含相同的 14 个文件。本表不再记录打印参数：请从 [stl/](stl/) 取 STL，按自己的机型与耗材切片，层高、壁数、填充率随机型与材料而定。
 
 打印件图片由对应的 STEP 模型渲染生成。紧固件图片为 AI 生成的外观示意图，规格以表格文字为准；点击图片可放大查看。
 

@@ -25,7 +25,7 @@
 | --- | --- | --- |
 | [DIY 装配](../../docs/diy-assembly/README.zh.md#102-fl) | 主体机械臂装配视频 | ✅ 已完成 |
 | [step/](step/) | parts/ 零件模型；assembly/ 整机装配模型 | ✅ 已完成 |
-| [printing/](printing/) | STL：[查看零件](printing/stl/) · [下载整套 ZIP](printing/star-arm-102-fl-stl.zip) | ✅ 已完成 |
+| [stl/](stl/) | [下载整套 STL（11 个打印件）](stl/downloads/star-arm-102-fl-stl-2026-10-22.zip?raw=true) · [浏览单个 STL](stl/) | ✅ 已完成 |
 | [drawings/](drawings/) | PDF／DWG 图纸 | ✅ 已完成 |
 | [robot-description/](robot-description/) | URDF 模型：[浏览源码](robot-description/) · [下载 ZIP](robot-description/star-arm-102-fl-urdf.zip) | ✅ 已完成 |
 
@@ -35,7 +35,7 @@
 
 下表列出 102-FL 的 **29 项装机物料**；无图片的条目标为待补。
 
-打印件的“型号／规格”栏填写零件标识，与所提供的 STEP、STL 文件名主体一致（不含扩展名）。本表不再记录打印参数：请从 [printing/stl/](printing/stl/) 取 STL，按自己的机型与耗材切片，层高、壁数、填充率随机型与材料而定。
+打印件的“型号／规格”栏填写零件标识，与所提供的 STEP、STL 文件名主体一致（不含扩展名）。本表不再记录打印参数：请从 [stl/](stl/) 取 STL，按自己的机型与耗材切片，层高、壁数、填充率随机型与材料而定。
 
 打印件图片由对应的 STEP 模型渲染生成。紧固件图片为 AI 生成的外观示意图，规格以表格文字为准；点击图片可放大查看。
 

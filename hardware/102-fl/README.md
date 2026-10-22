@@ -25,7 +25,7 @@
 | --- | --- | --- |
 | [Assembly guide](../../docs/diy-assembly/README.md#102-fl) | Main arm assembly video | ✅ Complete |
 | [step/](step/) | Part models in parts/; whole-arm assemblies in assembly/ | ✅ Complete |
-| [printing/](printing/) | STL: [View parts](printing/stl/) · [Download ZIP](printing/star-arm-102-fl-stl.zip) | ✅ Complete |
+| [stl/](stl/) | [Download all STL files (11 parts)](stl/downloads/star-arm-102-fl-stl-2026-10-22.zip?raw=true) · [Browse individual STL files](stl/) | ✅ Complete |
 | [drawings/](drawings/) | PDF / DWG drawings | ✅ Complete |
 | [robot-description/](robot-description/) | URDF model: [Browse source](robot-description/) · [Download ZIP](robot-description/star-arm-102-fl-urdf.zip) | ✅ Complete |
 
@@ -35,7 +35,7 @@
 
 The table below lists **29 assembly items** for 102-FL. Missing images are marked pending.
 
-For printed parts, Model / Specification lists the part identifier, matching the supplied STEP and STL filenames (without extensions). Print settings are not recorded here: take the STL from [printing/stl/](printing/stl/) and slice it for your own printer, because layer height, wall count and infill depend on the machine and filament used.
+For printed parts, Model / Specification lists the part identifier, matching the supplied STEP and STL filenames (without extensions). Print settings are not recorded here: take the STL from [stl/](stl/) and slice it for your own printer, because layer height, wall count and infill depend on the machine and filament used.
 
 Printed-part images are rendered from the corresponding STEP models. Fastener images are AI-generated illustrations; refer to the table text for specifications. Click an image to enlarge it.
 

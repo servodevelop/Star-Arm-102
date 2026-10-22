@@ -25,7 +25,7 @@
 | --- | --- | --- |
 | [Assembly guide](../../docs/diy-assembly/README.md#102-hd) | Main arm video with HD servo substitution and button wiring photo | ✅ Complete |
 | [step/](step/) | Part models in parts/; shared assembly in assembly/ | ✅ Complete |
-| [printing/](printing/) | STL: [View parts](printing/stl/) · [Download ZIP](printing/star-arm-102-hd-stl.zip) | ✅ Complete |
+| [stl/](stl/) | [Download all STL files (14 parts)](stl/downloads/star-arm-102-hd-stl-2026-10-22.zip?raw=true) · [Browse individual STL files](stl/) | ✅ Complete |
 | [drawings/](../102-ld/drawings/) | Shared LD/HD body drawings (PDF / DWG) | ✅ Complete |
 | [robot-description/](robot-description/) | URDF model: [Browse source](robot-description/) · [Download ZIP](robot-description/star-arm-102-ld-hd-urdf.zip) | ✅ Complete |
 
@@ -35,7 +35,7 @@
 
 The table below lists **32 assembly items** for 102-HD. Missing images are marked pending.
 
-For printed parts, Model / Specification lists the part identifier, matching the supplied STEP and STL filenames (without extensions). All 14 printed parts, including the handle rest, are available as STEP and STL files. The STL ZIP contains the same 14 files as the printing/stl/ directory. Print settings are not recorded here: take the STL from [printing/stl/](printing/stl/) and slice it for your own printer, because layer height, wall count and infill depend on the machine and filament used.
+For printed parts, Model / Specification lists the part identifier, matching the supplied STEP and STL filenames (without extensions). All 14 printed parts, including the handle rest, are available as STEP and STL files. The STL ZIP contains the same 14 files as the stl/ directory. Print settings are not recorded here: take the STL from [stl/](stl/) and slice it for your own printer, because layer height, wall count and infill depend on the machine and filament used.
 
 Printed-part images are rendered from the corresponding STEP models. Fastener images are AI-generated illustrations; refer to the table text for specifications. Click an image to enlarge it.
 
