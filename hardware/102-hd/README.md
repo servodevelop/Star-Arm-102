@@ -35,7 +35,7 @@
 
 The table below lists **32 assembly items** for 102-HD. Missing images are marked pending.
 
-For printed parts, Model / Specification lists the part identifier, matching the supplied STEP and STL filenames (without extensions). The handle rest is currently provided as a STEP model. Print settings are not recorded here: take the STL from [printing/stl/](printing/stl/) and slice it for your own printer, because layer height, wall count and infill depend on the machine and filament used.
+For printed parts, Model / Specification lists the part identifier, matching the supplied STEP and STL filenames (without extensions). All 14 printed parts, including the handle rest, are available as STEP and STL files. The STL ZIP contains the same 14 files as the printing/stl/ directory. Print settings are not recorded here: take the STL from [printing/stl/](printing/stl/) and slice it for your own printer, because layer height, wall count and infill depend on the machine and filament used.
 
 Printed-part images are rendered from the corresponding STEP models. Fastener images are AI-generated illustrations; refer to the table text for specifications. Click an image to enlarge it.
 
