@@ -23,17 +23,17 @@
 
 ## Bill of Materials
 
-The table lists **6 parts** with supplied STEP models. Names match the filenames. Images, materials, quantities per set, and print settings await confirmation. Purchased items such as cameras, servos, and fasteners are not yet listed; this is not a complete purchasing BOM.
+The table lists **6 parts** with supplied STEP models. Names match the filenames. Materials, quantities per set, and print settings await confirmation. Purchased items such as cameras, servos, and fasteners are not yet listed; this is not a complete purchasing BOM.
 
 The complete assembly model in [step/assembly/](step/assembly/) shows how the parts fit together and is not counted as an additional BOM item.
 
 | No. | Name | Image | Description | Quantity | Notes |
 | :---: | --- | :---: | --- | :---: | --- |
-| 1 | dual-shaft-flexible-gripper-body | Pending | Material to be confirmed | To be confirmed | Main body for the dual-shaft gripper |
-| 2 | flexible-gripper-link | Pending | Material to be confirmed | To be confirmed | Gripper linkage |
-| 3 | flexible-gripper-1 | Pending | Material to be confirmed | To be confirmed | Gripper part 1 |
-| 4 | flexible-gripper-2 | Pending | Material to be confirmed | To be confirmed | Gripper part 2 |
-| 5 | flexible-gripper-fingertip-1 | Pending | Material to be confirmed | To be confirmed | Fingertip part 1 |
-| 6 | flexible-gripper-fingertip-2 | Pending | Material to be confirmed | To be confirmed | Fingertip part 2 |
+| 1 | dual-shaft-flexible-gripper-body | <img src="images/dual-shaft-flexible-gripper-body.png" alt="Dual-shaft flexible gripper body" width="90"> | Material to be confirmed | To be confirmed | Main body for the dual-shaft gripper |
+| 2 | flexible-gripper-link | <img src="images/flexible-gripper-link.png" alt="Flexible gripper link" width="90"> | Material to be confirmed | To be confirmed | Gripper linkage |
+| 3 | flexible-gripper-1 | <img src="images/flexible-gripper-1.png" alt="Flexible gripper part 1" width="90"> | Material to be confirmed | To be confirmed | Gripper part 1 |
+| 4 | flexible-gripper-2 | <img src="images/flexible-gripper-2.png" alt="Flexible gripper part 2" width="90"> | Material to be confirmed | To be confirmed | Gripper part 2 |
+| 5 | flexible-gripper-fingertip-1 | <img src="images/flexible-gripper-fingertip-1.png" alt="Flexible gripper fingertip 1" width="90"> | Material to be confirmed | To be confirmed | Fingertip part 1 |
+| 6 | flexible-gripper-fingertip-2 | <img src="images/flexible-gripper-fingertip-2.png" alt="Flexible gripper fingertip 2" width="90"> | Material to be confirmed | To be confirmed | Fingertip part 2 |
 
 Found an error in these resources or need help? Contact our [Support Hub](https://fashionstar.com.hk/support/) with your product and the relevant file or item.
