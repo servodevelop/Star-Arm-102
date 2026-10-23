@@ -35,11 +35,15 @@
 
 The table below lists **29 assembly items** for 102-FL. Missing images are marked pending.
 
-For printed parts, Model / Specification lists the part identifier, matching the supplied STEP and STL filenames (without extensions). Print settings are not recorded here: take the STL from [stl/](stl/) and slice it for your own printer, because layer height, wall count and infill depend on the machine and filament used.
+For printed parts, the part name identifies the component. English names in the assembly tree, such as `Link 1`, correspond to the English BOM’s Part Name column.
+
+For printed parts, Model / Specification / Part Identifier lists the part identifier, matching the supplied STEP and STL filenames (without extensions). For example, `Link 1` uses the identifier `star-arm-102-link1`. The `star-arm-102-` prefix identifies the product series when files are downloaded separately.
+
+Print settings are not recorded here: take the STL from [stl/](stl/) and slice it for your own printer, because layer height, wall count and infill depend on the machine and filament used.
 
 Printed-part images are rendered from the corresponding STEP models. Fastener images are AI-generated illustrations; refer to the table text for specifications. Click an image to enlarge it.
 
-| No. | Part Name | Model / Specification | Image | Description | Quantity |
+| No. | Part Name | Model / Specification / Part Identifier | Image | Description | Quantity |
 | :---: | --- | --- | :---: | --- | :---: |
 | 1 | UART bus servo | RX8-U50H-M | <img src="images/rx8-u50h-m-primary.webp" alt="RX8-U50H-M" width="90"> | 12V; 50kg-cm; 70rpm; Dual-shaft; Brushless Motor; 12-bit Magnetic Absolute Encoder; 25T | 2 |
 | 2 | UART bus servo | RA8-U35H-M | <img src="images/ra8-u35h-m.webp" alt="RA8-U35H-M" width="90"> | 12V; 35kg-cm; 55rpm; Dual-shaft; Brushed Core Motor; 12-bit Magnetic Absolute Encoder; 25T | 3 |
