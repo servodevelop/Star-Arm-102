@@ -6,7 +6,8 @@ ports, checks four devices, and supervises one worker process per pair.
 See README.md for setup and usage.
 """
 
-import argparse 
+import argparse
+import math
 from collections import deque
 from contextlib import contextmanager
 import multiprocessing as mp
@@ -23,11 +24,129 @@ BAUDRATE = 1_000_000  # Servo bus baud rate in bits per second.
 SERVO_IDS = tuple(range(7))  # IDs 0-5 are arm joints; ID 6 is the gripper.
 REFERENCE_ANGLES = (-5.4, 39.4, -55.6, -19.6, 6.3, 0.8, 1.5)
 STARTUP_INTERVAL_MS = 4000
-STARTUP_DAMPING_POWER_MW = 3000
-STARTUP_DAMPING_SECONDS = 3
-LEADER_DAMPING_POWER_MW = 500
+STARTUP_GRIPPER_MOVEMENT_DEGREES = 5  # Raw servo angle, in each direction.
+LEADER_DAMPING_POWER_MW = 4000
 FOLLOWER_DAMPING_POWER_MW = 2000
 GRIPPER_DAMPING_POWER_MW = 500
+
+
+class ButtonCommandUART:
+    """Separate new-board command packets from the SDK's response stream."""
+
+    def __init__(self, uart):
+        self.uart = uart
+        self._buffer = bytearray()
+        self._responses = bytearray()
+        self._mode = None
+        self._joints = set()
+        self.locked = None
+        self.sequence = 0
+        self.activity = 0
+
+    def __getattr__(self, name):
+        return getattr(self.uart, name)
+
+    def poll(self):
+        """Consume available bytes without sending anything to the hardware."""
+        waiting = self.uart.in_waiting
+        if waiting:
+            self._buffer.extend(self.uart.read(waiting))
+        while len(self._buffer) >= 2:
+            if self._buffer[:2] not in (b'\x12\x4c', b'\x05\x1c'):
+                del self._buffer[0]
+                continue
+            if len(self._buffer) < 4:
+                break
+            size = self._buffer[3] + 5
+            if len(self._buffer) < size:
+                break
+            packet = bytes(self._buffer[:size])
+            if sum(packet[:-1]) % 256 != packet[-1]:
+                del self._buffer[0]
+                continue
+            del self._buffer[:size]
+            if packet[:2] == b'\x05\x1c':
+                self._responses.extend(packet)
+            elif packet[2:4] == b'\x18\x04':
+                joint, mode, _power = struct.unpack('<BBH', packet[4:-1])
+                if joint not in SERVO_IDS[:-1] or mode not in (0x10, 0x11):
+                    continue
+                self.activity += 1
+                if mode != self._mode:
+                    self._mode = mode
+                    self._joints.clear()
+                self._joints.add(joint)
+                # A press commands all six joints. Do not treat partial packets
+                # or repeated copies of the same state as additional presses.
+                if len(self._joints) == 6:
+                    locked = mode == 0x11
+                    if locked != self.locked:
+                        self.locked = locked
+                        self.sequence += 1
+                    self._joints.clear()
+
+    @property
+    def in_waiting(self):
+        self.poll()
+        return len(self._responses)
+
+    def read(self, size=1):
+        self.poll()
+        data = bytes(self._responses[:size])
+        del self._responses[:size]
+        return data
+
+    def write(self, data):
+        # Observe RX only: our own outgoing commands are never button events.
+        return self.uart.write(data)
+
+    def discard_commands(self):
+        """Discard buffered packets while preserving duplicate suppression."""
+        self.poll()
+        self._buffer.clear()
+        self._responses.clear()
+        self._joints.clear()
+
+
+def observe_button_commands(uart, timeout=10):
+    """Wait for a complete new-board press; never send motion commands."""
+    deadline = time.monotonic() + timeout
+    while True:
+        uart.poll()
+        if uart.sequence:
+            return True
+        if time.monotonic() >= deadline:
+            return False
+        time.sleep(0.01)
+
+
+class CommandButtonState:
+    """Follow a new board's actual state without repeating its commands."""
+
+    id = None  # These boards do not implement the legacy ID 7 monitor.
+
+    def __init__(self, uart):
+        self.uart = uart
+        self.sequence = uart.sequence
+        self.locked = bool(uart.locked)
+        self.changed = False
+
+    def update(self, leader):
+        self.changed = self.sequence != self.uart.sequence
+        if self.changed:
+            self.sequence = self.uart.sequence
+            self.locked = self.uart.locked
+        return self.locked
+
+
+def make_button_state(leader, args, number):
+    """Select legacy feedback or the new board's command stream per pair."""
+    if not button_enabled(args, number):
+        return None
+    if getattr(leader, 'button_protocol', 'legacy') == 'command':
+        return CommandButtonState(leader.button_uart)
+    button_id = getattr(args, f'leader_{number}_button_id')
+    return ButtonState(button_id, unlocked_angle=leader.servos[button_id].angle_monitor)
 
 
 def positive_int(value):
@@ -58,7 +177,7 @@ def build_parser(default_filter=25):
         parser.add_argument(f"--follower-{number}-port", required=True)
         parser.add_argument(f"--leader-{number}-type", choices=("102LD", "102HD"), default="102LD")
         # A leader's button board cannot be enabled and disabled at once.
-        buttons = parser.add_mutually_exclusive_group()
+        buttons = parser.add_mutually_exclusive_group(required=True)
         buttons.add_argument(f"--leader-{number}-button-enable", action="store_true")
         buttons.add_argument(f"--leader-{number}-button-disable", action="store_true")
         parser.add_argument(f"--leader-{number}-button-id", type=int, choices=range(7, 254),
@@ -79,12 +198,8 @@ def pair_value(args, number, field):
 
 
 def button_enabled(args, number):
-    """Apply the explicit button setting, or default to enabled for HD."""
-    if getattr(args, f"leader_{number}_button_enable"):
-        return True
-    if getattr(args, f"leader_{number}_button_disable"):
-        return False
-    return getattr(args, f"leader_{number}_type") == "102HD"
+    """Use the required explicit button setting for this leader."""
+    return getattr(args, f"leader_{number}_button_enable")
 
 
 def validate_ports(parser, args):
@@ -101,16 +216,29 @@ def check_connections(args):
     for number in (1, 2):
         for kind in ("leader", "follower"):
             port = pair_value(args, number, kind)
-            ids = list(SERVO_IDS)
-            if kind == "leader" and button_enabled(args, number):
-                # Only leaders have a button board; followers use IDs 0-6.
-                ids.append(getattr(args, f"leader_{number}_button_id"))
+            has_button = kind == "leader" and button_enabled(args, number)
             print(f"Checking pair {number} {kind}: {port}", flush=True)
             with serial.Serial(port, baudrate=BAUDRATE, timeout=0) as uart:
-                bus = uservo.UartServoManager(uart)
-                for servo_id in ids:
+                button_uart = ButtonCommandUART(uart) if has_button else None
+                bus = uservo.UartServoManager(button_uart if has_button else uart)
+                for servo_id in SERVO_IDS:
                     if not bus.ping(servo_id):
                         raise RuntimeError(f"{port}: device ID {servo_id} did not respond")
+                if has_button:
+                    button_id = getattr(args, f"leader_{number}_button_id")
+                    legacy = any(bus.ping(button_id) for _ in range(3))
+                    setattr(args, f"leader_{number}_button_protocol", 'legacy' if legacy else 'command')
+                    if not legacy:
+                        if args.check_only:
+                            print(f"Pair {number}: ID {button_id} did not respond. Press the "
+                                  "new button board within 10 seconds; it may lock or unlock the leader.",
+                                  flush=True)
+                            if not observe_button_commands(button_uart):
+                                raise RuntimeError(f"{port}: no legacy response or new-board button commands")
+                            print(f"Pair {number}: new button board detected.", flush=True)
+                        else:
+                            print(f"Pair {number}: ID {button_id} did not respond; "
+                                  "waiting for new-board unlock commands after initialization.", flush=True)
     print("All four ports responded.", flush=True)
 
 
@@ -121,14 +249,19 @@ def open_pair(args, number):
     leader_port = pair_value(args, number, "leader")
     follower_port = pair_value(args, number, "follower")
     with serial.Serial(leader_port, baudrate=BAUDRATE, timeout=0) as leader_uart:
-        leader = uservo.UartServoManager(leader_uart)
+        button_uart = ButtonCommandUART(leader_uart) if button_enabled(args, number) else None
+        leader = uservo.UartServoManager(button_uart if button_uart is not None else leader_uart)
+        leader.button_uart = button_uart
         with serial.Serial(follower_port, baudrate=BAUDRATE, timeout=0) as follower_uart:
             follower = uservo.UartServoManager(follower_uart)
             try:
                 if button_enabled(args, number):
                     button_id = getattr(args, f"leader_{number}_button_id")
-                    if not leader.ping(button_id):
-                        raise RuntimeError(f"{leader_port}: button ID {button_id} did not respond")
+                    leader.button_protocol = getattr(args, f"leader_{number}_button_protocol", None)
+                    if leader.button_protocol is None:
+                        leader.button_protocol = 'legacy' if leader.ping(button_id) else 'command'
+                    elif leader.button_protocol == 'legacy' and not any(leader.ping(button_id) for _ in range(3)):
+                        raise RuntimeError(f"{leader_port}: legacy button ID {button_id} did not respond")
                 for bus in (leader, follower):
                     bus.stop_on_control_mode(0xff, 0x10, 0x00)
                     bus.reset_multi_turn_angle(0xff)
@@ -136,12 +269,7 @@ def open_pair(args, number):
                 send_angles(leader, REFERENCE_ANGLES, STARTUP_INTERVAL_MS)
                 send_angles(follower, REFERENCE_ANGLES, STARTUP_INTERVAL_MS)
                 time.sleep(STARTUP_INTERVAL_MS / 1000 + 0.2)
-                print(f"Pair {number}: damping both arms for {STARTUP_DAMPING_SECONDS} seconds.",
-                      flush=True)
-                for bus in (leader, follower):
-                    for servo_id in SERVO_IDS:
-                        bus.stop_on_control_mode(servo_id, 0x12, STARTUP_DAMPING_POWER_MW)
-                time.sleep(STARTUP_DAMPING_SECONDS)
+                wait_for_startup(leader, args, number)
                 for bus in (leader, follower):
                     bus.stop_on_control_mode(0xff, 0x10, 0x00)
                 yield leader, follower
@@ -165,16 +293,91 @@ def open_pair(args, number):
                     signal.signal(signal.SIGINT, previous_handler)
 
 
+class GripperGesture:
+    """Detect one small round trip using the shared raw-angle threshold."""
+
+    def __init__(self):
+        self.origin = None
+        self.direction = 0
+        self.extreme = None
+
+    def update(self, angle):
+        """Return True once after movement and reversal; ignore invalid samples."""
+        if angle is None or not math.isfinite(angle):
+            return False
+        if self.origin is None:
+            self.origin = angle
+        elif self.direction == 0:
+            if abs(angle - self.origin) >= STARTUP_GRIPPER_MOVEMENT_DEGREES:
+                self.direction = 1 if angle > self.origin else -1
+                self.extreme = angle
+        elif self.direction * (angle - self.extreme) > 0:
+            self.extreme = angle
+        elif self.direction * (self.extreme - angle) >= STARTUP_GRIPPER_MOVEMENT_DEGREES:
+            self.origin, self.direction, self.extreme = angle, 0, None
+            return True
+        return False
+
+
+def wait_for_startup(leader, args, number):
+    """Keep position targets active until a fresh deliberate startup gesture."""
+    has_button = button_enabled(args, number)
+    if has_button and getattr(leader, 'button_protocol', 'legacy') == 'command':
+        leader.button_uart.discard_commands()
+        initial_sequence = leader.button_uart.sequence
+        print(f"Pair {number}: press the new button board to unlock; "
+              "if the first press locks, press again.", flush=True)
+        while True:
+            leader.button_uart.poll()
+            if (leader.button_uart.sequence != initial_sequence
+                    and leader.button_uart.locked is False):
+                break
+            time.sleep(0.01)
+        print(f"Pair {number}: startup gesture detected; unlocking both arms.", flush=True)
+        return
+    sensor_id = getattr(args, f"leader_{number}_button_id") if has_button else 6
+    initial_button = None
+    gripper_gesture = GripperGesture()
+    if has_button:
+        print(f"Pair {number}: waiting for a new button press to unlock.", flush=True)
+    else:
+        # Only the leader gripper is free; all other startup targets stay active.
+        leader.stop_on_control_mode(6, 0x10, 0x00)  # Allow manual gripper movement.
+        print(f"Pair {number}: move the leader gripper at least "
+              f"{STARTUP_GRIPPER_MOVEMENT_DEGREES} degrees, then back to unlock.",
+              flush=True)
+    while True:
+        # realtime=True substitutes an empty sample for missing feedback, rather
+        # than allowing a cached servo angle to complete a startup gesture.
+        samples = leader.send_sync_servo_monitor([sensor_id], realtime=True)
+        sample = samples.get(sensor_id)
+        angle = sample.angle_monitor if sample is not None else None
+        if has_button:
+            if angle in (0, 90, 180):
+                if initial_button is None:
+                    initial_button = angle
+                elif angle != initial_button:
+                    break  # The board toggles its reported state on each press.
+        elif gripper_gesture.update(angle):
+            break
+        time.sleep(0.01)
+    print(f"Pair {number}: startup gesture detected; unlocking both arms.", flush=True)
+
+
 class ButtonState:
     """Track the HD button board and send commands only on state changes."""
 
-    def __init__(self, button_id):
+    def __init__(self, button_id, unlocked_angle=0):
         self.id = button_id
+        self.unlocked_angle = unlocked_angle
         self.locked = False
 
     def update(self, leader):
-        """Lock six leader joints at reported angle 180; otherwise unlock."""
-        if leader.servos[self.id].angle_monitor == 180:
+        """Toggle six-joint hold relative to the consumed startup press."""
+        angle = leader.servos[self.id].angle_monitor
+        if angle not in (0, 90, 180):
+            return self.locked
+        if (angle == 180) != (self.unlocked_angle == 180):
             if not self.locked:
                 for servo_id in SERVO_IDS[:-1]:
                     leader.stop_on_control_mode(servo_id, 0x11, 0x00)
@@ -215,10 +418,10 @@ def send_angles(follower, angles, interval_ms=100):
 
 def run_pair(args, number):
     """Run one pair's control loop without accessing the other pair's ports."""
-    button = ButtonState(getattr(args, f"leader_{number}_button_id")) if button_enabled(args, number) else None
     buffer = deque(maxlen=getattr(args, f"pair_{number}_filtered_size"))
     count, started = 0, time.time()
     with open_pair(args, number) as (leader, follower):
+        button = make_button_state(leader, args, number)
         while True:
             # Read, filter, update the button, and send targets independently.
             angles = read_angles(leader, button.id if button else None)

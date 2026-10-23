@@ -22,6 +22,7 @@ class HoverState:
         self.still_since = None  # Start of the quiet interval, if any.
         self.locked = False  # Whether a hold command has been sent.
         self.just_locked = False  # Capture raw angles on the first held frame.
+        self.gripper_gesture = dual.GripperGesture()
 
     def reset(self, angles):
         """Clear automatic hold while the HD button controls the leader."""
@@ -29,11 +30,18 @@ class HoverState:
         self.still_since = None
         self.locked = False
         self.just_locked = False
+        self.gripper_gesture = dual.GripperGesture()
 
-    def update(self, leader, filtered):
+    def update(self, leader, filtered, *, gripper_unlock=False):
         """Update hold state and send a leader hold or release when needed."""
         now = time.time()
         if self.locked:
+            if gripper_unlock:
+                if self.gripper_gesture.update(leader.servos[6].angle_monitor):
+                    leader.stop_on_control_mode(0xff, 0x10, 0x00)
+                    self.reset(filtered)
+                    print(f"Pair {self.pair_number}: 夹爪开合，自动悬停解锁指令已发送", flush=True)
+                return
             if self.just_locked:
                 # Capture actual joint angles after sending the hold command.
                 self.last_angles = [leader.servos[i].angle_monitor for i in range(6)]
@@ -59,7 +67,16 @@ class HoverState:
             # Hold all six leader joints after more than one quiet second.
             self.locked = True
             self.just_locked = True
+            button_uart = (leader.button_uart
+                           if getattr(leader, 'button_protocol', None) == 'command' else None)
+            activity = button_uart.activity if button_uart is not None else None
             leader.send_sync_servo_monitor(list(dual.SERVO_IDS))
+            if button_uart is not None:
+                button_uart.poll()
+                if button_uart.activity != activity:
+                    # A physical button press during feedback takes priority.
+                    self.reset(filtered)
+                    return
             # Keep the original hold packet format and final field value.
             commands = [
                 struct.pack("<BlLHHH", i, int(leader.servos[i].angle_monitor * 10),
@@ -67,18 +84,20 @@ class HoverState:
                 for i in range(6)
             ]
             leader.send_sync_multiturnanglebyinterval(14, 6, commands)
+            if gripper_unlock:
+                self.gripper_gesture = dual.GripperGesture()
+                self.gripper_gesture.update(leader.servos[6].angle_monitor)
             print(f"Pair {self.pair_number}: 自动悬停锁定指令已发送", flush=True)
 
 
 def run_hover_pair(args, number):
     """Control one pair and update automatic hold on its leader."""
     # Each pair has its own button configuration and filter window.
-    button = (dual.ButtonState(getattr(args, f"leader_{number}_button_id"))
-              if dual.button_enabled(args, number) else None)
     buffer = deque(maxlen=getattr(args, f"pair_{number}_filtered_size"))
     hover = HoverState(number)
     count, started = 0, time.time()
     with dual.open_pair(args, number) as (leader, follower):
+        button = dual.make_button_state(leader, args, number)
         while True:
             # Keep the normal read, filter, and follower-command sequence.
             angles = dual.read_angles(leader, button.id if button else None)
@@ -90,13 +109,13 @@ def run_hover_pair(args, number):
                 if manual_locked != was_locked:
                     state = "锁定" if manual_locked else "解锁"
                     print(f"Pair {number}: 按钮{state}指令已发送", flush=True)
-                if manual_locked or was_locked:
+                if manual_locked or was_locked or getattr(button, 'changed', False):
                     # Restart the stillness timer when button hold is released.
                     hover.reset(targets)
                 else:
                     hover.update(leader, targets)
             else:
-                hover.update(leader, targets)
+                hover.update(leader, targets, gripper_unlock=True)
             dual.send_angles(follower, targets)
             time.sleep(0.001)  # Preserve the normal control-loop delay.
             count += 1
