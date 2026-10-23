@@ -11,7 +11,7 @@ For third-party follower setups, see [cross-brand pairing resources](../integrat
 | --- | --- | --- | --- |
 | Direct Python | LD/HD → FL; basic communication | Ubuntu 22.04; `pyserial`, `fashionstar-uart-sdk` | Existing script supports these modes. This phase checks CLI behavior; physical direction, zero pose, and HD board behavior still need a bench test. |
 | Released ACT example | FL + `up` and `front` cameras; optional leader for resets | Python 3.10; LeRobot 0.4.1; both StarArm plugins 0.0.1 | Environment and demo video recorded in the existing `act-pick-v1.0.0` release guide. New customer setups still require validation. |
-| Refactored HD/FL | HD/LD input and FL control | Separate environment; source package in `lerobot/lerobot-stararm102/` | Package declares LeRobot >=0.4, UART SDK >=1.3.12, motor plugin >=0.0.6. These are dependency bounds, not proof every newer version works. |
+| Refactored HD/FL | HD/LD input and FL control | Separate environment; source package in `lerobot/single-arm/lerobot-stararm102/` | Package declares LeRobot >=0.4, UART SDK >=1.3.12, motor plugin >=0.0.6. These are dependency bounds, not proof every newer version works. |
 | ROS 2 | FL integration, RViz/MoveIt/Gazebo | Ubuntu 22.04, ROS 2 Humble | Existing launch files; no new ROS build or hardware validation claimed by the English documentation update. |
 | reBot | 102 leader + B601 follower | Follow the upstream reBot guide in a separate environment | Upstream device names and versions differ from older Fashion Star fork examples. HD button support must be checked separately. |
 
@@ -19,7 +19,7 @@ For third-party follower setups, see [cross-brand pairing resources](../integrat
 
 | Detail | Release-compatible plugins | Refactored package |
 | --- | --- | --- |
-| Source directories | `lerobot-robot-stararm102/` and `lerobot-teleoperator-stararm102/` | `lerobot-stararm102/` |
+| Source directories | `single-arm/lerobot-robot-stararm102/` and `single-arm/lerobot-teleoperator-stararm102/` | `single-arm/lerobot-stararm102/` |
 | Follower type | `lerobot_robot_stararm102` | `stararm102_fl` |
 | Leader type | `lerobot_teleoperator_stararm102` | `stararm102_hd` |
 | Joint features | `Motor_0.pos` … `Motor_5.pos`, `gripper.pos` | `shoulder_pan.pos` … `wrist_roll.pos`, `gripper.pos` |

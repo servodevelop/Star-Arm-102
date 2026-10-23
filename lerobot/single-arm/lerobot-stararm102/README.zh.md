@@ -1,8 +1,8 @@
 # Star Arm 102 LeRobot 插件开发参考
 
-[← LeRobot](../README.zh.md)　|　<sub>[English](README.md) / **简体中文**</sub>
+[← 上级](../README.zh.md)　|　<sub>[English](README.md) / **简体中文**</sub>
 
-安装、校准、遥操作、相机、采集、训练和评估请按[完整使用教程](../README.zh.md)进行。本页说明插件接口和诊断示例。已发布 ACT 模型使用[另一代插件](../../docs/compatibility.md)。
+安装、校准、遥操作、相机、采集、训练和评估请按[完整使用教程](../../README.zh.md)进行。本页说明插件接口和诊断示例。已发布 ACT 模型使用[另一代插件](../../../docs/compatibility.md)。
 
 **目录：**
 
@@ -18,7 +18,7 @@
 
 <a id="page-section-1"></a>
 
-在独立环境中按[指定版本安装步骤](../README.zh.md#install)操作。修改源码后重新安装本地包；LeRobot 0.4.1 对可编辑安装的插件发现曾出现问题。
+在独立环境中按[指定版本安装步骤](../../README.zh.md#install)操作。修改源码后重新安装本地包；LeRobot 0.4.1 对可编辑安装的插件发现曾出现问题。
 
 | 角色 | 注册类型 | 导入包 |
 | --- | --- | --- |
@@ -50,9 +50,9 @@
 
 <a id="page-section-6"></a>
 
-运动前先完成[用户校准步骤](../README.zh.md#calibration)。两种实现都会解锁关节、提示摆放零位、写入原点／重置计数、记录运动范围并保存校准文件。主臂还会获取原点偏移。已有文件可按提示复用或重新生成。
+运动前先完成[用户校准步骤](../../README.zh.md#calibration)。两种实现都会解锁关节、提示摆放零位、写入原点／重置计数、记录运动范围并保存校准文件。主臂还会获取原点偏移。已有文件可按提示复用或重新生成。
 
-校准后配置中的方向和范围仍然生效。连接／配置过程可能解锁手臂并重置多圈计数，包括下面以读取为主的示例。这些诊断会访问硬件，不是离线查看器。安装和命令行检查不能代替[实机验证](../../docs/validation.md)。
+校准后配置中的方向和范围仍然生效。连接／配置过程可能解锁手臂并重置多圈计数，包括下面以读取为主的示例。这些诊断会访问硬件，不是离线查看器。安装和命令行检查不能代替[实机验证](../../../docs/validation.md)。
 
 <a id="examples"></a>
 
@@ -60,7 +60,7 @@
 
 <a id="page-section-7"></a>
 
-激活教程环境后，在 `lerobot/lerobot-stararm102/` 目录运行以下命令。替换示例端口，连接前托住手臂并恢复匹配的参考姿态。
+激活教程环境后，在 `lerobot/single-arm/lerobot-stararm102/` 目录运行以下命令。替换示例端口，连接前托住手臂并恢复匹配的参考姿态。
 
 读取 HD 按钮板：
 
@@ -101,4 +101,4 @@ from lerobot_teleoperator_stararm102 import (
 <a id="train-a-first-act-checkpoint"></a>
 <a id="evaluate-your-own-trained-checkpoint"></a>
 
-继续查看[遥操作](../README.zh.md#teleoperation)、[采集](../README.zh.md#record)、[训练](../README.zh.md#train)或[评估](../README.zh.md#evaluate)。其他品牌从臂请使用 [reBot 搭配指南](../../integrations/seeed-rebot/README.md)。
+继续查看[遥操作](../../README.zh.md#teleoperation)、[采集](../../README.zh.md#record)、[训练](../../README.zh.md#train)或[评估](../../README.zh.md#evaluate)。其他品牌从臂请使用 [reBot 搭配指南](../../../integrations/seeed-rebot/README.md)。

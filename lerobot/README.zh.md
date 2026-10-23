@@ -7,6 +7,7 @@
 | 你的目标 | 从这里开始 |
 | --- | --- |
 | 采集示范数据，训练自己的任务 | 按下方教程使用重构后的集成插件 |
+| 控制两组独立的主从机械臂 | [双臂 LeRobot 插件](dual-arm/) |
 | 无需训练，先体验现成 AI 模型 | [ACT 积木放置预训练演示](examples/act_pick/README.zh.md)，使用其独立的兼容环境 |
 | 控制其他品牌的从臂 | [从臂兼容性与搭配指南](../integrations/README.md) |
 
@@ -55,7 +56,7 @@ conda create -n stararm102-learning python=3.10 -y
 conda activate stararm102-learning
 conda install -c conda-forge ffmpeg -y
 python -m pip install "lerobot==0.4.1" "lerobot-motor-starai==0.0.6" "fashionstar-uart-sdk==1.3.12"
-python -m pip install ./lerobot/lerobot-stararm102
+python -m pip install ./lerobot/single-arm/lerobot-stararm102
 python -m pip check
 python -c "from lerobot_teleoperator_stararm102 import Stararm102HD, Stararm102FL; print('HD/FL imports OK')"
 lerobot-teleoperate --help
@@ -346,4 +347,4 @@ lerobot-record \
 | CUDA、视频解码或依赖错误 | PyTorch／驱动兼容性、FFmpeg、`pip check`、完整报错 |
 | 模型能运行但任务失败 | 相机位置、校准、示范质量与场景变化 |
 
-实现细节请参阅[插件开发参考](lerobot-stararm102/README.zh.md)。反馈问题时，请按[排障指南](../docs/troubleshooting.md)提供机械臂型号、仓库提交号、环境文件、完整命令及报错。命令行行为以 [LeRobot 0.4.1 源码](https://github.com/huggingface/lerobot/tree/v0.4.1/src/lerobot/scripts)为核对依据。
+实现细节请参阅[插件开发参考](single-arm/lerobot-stararm102/README.zh.md)。反馈问题时，请按[排障指南](../docs/troubleshooting.md)提供机械臂型号、仓库提交号、环境文件、完整命令及报错。命令行行为以 [LeRobot 0.4.1 源码](https://github.com/huggingface/lerobot/tree/v0.4.1/src/lerobot/scripts)为核对依据。

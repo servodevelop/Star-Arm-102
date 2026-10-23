@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lerobot-stararm102-dual"
+version = "0.1.0"
+description = "Dual Star Arm 102 LeRobot robot and teleoperator plugins"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["lerobot>=0.4,<0.5", "pyserial==3.5", "fashionstar-uart-sdk==1.3.12"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["lerobot_stararm102_dual*", "lerobot_robot_stararm102_dual*", "lerobot_teleoperator_stararm102_dual*"]

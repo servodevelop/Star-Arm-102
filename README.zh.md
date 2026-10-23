@@ -210,9 +210,11 @@ Star-Arm-102/
 │   ├── README.md
 │   ├── README.zh.md
 │   ├── examples/act_pick/
-│   ├── lerobot-robot-stararm102/
-│   ├── lerobot-teleoperator-stararm102/
-│   └── lerobot-stararm102/
+│   ├── single-arm/
+│   │   ├── lerobot-robot-stararm102/
+│   │   ├── lerobot-teleoperator-stararm102/
+│   │   └── lerobot-stararm102/
+│   └── dual-arm/
 ├── python-sdk/
 ├── ros2-humble/
 │   └── src/

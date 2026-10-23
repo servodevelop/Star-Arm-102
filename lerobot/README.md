@@ -7,6 +7,7 @@ Teleoperate a 102-FL with a 102-LD or 102-HD, collect demonstrations, and train 
 | Your goal | Start here |
 | --- | --- |
 | Record demonstrations and train my own task | Follow the tutorial below using the refactored integration |
+| Control two independent leader–follower pairs | [Dual-pair LeRobot plugin](dual-arm/) |
 | Try a supplied AI model without training | [Pretrained ACT block-placement demo](examples/act_pick/README.md), with its own release-compatible environment |
 | Control another brand of follower | [Follower compatibility and pairing guides](../integrations/README.md) |
 
@@ -55,7 +56,7 @@ conda create -n stararm102-learning python=3.10 -y
 conda activate stararm102-learning
 conda install -c conda-forge ffmpeg -y
 python -m pip install "lerobot==0.4.1" "lerobot-motor-starai==0.0.6" "fashionstar-uart-sdk==1.3.12"
-python -m pip install ./lerobot/lerobot-stararm102
+python -m pip install ./lerobot/single-arm/lerobot-stararm102
 python -m pip check
 python -c "from lerobot_teleoperator_stararm102 import Stararm102HD, Stararm102FL; print('HD/FL imports OK')"
 lerobot-teleoperate --help
@@ -346,4 +347,4 @@ Use a fresh evaluation name/directory for each trial. Check for input-feature mi
 | CUDA, video-decoder, or dependency error | PyTorch/driver compatibility, FFmpeg, `pip check`, full traceback |
 | Model runs but fails the task | Camera placement, calibration, demonstration quality and scene variation |
 
-For implementation details, see the [plugin developer reference](lerobot-stararm102/README.md). For a report, include your arm models, repository commit, environment file, exact command, and full error using the [troubleshooting guide](../docs/troubleshooting.md). CLI behavior is matched to the upstream [LeRobot 0.4.1 source](https://github.com/huggingface/lerobot/tree/v0.4.1/src/lerobot/scripts).
+For implementation details, see the [plugin developer reference](single-arm/lerobot-stararm102/README.md). For a report, include your arm models, repository commit, environment file, exact command, and full error using the [troubleshooting guide](../docs/troubleshooting.md). CLI behavior is matched to the upstream [LeRobot 0.4.1 source](https://github.com/huggingface/lerobot/tree/v0.4.1/src/lerobot/scripts).
