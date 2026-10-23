@@ -9,14 +9,10 @@ ROOT = Path(__file__).resolve().parents[1] / 'hardware'
 def main():
     for model in ('102-ld', '102-hd', '102-fl'):
         variant = 'fl' if model == '102-fl' else 'ld-hd'
-        if model == '102-ld':
-            directory = ROOT / model / 'urdf'
-            source = directory / 'stararm102-ld-hd-description'
-            output = directory / 'downloads' / 'star-arm-102-ld-hd-urdf-2026-10-21.zip'
-        else:
-            directory = ROOT / model / 'robot-description'
-            source = directory / ('stararm102_' + variant.replace('-', '_') + '_description')
-            output = directory / ('star-arm-102-' + variant + '-urdf.zip')
+        directory = ROOT / model / 'urdf'
+        source = directory / ('stararm102-' + variant + '-description')
+        bundle_date = '2026-10-21' if model == '102-ld' else '2026-10-23'
+        output = directory / 'downloads' / f'star-arm-102-{variant}-urdf-{bundle_date}.zip'
         if not (source / 'package.xml').is_file():
             raise FileNotFoundError(f'Missing ROS source package: {source}')
         output.parent.mkdir(parents=True, exist_ok=True)

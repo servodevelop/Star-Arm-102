@@ -27,7 +27,7 @@
 | [step/](step/) | Part models in parts/; shared assembly in assembly/ | ✅ Complete |
 | [stl/](stl/) | [Download all STL files (14 parts)](stl/downloads/star-arm-102-hd-stl-2026-10-22.zip?raw=true) · [Browse individual STL files](stl/) | ✅ Complete |
 | [drawings/](../102-ld/drawings/) | Shared LD/HD body drawings (PDF / DWG) | ✅ Complete |
-| [robot-description/](robot-description/) | URDF model: [Browse source](robot-description/) · [Download ZIP](robot-description/star-arm-102-ld-hd-urdf.zip) | ✅ Complete |
+| [URDF Models](urdf/) | [Download complete URDF package](urdf/downloads/star-arm-102-ld-hd-urdf-2026-10-23.zip?raw=true) · [Browse source](urdf/stararm102-ld-hd-description/) | ✅ Complete |
 
 <a id="bill-of-materials"></a>
 

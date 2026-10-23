@@ -64,7 +64,7 @@ hardware/
 └── flexible-gripper/
 ```
 
-`step/assembly/` contains CAD assemblies; assembly, PID setup and zero calibration are covered in the [DIY assembly guide](../docs/diy-assembly/README.md). Each model provides its ROS 1 source package and complete ZIP: [LD](102-ld/urdf/), [HD](102-hd/robot-description/), [FL](102-fl/robot-description/). LD and HD contain the same model.
+`step/assembly/` contains CAD assemblies; assembly, PID setup and zero calibration are covered in the [DIY assembly guide](../docs/diy-assembly/README.md). Each model provides its ROS 1 source package and complete ZIP: [LD](102-ld/urdf/), [HD](102-hd/urdf/), [FL](102-fl/urdf/). LD and HD contain the same model.
 
 ## Licensing
 

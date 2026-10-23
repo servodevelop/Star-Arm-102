@@ -64,7 +64,7 @@ hardware/
 └── flexible-gripper/
 ```
 
-`step/assembly/` 存放 CAD 装配模型；装配、PID 设置与零位校准集中在 [DIY 装配指南](../docs/diy-assembly/README.zh.md)。各型号的 ROS 1 源码与完整 ZIP：[LD](102-ld/urdf/)、[HD](102-hd/robot-description/)、[FL](102-fl/robot-description/)。LD 与 HD 包含相同模型。
+`step/assembly/` 存放 CAD 装配模型；装配、PID 设置与零位校准集中在 [DIY 装配指南](../docs/diy-assembly/README.zh.md)。各型号的 ROS 1 源码与完整 ZIP：[LD](102-ld/urdf/)、[HD](102-hd/urdf/)、[FL](102-fl/urdf/)。LD 与 HD 包含相同模型。
 
 ## 许可
 
