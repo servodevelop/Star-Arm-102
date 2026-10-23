@@ -15,7 +15,7 @@
 | --- | --- | --- |
 | [装配指南](../../docs/diy-assembly/README.zh.md#flexible-gripper-assembly) | 装配与安装视频 | ✅ 视频已提供 |
 | [step/](step/) | parts/ 零件模型；assembly/ 装配模型 | ✅ 已提供 6 个零件模型及 1 个装配模型 |
-| [stl/](stl/) | 独立 STL 打印文件 | ✅ 已提供 |
+| [stl/](stl/) | [下载整套 STL（6 个打印件）](stl/downloads/flexible-gripper-stl-2026-10-23.zip?raw=true) · [浏览单个 STL](stl/) | ✅ 已提供 |
 | [drawings/](drawings/) | PDF／DWG 图纸 | — 待提供 |
 | [robot-description/](robot-description/) | URDF 和网格 | — 待提供 |
 
