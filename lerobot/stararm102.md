@@ -149,7 +149,7 @@ lerobot-find-port
 > lsusb
 > ```
 >
-> <img src="./media/stararm102/image-20241230112928879-1749511998299-1.png" alt="image-20241230112928879-1749511998299-1" style="zoom:80%;" />
+> <img src="media/stararm102/image-20241230112928879-1749511998299-1.png" alt="image-20241230112928879-1749511998299-1" style="zoom:80%;" />
 >
 > 识别成功，查看ttyusb的信息
 >
@@ -157,7 +157,7 @@ lerobot-find-port
 > sudo dmesg | grep ttyUSB
 > ```
 >
-> <img src="./media/stararm102/image-20241230113058856-1749512093309-2.png" alt="image-20241230113058856" style="zoom:80%;" />
+> <img src="media/stararm102/image-20241230113058856-1749512093309-2.png" alt="image-20241230113058856" style="zoom:80%;" />
 >
 > 最后一行显示断连，因为brltty在占用该USB设备号，移除掉就可以了
 >
@@ -165,7 +165,7 @@ lerobot-find-port
 > sudo apt remove brltty
 > ```
 >
-> <img src="./media/stararm102/image-20241230113211143-1749512102599-4.png" alt="image-20241230113211143" style="zoom: 80%;" />
+> <img src="media/stararm102/image-20241230113211143-1749512102599-4.png" alt="image-20241230113211143" style="zoom: 80%;" />
 >
 > 最后，赋予权限
 >

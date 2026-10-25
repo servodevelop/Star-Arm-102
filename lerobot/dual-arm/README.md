@@ -1,4 +1,4 @@
-# Star Arm 102 dual-pair LeRobot plugin
+# Star Arm 102 dual-pair LeRobot plugin (2-to-2)
 
 [← Parent](../README.md) | <sub>**English** / [简体中文](README.zh.md)</sub>
 
@@ -10,7 +10,7 @@ Contents
 - 🔘 [Button detection and hover release](#button-detection-and-hover-release)
 - ⚙️ [Behavior and limits](#behavior-and-limits)
 
-This package adapts the dual Python SDK to LeRobot 0.4.1. Two leaders independently control two 102-FL followers. LeRobot sees one `stararm102_dual_leader` teleoperator and one `stararm102_dual_follower` robot. The 14 joint keys are `left.shoulder_pan.pos` through `left.gripper.pos` and `right.shoulder_pan.pos` through `right.gripper.pos`. Keep the same side mapping when recording, replaying, or training.
+This package adapts the dual Python SDK to LeRobot 0.4.1. Use 2 leaders and 2 followers, for 4 arms in total. Each leader independently controls its corresponding 102-FL follower. LeRobot sees one `stararm102_dual_leader` teleoperator and one `stararm102_dual_follower` robot. The 14 joint keys are `left.shoulder_pan.pos` through `left.gripper.pos` and `right.shoulder_pan.pos` through `right.gripper.pos`. Keep the same side mapping when recording, replaying, or training.
 
 ## Install
 
@@ -37,7 +37,7 @@ Secure all four bases, power the servos, and clear the complete paths to the SDK
 Replace every example port with the real one. From the Star-Arm-102 repository root, run the dual Python SDK's read-only four-port check before enabling motion; change the button flags to match the two real leaders:
 
 ```bash
-python dual-python-sdk/stararm102_dual.py \
+python python-sdk/dual-arm/stararm102_dual.py \
   --leader-1-port /dev/ttyUSB0 --follower-1-port /dev/ttyUSB1 \
   --leader-2-port /dev/ttyUSB2 --follower-2-port /dev/ttyUSB3 \
   --leader-1-button-disable --leader-2-button-disable --check-only

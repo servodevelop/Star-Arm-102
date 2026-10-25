@@ -2,7 +2,7 @@
 
 [← Parent](../README.md)　|　<sub>**English** / [简体中文](README.zh.md)</sub>
 
-For installation, calibration, teleoperation, cameras, recording, training, and evaluation, follow the [complete user tutorial](../../README.md). This page covers package interfaces and diagnostic examples. The released ACT model uses a [different plugin generation](../../../docs/compatibility.md).
+For installation, calibration, teleoperation, cameras, recording, training, and evaluation, follow the [complete user tutorial](../README.md). This page covers package interfaces and diagnostic examples. The released ACT model uses a [different plugin generation](../../../docs/compatibility.md).
 
 **Contents:**
 
@@ -18,7 +18,7 @@ For installation, calibration, teleoperation, cameras, recording, training, and 
 
 <a id="page-section-1"></a>
 
-Use the [versioned installation steps](../../README.md#install) in a separate environment. Reinstall the local package after source changes; editable installation was not reliably discovered by LeRobot 0.4.1.
+Use the [versioned installation steps](../README.md#install) in a separate environment. Reinstall the local package after source changes; editable installation was not reliably discovered by LeRobot 0.4.1.
 
 | Role | Registered type | Import package |
 | --- | --- | --- |
@@ -50,7 +50,7 @@ Default joint names: `shoulder_pan`, `shoulder_lift`, `elbow_flex`, `wrist_flex`
 
 <a id="page-section-6"></a>
 
-Follow [user calibration steps](../../README.md#calibration) before motion. Both implementations unlock joints, prompt for the zero pose, write origin/reset information, record motion ranges, and save a calibration file. The leader also obtains homing offsets. Existing files can be reused or regenerated through the prompt.
+Follow [user calibration steps](../README.md#calibration) before motion. Both implementations unlock joints, prompt for the zero pose, write origin/reset information, record motion ranges, and save a calibration file. The leader also obtains homing offsets. Existing files can be reused or regenerated through the prompt.
 
 Configured directions and ranges remain active after calibration. Connection/configuration can unlock the arm and reset multi-turn counts, including in the read-oriented examples below. These are hardware-accessing diagnostics, not offline viewers. Installation and CLI checks do not replace [bench validation](../../../docs/validation.md).
 
@@ -101,4 +101,4 @@ from lerobot_teleoperator_stararm102 import (
 <a id="train-a-first-act-checkpoint"></a>
 <a id="evaluate-your-own-trained-checkpoint"></a>
 
-Continue with [teleoperation](../../README.md#teleoperation), [recording](../../README.md#record), [training](../../README.md#train), or [evaluation](../../README.md#evaluate). For third-party followers, use the [reBot pairing guide](../../../integrations/seeed-rebot/README.md).
+Continue with [teleoperation](../README.md#teleoperation), [recording](../README.md#record), [training](../README.md#train), or [evaluation](../README.md#evaluate). For third-party followers, use the [reBot pairing guide](../../../integrations/seeed-rebot/README.md).

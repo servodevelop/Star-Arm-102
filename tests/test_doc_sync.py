@@ -28,8 +28,8 @@ class BilingualDocumentationTests(unittest.TestCase):
         return failed, output.getvalue()
 
     def test_non_readme_command_drift_is_reported(self):
-        self.write('python-sdk/PYTHON_SDK_GUIDE.md', '# Guide\n\n```bash\nrun --window=1\n```\n')
-        zh = self.write('python-sdk/PYTHON_SDK_GUIDE.zh.md', '# 指南\n\n```bash\nrun --window=30\n```\n')
+        self.write('python-sdk/single-arm/PYTHON_SDK_GUIDE.md', '# Guide\n\n```bash\nrun --window=1\n```\n')
+        zh = self.write('python-sdk/single-arm/PYTHON_SDK_GUIDE.zh.md', '# 指南\n\n```bash\nrun --window=30\n```\n')
         failed, output = self.run_check()
         self.assertTrue(failed)
         self.assertIn('PYTHON_SDK_GUIDE.zh.md: mismatched code', output)

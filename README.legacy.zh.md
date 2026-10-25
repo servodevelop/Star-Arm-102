@@ -111,13 +111,13 @@ Star Arm 102-HD 是 Star Arm 102 系列即将推出的新主臂型号
 ## 🔧硬件资料
 
 <p align="center">
-  <img src="./media/10.png" alt="Star-Arm-102 assembly overview" width="480">
+  <img src="media/10.png" alt="Star-Arm-102 assembly overview" width="480">
 </p>
 
 
-- [Parts List](./hardware/README.md): 查看完整零件清单、数量和配件
+- [Parts List](hardware/README.md): 查看完整零件清单、数量和配件
 
-- [Engineering Drawings](./hardware/102-ld/drawings/): 查看总装图、和制造图纸
+- [Engineering Drawings](hardware/102-ld/drawings/): 查看总装图、和制造图纸
 
 - [Assembly Guide](docs/diy-assembly/README.md#102-ld): 查看装配顺序、注意事项和配图说明(等待完善中)
 
@@ -148,7 +148,7 @@ pip install pyserial fashionstar-uart-sdk
 
 # 2. 运行程序
 sudo chmod 777 /dev/ttyUSB*
-python3 ./python-sdk/stararm102_ro.py
+python3 ./python-sdk/single-arm/stararm102_ro.py
 ```
 
 #### 方式二：ROS2 HUMBLE
@@ -340,9 +340,9 @@ sudo chmod 777 /dev/ttyUSB*
 
 选择你需要的控制方式查看详细文档：
 
-- 📘 **[Python SDK 详细文档](./python-sdk/PYTHON_SDK_GUIDE.md)** - 推荐！最简单易用
-- 📗 **[ROS2 HUMBLE 详细文档](./ros2-humble/README.md)** - 适用于机器人系统集成
-- 📙 **[Lerobot 详细文档](./lerobot/README.md)** - 适用于AI训练和研究
+- 📘 **[Python SDK 详细文档](python-sdk/single-arm/PYTHON_SDK_GUIDE.md)** - 推荐！最简单易用
+- 📗 **[ROS2 HUMBLE 详细文档](ros2-humble/README.md)** - 适用于机器人系统集成
+- 📙 **[Lerobot 详细文档](lerobot/README.md)** - 适用于AI训练和研究
 
 ## 📄 许可证
 
@@ -368,9 +368,9 @@ sudo chmod 777 /dev/ttyUSB*
 
 Star Arm 102 的 ACT 方块抓取与放置模型，已训练 100,000 步。按案例教程布置机械臂和两路相机后，可下载模型进行实机验证。
 
-- [完整运行教程与摆位照片](./lerobot/examples/act_pick/README.md)
+- [完整运行教程与摆位照片](lerobot/examples/act_pick/README.md)
 - [下载模型与原视频](https://github.com/servodevelop/Star-Arm-102/releases/tag/act-pick-v1.0.0)
-- [客户运行手册](./lerobot/examples/act_pick/docs/Star_Arm_102_ACT_客户运行指南.docx)
+- [客户运行手册](lerobot/examples/act_pick/docs/Star_Arm_102_ACT_客户运行指南.docx)
 
 训练完成后的现场演示，点击下方播放器即可在线观看。
 

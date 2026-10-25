@@ -2,7 +2,7 @@
 
 [← Parent](../README.md)　|　<sub>**English**</sub>
 
-This package registers `lerobot_teleoperator_stararm102` with `Motor_0.pos` through `Motor_5.pos` and `gripper.pos`. Use the [LeRobot guide](../../README.md) to install, calibrate, and teleoperate an LD/FL pair.
+This package registers `lerobot_teleoperator_stararm102` with `Motor_0.pos` through `Motor_5.pos` and `gripper.pos`. Use the [LeRobot guide](../README.md) to install, calibrate, and teleoperate an LD/FL pair.
 
 For development, from the repository root in the release-compatible environment:
 

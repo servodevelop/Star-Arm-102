@@ -1,4 +1,4 @@
-# 星臂 102 双臂 LeRobot 插件
+# Star Arm 102 双组主从臂 LeRobot 插件（2 控 2）
 
 [← 上级](../README.zh.md) | <sub>[English](README.md) / **简体中文**</sub>
 
@@ -10,7 +10,7 @@
 - 🔘 [按键检测与悬停解锁](#按键检测与悬停解锁)
 - ⚙️ [行为与限制](#行为与限制)
 
-本包将双臂 Python SDK接入 LeRobot 0.4.1。两台主臂分别控制两台 102-FL 从臂。LeRobot 将其识别为一个 `stararm102_dual_leader` 遥操作器和一个 `stararm102_dual_follower` 机器人。14 个关节字段从 `left.shoulder_pan.pos` 到 `left.gripper.pos`，以及从 `right.shoulder_pan.pos` 到 `right.gripper.pos`。录制、回放和训练时应保持左右映射一致。
+本包将双臂 Python SDK接入 LeRobot 0.4.1。使用 2 台主臂和 2 台从臂，共 4 台机械臂；两台主臂分别控制对应的 102-FL 从臂。LeRobot 将其识别为一个 `stararm102_dual_leader` 遥操作器和一个 `stararm102_dual_follower` 机器人。14 个关节字段从 `left.shoulder_pan.pos` 到 `left.gripper.pos`，以及从 `right.shoulder_pan.pos` 到 `right.gripper.pos`。录制、回放和训练时应保持左右映射一致。
 
 ## 安装
 
@@ -37,7 +37,7 @@ lerobot-teleoperate --help
 将所有示例串口替换为实际串口。允许运动前，在 Star-Arm-102 仓库根目录运行双臂 Python SDK 的四串口只读检查；按两台真实主臂的情况修改按键标志：
 
 ```bash
-python dual-python-sdk/stararm102_dual.py \
+python python-sdk/dual-arm/stararm102_dual.py \
   --leader-1-port /dev/ttyUSB0 --follower-1-port /dev/ttyUSB1 \
   --leader-2-port /dev/ttyUSB2 --follower-2-port /dev/ttyUSB3 \
   --leader-1-button-disable --leader-2-button-disable --check-only

@@ -39,8 +39,8 @@ Star Arm 102 具有六个臂关节和一个手柄／夹爪通道。LD 与 HD 是
 
 | 型号 | 角色 | 下一步 |
 | --- | --- | --- |
-| 102-LD | 遥操作示教主臂 | [Python](../python-sdk/README.md) 或 [LeRobot](../lerobot/README.zh.md) |
-| 102-HD | 支持按钮板的姿态保持主臂 | [Python](../python-sdk/README.md) 或 [LeRobot](../lerobot/README.zh.md) |
+| 102-LD | 遥操作示教主臂 | [Python](../python-sdk/README.zh.md) 或 [LeRobot](../lerobot/README.zh.md) |
+| 102-HD | 支持按钮板的姿态保持主臂 | [Python](../python-sdk/README.zh.md) 或 [LeRobot](../lerobot/README.zh.md) |
 | 102-FL | 遥操作与策略执行从臂 | [ACT 模型](../lerobot/examples/act_pick/README.zh.md) 或 [ROS 2](../ros2-humble/README.zh.md) |
 
 尺寸、负载与供货配置请参阅[硬件规格](../hardware/README.zh.md#product-specifications)及官方 [LD](https://fashionstar.com.hk/store/product/star-arm-102-ld/)、[HD](https://fashionstar.com.hk/store/product/star-arm-102-hd/)、[FL](https://fashionstar.com.hk/store/product/star-arm-102-fl/) 产品规格。[LD 工程图纸](../hardware/102-ld/drawings/)提供机械参考文件。URDF 或配置中的运动限位描述的是相应软件模型，不能替代具体硬件版本的限位。

@@ -42,7 +42,7 @@
 - [🤖 Run Your First AI Task](#run-your-first-ai-task)
 - [⚙️ Hardware Resources](hardware/)
 - [🤗 LeRobot Teleoperation & Training](lerobot/README.md)
-- [💬 Natural Language Control](integrations/butterfly/README.md)
+- [🧠 Explore Vision–Language–Action (VLA)](integrations/butterfly/README.md)
 - [🦾 ROS 2 Humble Applications](ros2-humble/README.md)
 - [🐍 Python SDK](python-sdk/README.md)
 - [🧰 Control & Configuration Tools](tools/README.md)
@@ -158,6 +158,8 @@ Watch Star Arm 102-FL pick up and place a block using our pretrained ACT model. 
 
 The guide walks you through the required hardware, two-camera setup, calibration, and workspace preparation.
 
+**[Explore Vision–Language–Action (VLA) →](integrations/butterfly/README.md)** — Explore how visual perception, language instructions, and robot actions work together through the Butterfly community integration. The current application combines AI tool calls with perception and motion-planning services; it is not an end-to-end VLA policy.
+
 <a id="teaching-and-force-feedback"></a>
 
 ## 🎮 Teach by Hand. Feel the Load.
@@ -205,7 +207,7 @@ Star-Arm-102/
 │   ├── yam/
 │   ├── galaxea-a1/
 │   ├── lumos-touch/
-│   └── butterfly/                            Natural-language control application
+│   └── butterfly/                            Vision–language–action exploration (community integration)
 ├── lerobot/
 │   ├── README.md
 │   ├── README.zh.md
@@ -216,6 +218,10 @@ Star-Arm-102/
 │   │   └── lerobot-stararm102/
 │   └── dual-arm/
 ├── python-sdk/
+│   ├── README.md
+│   ├── README.zh.md
+│   ├── single-arm/
+│   └── dual-arm/
 ├── ros2-humble/
 │   └── src/
 ├── tools/                                    Web control and servo configuration tools

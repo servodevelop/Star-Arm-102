@@ -67,7 +67,7 @@ Use the photo to check the button module's position on the base, connector orien
 
 ## 🔌 Wiring & Communication
 
-Follow [power, wiring and serial-port identification](../getting-started.md#connect), then complete the [communication check](../../python-sdk/README.md#check-communication-without-commanding-motion). Return here to complete zero calibration first, then set and write the PID parameters applicable to your model.
+Follow [power, wiring and serial-port identification](../getting-started.md#connect), then complete the [communication check](../../python-sdk/single-arm/README.md#check-communication-without-commanding-motion). Return here to complete zero calibration first, then set and write the PID parameters applicable to your model.
 
 <a id="zero-calibration"></a>
 

@@ -1,6 +1,6 @@
-# Star Arm 102: Two independent leader–follower pairs
+# Star Arm 102 dual-pair Python control (2-to-2)
 
-[← Parent](../README.md) | <sub>**English** / [简体中文](README.md)</sub>
+[← Python SDK](../README.md) | <sub>**English** / [简体中文](README.zh.md)</sub>
 
 Contents
 
@@ -11,7 +11,7 @@ Contents
 - 🦾 [Normal and hover behavior](#normal-and-hover-behavior)
 - ⚙️ [Common options](#common-options)
 
-Two leaders each control one 102-FL follower: **leader 1 → follower 1** and **leader 2 → follower 2**. Each leader may be a 102-LD or 102-HD. Choose one of two dual-arm programs:
+Use 2 leaders and 2 followers, for 4 arms in total. Two leaders each control one 102-FL follower: **leader 1 → follower 1** and **leader 2 → follower 2**. Each leader may be a 102-LD or 102-HD. Choose one of two dual-arm programs:
 
 | Program | Operation | Who it is for |
 | --- | --- | --- |
@@ -20,13 +20,16 @@ Two leaders each control one 102-FL follower: **leader 1 → follower 1** and **
 
 Both scripts support startup with or without buttons and automatically handle both old and new button boards, without a separate version option. Keep both scripts in the same directory when using hover mode. These instructions use Ubuntu 22.04.
 
+<a id="install"></a>
+
 ## Install
 
 Prepare four arms, their matching UC-01 adapters, USB data cables, and servo power supplies. Secure the bases and clear the motion area. USB carries data; it does not power the servos. Wire everything with power off. Both leaders and followers move to the same reference pose on startup; clear their entire paths before control.
 
-From the project directory:
+From the Star-Arm-102 repository root, enter the dual-pair directory and install:
 
 ```bash
+cd python-sdk/dual-arm
 sudo apt update
 sudo apt install python3 python3-venv python3-pip
 python3 -m venv .venv
@@ -34,7 +37,9 @@ source .venv/bin/activate
 python -m pip install -r requirements.txt
 ```
 
-In each new terminal, enter the project directory and run `source .venv/bin/activate` again.
+In each new terminal, enter `python-sdk/dual-arm/` and run `source .venv/bin/activate` again.
+
+<a id="find-the-four-serial-ports"></a>
 
 ## Find the four serial ports
 
@@ -47,6 +52,8 @@ ls /dev/ttyUSB*
 If no new port appears, try `ls /dev/ttyACM*`. If neither changes, try another USB data cable or port, then consult the driver instructions for your UC-01 hardware revision. The `/dev/ttyUSB0`–`3` paths below are **examples**; port numbers may also change after reconnecting USB.
 
 For `Permission denied`, run `sudo usermod -aG dialout "$USER"`, log out and back in, then confirm `dialout` appears in `id -nG`.
+
+<a id="check-communication-first"></a>
 
 ## Check communication first
 
@@ -71,6 +78,8 @@ Old boards can be detected directly; new boards prompt you to press the button w
 For more detection time, add `--wait-seconds 20`. For an old board with a different ID, add `--button-id`, for example `--button-id 8`.
 
 If an ID does not respond, check the port mapping, servo power, and bus wiring. To diagnose one arm, use `python check_connection.py --port /dev/ttyUSB0` with its actual port. Resolve communication errors before control.
+
+<a id="run-normal-or-hover-control"></a>
 
 ## Run normal or hover control
 
@@ -132,6 +141,8 @@ Support the arms first, then press `Ctrl+C` in the terminal running the script. 
 
 Exit damping requires brushless magnetic-encoder servo firmware V316 or later. `Ctrl+C` **is not a hardware emergency stop**; use your local hardware power-off procedure for unexpected motion.
 
+<a id="normal-and-hover-behavior"></a>
+
 ## Normal and hover behavior
 
 **Normal mode:** continuously move a leader to control its follower, without automatic hold. This is the recommended mode for LD leaders.
@@ -139,6 +150,8 @@ Exit damping requires brushless magnetic-encoder servo firmware V316 or later. `
 **Hover mode:** an HD leader automatically holds position after staying still for about one second. **Without buttons**, slightly open then close the gripper, or close then open it, to release hold and resume following. Use the same movement as startup: about 5° in each direction, without fully opening or closing. Arm-joint movement no longer releases hover hold without buttons. **With buttons**, gently moving the leader still releases automatic hold. Gripper movement does not trigger hold locking. Physical testing showed **no usable hold on LD leaders**, so HD leaders are recommended for this feature.
 
 **With buttons, both modes support manual leader hold:** complete startup as prompted; after following begins, the next press holds the leader joints and another press releases them. The program follows the actual locked or unlocked state of a new board. The follower continues tracking the leader's position during hold. In hover mode, manual button hold takes priority over automatic hold.
+
+<a id="common-options"></a>
 
 ## Common options
 

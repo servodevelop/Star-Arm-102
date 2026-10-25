@@ -149,7 +149,7 @@ For example：
 > lsusb
 > ```
 >
-> <img src="./media/stararm102/image-20241230112928879-1749511998299-1.png" alt="image-20241230112928879-1749511998299-1" style="zoom:80%;" />
+> <img src="media/stararm102/image-20241230112928879-1749511998299-1.png" alt="image-20241230112928879-1749511998299-1" style="zoom:80%;" />
 >
 > Once identified, check the information of the ttyusb.
 >
@@ -157,7 +157,7 @@ For example：
 > sudo dmesg | grep ttyUSB
 > ```
 >
-> <img src="./media/stararm102/image-20241230113058856-1749512093309-2.png" alt="image-20241230113058856" style="zoom:80%;" />
+> <img src="media/stararm102/image-20241230113058856-1749512093309-2.png" alt="image-20241230113058856" style="zoom:80%;" />
 >
 > The last line indicates a disconnection because brltty is occupying the USB. Removing brltty will resolve the issue.
 >
@@ -165,7 +165,7 @@ For example：
 > sudo apt remove brltty
 > ```
 >
-> <img src="./media/stararm102/image-20241230113211143-1749512102599-4.png" alt="image-20241230113211143" style="zoom: 80%;" />
+> <img src="media/stararm102/image-20241230113211143-1749512102599-4.png" alt="image-20241230113211143" style="zoom: 80%;" />
 >
 > Finally，use chmod command.
 >

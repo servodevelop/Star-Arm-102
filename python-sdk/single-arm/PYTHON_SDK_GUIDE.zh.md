@@ -1,8 +1,8 @@
 # Python 遥操作参考
 
-[← Python SDK](README.md)　|　<sub>[English](PYTHON_SDK_GUIDE.md) / **简体中文**</sub>
+[← Python SDK](README.zh.md)　|　<sub>[English](PYTHON_SDK_GUIDE.md) / **简体中文**</sub>
 
-安装与首次运行请参阅 [Python 快速开始](README.md)。
+安装与首次运行请参阅 [Python 快速开始](README.zh.md)。
 
 ## 端口与选项
 
@@ -22,7 +22,9 @@
 
 `main(args)` 打开指定串口、解锁各机械臂、重置多圈计数，读取主臂 ID 0–6 的角度，再向各台 FL 发送目标。臂关节角度采用移动平均滤波。手柄／夹爪通道乘以 1.5 后限制在 0–90 度，不参与移动平均；增大滤波窗口会增加延迟。
 
-这是直接控制示例，不会加载 LeRobot 校准文件、规划无碰撞路径或重新设定机械零位。启动前将两台机械臂置于正确的参考姿态。实机验收项目见[验证记录](../docs/validation.md)。
+这是直接控制示例，不会加载 LeRobot 校准文件、规划无碰撞路径或重新设定机械零位。启动前将两台机械臂置于正确的参考姿态。实机验收项目见[验证记录](../../docs/validation.md)。
+
+<a id="hd-button-behavior"></a>
 
 ## HD 按钮行为
 
@@ -38,4 +40,4 @@ HD 模式启用 ID 7。当前脚本根据按钮板报告的锁定状态锁住主
 
 目录中保留实验和配置脚本以兼容已有用途。运行前请阅读其串口常量与写入操作。不要通过写入参数的脚本排查 USB 未连接的问题。
 
-[UART SDK 源码](https://github.com/servodevelop/servo-uart-rs485-sdk) · [故障排查](../docs/troubleshooting.md)
+[UART SDK 源码](https://github.com/servodevelop/servo-uart-rs485-sdk) · [故障排查](../../docs/troubleshooting.md)

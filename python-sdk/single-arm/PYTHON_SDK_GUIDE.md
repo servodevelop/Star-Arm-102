@@ -22,7 +22,9 @@ The historical default ports are preserved for existing scripts. The quick start
 
 `main(args)` opens the selected serial ports, unlocks each arm, resets multi-turn counts, reads leader IDs 0–6, and sends targets to each FL. It applies a moving average to arm angles. The handle/gripper channel is multiplied by 1.5 and clamped to 0–90 degrees; it bypasses the moving average. A larger filter window adds lag.
 
-This is a direct control example. It does not load a LeRobot calibration file, plan collision-free motion, or establish a new mechanical zero. Place both arms at the correct reference pose before launch. The hardware acceptance checks are listed in [validation](../docs/validation.md).
+This is a direct control example. It does not load a LeRobot calibration file, plan collision-free motion, or establish a new mechanical zero. Place both arms at the correct reference pose before launch. The hardware acceptance checks are listed in [validation](../../docs/validation.md).
+
+<a id="hd-button-behavior"></a>
 
 ## HD button behavior
 
@@ -38,4 +40,4 @@ The button is a teleoperation control, not a hardware emergency stop. Confirm it
 
 The directory retains experimental and setup scripts for compatibility. Read their serial-port constants and write operations before running them. Do not use a parameter-writing script to diagnose a missing USB connection.
 
-[UART SDK source](https://github.com/servodevelop/servo-uart-rs485-sdk) · [Troubleshooting](../docs/troubleshooting.md)
+[UART SDK source](https://github.com/servodevelop/servo-uart-rs485-sdk) · [Troubleshooting](../../docs/troubleshooting.md)

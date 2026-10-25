@@ -25,7 +25,7 @@ Keep conventional filenames such as `README.md`, `README.zh.md`, `LICENSE`, and 
 From the repository root in a Python environment:
 
 ```bash
-python -m pip install -r scripts/requirements-docs.txt -r python-sdk/requirements.txt
+python -m pip install -r scripts/requirements-docs.txt -r python-sdk/single-arm/requirements.txt
 python scripts/check_docs.py
 python scripts/check_readme_sync.py
 python -m unittest discover -s tests -v

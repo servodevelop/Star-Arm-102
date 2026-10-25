@@ -11,7 +11,7 @@
 
 **Try a supplied policy without retraining.** This example uses a Star Arm 102-FL and two cameras to place a block in the center of a prepared workspace.
 
-**[Run the model](inference.md) · [Download the release](https://github.com/servodevelop/Star-Arm-102/releases/tag/act-pick-v1.0.0) · [Train your own task](../../README.md#record)**
+**[Run the model](inference.md) · [Download the release](https://github.com/servodevelop/Star-Arm-102/releases/tag/act-pick-v1.0.0) · [Train your own task](../../single-arm/README.md#record)**
 
 <a id="page-section-1"></a>
 

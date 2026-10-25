@@ -111,7 +111,7 @@ sudo usermod -aG dialout "$USER"
 
 Log out and back in, then check `id -nG`. For a temporary session, grant access only to the identified device, for example `sudo chmod a+rw /dev/ttyUSB0`. Do not change permissions on every USB device.
 
-**Success:** both ports are visible and accessible. Continue with the [communication check](../python-sdk/README.md#check-communication-without-commanding-motion).
+**Success:** both ports are visible and accessible. Continue with the [communication check](../python-sdk/single-arm/README.md#check-communication-without-commanding-motion).
 
 <a id="reference-pose-and-stopping"></a>
 

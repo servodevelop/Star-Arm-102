@@ -67,7 +67,7 @@ BOM、CAD（STEP）、URDF 与 3D 打印文件：[102-LD](../../hardware/102-ld/
 
 ## 🔌 接线与通信
 
-按[电源、接线与串口识别](../getting-started.zh.md#connect)完成连接，再执行[通信检查](../../python-sdk/README.md#check-communication-without-commanding-motion)。之后回到本页，先完成零位校准，再按适用型号设置并写入 PID 参数。
+按[电源、接线与串口识别](../getting-started.zh.md#connect)完成连接，再执行[通信检查](../../python-sdk/single-arm/README.zh.md#check-communication-without-commanding-motion)。之后回到本页，先完成零位校准，再按适用型号设置并写入 PID 参数。
 
 <a id="zero-calibration"></a>
 

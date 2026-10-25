@@ -8,7 +8,7 @@
 <p align="center">
   <a href="docs/specifications.zh.md"><img src="https://img.shields.io/badge/DOF-6%2B1-16A085?style=flat-square" alt="6 arm joints plus 1 gripper"></a>
   <a href="lerobot/README.zh.md"><img src="https://img.shields.io/badge/LeRobot-Integration-FFD21E?style=flat-square&amp;logo=huggingface&amp;logoColor=FFD21E" alt="LeRobot integration"></a>
-  <a href="python-sdk/README.md"><img src="https://img.shields.io/badge/Python-SDK-3776AB?style=flat-square&amp;logo=python&amp;logoColor=white" alt="Python SDK"></a>
+  <a href="python-sdk/README.zh.md"><img src="https://img.shields.io/badge/Python-SDK-3776AB?style=flat-square&amp;logo=python&amp;logoColor=white" alt="Python SDK"></a>
   <a href="ros2-humble/README.zh.md"><img src="https://img.shields.io/badge/ROS_2-Humble-22314E?style=flat-square&amp;logo=ros&amp;logoColor=white" alt="ROS 2 Humble"></a>
   <a href="lerobot/examples/act_pick/README.zh.md"><img src="https://img.shields.io/badge/ACT-Pretrained_Model-8B5CF6?style=flat-square" alt="ACT pretrained model"></a>
 </p>
@@ -42,9 +42,9 @@
 - [🤖 运行第一个 AI 任务](#run-your-first-ai-task)
 - [⚙️ 硬件资源](hardware/)
 - [🤗 LeRobot 遥操作与训练](lerobot/README.zh.md)
-- [💬 自然语言控制](integrations/butterfly/README.zh-CN.md)
+- [🧠 VLA（视觉—语言—动作）探索](integrations/butterfly/README.zh-CN.md)
 - [🦾 ROS 2 Humble 应用](ros2-humble/README.zh.md)
-- [🐍 Python SDK](python-sdk/README.md)
+- [🐍 Python SDK](python-sdk/README.zh.md)
 - [🧰 控制与配置工具](tools/README.md)
 
 [🛠️ 仓库目录结构](#repository-structure) · [🔗 相关项目](#related-projects)
@@ -158,6 +158,8 @@ Star Arm 102 是 **[Fashion Star](https://fashionstar.com.hk/)** 开发的开源
 
 指南将带你完成所需硬件、双相机配置、校准和任务场景的准备。
 
+**[探索 VLA（视觉—语言—动作）→](integrations/butterfly/README.zh-CN.md)** — 通过 Butterfly 社区集成，探索视觉感知、语言指令与机器人动作如何协同。当前应用结合 AI 工具调用、感知和运动规划服务实现任务执行，并非端到端 VLA 策略。
+
 <a id="teaching-and-force-feedback"></a>
 
 ## 🎮 手动示教，感知负载
@@ -205,7 +207,7 @@ Star-Arm-102/
 │   ├── yam/
 │   ├── galaxea-a1/
 │   ├── lumos-touch/
-│   └── butterfly/                            自然语言控制应用
+│   └── butterfly/                            视觉—语言—动作探索（社区集成）
 ├── lerobot/
 │   ├── README.md
 │   ├── README.zh.md
@@ -216,6 +218,10 @@ Star-Arm-102/
 │   │   └── lerobot-stararm102/
 │   └── dual-arm/
 ├── python-sdk/
+│   ├── README.md
+│   ├── README.zh.md
+│   ├── single-arm/
+│   └── dual-arm/
 ├── ros2-humble/
 │   └── src/
 ├── tools/                                    网页控制与舵机配置工具
