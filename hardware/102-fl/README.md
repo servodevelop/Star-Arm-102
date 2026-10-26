@@ -45,8 +45,8 @@ Printed-part images are rendered from the corresponding STEP models. Fastener im
 
 | No. | Part Name | Model / Specification / Part Identifier | Image | Description | Quantity |
 | :---: | --- | --- | :---: | --- | :---: |
-| 1 | UART bus servo | RX8-U50H-M | <img src="images/rx8-u50h-m-primary.webp" alt="RX8-U50H-M" width="90"> | 12V; 50kg-cm; 70rpm; Dual-shaft; Brushless Motor; 12-bit Magnetic Absolute Encoder; 25T | 2 |
-| 2 | UART bus servo | RA8-U35H-M | <img src="images/ra8-u35h-m.webp" alt="RA8-U35H-M" width="90"> | 12V; 35kg-cm; 55rpm; Dual-shaft; Brushed Core Motor; 12-bit Magnetic Absolute Encoder; 25T | 3 |
+| 1 | UART bus servo | RX8-U50H-M | <img src="images/rx8-u50h-m-primary.png" alt="RX8-U50H-M" width="90"> | 12V; 50kg-cm; 70rpm; Dual-shaft; Brushless Motor; 12-bit Magnetic Absolute Encoder; 25T | 2 |
+| 2 | UART bus servo | RA8-U35H-M | <img src="images/ra8-u35h-m.png" alt="RA8-U35H-M" width="90"> | 12V; 35kg-cm; 55rpm; Dual-shaft; Brushed Core Motor; 12-bit Magnetic Absolute Encoder; 25T | 3 |
 | 3 | UART bus servo | RA8-U35H-M-C047 | <img src="images/ra8-u35h-m-c047.webp" alt="RA8-U35H-M-C047" width="90"> | 12V; 35kg-cm; 55rpm; Dual-shaft Housing (Flat Bottom Cover, No Rear Output Shaft); Brushed Core Motor; 12-bit Magnetic Absolute Encoder; 25T | 1 |
 | 4 | UART bus servo | RA8-U27H-M-C005 | <img src="images/ra8-u27h-m-c005.webp" alt="RA8-U27H-M-C005" width="90"> | 12V; 25kg-cm; 72rpm; Dual-shaft Housing (Flat Bottom Cover, No Rear Output Shaft); Brushed Core Motor; 12-bit Magnetic Absolute Encoder; D-Type Shaft | 1 |
 | 5 | Base bottom plate | star-arm-102-base-bottom | <a href="images/star-arm-102-base-bottom.png"><img src="images/star-arm-102-base-bottom.png" alt="star-arm-102-base-bottom" width="90"></a> | Ivory, PLA 3D printed part | 1 |

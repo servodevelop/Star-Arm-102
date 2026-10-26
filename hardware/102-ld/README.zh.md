@@ -45,7 +45,7 @@
 
 | 序号 | 品名 | 型号／规格／零件标识 | 图片 | 描述 | 数量 |
 | :---: | --- | --- | :---: | --- | :---: |
-| 1 | UART 总线舵机 | RA8-U01H-M | <img src="images/ra8-u01h-m.webp" alt="RA8-U01H-M" width="90"> | 12V；双轴；无电机（无扭矩输出）；12 位磁性绝对值编码器；25T | 4 |
+| 1 | UART 总线舵机 | RA8-U01H-M | <img src="images/ra8-u01h-m.png" alt="RA8-U01H-M" width="90"> | 12V；双轴；无电机（无扭矩输出）；12 位磁性绝对值编码器；25T | 4 |
 | 2 | UART 总线舵机 | RA8-U02H-M | <img src="images/ra8-u02h-m.webp" alt="RA8-U02H-M" width="90"> | 12V；双轴款壳体（平面下盖，无后输出轴）；无电机（无扭矩输出）；12 位磁性绝对值编码器；D 型轴 | 1 |
 | 3 | UART 总线舵机 | RA8-U03H-M | <img src="images/ra8-u03h-m.webp" alt="RA8-U03H-M" width="90"> | 12V；双轴款壳体（平面下盖，无后输出轴）；无电机（无扭矩输出）；12 位磁性绝对值编码器；25T | 2 |
 | 4 | 基座底板 | star-arm-102-base-bottom | <a href="images/star-arm-102-base-bottom.png"><img src="images/star-arm-102-base-bottom.png" alt="star-arm-102-base-bottom" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |

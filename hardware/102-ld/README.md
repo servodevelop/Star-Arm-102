@@ -45,7 +45,7 @@ Printed-part images are rendered from the corresponding STEP models. Fastener im
 
 | No. | Part Name | Model / Specification / Part Identifier | Image | Description | Quantity |
 | :---: | --- | --- | :---: | --- | :---: |
-| 1 | UART bus servo | RA8-U01H-M | <img src="images/ra8-u01h-m.webp" alt="RA8-U01H-M" width="90"> | 12V; Dual-shaft; No Motor (No Torque Output); 12-bit Magnetic Absolute Encoder; 25T | 4 |
+| 1 | UART bus servo | RA8-U01H-M | <img src="images/ra8-u01h-m.png" alt="RA8-U01H-M" width="90"> | 12V; Dual-shaft; No Motor (No Torque Output); 12-bit Magnetic Absolute Encoder; 25T | 4 |
 | 2 | UART bus servo | RA8-U02H-M | <img src="images/ra8-u02h-m.webp" alt="RA8-U02H-M" width="90"> | 12V; Dual-shaft Housing (Flat Bottom Cover, No Rear Output Shaft); No Motor (No Torque Output); 12-bit Magnetic Absolute Encoder; D-Type Shaft | 1 |
 | 3 | UART bus servo | RA8-U03H-M | <img src="images/ra8-u03h-m.webp" alt="RA8-U03H-M" width="90"> | 12V; Dual-shaft Housing (Flat Bottom Cover, No Rear Output Shaft); No Motor (No Torque Output); 12-bit Magnetic Absolute Encoder; 25T | 2 |
 | 4 | Base bottom plate | star-arm-102-base-bottom | <a href="images/star-arm-102-base-bottom.png"><img src="images/star-arm-102-base-bottom.png" alt="star-arm-102-base-bottom" width="90"></a> | Ivory, PLA 3D printed part | 1 |

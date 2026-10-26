@@ -45,8 +45,8 @@
 
 | 序号 | 品名 | 型号／规格／零件标识 | 图片 | 描述 | 数量 |
 | :---: | --- | --- | :---: | --- | :---: |
-| 1 | UART 总线舵机 | RX8-U50H-M | <img src="images/rx8-u50h-m-primary.webp" alt="RX8-U50H-M" width="90"> | 12V；50kg-cm；70rpm；双轴；无刷电机；12 位磁性绝对值编码器；25T | 2 |
-| 2 | UART 总线舵机 | RA8-U35H-M | <img src="images/ra8-u35h-m.webp" alt="RA8-U35H-M" width="90"> | 12V；35kg-cm；55rpm；双轴；有刷铁芯电机；12 位磁性绝对值编码器；25T | 3 |
+| 1 | UART 总线舵机 | RX8-U50H-M | <img src="images/rx8-u50h-m-primary.png" alt="RX8-U50H-M" width="90"> | 12V；50kg-cm；70rpm；双轴；无刷电机；12 位磁性绝对值编码器；25T | 2 |
+| 2 | UART 总线舵机 | RA8-U35H-M | <img src="images/ra8-u35h-m.png" alt="RA8-U35H-M" width="90"> | 12V；35kg-cm；55rpm；双轴；有刷铁芯电机；12 位磁性绝对值编码器；25T | 3 |
 | 3 | UART 总线舵机 | RA8-U35H-M-C047 | <img src="images/ra8-u35h-m-c047.webp" alt="RA8-U35H-M-C047" width="90"> | 12V；35kg-cm；55rpm；双轴款壳体（平面下盖，无后输出轴）；有刷铁芯电机；12 位磁性绝对值编码器；25T | 1 |
 | 4 | UART 总线舵机 | RA8-U27H-M-C005 | <img src="images/ra8-u27h-m-c005.webp" alt="RA8-U27H-M-C005" width="90"> | 12V；25kg-cm；72rpm；双轴款壳体（平面下盖，无后输出轴）；有刷铁芯电机；12 位磁性绝对值编码器；D 型轴 | 1 |
 | 5 | 基座底板 | star-arm-102-base-bottom | <a href="images/star-arm-102-base-bottom.png"><img src="images/star-arm-102-base-bottom.png" alt="star-arm-102-base-bottom" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |

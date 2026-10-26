@@ -45,7 +45,7 @@
 
 | 序号 | 品名 | 型号／规格／零件标识 | 图片 | 描述 | 数量 |
 | :---: | --- | --- | :---: | --- | :---: |
-| 1 | UART 总线舵机 | RP8-U45H-M | <img src="images/rp8-u45h-m.webp" alt="RP8-U45H-M" width="90"> | 12V；45kg-cm；118rpm；双轴；空心杯电机；12 位磁性绝对值编码器；25T | 4 |
+| 1 | UART 总线舵机 | RP8-U45H-M | <img src="images/rp8-u45h-m.png" alt="RP8-U45H-M" width="90"> | 12V；45kg-cm；118rpm；双轴；空心杯电机；12 位磁性绝对值编码器；25T | 4 |
 | 2 | UART 总线舵机 | RP8-U45H-M-C028 | <img src="images/rp8-u45h-m-c028.webp" alt="RP8-U45H-M-C028" width="90"> | 12V；45kg-cm；118rpm；双轴款壳体（平面下盖，无后输出轴）；空心杯电机；12 位磁性绝对值编码器；25T | 2 |
 | 3 | UART 总线舵机 | RP8-U45H-M-C029 | <img src="images/rp8-u45h-m-c029.webp" alt="RP8-U45H-M-C029" width="90"> | 12V；45kg-cm；118rpm；双轴款壳体（平面下盖，无后输出轴）；空心杯电机；12 位磁性绝对值编码器；D 型轴 | 1 |
 | 4 | 基座底板 | star-arm-102-base-bottom | <a href="images/star-arm-102-base-bottom.png"><img src="images/star-arm-102-base-bottom.png" alt="star-arm-102-base-bottom" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
