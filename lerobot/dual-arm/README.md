@@ -9,19 +9,42 @@ Contents
 - 🎮 [Teleoperate](#teleoperate)
 - 🔘 [Button detection and hover release](#button-detection-and-hover-release)
 - ⚙️ [Behavior and limits](#behavior-and-limits)
+- 🛠️ [Troubleshooting](#troubleshooting)
 
 This package adapts the dual Python SDK to LeRobot 0.4.1. Use 2 leaders and 2 followers, for 4 arms in total. Each leader independently controls its corresponding 102-FL follower. LeRobot sees one `stararm102_dual_leader` teleoperator and one `stararm102_dual_follower` robot. The 14 joint keys are `left.shoulder_pan.pos` through `left.gripper.pos` and `right.shoulder_pan.pos` through `right.gripper.pos`. Keep the same side mapping when recording, replaying, or training.
 
 ## Install
 
-From the Star-Arm-102 repository root, in a Python 3.10 LeRobot 0.4.1 environment:
+Install Miniconda or Anaconda first, then create a dedicated Python 3.10 environment in a terminal where `conda` is available. Run these commands once to create it:
 
 ```bash
+conda create -n stararm-dual python=3.10 pip -y
+conda activate stararm-dual
+conda env config vars set PYTHONNOUSERSITE=1
+conda deactivate
+conda activate stararm-dual
+which python
+python -m pip --version
+```
+
+`PYTHONNOUSERSITE=1` is applied when this Conda environment is activated, preventing imports from user packages under `~/.local`. Both the Python and pip paths should contain `envs/stararm-dual`. If they still point to `/usr/bin/python` or a user-level pip, follow Troubleshooting below before installing.
+
+From the Star-Arm-102 repository root, install LeRobot 0.4.1 and the plugin:
+
+```bash
+python -m pip install "lerobot==0.4.1"
 python -m pip install ./lerobot/dual-arm
+python -m pip check
 lerobot-teleoperate --help
 ```
 
 The CLI help should list `stararm102_dual_leader` and `stararm102_dual_follower`. Install this package in its own environment if you also use another Star Arm plugin generation; dataset fields and calibration behavior differ. The package contains a copy of the dual SDK's normal and hover control helpers so that its button protocols and raw angle mapping remain available.
+
+In each new terminal, activate the environment before running the checks and teleoperation commands below:
+
+```bash
+conda activate stararm-dual
+```
 
 ## Connect four arms
 
@@ -126,3 +149,30 @@ Automatic hover intentionally releases if raw joint feedback shifts by more than
 The plugin uses the SDK's raw servo reference pose and degree values. `is_calibrated` is always true because it does not write a LeRobot calibration file. It should not be mixed with the named-joint single-arm plugin's calibration or datasets. Gripper values are scaled by 1.5 and clamped to 0–90°, as in the SDK. Cameras can be configured on the follower with LeRobot camera configs and become observation fields.
 
 The original SDK runs one worker process per pair; LeRobot calls the two sides sequentially through one robot and one teleoperator. The inherited startup, button, and hover code has only been checked offline through import and mock-based checks here; four-arm motion and timing require on-site validation. Replay and policies send full 14-key actions, so confirm the side mapping and reference pose before commanding motion.
+
+## Troubleshooting
+
+### Python or pip is outside the dedicated environment
+
+Run `which python` and `python -m pip --version`. If the paths do not point to `envs/stararm-dual`, run `conda activate stararm-dual` again. Always use `python -m pip` so the installer belongs to the current Python. Do not install into this environment with `sudo pip install` or `--user`.
+
+If `conda activate` reports that the shell is not initialized, run `conda init bash` for Bash, reopen the terminal, and activate again. If `conda` is not found, install Miniconda/Anaconda first or load `etc/profile.d/conda.sh` from its actual installation directory. For example, for an installation under `~/miniconda3`:
+
+```bash
+source ~/miniconda3/etc/profile.d/conda.sh
+conda activate stararm-dual
+```
+
+### Installation reports a missing `get_gprof` file
+
+For example:
+
+```text
+OSError: [Errno 2] No such file or directory: '/home/<user>/.local/lib/python3.10/site-packages/../../../bin/get_gprof'
+```
+
+This indicates that installation involves user-level packages or scripts under `~/.local`; this message alone does not establish why the file is missing. Create and activate the dedicated environment using the installation steps, confirm the Python and pip paths, and rerun the installation commands. There is no need to delete the entire `~/.local` directory. If installation still fails in the dedicated environment, retain the complete installation command, Python/pip paths, and full error output for further diagnosis.
+
+### Why installation pulls many dependencies
+
+LeRobot automatically pulls PyTorch, TorchVision, dataset tools, and training libraries. Depending on the platform and resolved PyTorch package, it may also download CUDA runtime libraries such as `nvidia-*-cu12`. A long dependency list is not itself an error and does not confirm that the local CUDA driver is configured. Use successful installation, `python -m pip check`, and the CLI help check to decide whether to continue. The pip upgrade notice is not the cause of the `get_gprof` error.

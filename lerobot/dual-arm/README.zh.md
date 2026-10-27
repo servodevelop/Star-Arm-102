@@ -9,19 +9,42 @@
 - 🎮 [遥操作](#遥操作)
 - 🔘 [按键检测与悬停解锁](#按键检测与悬停解锁)
 - ⚙️ [行为与限制](#行为与限制)
+- 🛠️ [故障排查](#故障排查)
 
 本包将双臂 Python SDK接入 LeRobot 0.4.1。使用 2 台主臂和 2 台从臂，共 4 台机械臂；两台主臂分别控制对应的 102-FL 从臂。LeRobot 将其识别为一个 `stararm102_dual_leader` 遥操作器和一个 `stararm102_dual_follower` 机器人。14 个关节字段从 `left.shoulder_pan.pos` 到 `left.gripper.pos`，以及从 `right.shoulder_pan.pos` 到 `right.gripper.pos`。录制、回放和训练时应保持左右映射一致。
 
 ## 安装
 
-在 Star-Arm-102 仓库根目录、Python 3.10 的 LeRobot 0.4.1 环境中运行：
+先安装 Miniconda 或 Anaconda，并在可使用 `conda` 的终端创建独立的 Python 3.10 环境。以下命令只需首次创建时执行：
 
 ```bash
+conda create -n stararm-dual python=3.10 pip -y
+conda activate stararm-dual
+conda env config vars set PYTHONNOUSERSITE=1
+conda deactivate
+conda activate stararm-dual
+which python
+python -m pip --version
+```
+
+`PYTHONNOUSERSITE=1` 会随此 Conda 环境激活，避免加载 `~/.local` 中的用户级 Python 包。`which python` 和 pip 的路径都应包含 `envs/stararm-dual`；若仍显示 `/usr/bin/python` 或用户目录中的 pip，先按下方故障排查处理，再安装。
+
+在 Star-Arm-102 仓库根目录安装 LeRobot 0.4.1 和插件：
+
+```bash
+python -m pip install "lerobot==0.4.1"
 python -m pip install ./lerobot/dual-arm
+python -m pip check
 lerobot-teleoperate --help
 ```
 
 命令行帮助应列出 `stararm102_dual_leader` 和 `stararm102_dual_follower`。如果还使用其他代的星臂插件，请放在独立环境中；数据字段和校准行为不同。本包包含双臂 SDK 的普通与悬停控制辅助代码，以保留按键协议和原始角度映射。
+
+每次新开终端后，先激活环境，再执行下文的检查和遥操作命令：
+
+```bash
+conda activate stararm-dual
+```
 
 ## 连接四台机械臂
 
@@ -126,3 +149,30 @@ lerobot-teleoperate \
 插件使用 SDK 原始舵机参考位姿和角度值。由于不写入 LeRobot 校准文件，`is_calibrated` 恒为 true。不要与单臂命名关节插件的校准文件或数据集混用。夹爪角度和 SDK 一样乘以 1.5 并限制在 0–90°。可以在从臂配置中设置 LeRobot 摄像头，图像会成为观测字段。
 
 原 SDK 每对机械臂各运行一个工作进程；LeRobot 通过一个机器人和一个遥操作器依次处理两侧。目前继承的启动、按键和悬停代码仅完成离线导入及模拟检查；四臂动作与时序仍需现场验证。回放和策略会发送完整的 14 字段动作，执行运动前请确认左右映射与参考位姿。
+
+## 故障排查
+
+### Python 或 pip 没有使用独立环境
+
+运行 `which python` 和 `python -m pip --version`。如果路径没有指向 `envs/stararm-dual`，重新执行 `conda activate stararm-dual`。始终使用 `python -m pip`，确保安装器属于当前 Python；不要用 `sudo pip install` 或 `--user` 向此环境安装。
+
+如果 `conda activate` 提示 shell 未初始化，在 Bash 中执行 `conda init bash`，重新打开终端后再激活。如果找不到 `conda`，先安装 Miniconda/Anaconda，或从实际安装目录加载 `etc/profile.d/conda.sh`；例如安装在 `~/miniconda3` 时执行：
+
+```bash
+source ~/miniconda3/etc/profile.d/conda.sh
+conda activate stararm-dual
+```
+
+### 安装时提示 `get_gprof` 文件不存在
+
+例如：
+
+```text
+OSError: [Errno 2] No such file or directory: '/home/<user>/.local/lib/python3.10/site-packages/../../../bin/get_gprof'
+```
+
+这表明安装涉及 `~/.local` 的用户级包或脚本；仅凭这条报错无法确定文件缺失的具体原因。先按安装步骤创建并激活独立环境，确认 Python 和 pip 路径后，重新执行安装命令。无需删除整个 `~/.local` 目录。若在独立环境中仍失败，请保留完整安装命令、Python/pip 路径及完整报错，以便继续定位。
+
+### 为什么会安装大量依赖
+
+LeRobot 会自动拉取 PyTorch、TorchVision、数据集和训练相关库；根据平台和解析到的 PyTorch 包，还可能下载 `nvidia-*-cu12` 等 CUDA 运行库。较长的依赖列表本身不是错误，也不表示本机 CUDA 驱动已经配置完成。以安装是否成功、`python -m pip check` 和 CLI 帮助检查结果判断是否能继续；pip 的新版本提示不是本次 `get_gprof` 报错的原因。
