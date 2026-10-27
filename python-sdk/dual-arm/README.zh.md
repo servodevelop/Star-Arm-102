@@ -83,7 +83,7 @@ python check_button.py --port /dev/ttyUSB0
 
 ## 启动普通或悬停版
 
-确认四个底座固定、工作空间无人，包括通往启动姿态的运动路径。以下四种命令均可整行复制，串口替换为实际值；**只运行其中一条，不要同时运行两个脚本占用同一组串口**。每台主臂都必须选择 `button-enable` 或 `button-disable`，与 LD/HD 型号设置相互独立。
+确认四个底座固定、工作空间无人；两台主臂均为 HD 时，还需清空通往启动姿态的运动路径。以下四种命令均可整行复制，串口替换为实际值；**只运行其中一条，不要同时运行两个脚本占用同一组串口**。每台主臂都必须选择 `button-enable` 或 `button-disable`，与 LD/HD 型号设置相互独立。
 
 ### 普通版：有按钮
 
@@ -117,9 +117,9 @@ python stararm102_dual_hover.py --leader-1-port /dev/ttyUSB0 --follower-1-port /
 python stararm102_dual_hover.py --leader-1-port /dev/ttyUSB0 --follower-1-port /dev/ttyUSB1 --leader-2-port /dev/ttyUSB2 --follower-2-port /dev/ttyUSB3 --leader-1-type 102HD --leader-2-type 102HD --leader-1-button-disable --leader-2-button-disable
 ```
 
-LD 也能运行悬停脚本，可将对应型号改为 `102LD`，但实机未验证出可用的 LD 保持效果，详见下节。若一台有按钮、另一台无按钮，只需分别设置该主臂的 `--leader-1-button-enable`／`--leader-1-button-disable` 与 `--leader-2-button-enable`／`--leader-2-button-disable`；两对独立等待各自的启动操作。
+LD 也能运行悬停脚本，可将对应型号改为 `102LD`，但实机未验证出可用的 LD 保持效果，详见下节。若一台有按钮、另一台无按钮，只需分别设置该主臂的 `--leader-1-button-enable`／`--leader-1-button-disable` 与 `--leader-2-button-enable`／`--leader-2-button-disable`。只要任一主臂为 LD，两对机械臂均跳过启动初始化，通信检查完成后立即开始跟随。
 
-### 有无按钮的启动区别（两个脚本通用）
+### 两台主臂均为 HD 时，有无按钮的启动区别（两个脚本通用）
 
 1. 运行命令后，主从臂会在约 4 秒内移动到启动姿态。
 2. 等待终端提示，再按下表操作；两对机械臂各自解锁、各自开始跟随。
@@ -133,7 +133,7 @@ LD 也能运行悬停脚本，可将对应型号改为 `102LD`，但实机未验
 
 有按钮时，等待提示后再操作；启动前的按键不计入。新版按钮板要切换到解锁状态才开始跟随，第一下若锁定，再按一下即可。无按钮时，需要一次往返动作，只往一个方向移动不会解锁。如果没有反应，可将夹爪开合幅度稍微加大。
 
-普通版解锁后开始持续跟随；悬停版同时启用自动悬停。若跟随对象或运动方向不对，立即停止并核对串口。启动姿态不代表已完成零位标定。启动与按钮逻辑已通过模拟测试和实机采集数据回放，双臂实际运动仍需现场验证。
+若任一主臂为 LD，两对机械臂均不重置圈数、不移动到启动姿态，也不等待启动操作，而是从当前位置立即开始跟随；从臂可能马上移动到主臂的位置。普通版持续跟随；悬停版同时启用自动悬停。若跟随对象或运动方向不对，立即停止并核对串口。启动姿态不代表已完成零位标定。启动与按钮逻辑已通过模拟测试和实机采集数据回放，双臂实际运动仍需现场验证。
 
 ### 停止两个脚本
 
@@ -158,7 +158,7 @@ LD 也能运行悬停脚本，可将对应型号改为 `102LD`，但实机未验
 | 参数 | 什么时候需要 |
 | --- | --- |
 | `--leader-N-port`、`--follower-N-port` | 必填，指定第 N 对主臂和从臂的实际串口 |
-| `--leader-N-type 102HD` | 使用 HD 主臂时添加；默认是 LD |
+| `--leader-N-type 102HD` | 使用 HD 主臂时添加；默认是 LD。任一主臂为 LD 时，两对均跳过启动初始化 |
 | `--leader-N-button-enable` / `--leader-N-button-disable` | 每台主臂必选其一，按实际有无按钮设置 |
 | `--check-only` | 只检查通信，不启动运动 |
 

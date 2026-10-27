@@ -1,7 +1,8 @@
 """Add leader hold behavior to two Star Arm 102 control pairs.
 
-Reuse serial checks, initialization, filtering, follower commands, and worker
-management from stararm102_dual.py. This file tracks automatic leader hold.
+Reuse serial checks, conditional startup initialization, filtering, follower
+commands, and worker management from stararm102_dual.py. If either leader is
+LD, both pairs skip startup initialization; automatic hold still runs here.
 """
 
 from collections import deque

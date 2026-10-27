@@ -83,7 +83,7 @@ If an ID does not respond, check the port mapping, servo power, and bus wiring. 
 
 ## Run normal or hover control
 
-Secure the bases and clear the workspace, including the paths to the startup pose. Copy any of the four commands below as one line and replace the ports with actual values. **Run only one command; do not run both scripts against the same ports at once.** Each leader requires either `button-enable` or `button-disable`, independently of its LD/HD model setting.
+Secure the bases and clear the workspace, including the paths to the startup pose when both leaders are HD. Copy any of the four commands below as one line and replace the ports with actual values. **Run only one command; do not run both scripts against the same ports at once.** Each leader requires either `button-enable` or `button-disable`, independently of its LD/HD model setting.
 
 ### Normal mode: with buttons
 
@@ -117,9 +117,9 @@ Both leaders are HD models without button boards; automatic hold remains availab
 python stararm102_dual_hover.py --leader-1-port /dev/ttyUSB0 --follower-1-port /dev/ttyUSB1 --leader-2-port /dev/ttyUSB2 --follower-2-port /dev/ttyUSB3 --leader-1-type 102HD --leader-2-type 102HD --leader-1-button-disable --leader-2-button-disable
 ```
 
-LD leaders can also run the hover script by setting their model to `102LD`, but physical testing showed no usable LD hold; see the next section. For a mixed setup with only one button board, choose `--leader-1-button-enable` / `--leader-1-button-disable` and `--leader-2-button-enable` / `--leader-2-button-disable` separately. Each pair independently waits for its own startup gesture.
+LD leaders can also run the hover script by setting their model to `102LD`, but physical testing showed no usable LD hold; see the next section. For a mixed setup with only one button board, choose `--leader-1-button-enable` / `--leader-1-button-disable` and `--leader-2-button-enable` / `--leader-2-button-disable` separately. If either leader is LD, both pairs skip startup initialization and begin following immediately after the connection check.
 
-### Startup with and without buttons (both scripts)
+### Startup with and without buttons when both leaders are HD (both scripts)
 
 1. After you run the command, both leaders and followers move to the startup pose in about four seconds.
 2. Wait for the terminal prompt, then follow the table below. Each pair unlocks and starts following independently.
@@ -133,7 +133,7 @@ LD leaders can also run the hover script by setting their model to `102LD`, but 
 
 With buttons, wait for the prompt before pressing; earlier presses do not count. A new board must switch to unlocked before following starts. If the first press locks it, press again. Without buttons, a back-and-forth movement is required; moving in only one direction does not unlock the pair. If there is no response, try a slightly larger gripper movement.
 
-Normal mode starts continuous following after unlocking; hover mode also enables automatic hold. If the wrong follower moves or the direction is incorrect, stop immediately and check the ports. The startup pose does not mean mechanical zero has been calibrated. Startup and button logic have passed simulated tests and replay of hardware recordings; actual dual-pair motion still requires on-site validation.
+When either leader is LD, neither pair resets turn counts, moves to the startup pose, or waits for a startup gesture. Both pairs begin following at their current positions; the followers may move immediately to match the leaders. Normal mode starts continuous following; hover mode also enables automatic hold. If the wrong follower moves or the direction is incorrect, stop immediately and check the ports. The startup pose does not mean mechanical zero has been calibrated. Startup and button logic have passed simulated tests and replay of hardware recordings; actual dual-pair motion still requires on-site validation.
 
 ### Stop either script
 
@@ -158,7 +158,7 @@ Exit damping requires brushless magnetic-encoder servo firmware V316 or later. `
 | Option | When to use it |
 | --- | --- |
 | `--leader-N-port`, `--follower-N-port` | Required: set the actual leader and follower ports for pair N |
-| `--leader-N-type 102HD` | Add for an HD leader; the default is LD |
+| `--leader-N-type 102HD` | Add for an HD leader; the default is LD. If either leader is LD, both pairs skip startup initialization |
 | `--leader-N-button-enable` / `--leader-N-button-disable` | Required choice for each leader, according to whether it has a button board |
 | `--check-only` | Check communication without starting motion |
 

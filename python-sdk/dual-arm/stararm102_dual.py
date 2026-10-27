@@ -202,6 +202,11 @@ def button_enabled(args, number):
     return getattr(args, f"leader_{number}_button_enable")
 
 
+def skip_startup_initialization(args):
+    """Skip startup motion for all four arms if either leader is LD."""
+    return any(getattr(args, f"leader_{number}_type") == "102LD" for number in (1, 2))
+
+
 def validate_ports(parser, args):
     """Require four distinct devices, resolving serial-port symlinks."""
     ports = [pair_value(args, number, kind)
@@ -244,7 +249,7 @@ def check_connections(args):
 
 @contextmanager
 def open_pair(args, number):
-    """Move both arms to the reference pose and stop in damping mode on exit."""
+    """Initialize HD-only setups, then stop both arms in damping mode on exit."""
 
     leader_port = pair_value(args, number, "leader")
     follower_port = pair_value(args, number, "follower")
@@ -262,16 +267,20 @@ def open_pair(args, number):
                         leader.button_protocol = 'legacy' if leader.ping(button_id) else 'command'
                     elif leader.button_protocol == 'legacy' and not any(leader.ping(button_id) for _ in range(3)):
                         raise RuntimeError(f"{leader_port}: legacy button ID {button_id} did not respond")
-                for bus in (leader, follower):
-                    bus.stop_on_control_mode(0xff, 0x10, 0x00)
-                    bus.reset_multi_turn_angle(0xff)
-                print(f"Pair {number}: moving both arms to reference pose.", flush=True)
-                send_angles(leader, REFERENCE_ANGLES, STARTUP_INTERVAL_MS)
-                send_angles(follower, REFERENCE_ANGLES, STARTUP_INTERVAL_MS)
-                time.sleep(STARTUP_INTERVAL_MS / 1000 + 0.2)
-                wait_for_startup(leader, args, number)
-                for bus in (leader, follower):
-                    bus.stop_on_control_mode(0xff, 0x10, 0x00)
+                if skip_startup_initialization(args):
+                    print(f"Pair {number}: LD leader selected; skipping startup initialization "
+                          "for both pairs.", flush=True)
+                else:
+                    for bus in (leader, follower):
+                        bus.stop_on_control_mode(0xff, 0x10, 0x00)
+                        bus.reset_multi_turn_angle(0xff)
+                    print(f"Pair {number}: moving both arms to reference pose.", flush=True)
+                    send_angles(leader, REFERENCE_ANGLES, STARTUP_INTERVAL_MS)
+                    send_angles(follower, REFERENCE_ANGLES, STARTUP_INTERVAL_MS)
+                    time.sleep(STARTUP_INTERVAL_MS / 1000 + 0.2)
+                    wait_for_startup(leader, args, number)
+                    for bus in (leader, follower):
+                        bus.stop_on_control_mode(0xff, 0x10, 0x00)
                 yield leader, follower
             finally:
                 # No exit target: stop in damping mode and let the arms settle.
