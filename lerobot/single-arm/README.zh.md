@@ -97,7 +97,7 @@ export STARARM_BUTTON=false
 
 关节编号、舵机通信 ID 与 LeRobot 字段的关系见[完整映射表](../../docs/specifications.zh.md#joint-ids-and-names)。`STARARM_LEADER_ID`／`STARARM_FOLLOWER_ID` 是校准名称，不会改变舵机 ID。
 
-通过[通信检查](../../python-sdk/single-arm/README.zh.md#check-communication-without-commanding-motion)确认 ID 0–6 均有响应，再关闭检查程序和其他串口工具。权限不足时检查串口设备所属组及用户权限。不要让多个程序同时占用同一端口。
+通过[通信检查](../../python-sdk/102-ld-hd-to-102-fl/single-pair/README.zh.md#check-communication-without-commanding-motion)确认 ID 0–6 均有响应，再关闭检查程序和其他串口工具。权限不足时检查串口设备所属组及用户权限。不要让多个程序同时占用同一端口。
 
 <a id="calibration"></a>
 

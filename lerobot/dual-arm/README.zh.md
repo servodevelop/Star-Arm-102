@@ -60,7 +60,7 @@ conda activate stararm-dual
 将所有示例串口替换为实际串口。允许运动前，在 Star-Arm-102 仓库根目录运行双臂 Python SDK 的四串口只读检查；按两台真实主臂的情况修改按键标志：
 
 ```bash
-python python-sdk/dual-arm/stararm102_dual.py \
+python python-sdk/102-ld-hd-to-102-fl/dual-pair/stararm102_dual.py \
   --leader-1-port /dev/ttyUSB0 --follower-1-port /dev/ttyUSB1 \
   --leader-2-port /dev/ttyUSB2 --follower-2-port /dev/ttyUSB3 \
   --leader-1-button-disable --leader-2-button-disable --check-only

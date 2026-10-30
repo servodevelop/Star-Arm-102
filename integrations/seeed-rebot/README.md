@@ -15,7 +15,7 @@
 
 **Status: upstream LeRobot instructions available for B601-DM and B601-RS; no new local bench validation.**
 
-The B601 follower uses a different motor bus from Star Arm 102-FL. Do not run `python-sdk/single-arm/stararm102_ro.py` against a B601, and do not connect the follower's supply to the 102 leader.
+The B601 follower uses a different motor bus from Star Arm 102-FL. Do not run `python-sdk/102-ld-hd-to-102-fl/single-pair/stararm102_ro.py` against a B601, and do not connect the follower's supply to the 102 leader.
 
 For the upstream integration, follow the [LeRobot reBot guide](https://huggingface.co/docs/lerobot/main/rebot_b601), including its installation, wiring references, calibration and single/bimanual commands. Upstream uses `rebot_102_leader` and `rebot_b601_follower`; older Fashion Star fork examples may use other names. Keep the complete workflow within one documented version.
 

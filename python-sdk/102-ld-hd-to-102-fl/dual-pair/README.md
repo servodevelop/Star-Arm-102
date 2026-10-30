@@ -1,6 +1,6 @@
 # Star Arm 102 dual-pair Python control (2-to-2)
 
-[← Python SDK](../README.md) | <sub>**English** / [简体中文](README.zh.md)</sub>
+[← 102-LD/HD → 102-FL](../README.md) | <sub>**English** / [简体中文](README.zh.md)</sub>
 
 Contents
 
@@ -29,7 +29,7 @@ Prepare four arms, their matching UC-01 adapters, USB data cables, and servo pow
 From the Star-Arm-102 repository root, enter the dual-pair directory and install:
 
 ```bash
-cd python-sdk/dual-arm
+cd python-sdk/102-ld-hd-to-102-fl/dual-pair
 sudo apt update
 sudo apt install python3 python3-venv python3-pip
 python3 -m venv .venv
@@ -37,7 +37,7 @@ source .venv/bin/activate
 python -m pip install -r requirements.txt
 ```
 
-In each new terminal, enter `python-sdk/dual-arm/` and run `source .venv/bin/activate` again.
+In each new terminal, enter `python-sdk/102-ld-hd-to-102-fl/dual-pair/` and run `source .venv/bin/activate` again.
 
 <a id="find-the-four-serial-ports"></a>
 

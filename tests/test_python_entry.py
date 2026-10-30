@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def load_script(name):
-    spec = importlib.util.spec_from_file_location(name, ROOT / "python-sdk" / "single-arm" / f"{name}.py")
+    spec = importlib.util.spec_from_file_location(name, ROOT / "python-sdk" / "102-ld-hd-to-102-fl" / "single-pair" / f"{name}.py")
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
@@ -80,7 +80,7 @@ class TeleoperationCLITests(unittest.TestCase):
             self.assertEqual((size, count, len(commands)), (14, 7, 7))
 
     def test_invalid_options_fail_before_hardware_access(self):
-        script = ROOT / "python-sdk/single-arm/stararm102_ro.py"
+        script = ROOT / "python-sdk/102-ld-hd-to-102-fl/single-pair/stararm102_ro.py"
         for flags in (["--filtered_size", "0"], ["--leader-type", "wrong"],
                       ["--button", "yes"], ["--button_id", "6"],
                       ["--button_enable", "--button_disable"],
@@ -92,7 +92,7 @@ class TeleoperationCLITests(unittest.TestCase):
 
     def test_help_does_not_open_hardware(self):
         for script in ("stararm102_ro.py", "check_connection.py"):
-            result = subprocess.run([sys.executable, str(ROOT / "python-sdk" / "single-arm" / script), "--help"],
+            result = subprocess.run([sys.executable, str(ROOT / "python-sdk" / "102-ld-hd-to-102-fl" / "single-pair" / script), "--help"],
                                     capture_output=True, text=True)
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assertIn("--port" if script.startswith("check") else "--leader-port", result.stdout)

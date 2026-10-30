@@ -60,7 +60,7 @@ Secure all four bases, power the servos, and clear the complete paths to the SDK
 Replace every example port with the real one. From the Star-Arm-102 repository root, run the dual Python SDK's read-only four-port check before enabling motion; change the button flags to match the two real leaders:
 
 ```bash
-python python-sdk/dual-arm/stararm102_dual.py \
+python python-sdk/102-ld-hd-to-102-fl/dual-pair/stararm102_dual.py \
   --leader-1-port /dev/ttyUSB0 --follower-1-port /dev/ttyUSB1 \
   --leader-2-port /dev/ttyUSB2 --follower-2-port /dev/ttyUSB3 \
   --leader-1-button-disable --leader-2-button-disable --check-only

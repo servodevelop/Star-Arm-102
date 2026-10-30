@@ -1,6 +1,6 @@
 # Star Arm 102 双组主从臂 Python 控制（2 控 2）
 
-[← Python SDK](../README.zh.md) | <sub>[English](README.md) / **简体中文**</sub>
+[← 102-LD/HD → 102-FL](../README.zh.md) | <sub>[English](README.md) / **简体中文**</sub>
 
 目录
 
@@ -29,7 +29,7 @@
 在 Star-Arm-102 仓库根目录进入双组目录，然后安装：
 
 ```bash
-cd python-sdk/dual-arm
+cd python-sdk/102-ld-hd-to-102-fl/dual-pair
 sudo apt update
 sudo apt install python3 python3-venv python3-pip
 python3 -m venv .venv
@@ -37,7 +37,7 @@ source .venv/bin/activate
 python -m pip install -r requirements.txt
 ```
 
-每次新开终端，先进入 `python-sdk/dual-arm/`并运行 `source .venv/bin/activate`。
+每次新开终端，先进入 `python-sdk/102-ld-hd-to-102-fl/dual-pair/`并运行 `source .venv/bin/activate`。
 
 <a id="找出四个串口"></a>
 

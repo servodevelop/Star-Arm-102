@@ -55,7 +55,7 @@ Only extract after the checksum reports `OK`. Use an empty model directory to av
 
 ## Prepare the follower and cameras
 
-Complete [hardware setup](../../../docs/getting-started.md#connect) and the [communication check](../../../python-sdk/single-arm/README.md#check-communication-without-commanding-motion). Close other processes using the arm's serial port. Replace `/dev/ttyUSB1` with the FL port.
+Complete [hardware setup](../../../docs/getting-started.md#connect) and the [communication check](../../../python-sdk/102-ld-hd-to-102-fl/single-pair/README.md#check-communication-without-commanding-motion). Close other processes using the arm's serial port. Replace `/dev/ttyUSB1` with the FL port.
 
 ```bash
 lerobot-calibrate \

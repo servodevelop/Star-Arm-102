@@ -148,7 +148,7 @@ pip install pyserial fashionstar-uart-sdk
 
 # 2. 运行程序
 sudo chmod 777 /dev/ttyUSB*
-python3 ./python-sdk/single-arm/stararm102_ro.py
+python3 ./python-sdk/102-ld-hd-to-102-fl/single-pair/stararm102_ro.py
 ```
 
 #### 方式二：ROS2 HUMBLE
@@ -340,7 +340,7 @@ sudo chmod 777 /dev/ttyUSB*
 
 选择你需要的控制方式查看详细文档：
 
-- 📘 **[Python SDK 详细文档](python-sdk/single-arm/PYTHON_SDK_GUIDE.md)** - 推荐！最简单易用
+- 📘 **[Python SDK 详细文档](python-sdk/102-ld-hd-to-102-fl/single-pair/PYTHON_SDK_GUIDE.md)** - 推荐！最简单易用
 - 📗 **[ROS2 HUMBLE 详细文档](ros2-humble/README.md)** - 适用于机器人系统集成
 - 📙 **[Lerobot 详细文档](lerobot/README.md)** - 适用于AI训练和研究
 

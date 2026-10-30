@@ -1,1 +1,1 @@
-"""Hardware helpers adapted from python-sdk/dual-arm."""
+"""Hardware helpers adapted from python-sdk/102-ld-hd-to-102-fl/dual-pair."""

@@ -111,7 +111,7 @@ sudo usermod -aG dialout "$USER"
 
 注销后重新登录，再用 `id -nG` 检查。临时授权时，只给已识别的设备授权，例如 `sudo chmod a+rw /dev/ttyUSB0`，不要批量修改所有 USB 设备的权限。
 
-**完成标志：** 两个端口均可见且可访问，然后执行[通信检查](../python-sdk/single-arm/README.zh.md#check-communication-without-commanding-motion)。
+**完成标志：** 两个端口均可见且可访问，然后执行[通信检查](../python-sdk/102-ld-hd-to-102-fl/single-pair/README.zh.md#check-communication-without-commanding-motion)。
 
 <a id="reference-pose-and-stopping"></a>
 
