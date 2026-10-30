@@ -1,0 +1,5 @@
+lerobot==0.4.1
+lerobot-teleoperator-rebot-arm-102==1.0.1
+lerobot-robot-seeed-b601==1.0.5
+motorbridge==0.5.6
+motorbridge-smart-servo @ https://raw.githubusercontent.com/VincentHSS/stararm-b601-rs-feedback/1e72b241369cf524fa0024336ca674412250289d/dist/motorbridge_smart_servo-0.0.4%2Brsfix1-cp39-abi3-manylinux_2_34_x86_64.whl#sha256=9fcd29e0e3e315768faffc776b8311112fd6e2d91a62ee83419c5e002313ee7c

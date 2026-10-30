@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "stararm-rs-feedback"
+version = "0.7.0"
+description = "Star Arm 102 and B601 RS teleoperation workbench"
+requires-python = ">=3.12,<3.13"
+dependencies = ["python-can>=4.2,<5"]
+
+[project.scripts]
+stararm-rs-dashboard = "stararm_rs_feedback.dashboard:main"
+
+[tool.setuptools.packages.find]
+include = ["stararm_rs_feedback*"]
+
+[tool.setuptools.package-data]
+stararm_rs_feedback = ["web/*.html", "web/*.css", "web/*.js", "web/brand/*.png"]

@@ -1,0 +1,11 @@
+data/
+.runtime/
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+feedback.rs-dynamic.json
+*.log
+*.csv

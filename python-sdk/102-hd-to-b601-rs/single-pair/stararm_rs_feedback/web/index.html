@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <title>Star Arm 102 — 工作台</title>
+  <link rel="icon" href="brand/fashionstar.png">
+  <link rel="stylesheet" href="style.css">
+  <script type="importmap">{"imports":{"three":"/vendor/three.module.js"}}</script>
+</head>
+<body>
+<header class="app-header" data-enter>
+  <a class="brand" href="#workspace" aria-label="Star Arm 102 工作台">
+    <img src="brand/fashionstar.png" width="34" height="34" alt="Fashionstar">
+    <div><b>Star Arm <span>102</span></b><small>FASHIONSTAR ROBOTICS</small></div>
+  </a>
+  <nav class="page-tabs" role="tablist" aria-label="工作区导航">
+    <button id="tab-workspace" role="tab" data-view="workspace" aria-controls="workspace" aria-selected="true" tabindex="0">工作台</button>
+    <button id="tab-parameters" role="tab" data-view="parameters" aria-controls="parameters" aria-selected="false" tabindex="-1">反馈调校</button>
+    <button id="tab-logs" role="tab" data-view="logs" aria-controls="logs" aria-selected="false" tabindex="-1">运行日志</button>
+  </nav>
+  <div class="head-status"><button id="languageSwitch" class="language-switch quiet" type="button" aria-label="Switch to English" aria-pressed="false" data-no-i18n><span>中文 / EN</span></button><span id="led" class="led"></span><span id="connection" data-state-motion>连接中</span><span id="version" class="version"></span></div>
+</header>
+<main>
+  <section class="toolbar" data-enter>
+    <div class="page-heading"><div class="breadcrumb"><span>Star Arm 102</span><svg class="icon"><use href="icons.svg#chevron-right"></use></svg><span id="pageName">实时工作台</span></div><h1 id="pageTitle">力反馈工作台</h1></div>
+    <div class="actions">
+      <button id="replay" class="quiet" data-icon="rotate-ccw">日志回放</button>
+      <button id="monitor" class="secondary" data-icon="activity">仅监测</button>
+      <span class="action-divider"></span>
+      <button id="start" class="primary" data-icon="play">启动反馈</button>
+      <button id="stop" class="danger icon-button" data-icon="square" data-tooltip="正常停止会话" aria-label="停止运行" disabled></button>
+    </div>
+  </section>
+  <div id="notice" role="status" class="notice" data-enter>
+    <svg class="icon"><use href="icons.svg#info"></use></svg><span id="noticeText">网页已打开，尚未连接机械臂。启动前请退出终端中已有的遥操作程序。</span>
+    <button id="dismissNotice" class="icon-button" data-icon="x" aria-label="收起提示" data-tooltip="收起提示"></button>
+  </div>
+  <section class="metrics" aria-label="会话概览" data-enter>
+    <article><span class="metric-name">会话状态</span><b id="session" data-state-motion>未启动</b><small id="sessionDetail">本地设备</small></article>
+    <article><span class="metric-name">Leader 阻尼</span><b><i id="activeCount">—</i><em> / 6 轴</em></b><small id="outputDetail">等待反馈数据</small></article>
+    <article><span class="metric-name">峰值扭矩</span><b><i id="maxTorque">—</i><em> N·m</em></b><small id="maxTorqueJoint">RS 电机反馈值</small></article>
+    <article><span class="metric-name">数据时效</span><b id="freshness" data-state-motion>—</b><small id="revision">参数尚未应用</small></article>
+  </section>
+  <div id="contentSurface" class="content-surface">
+    <section class="view workspace" id="workspace" data-page="workspace" role="tabpanel" aria-labelledby="tab-workspace">
+      <article class="panel model-panel">
+        <div class="panel-head" data-enter><div class="panel-heading"><svg class="icon"><use href="icons.svg#box"></use></svg><h2>从臂姿态</h2><span class="panel-caption">B601 RS</span></div><span id="source" class="tag" data-state-motion>等待数据</span></div>
+        <div class="visual-controls" data-enter>
+          <div class="segmented" role="group" aria-label="受力显示数据"><button data-metric="torque_nm" aria-pressed="true">电机扭矩</button><button data-metric="residual_nm" aria-pressed="false">剩余力矩</button></div>
+          <div class="scale-control"><span>显示量程</span> <span class="select-wrap"><select id="heatScale" aria-label="受力颜色量程"><option value=".5">0.5 N·m</option><option value="1">1 N·m</option><option value="2" selected>2 N·m</option><option value="5">5 N·m</option><option value="10">10 N·m</option></select><svg class="icon"><use href="icons.svg#chevron-down"></use></svg></span></div>
+        </div>
+        <div id="viewport">
+          <div class="model-label" data-enter><span class="view-coordinate">PERSPECTIVE</span><span>6 自由度 + 夹爪</span></div>
+          <div id="modelLoading" class="loading"><span class="loading-ring"></span><span id="modelLoadingText">正在加载模型</span></div>
+          <div class="view-tools" data-enter><button id="resetView" class="icon-button" data-icon="focus" aria-label="恢复视角" data-tooltip="恢复视角"></button><span></span><label class="toggle-check" data-tooltip="显示关节坐标轴"><input id="showAxes" type="checkbox"><svg class="icon"><use href="icons.svg#crosshair"></use></svg><span>轴</span></label><label class="toggle-check" data-tooltip="显示或隐藏图上受力标注"><input id="showForces" type="checkbox" checked><svg class="icon"><use href="icons.svg#layers-2"></use></svg><span>标注</span></label></div>
+          <svg id="forceLines" aria-hidden="true"></svg><div id="forceLabels" role="group" aria-label="模型关节受力标注"></div>
+          <div class="model-footer" data-enter><span id="forceStatus">等待关节数据</span><span>拖动旋转  滚轮缩放</span></div>
+        </div>
+        <div class="heat-legend" data-enter><div><span>扭矩幅值</span><i></i><span id="scaleMax">2 N·m</span></div><small>颜色仅表示量程占比</small></div>
+        <p class="subnote" id="forceNote" data-enter>电机扭矩含重力与运动影响  非末端接触力</p>
+      </article>
+      <div class="telemetry-column">
+        <article class="panel joints-panel">
+          <div class="panel-head" data-enter><div class="panel-heading"><svg class="icon"><use href="icons.svg#activity"></use></svg><h2>关节状态</h2></div><span class="panel-caption">7 JOINTS</span></div>
+          <div class="table-scroll"><table class="live-table"><thead><tr data-enter><th>关节</th><th>角度 <small>°</small></th><th>电流 <small>A</small></th><th>Leader <small>模式 / mW</small></th></tr></thead><tbody id="jointRows"></tbody></table></div>
+          <details class="joint-inspector"><summary><span class="inspector-label"><svg class="icon"><use href="icons.svg#settings-2"></use></svg>诊断详情</span><b id="selectedTitle">J1 底座回转</b><svg class="icon chevron"><use href="icons.svg#chevron-down"></use></svg></summary><div class="joint-detail"><div class="detail-values"><span>温度 <b id="selectedTemp">— °C</b></span><span>剩余力矩 <b id="selectedResidual">—</b></span><span>当前死区 <b id="selectedDeadzone">—</b></span><span>Leader 角度 <b id="selectedLeader">—</b></span></div><p id="selectedReason">等待实时数据</p><p class="inspector-help">Iq 为滤波电流  功率为 Leader 请求值</p></div></details>
+        </article>
+        <section class="panel trends-panel">
+          <div class="panel-head" data-enter><div class="panel-heading"><svg class="icon"><use href="icons.svg#chart-no-axes-combined"></use></svg><h2>扭矩趋势</h2></div><span class="panel-caption">30 s</span></div>
+          <div id="legend" class="chart-legend" role="group" aria-label="选择曲线" data-enter></div>
+          <div class="chart-surface"><canvas id="trend" role="img" aria-label="最近三十秒七轴扭矩曲线 单位牛米"></canvas><div id="trendTooltip" class="chart-tooltip" hidden></div></div>
+          <div class="trend-footer" data-enter><span id="trendWindow">过去 30 秒</span><span>N·m</span></div>
+        </section>
+      </div>
+    </section>
+<section class="view panel params-panel" id="parameters" data-page="parameters" role="tabpanel" aria-labelledby="tab-parameters" hidden><div class="panel-head" data-enter><div><h2><svg class="icon"><use href="icons.svg#sliders-horizontal"></use></svg> 阻尼参数</h2><p>保存后自动应用  重新初始化约 0.25 秒  HOLD 保持 1500 mW</p></div><div class="param-actions"><span id="dirty" class="tag">已保存</span><button id="defaults" class="quiet">恢复默认值</button><button id="save" class="primary">保存并应用</button></div></div><div class="global-settings" data-enter><label>普通阻尼总上限 <span><input id="maxPower" type="number" min="400" max="1500" step="10"><em>mW</em></span><small>400–1500；各轴还受下方上限限制</small></label><div class="param-explainer"><b>只调整普通动态阻尼</b><p>死区越小越容易触发；满输出标尺越小，同等负载下输出越强。每轴上限填 0 可关闭该轴普通阻尼；J6 保持关闭。</p></div></div><div class="table-scroll"><table class="param-table"><thead><tr><th>关节</th><th>功率上限 <small>mW</small></th><th>基础死区 <small>Nm</small></th><th>运动余量最大值 <small>Nm</small></th><th>满输出力矩标尺 <small>Nm · 超过死区部分</small></th></tr></thead><tbody id="paramRows"></tbody></table></div><div class="advanced"><button id="advancedToggle" class="quiet">滤波与响应参数</button><div id="advancedFields" hidden></div></div><div class="param-note">臂部运动超范围清零已临时关闭，超过旧速度/加速度阈值时继续计算阻尼。J1 按自身回转残差判断；近限位按轴释放。J2/J3 同时处于近零模型无效区时，会暂停 J2–J5 普通阻尼，任一电机角达到 5° 后恢复。故障和通信保护仍生效。</div></section>
+
+    <section class="view panel log-panel" id="logs" data-page="logs" role="tabpanel" aria-labelledby="tab-logs" hidden>
+      <div class="panel-head" data-enter><div class="panel-heading"><svg class="icon"><use href="icons.svg#terminal"></use></svg><h2>运行日志</h2></div><button id="toggleLog" class="secondary" data-icon="chevron-down">展开日志</button></div>
+      <div class="log-empty" id="logEmpty" data-enter><svg class="icon"><use href="icons.svg#terminal"></use></svg><h3>会话记录</h3><p>展开查看当前会话的原始输出</p></div>
+      <pre id="log" hidden>尚无运行日志</pre><p id="logPath" class="subnote" data-enter>日志保存在本机 data/ 目录</p>
+    </section>
+  </div>
+  <footer data-enter><span>Fashionstar <span class="footer-divider"></span> Star Arm 102</span><span>关闭页面不会停止会话  停止运行可能回零或卸力</span></footer>
+</main>
+<div id="uiTooltip" class="ui-tooltip" role="tooltip" hidden></div>
+<script type="module" src="app.js"></script>
+</body>
+</html>
