@@ -1,10 +1,8 @@
 """负载阻尼 → 持续堵转时主臂保持 → 角差连续恢复后释放。"""
-import logging
 import math
 
 from .config import NAMES
 
-log = logging.getLogger(__name__)
 
 
 class Feedback:
@@ -17,6 +15,7 @@ class Feedback:
         self.sent = {}
         self.last_time = None
         self.closed = False
+        self.release_failures = set()
         self.observer = observer
         self.damping_loads = dict.fromkeys(NAMES, 0.)
 
@@ -137,4 +136,4 @@ class Feedback:
             try:
                 self.bus.unlock(self.ids[name])
             except Exception:
-                log.exception("Could not release Leader %s", name)
+                self.release_failures.add(name)

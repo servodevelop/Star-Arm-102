@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "stararm-rs-feedback"
-version = "0.7.0"
+version = "0.7.1"
 description = "Star Arm 102 and B601 RS teleoperation workbench"
 requires-python = ">=3.12,<3.13"
 dependencies = ["python-can>=4.2,<5"]

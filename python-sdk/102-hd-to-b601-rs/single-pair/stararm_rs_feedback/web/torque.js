@@ -1,8 +1,8 @@
 // Display-only mapping. The scale is not a motor limit or a control parameter.
 export const finite = value => typeof value === 'number' && Number.isFinite(value);
 export const HEAT_COLORS = ['#3978f6', '#d69b35', '#dc4d4d'];
-export function torqueVisual(joint, {fresh = false, source = 'live', metric = 'torque_nm', scale = 2} = {}) {
-  const available = fresh && (source === 'replay' || !finite(joint?.can_age_s) || joint.can_age_s < .8);
+export function torqueVisual(joint, {fresh = false, metric = 'torque_nm', scale = 2} = {}) {
+  const available = fresh && (!finite(joint?.can_age_s) || joint.can_age_s < .8);
   const valid = available && finite(joint?.[metric]) && (metric !== 'residual_nm' || joint.valid === true);
   if (!valid) return {value: null, ratio: 0, color: '#92a29e', level: available ? '缺少数据' : '非实时'};
   const value = joint[metric], ratio = Math.min(1, Math.abs(value) / (finite(scale) && scale > 0 ? scale : 2));

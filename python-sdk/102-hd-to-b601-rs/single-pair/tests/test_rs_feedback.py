@@ -476,10 +476,10 @@ class IntegrationTests(unittest.TestCase):
         s, leader, robot = self.make()
         with s:
             leader.bus.unreliable_ids = {4}
-            with self.assertLogs("stararm_rs_feedback.session", level="WARNING") as captured:
+            with self.assertNoLogs("stararm_rs_feedback.session", level="WARNING"):
                 robot.send_action(leader.get_action())
-            self.assertIn("wrist_yaw(id=4)", captured.output[0])
-            self.assertNotIn("shoulder_pan(id=0)", captured.output[0])
+            self.assertIn("wrist_yaw(id=4)", s.leader_issues)
+            self.assertNotIn("shoulder_pan(id=0)", s.leader_issues)
 
     def test_second_send_after_skipped_read_is_rejected(self):
         s, leader, robot = self.make()
@@ -560,29 +560,20 @@ class IntegrationTests(unittest.TestCase):
             self.assertEqual(before, (leader.get_action, robot.send_action, leader.bus.sync_monitor))
             self.assertFalse(robot._skip_safe_zero_on_disconnect)
 
-    def test_wrong_robot_is_rejected_and_existing_log_never_overwritten(self):
+    def test_wrong_robot_is_rejected(self):
         s, _, robot = self.make()
         robot.name = "seeed_b601_dm_follower"
-        with self.assertRaises(ValueError):
-            s.__enter__()
-        with tempfile.TemporaryDirectory() as folder:
-            p = Path(folder)/"existing.csv"
-            p.write_text("keep")
-            s, _, _ = self.make(log_path=p)
-            with self.assertRaises(FileExistsError):
-                s.__enter__()
-            self.assertEqual(p.read_text(), "keep")
-            self.assertTrue(s.monitor.closed)
+        with self.assertRaises(ValueError):s.__enter__()
 
-    def test_csv_records_simulated_output_explicitly(self):
+    def test_recording_requests_are_rejected_before_any_hardware_access(self):
         with tempfile.TemporaryDirectory() as folder:
-            p = Path(folder)/"new.csv"
-            s, leader, robot = self.make(log_path=p)
-            with s:
-                robot.send_action(leader.get_action())
-            self.assertEqual(len(p.read_text().splitlines()), 8)
-            self.assertIn("False", p.read_text())
-            self.assertFalse(leader.bus.calls)
+            path=Path(folder)/'disabled.csv'
+            for key in ('log_path','collect_path'):
+                leader,robot=pair()
+                with self.assertRaisesRegex(ValueError,'recording is disabled'):
+                    Session(leader,robot,Config(),**{key:path})
+                self.assertFalse(path.exists())
+                self.assertFalse(leader.bus.calls or robot.sent)
 
     def test_runtime_wrapper_supports_keyword_loop_args_and_cleans_up(self):
         s, leader, robot = self.make()

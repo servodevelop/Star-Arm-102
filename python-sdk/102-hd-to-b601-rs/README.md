@@ -12,7 +12,7 @@
 - ▸ [Bind the feedback model](#binding)
 - ▸ [Use the workbench](#workbench)
 - ▸ [Tune damping](#tuning)
-- ▸ [Logs and updates](#data)
+- ▸ [Local settings and updates](#data)
 - ▸ [Troubleshooting](#troubleshooting)
 - ▸ [Validation](#validation)
 
@@ -22,7 +22,7 @@ Single pair implementation: [single-pair/](single-pair/). Run all operating comm
 
 ## Compatibility
 
-One Star Arm 102-HD leader and one B601 RS follower. The workbench combines the 3D follower, joint telemetry and a seven-color torque history on one page. It also provides damping settings and CSV replay. The interface supports Chinese and English; use **中文 / EN** in the header. The selected language is remembered in this browser.
+One Star Arm 102-HD leader and one B601 RS follower. The workbench combines the 3D follower, joint telemetry and a seven-color torque history on one page. It also provides damping settings. The interface supports Chinese and English; use **中文 / EN** in the header. The selected language is remembered in this browser.
 
 | Item | Configuration |
 | --- | --- |
@@ -167,11 +167,22 @@ bash run_dashboard.sh
 
 Open **http://127.0.0.1:8765** in a browser on the same host. A different HTTP port can be passed as the first argument. Opening the page only starts the local service; it does not connect hardware.
 
+![Workbench with simulated telemetry](images/workbench-en.png)
+
+<details>
+<summary>Chinese interface</summary>
+
+![Workbench with simulated telemetry](images/workbench-zh.png)
+
+</details>
+
+The screenshots use simulated telemetry and do not show a hardware validation run.
+
 1. Choose **Monitor only** for the first session. The follower still follows the leader, but this layer sends no Leader damping. Check live CAN data, angles, current and torque.
 2. Stop the session and wait for cleanup. Choose **Start feedback** to enable ordinary damping and the independent stall holding logic. Start unloaded and move slowly before comparing a supported payload.
 3. Select a joint from the table, a model annotation or the curve legend to focus it. Drag to orbit and scroll to zoom. The seven trend curves use distinct colors. Disable **Labels** to hide both the numbers and their connector lines; **Axes** independently controls joint axes.
 4. Use **Motor torque** for measured motor torque or **Residual torque** for the model residual. Change **Display range** to adjust the visualization only. This does not change any motor limit or damping gain.
-5. Use **中文 / EN** to switch language without restarting the session or losing edits. Numeric values and saved settings are unchanged. Raw device logs remain in their original language.
+5. Use **中文 / EN** to switch language without restarting the session or losing edits. Numeric values and saved settings are unchanged.
 
 Torque is displayed in N·m. It includes gravity and motion; the residual also contains friction and model error. Neither value is a calibrated end effector contact force or a mass estimate. Invalid residuals and stale values show a dash rather than a valid force reading. Old poses may remain visible after telemetry expires.
 
@@ -182,6 +193,15 @@ Torque is displayed in N·m. It includes gravity and motion; the residual also c
 ## Tune damping
 
 Open **Feedback tuning**. Save and apply to persist the settings; a running control loop reports the applied revision after confirmation. Restoring defaults only fills the form until it is saved.
+
+![Damping settings](images/tuning-en.png)
+
+<details>
+<summary>Chinese interface</summary>
+
+![Damping settings](images/tuning-zh.png)
+
+</details>
 
 | Setting | Effect |
 | --- | --- |
@@ -206,21 +226,18 @@ This terminal entry uses its command-line cap and fixed policy defaults; it does
 
 <a id="data"></a>
 
-## Logs and updates
+## Local settings and updates
 
-The source directory contains no recorded sessions or device-specific calibration. Runtime files remain local:
+This version does not import, export, replay or generate session logs. The live chart keeps only its most recent 30 seconds in browser memory. Telemetry passes through a local memory channel; no CSV, process log, telemetry snapshot or settings revision history is written.
 
 | Path under `single-pair/` | Content |
 | --- | --- |
 | `feedback.rs-dynamic.json` | Binding for this follower |
-| `data/dynamic_*.csv` | Sampled joint telemetry for replay |
-| `data/web/*.log` | Original process output |
-| `data/web/settings.json` | Current workbench settings |
-| `data/web/settings_v*.json` | Saved settings revisions |
+| `.runtime/settings.json` | Current workbench settings |
 
-Open **Session logs** for the current process output. Stop live operation before using **Replay logs**. Replay uses the latest supported local CSV; it never sends motor commands. Historical samples are explicitly labeled and may lack current values in older files.
+The dashboard also uses a local session lock to prevent duplicate controllers. An existing workbench settings file is migrated from the previous location when necessary; old recordings are not read.
 
-Before updating, stop both the arm session and dashboard server, and back up the binding and local data. Then run from the repository:
+Before updating, stop both the arm session and dashboard server, then back up the binding and current settings. Run from the repository:
 
 ```bash
 git pull --ff-only
@@ -229,7 +246,7 @@ bash setup.sh
 source .venv/bin/activate
 ```
 
-Do not commit calibration files, recordings, environment directories or runtime caches. Delete unneeded logs only after the session has ended; preserve the relevant run when investigating a fault.
+Do not commit device calibration, local settings, environment directories or runtime caches. Current connection and settings errors appear directly in the workbench; there is no log file to download.
 
 <a id="troubleshooting"></a>
 
@@ -244,8 +261,8 @@ Do not commit calibration files, recordings, environment directories or runtime 
 | Model missing or resource check fails | Rerun `python -m stararm_rs_feedback.resources`; check network and the same cache environment variables |
 | Page opens but no arm data | Opening the page is passive; complete calibration/binding, stop terminal controllers, then start Monitor only |
 | No Leader damping | Monitor mode sends none; also check J6, axis caps, deadzones, near zero model validity, limits and fresh data |
-| Old or blank torque values | Check the data-age indicator and CAN communication; replay is historical rather than live feedback |
-| Settings remain pending | Check the applied/saved revisions and session log; invalid settings are rejected rather than silently applied |
+| Old or blank torque values | Check the data-age indicator and CAN communication |
+| Settings remain pending | Check the applied/saved revisions and the current error shown in the workbench; invalid settings are rejected rather than silently applied |
 | Existing session or port in use | Return to the original session and stop it normally; do not force-kill a running arm process |
 
 Only one controller may own the pair. The dashboard binds to localhost and checks its local request origin; it is not a remote network control service.
@@ -254,7 +271,7 @@ Only one controller may own the pair. The dashboard binds to localhost and check
 
 ## Validation
 
-Offline checks cover rigid-body dynamics, torque display behavior, interrupted animations, annotation hiding, runtime resource integrity and language switching. Browser checks use simulated telemetry to inspect Chinese/English layouts and interaction states. These checks do not connect hardware.
+Offline checks cover rigid-body dynamics, torque display behavior, interrupted animations, annotation hiding, runtime resource integrity, language switching and disabled recording. Browser checks use simulated telemetry to inspect Chinese/English layouts and interaction states. These checks do not connect hardware.
 
 The migrated package and pinned installation procedure still require an end-to-end check on the target Linux host and actual arm pair. Dynamic residual damping remains experimental: unloaded transparency, payload-dependent feel and model accuracy are not certified by the software tests. Verify basic following and monitor mode on the intended hardware before enabling feedback.
 

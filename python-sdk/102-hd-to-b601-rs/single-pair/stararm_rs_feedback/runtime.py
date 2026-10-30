@@ -7,6 +7,8 @@ from .session import Session
 
 def install_runtime_wrapper(module, cfg, *, enabled=False, log_path=None, collect_path=None, session_factory=Session):
     """只包装本次进程，退出即可恢复。两个设备在官方循环开始前已经连接。"""
+    if log_path is not None or collect_path is not None:
+        raise ValueError("Session recording is disabled in this version")
     original = module.teleop_loop
     if getattr(original, "_stararm_rs_feedback", False):
         raise ValueError("RS feedback wrapper already active")
@@ -23,9 +25,7 @@ def install_runtime_wrapper(module, cfg, *, enabled=False, log_path=None, collec
     @functools.wraps(original)
     def wrapped(*args, **kwargs):
         bound = signature.bind(*args, **kwargs)
-        options = dict(enabled=enabled, log_path=log_path)
-        if collect_path:
-            options['collect_path'] = collect_path
+        options = dict(enabled=enabled)
         with session_factory(bound.arguments["teleop"], bound.arguments["robot"], cfg, **options):
             return original(*args, **kwargs)
 

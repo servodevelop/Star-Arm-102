@@ -3,7 +3,6 @@ import argparse
 import functools
 import importlib
 import json
-import logging
 import math
 from pathlib import Path
 import re
@@ -16,7 +15,6 @@ from .session import Session
 from .runtime import check_can
 from .unloaded import robot_signature, vector
 
-log = logging.getLogger(__name__)
 # 下标从 0 开始：0=J1，1=J2，2=J3，3=J4，4=J5，5=J6，6=夹爪/J7。
 # 当前普通动态阻尼覆盖 J1-J5 与夹爪；J6 仍可参与独立的堵转 HOLD。
 ARM_JOINTS=(0,1,2,3,4)
@@ -356,32 +354,19 @@ class DynamicObserver:
 
 class DynamicSession(Session):
     monitor_read_retries=POLICY['leader_monitor_retries']
-    csv_header=Session.csv_header+['motor_velocity_rad_s','estimated_velocity_rad_s',
-                                  'estimated_acceleration_rad_s2','model_torque_nm',
-                                  'raw_residual_nm','deadzone_nm','received_at_s','dynamic_valid',
-                                  'dynamic_signal','leader_read_retry_count','leader_read_issues','web_settings_revision',
-                                  'current_iq_a','current_age_s']
-
     def __init__(self,*args,spec,web_bridge=None,**kwargs):
         self.spec=spec
         self.web_bridge=web_bridge
         super().__init__(*args,**kwargs)
 
     def __enter__(self):
-        if self.collect_path or self.cfg.unloaded_profile or self.cfg!=dynamic_config(self.cfg.power_max_mw):
+        if self.cfg.unloaded_profile or self.cfg!=dynamic_config(self.cfg.power_max_mw):
             raise ValueError('Dynamic mode requires fixed dynamic config without capture/profile')
         self.spec.check_robot(self.robot)
         result=super().__enter__()
         try:
             self.feedback.observer=DynamicObserver(self.robot.config.joint_limits,self.cfg.power_max_mw)
             if self.web_bridge:self.web_bridge.attach(self)
-            log.warning('EXPERIMENTAL DYNAMIC FEEDBACK: continuously updated J1-J5 + gripper damping <=%dmW; '
-                        'no stationary window or 3s load latch. Fixed URDF gravity/inertia model, '
-                        'gripper uses motor torque; friction/model error remains. Independent stall HOLD stays at 1500mW. '
-                        'Leader output %s.',self.cfg.power_max_mw,'ENABLED' if self.enabled else 'DISABLED')
-            if not POLICY['arm_motion_range_reset']:
-                log.warning('Arm motion-range reset DISABLED: speed/acceleration thresholds no longer '
-                            'clear ordinary damping. CAN freshness/faults, discontinuities and joint limits remain active.')
             return result
         except BaseException:
             self._skip_fault_zero();self.close();raise
@@ -391,46 +376,18 @@ class DynamicSession(Session):
             # 先按原流程释放 Leader，电流读取线程的退出不能延迟反馈释放。
             super().close()
         finally:
-            if self.web_bridge:self.web_bridge.close()
+            if self.web_bridge:
+                self.web_bridge.close()
+                failed=getattr(self.feedback,'release_failures',set())
+                issue=('主臂卸力失败：'+', '.join(sorted(failed))) if failed else self.cleanup_issue
+                if issue:self.web_bridge.report_error(issue)
 
-    def _log(self,states,errors,now):
+    def _publish(self,states,errors,now):
         if self.web_bridge:self.web_bridge.tick(self,states,errors,now)
-        o=self.feedback.observer
-        if self.csv:
-            currents=self.web_bridge.probe.snapshot(now) if self.web_bridge and self.web_bridge.probe else {}
-            for i,n in enumerate(NAMES):
-                mode,power,_=self.feedback.sent[n]
-                valid=o.axis_valid[i]
-                status=o.axis_status[i]
-                self.csv.writerow([now,n,states[n].torq,math.degrees(states[n].pos),errors[n],
-                                   self.feedback.loads[n],hex(mode),power,self.enabled,
-                                   self.feedback.damping_loads[n],o.residual_nm[i] if valid else '',
-                                   status,states[n].vel,o.velocity[i],
-                                   o.acceleration[i],o.model_torque_nm[i] if i<6 else '',
-                                   o.raw_residual_nm[i],o.deadzone_nm[i],
-                                   states[n].received_at,valid,
-                                   'gripper_motor_torque_nm' if i==6 else 'arm_model_residual_nm',
-                                   self.monitor_retries_used,', '.join(self.monitor_issues),
-                                   self.web_bridge.revision if self.web_bridge else '',
-                                   currents.get(n,{}).get('current_a'),
-                                   currents.get(n,{}).get('current_age_s')])
-        if now>=self.next_log:
-            mode='HOLD' if self.feedback.holding else (
-                'FREE' if all(x[0]==0x10 for x in self.feedback.sent.values()) else 'DAMPING')
-            log.info('RS DYNAMIC %s%s | %s | %s | %s',mode,
-                     '' if self.enabled else ' (simulated; no Leader output)',
-                     ', '.join(f'J{i+1}={self.feedback.sent[n][1]}mW' for i,n in enumerate(NAMES)),o.status,o.gripper.status)
-            if o.valid:
-                log.info('RS DYNAMIC current residual/deadzone: %s',', '.join(
-                    f'J{i+1}={o.residual_nm[i]:+.2f}/{o.deadzone_nm[i]:.2f}Nm' for i in ARM_JOINTS))
-            if o.gripper.valid:
-                log.info('RS GRIPPER J7 motor torque/deadzone: %+.2f/%.2fNm',o.residual_nm[6],o.deadzone_nm[6])
-            self.next_log=now+1.
-            if self.csv_file:self.csv_file.flush()
 
-    def _log_leader_gap(self,states,now):
-        # 缺帧与继续计算的实际阻尼同时记录，角差留空，避免误当成有效跟随帧。
-        self._log(states,dict.fromkeys(NAMES,''),now)
+    def _publish_leader_gap(self,states,now):
+        # Publish fresh RS damping during a Leader gap without inventing an angle error.
+        self._publish(states,dict.fromkeys(NAMES,''),now)
 
     def _handle_leader_gap(self,states,now):
         # snapshot 已检查 RS 通信/故障/温度，observer 仍检查时效/限位/运动范围。
@@ -445,26 +402,29 @@ def main(argv=None):
     # 直接运行本 Python 入口且未传参数时使用 1200mW；脚本始终会显式传入值。
     parser.add_argument('--dynamic-max-power-mw',type=int,default=1200)
     parser.add_argument('--feedback-enable',action='store_true')
-    parser.add_argument('--feedback-log',help='Create a NEW CSV, never overwrite')
     parser.add_argument('--web-settings',help=argparse.SUPPRESS)
-    parser.add_argument('--web-state',help=argparse.SUPPRESS)
+    parser.add_argument('--web-fd',type=int,help=argparse.SUPPRESS)
     parser.add_argument('--web-run-id',help=argparse.SUPPRESS)
     args,remaining=parser.parse_known_args(argv)
-    if any((args.web_settings,args.web_state,args.web_run_id)) and not all((args.web_settings,args.web_state,args.web_run_id)):
-        parser.error('Web bridge requires settings, state and run id together')
-    if any(x.startswith(('--feedback','--dynamic','--trial','--collect','--confirm-unloaded')) for x in remaining):
-        parser.error('Use dynamic-spec, dynamic-max-power-mw, feedback-enable and feedback-log only')
+    web_options=(args.web_settings is not None,args.web_fd is not None,args.web_run_id is not None)
+    if any(web_options) and not all(web_options):
+        parser.error('Web bridge requires settings, telemetry descriptor and run id together')
+    if any(x.startswith(('--feedback','--dynamic','--trial','--collect','--confirm-unloaded','--web')) for x in remaining):
+        parser.error('Use dynamic-spec, dynamic-max-power-mw, feedback-enable only')
     try:
         cfg=dynamic_config(args.dynamic_max_power_mw)
         spec=DynamicSpec(args.dynamic_spec)
     except (ValueError,OSError) as e:
         parser.error(str(e))
-    if args.feedback_log and Path(args.feedback_log).exists():parser.error('Log exists; choose a new file')
-    web_bridge=None
+    web_bridge=None;sender=None
     if args.web_settings:
         from .web_runtime import WebBridge
-        web_bridge=WebBridge(args.web_settings,args.web_state,POLICY,args.web_run_id)
-    module=importlib.import_module('lerobot.scripts.lerobot_teleoperate')
+        from .telemetry import TelemetrySender
+        try:sender=TelemetrySender(args.web_fd)
+        except (OSError,ValueError) as error:parser.error(str(error))
+        web_bridge=WebBridge(args.web_settings,sender.send,POLICY,args.web_run_id)
+    from .quiet import quiet_output
+    with quiet_output():module=importlib.import_module('lerobot.scripts.lerobot_teleoperate')
     original,original_factory,saved_argv=module.teleop_loop,module.make_robot_from_config,sys.argv
     try:
         def checked_factory(config):
@@ -473,7 +433,7 @@ def main(argv=None):
             check_can(config)
             return robot
         module.make_robot_from_config=checked_factory
-        install_runtime_wrapper(module,cfg,enabled=args.feedback_enable,log_path=args.feedback_log,
+        install_runtime_wrapper(module,cfg,enabled=args.feedback_enable,
                                 session_factory=functools.partial(DynamicSession,spec=spec,web_bridge=web_bridge))
         sys.argv=[saved_argv[0],*remaining]
         # 启动前占用本用户的单会话锁；网页与新版终端入口不能同时接管机械臂。
@@ -481,8 +441,13 @@ def main(argv=None):
         with open(Path(tempfile.gettempdir())/f'stararm-rs-feedback-{os.getuid()}.lock','a') as device_lock:
             try:fcntl.flock(device_lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
             except BlockingIOError:raise RuntimeError('Another RS feedback session is already running')
-            module.main()
+            with quiet_output():module.main()
+    except BaseException as error:
+        if sender and not isinstance(error,KeyboardInterrupt):
+            sender.send(dict(run_id=args.web_run_id,error=str(error)))
+        raise
     finally:
+        if sender:sender.close()
         module.teleop_loop=original
         module.make_robot_from_config=original_factory
         sys.argv=saved_argv

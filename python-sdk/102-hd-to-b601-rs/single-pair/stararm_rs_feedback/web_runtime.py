@@ -1,20 +1,18 @@
-"""遥操作循环与网页的文件桥；网页故障不改变 CAN/Leader 保护条件。"""
-import logging
+"""遥操作循环与网页的内存桥；网页故障不改变 CAN/Leader 保护条件。"""
 import math
 from pathlib import Path
 import time
 
 from .config import NAMES
 from .current_probe import CurrentProbe
-from .web_settings import read, atomic_json, SCALARS, ARRAYS
+from .web_settings import read, SCALARS, ARRAYS
 
-log=logging.getLogger(__name__)
 
 class WebBridge:
-    def __init__(self,settings_path,state_path,policy,run_id):
-        self.settings_path=Path(settings_path);self.state_path=Path(state_path)
+    def __init__(self,settings_path,publish,policy,run_id):
+        self.settings_path=Path(settings_path);self.publish=publish
         self.policy=policy;self.run_id=run_id;self.revision=-1
-        self.next_publish=0.;self.probe=None;self.settings_error=None;self.io_warned=False
+        self.next_publish=0.;self.probe=None;self.settings_error=None;self.current_error=None
 
     def apply(self,session):
         try:
@@ -32,14 +30,13 @@ class WebBridge:
             session.feedback.damping_loads=dict.fromkeys(NAMES,0.)
             session.feedback.apply(session.clock())
             self.revision=settings['revision'];self.settings_error=None
-            log.info('WEB tuning applied revision %s; ordinary estimator reset',self.revision)
         except (OSError,ValueError,TypeError) as e:
             self.settings_error=str(e)
 
     def attach(self,session):
         self.apply(session)
         try:self.probe=CurrentProbe(session.robot).start()
-        except Exception as e:log.warning('Current telemetry unavailable: %s',e)
+        except Exception as error:self.current_error=str(error)
 
     def tick(self,session,states,errors,now):
         if now<self.next_publish:return
@@ -64,14 +61,18 @@ class WebBridge:
         value=dict(run_id=self.run_id,source='live',wall_time=time.time(),monotonic_s=now,
             output_enabled=session.enabled,holding=session.feedback.holding,
             applied_revision=self.revision,settings_error=self.settings_error,
-            current_error=self.probe.error if self.probe else '电流读取不可用',
+            current_error=self.probe.error if self.probe else self.current_error or '电流读取不可用',
             status=o.status,gripper_status=o.gripper.status,
             leader_targets_paused=session.leader_gap_since is not None,
             leader_read_retry_count=session.monitor_retries_used,
             leader_read_issues=session.monitor_issues,joints=joints)
-        try:atomic_json(self.state_path,value)
-        except OSError as e:
-            if not self.io_warned:log.warning('Web telemetry file unavailable: %s',e);self.io_warned=True
+        # Dropped UI frames must never block or change the control loop.
+        try:self.publish(value)
+        except OSError:pass
+
+    def report_error(self,message):
+        try:self.publish(dict(run_id=self.run_id,error=message))
+        except OSError:pass
 
     def close(self):
         if self.probe:self.probe.close();self.probe=None

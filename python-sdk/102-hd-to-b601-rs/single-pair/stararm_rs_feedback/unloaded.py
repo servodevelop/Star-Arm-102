@@ -1,12 +1,9 @@
-"""固定空载模型、只记录原始状态的采样器，以及准静态残余力矩阻尼。"""
+"""固定空载模型与准静态残余力矩阻尼。"""
 import collections
-import csv
 import hashlib
 import json
 import math
 from pathlib import Path
-import time
-import uuid
 
 from .config import NAMES
 from .gravity import GravityModel
@@ -53,50 +50,6 @@ def vector(v, n):
     return v
 
 
-class Recorder:
-    """仅在明确声明整个会话为空载时记录，不发送任何设备命令。"""
-    def __init__(self, path, robot):
-        self.path = Path(path)
-        self.meta_path = self.path.with_suffix('.meta.json')
-        self.path.parent.mkdir(parents=True, exist_ok=True)
-        if self.path.exists() or self.meta_path.exists():
-            raise FileExistsError(f'Capture already exists: {self.path}')
-        self.meta = dict(algorithm=ALGORITHM, run_id=str(uuid.uuid4()), confirmed_unloaded=True,
-                         upright_stock_gripper=True, robot_signature=robot_signature(robot),
-                         model_sha256=GravityModel().sha256, created_unix=time.time(),
-                         complete=False, sample_count=0)
-        self.meta['joint_limits_deg'] = dict(robot.config.joint_limits)
-        # 先独占创建元信息，异常或强杀留下的 incomplete 数据不会被拟合工具接受。
-        with self.meta_path.open('x', encoding='utf-8') as f:
-            json.dump(self.meta, f, indent=2)
-        self.file = self.path.open('x', newline='', encoding='utf-8')
-        self.writer = csv.writer(self.file)
-        self.writer.writerow(['t']+[f'{k}{i}' for k in ('q', 'v', 'tau') for i in range(1, 8)])
-        self.last_time = None
-        self.previous_frames = None
-        self.closed = False
-
-    def update(self, states, now):
-        if self.last_time is not None and now-self.last_time < .095:
-            return
-        times = [states[n].received_at for n in NAMES]
-        if max(times)-min(times) > .06 or now-min(times) > .06:
-            return
-        if self.previous_frames and any(a <= b for a, b in zip(times, self.previous_frames)):
-            return
-        self.writer.writerow([now]+[getattr(states[n], k) for k in ('pos', 'vel', 'torq') for n in NAMES])
-        self.last_time, self.previous_frames = now, times
-        self.meta['sample_count'] += 1
-        if self.meta['sample_count'] % 10 == 0:
-            self.file.flush()
-
-    def close(self, complete=False):
-        if self.closed:
-            return
-        self.closed = True
-        self.file.close()
-        self.meta.update(complete=bool(complete), csv_sha256=digest(self.path.read_bytes()))
-        self.meta_path.write_text(json.dumps(self.meta, indent=2)+'\n', encoding='utf-8')
 
 
 class Profile:

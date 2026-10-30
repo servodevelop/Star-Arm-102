@@ -11,9 +11,9 @@ const $=id=>document.getElementById(id);
 const names=['底座回转','肩部俯仰','肘部俯仰','腕部俯仰','腕部偏转','腕部旋转','夹爪'];
 const colors=['#2563eb','#d97706','#0d9488','#7c3aed','#c2417e','#4d7c0f','#64748b'];
 let token='',settings=null,boot=null,dirty=false,selected=0,latest=null,latestStatus=null;
-let replay=null,replayIndex=0,replayTimer=null,history=[],lastHistory=null,busy=false,logOpen=false,networkFailed=false;
+let history=[],lastHistory=null,busy=false,networkFailed=false;
 const fmt=(v,n=2)=>typeof v==='number'&&Number.isFinite(v)?v.toFixed(n):'—';
-let forceMetric='torque_nm',forceFresh=false,forceSource='live',freshDeadline=0;
+let forceMetric='torque_nm',forceFresh=false,freshDeadline=0;
 const forceElements=[],forceMarkers=[],forceAnchors=[];
 let activeView='workspace',navIndicator,metricIndicator;
 function setButton(id,label,name){
@@ -81,7 +81,7 @@ function initScaleMenu(){
 }
 function navigate(view){
   if(view===activeView)return;activeView=view;
-  const titles={workspace:['实时工作台','力反馈工作台'],parameters:['反馈调校','阻尼参数'],logs:['运行日志','会话记录']};
+  const titles={workspace:['实时工作台','力反馈工作台'],parameters:['反馈调校','阻尼参数']};
   document.querySelectorAll('[data-view]').forEach(button=>{const chosen=button.dataset.view===view;button.setAttribute('aria-selected',String(chosen));button.tabIndex=chosen?0:-1;});navIndicator();
   text($('pageName'),titles[view][0]);text($('pageTitle'),titles[view][1]);
   Motion.morph(()=>{document.querySelectorAll('[data-page]').forEach(page=>{page.hidden=page.dataset.page!==activeView;});Motion.enter($(activeView));});
@@ -98,7 +98,7 @@ async function api(path,body){
   const response=await fetch(path,{method:body===undefined?'GET':'POST',headers:body===undefined?{}:{'Content-Type':'application/json','X-RS-Token':token},body:body===undefined?undefined:JSON.stringify(body),signal:AbortSignal.timeout(4000)});
   const data=await response.json();if(!response.ok)throw new Error(data.error||`HTTP ${response.status}`);return data;
 }
-function markDirty(){dirty=true;text($('dirty'),'未保存');$('dirty').className='tag replay';}
+function markDirty(){dirty=true;text($('dirty'),'未保存');$('dirty').className='tag pending';}
 function buildTables(){
   $('jointRows').innerHTML=names.map((n,i)=>`<tr data-joint="${i}" class="${i===selected?'selected':''}"><td><div class="joint-name"><span style="background:${colors[i]}"></span><div>J${i+1}<small>${n}</small></div></div></td><td id="pos${i}">—</td><td id="cur${i}" title="RS iqf 滤波电流，约 2.86 Hz">—</td><td><div class="power"><span id="mode${i}" class="mode UNKNOWN">—</span><span id="power${i}" class="pval">—</span></div><div class="powerbar"><i id="bar${i}" style="width:0%"></i></div></td></tr>`).join('');
   $('legend').innerHTML=colors.map((c,i)=>`<button data-curve="${i}" style="--curve:${c}" aria-label="突出 J${i+1} ${names[i]} 曲线" aria-pressed="${i===selected}"><i></i>J${i+1}</button>`).join('');
@@ -144,12 +144,12 @@ async function start(mode){
   if(busy)return;
   if(dirty){notice('有未保存参数，请先保存或恢复已保存值。','error');return;}
   busy=true;setButtons();
-  try{history=[];lastHistory=null;latest=null;notice('正在连接机械臂，请查看运行日志。');renderStatus(await api('/api/start',{mode}));}
+  try{history=[];lastHistory=null;latest=null;notice('正在连接机械臂');renderStatus(await api('/api/start',{mode}));}
   catch(e){notice(e.message,'error');}finally{busy=false;setButtons();}
 }
 $('start').onclick=()=>start('feedback');$('monitor').onclick=()=>start('monitor');
 $('stop').onclick=async()=>{if(busy)return;busy=true;setButtons();try{renderStatus(await api('/api/stop',{}));notice('已发送正常停止请求，等待回零/卸力清理。');}catch(e){notice(e.message,'error');}finally{busy=false;setButtons();}};
-function setButtons(){const running=latestStatus?.running;$('start').disabled=busy||running||!!replay||networkFailed;$('monitor').disabled=$('start').disabled;$('stop').disabled=busy||!running||latestStatus?.stop_requested||networkFailed;$('replay').disabled=busy||running||networkFailed;}
+function setButtons(){const running=latestStatus?.running;$('start').disabled=busy||running||networkFailed;$('monitor').disabled=$('start').disabled;$('stop').disabled=busy||!running||latestStatus?.stop_requested||networkFailed;}
 function explain(reason){
   if(!reason)return '等待实时数据';
   return reason.replace('RS DYNAMIC: ','').replace('RS GRIPPER: ','').replace('current moving residual (experimental)','按运动中剩余力矩更新').replace('current residual (experimental)','按当前剩余力矩更新').replace('current motor torque (experimental)','按夹爪当前电机力矩更新').replace('home-pose gravity model invalid','近零姿态模型无效').replace('this joint damping released','本轴普通阻尼已释放').replace('near joint limit','接近本轴软件限位').replace('Leader feedback gap','主臂缺帧').replace('ordinary damping released','普通阻尼已释放').replace('gripper damping released','夹爪普通阻尼已释放').replace('warming up','初始化').replace('no stationary pose required','无需停稳');
@@ -159,8 +159,8 @@ function updateDetail(){
   text($('selectedTemp'),fmt(j?.temperature_c,1)+' °C');text($('selectedReason'),explain(j?.reason));
   text($('selectedResidual'),fmt(j?.residual_nm)+' Nm');text($('selectedDeadzone'),fmt(j?.deadzone_nm)+' Nm');text($('selectedLeader'),fmt(j?.leader_pos_deg,1)+'°');
 }
-function renderTelemetry(frame,source,fresh=true){
-  latest=frame;forceFresh=fresh;forceSource=source;text($('source'),source==='replay'?'日志回放 · 非实时':fresh?'实时 CAN':'数据已过期');$('source').className='tag '+(source==='replay'?'replay':fresh?'live':'replay');
+function renderTelemetry(frame,fresh=true){
+  latest=frame;forceFresh=fresh;text($('source'),fresh?'实时 CAN':'数据已过期');$('source').className='tag '+(fresh?'live':'pending');
   const joints=frame.joints||[];let max=-1,axis=0,active=0;
   Array.from({length:7},(_,i)=>joints[i]||{}).forEach((j,i)=>{
     text($('pos'+i),fmt(j.motor_pos_deg,1));text($('cur'+i),fresh?fmt(j.current_a):'—');
@@ -168,7 +168,7 @@ function renderTelemetry(frame,source,fresh=true){
     text($('power'+i),fresh?fmt(j.leader_power_mw,0):'—');$('bar'+i).style.width=fresh?`${Math.min(100,(j.leader_power_mw||0)/1500*100)}%`:'0%';
     if(finite(j.torque_nm)&&Math.abs(j.torque_nm)>max){max=Math.abs(j.torque_nm);axis=i;}if(j.leader_mode==='DAMPING'&&j.leader_power_mw>0)active++;
   });
-  text($('activeCount'),fresh?active:'—');text($('outputDetail'),source==='replay'?'历史请求值':frame.holding?'HOLD · 独立堵转保持':frame.output_enabled?'反馈输出已启用':'仅监测 · 未发送 Leader 阻尼');
+  text($('activeCount'),fresh?active:'—');text($('outputDetail'),frame.holding?'HOLD · 独立堵转保持':frame.output_enabled?'反馈输出已启用':'仅监测 · 未发送 Leader 阻尼');
   text($('maxTorque'),fmt(max<0?null:max));text($('maxTorqueJoint'),`J${axis+1} · ${names[axis]}`);
   updateDetail();setPose(joints);updateForces();
   if(fresh&&frame.monotonic_s!==lastHistory){
@@ -181,7 +181,7 @@ function clearTelemetry(){
   for(let i=0;i<7;i++){for(const key of ['pos','cur','power'])$(key+i).textContent='—';text($('mode'+i),'—');$('mode'+i).className='mode UNKNOWN';$('bar'+i).style.width='0%';}
 }
 function renderStatus(data){
-  latestStatus=data;networkFailed=false;setButtons();if(replay)return;
+  latestStatus=data;networkFailed=false;setButtons();
   freshDeadline=data.fresh?performance.now()+Math.max(0,.8-(data.age_s??0))*1000:0;
   document.body.classList.toggle('stale',!data.fresh);
   const phase={idle:'未启动',connecting:'连接中',running:'运行中',stopping:'正在停止',exited:'已结束'};
@@ -190,24 +190,14 @@ function renderStatus(data){
   text($('freshness'),data.age_s===null?'—':data.fresh?`${Math.round(data.age_s*1000)} ms`:'已过期');
   const applied=data.telemetry?.applied_revision;
   text($('revision'),data.running&&applied!==undefined?`已应用 v${applied} / 已保存 v${data.saved_revision}${applied!==data.saved_revision?' · 等待应用':''}`:`已保存 v${data.saved_revision} · 启动后应用`);
-  if(data.telemetry)renderTelemetry(data.telemetry,'live',data.fresh);else if(latest)clearTelemetry();
+  if(data.telemetry)renderTelemetry(data.telemetry,data.fresh);else if(latest)clearTelemetry();
   if(data.telemetry?.settings_error)notice('参数未应用：'+data.telemetry.settings_error,'error');
-  if(data.phase==='exited'&&data.exit_code!==0&&data.exit_code!==-2)notice(`会话已结束（退出代码 ${data.exit_code}），展开日志查看原因。`,'error');
-  if(data.log_file)text($('logPath'),data.log_file);
+  if(data.phase==='exited'&&data.exit_code!==0&&data.exit_code!==-2)notice(`会话已结束（退出代码 ${data.exit_code}）`,'error');
+  if(data.error)notice(data.error,'error');
 }
-async function poll(){try{renderStatus(await api('/api/state'));}catch(e){networkFailed=true;setButtons();document.body.classList.add('stale');$('led').className='led orange';text($('connection'),'网页服务连接中断');text($('freshness'),'已过期');if(latest&&!replay)renderTelemetry(latest,'live',false);notice('网页服务暂不可达；此状态不能确认机械臂已停止。','error');}setTimeout(poll,250);}
+async function poll(){try{renderStatus(await api('/api/state'));}catch(e){networkFailed=true;setButtons();document.body.classList.add('stale');$('led').className='led orange';text($('connection'),'网页服务连接中断');text($('freshness'),'已过期');if(latest)renderTelemetry(latest,false);notice('网页服务暂不可达；此状态不能确认机械臂已停止。','error');}setTimeout(poll,250);}
 // Expire on the client even while a state request is still waiting for its timeout.
-setInterval(()=>{if(!replay&&forceFresh&&performance.now()>freshDeadline){document.body.classList.add('stale');text($('freshness'),'已过期');text($('connection'),'等待新鲜设备数据');$('led').className='led orange';renderTelemetry(latest,'live',false);}},100);
-$('replay').onclick=async()=>{
-  if(replay){clearInterval(replayTimer);replay=null;history=[];lastHistory=null;drawTrend();setButton('replay','日志回放','rotate-ccw');notice('已退出回放，尚未连接机械臂。');renderStatus(await api('/api/state'));return;}
-  try{replay=await api('/api/replay');replayIndex=0;history=[];lastHistory=null;setButton('replay','退出回放','square');setButtons();notice(`正在回放 ${replay.file}，所有数值为历史数据；旧日志缺少电流时显示“—”。`);document.body.classList.remove('stale');
-    text($('session'),'日志回放');text($('sessionDetail'),replay.file);text($('connection'),'历史数据 · 非实时');$('led').className='led orange';text($('freshness'),'回放中');text($('revision'),'历史日志参数');
-    replayTimer=setInterval(()=>{if(replayIndex>=replay.frames.length){replayIndex=0;history=[];lastHistory=null;}renderTelemetry(replay.frames[replayIndex++],'replay',true);},100);
-  }catch(e){replay=null;notice(e.message,'error');}
-};
-$('toggleLog').onclick=()=>{logOpen=!logOpen;Motion.show($('log'),logOpen,{collapse:true,duration:300});Motion.show($('logEmpty'),!logOpen,{collapse:true,duration:300});setButton('toggleLog',logOpen?'收起日志':'展开日志',logOpen?'chevron-down':'terminal');loadLog();};
-async function loadLog(){if(logOpen){try{Motion.text($('log'),(await api('/api/log')).text||translate('尚无运行日志'));$('log').scrollTop=$('log').scrollHeight;}catch{}}}
-setInterval(loadLog,1500);
+setInterval(()=>{if(forceFresh&&performance.now()>freshDeadline){document.body.classList.add('stale');text($('freshness'),'已过期');text($('connection'),'等待新鲜设备数据');$('led').className='led orange';renderTelemetry(latest,false);}},100);
 let chartHover=null;
 function drawTrend(){
   const canvas=$('trend'),width=canvas.clientWidth,height=canvas.clientHeight;
@@ -235,7 +225,7 @@ function drawTrend(){
     ctx.strokeStyle='#c9d7ed';ctx.setLineDash([2,3]);ctx.beginPath();ctx.moveTo(x,top);ctx.lineTo(x,bottom);ctx.stroke();ctx.setLineDash([]);
     if(finite(value)){ctx.fillStyle=colors[selected];ctx.beginPath();ctx.arc(x,toY(value),3,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=1.5;ctx.stroke();}
     const tip=$('trendTooltip');tip.style.setProperty('--curve',colors[selected]);tip.replaceChildren();const title=document.createElement('b'),subtitle=document.createElement('span');
-    title.textContent=`J${selected+1}  ${fmt(value)} N·m`;text(subtitle,`${replay?'历史回放':'历史采样'}  ${fmt(end-point.time,1)} s 前`);tip.append(title,subtitle);
+    title.textContent=`J${selected+1}  ${fmt(value)} N·m`;text(subtitle,`采样  ${fmt(end-point.time,1)} s 前`);tip.append(title,subtitle);
     tip.style.left=`${Math.max(8,Math.min(width-122,chartHover.x-50))}px`;tip.style.top='5px';
     if(tip.hidden||tip.inert)Motion.show(tip,true,{duration:160});
   }else if(chartHover){Motion.show($('trendTooltip'),false,{duration:100});}
@@ -285,19 +275,19 @@ async function initModel(){
       modelJoints.forEach(joint=>{if(joint.targetQuaternion)joint.moving.quaternion.slerp(joint.targetQuaternion,blend);if(joint.targetPosition)joint.moving.position.lerp(joint.targetPosition,blend);});
       controls.update();renderer.render(scene,camera);positionForceLabels();
     };animate();view.classList.add('model-ready');Motion.show($('forceLabels'),$('showForces').checked,{duration:380});Motion.show($('forceLines'),$('showForces').checked,{duration:380});
-  }catch(e){text($('modelLoadingText'),'模型加载失败：'+e.message);console.error(e);}
+  }catch(e){text($('modelLoadingText'),'模型加载失败：'+e.message);}
 }
 function setPose(joints){if(!modelReady)return;for(const j of modelJoints){if(j.type==='revolute'){const index=Number(j.name.replace('joint',''))-1;const angle=(joints[index]?.motor_pos_deg??0)*Math.PI/180;j.targetQuaternion=new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(...j.axis),angle);}else if(j.type==='prismatic'){const opening=THREE.MathUtils.clamp((joints[6]?.motor_pos_deg??0)/270,0,1)*.05;j.targetPosition=new THREE.Vector3(...j.axis).multiplyScalar(opening);}}}
 function highlightModel(){updateForces();}
 function updateForces(){
-  const scale=Number($('heatScale').value),options={fresh:forceFresh,source:forceSource,metric:forceMetric,scale};
-  text($('forceStatus'),!latest?'等待关节数据':forceSource==='replay'?'历史回放 · 非实时受力':forceFresh?'实时受力 · N·m':'数据过期 · 保留最后姿态');
+  const scale=Number($('heatScale').value),options={fresh:forceFresh,metric:forceMetric,scale};
+  text($('forceStatus'),!latest?'等待关节数据':forceFresh?'实时受力 · N·m':'数据过期 · 保留最后姿态');
   forceElements.forEach((item,i)=>{
     const visual=torqueVisual(latest?.joints?.[i],options),active=selected===i,available=visual.value!==null;
     item.label.style.setProperty('--heat',visual.color);item.line.style.setProperty('--heat',visual.color);item.value.textContent=fmt(visual.value);
     text(item.level,!latest?'等待':!forceFresh?'已过期':available?`${visual.level} · ${Math.round(visual.ratio*100)}%`:'无效 / 缺失');
     item.label.classList.toggle('unavailable',!available);item.label.classList.toggle('selected',active);
-    item.label.setAttribute('aria-label',`J${i+1} ${names[i]}，${forceSource==='replay'?'历史回放，':''}${forceMetric==='torque_nm'?'电机扭矩':'模型剩余力矩'} ${available?fmt(visual.value)+' N·m':!forceFresh&&latest?'数据过期':'暂无有效数据'}`);
+    item.label.setAttribute('aria-label',`J${i+1} ${names[i]}，${forceMetric==='torque_nm'?'电机扭矩':'模型剩余力矩'} ${available?fmt(visual.value)+' N·m':!forceFresh&&latest?'数据过期':'暂无有效数据'}`);
     if(!modelReady)return;
     forceMarkers[i].material.color.set(visual.color);forceMarkers[i].userData.selected=active;
     const links=i<6?[`link${i+1}`]:['gripper_end','gripper_left','gripper_right'];

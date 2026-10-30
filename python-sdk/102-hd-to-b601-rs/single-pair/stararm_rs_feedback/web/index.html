@@ -18,7 +18,6 @@
   <nav class="page-tabs" role="tablist" aria-label="工作区导航">
     <button id="tab-workspace" role="tab" data-view="workspace" aria-controls="workspace" aria-selected="true" tabindex="0">工作台</button>
     <button id="tab-parameters" role="tab" data-view="parameters" aria-controls="parameters" aria-selected="false" tabindex="-1">反馈调校</button>
-    <button id="tab-logs" role="tab" data-view="logs" aria-controls="logs" aria-selected="false" tabindex="-1">运行日志</button>
   </nav>
   <div class="head-status"><button id="languageSwitch" class="language-switch quiet" type="button" aria-label="Switch to English" aria-pressed="false" data-no-i18n><span>中文 / EN</span></button><span id="led" class="led"></span><span id="connection" data-state-motion>连接中</span><span id="version" class="version"></span></div>
 </header>
@@ -26,7 +25,6 @@
   <section class="toolbar" data-enter>
     <div class="page-heading"><div class="breadcrumb"><span>Star Arm 102</span><svg class="icon"><use href="icons.svg#chevron-right"></use></svg><span id="pageName">实时工作台</span></div><h1 id="pageTitle">力反馈工作台</h1></div>
     <div class="actions">
-      <button id="replay" class="quiet" data-icon="rotate-ccw">日志回放</button>
       <button id="monitor" class="secondary" data-icon="activity">仅监测</button>
       <span class="action-divider"></span>
       <button id="start" class="primary" data-icon="play">启动反馈</button>
@@ -77,11 +75,6 @@
     </section>
 <section class="view panel params-panel" id="parameters" data-page="parameters" role="tabpanel" aria-labelledby="tab-parameters" hidden><div class="panel-head" data-enter><div><h2><svg class="icon"><use href="icons.svg#sliders-horizontal"></use></svg> 阻尼参数</h2><p>保存后自动应用  重新初始化约 0.25 秒  HOLD 保持 1500 mW</p></div><div class="param-actions"><span id="dirty" class="tag">已保存</span><button id="defaults" class="quiet">恢复默认值</button><button id="save" class="primary">保存并应用</button></div></div><div class="global-settings" data-enter><label>普通阻尼总上限 <span><input id="maxPower" type="number" min="400" max="1500" step="10"><em>mW</em></span><small>400–1500；各轴还受下方上限限制</small></label><div class="param-explainer"><b>只调整普通动态阻尼</b><p>死区越小越容易触发；满输出标尺越小，同等负载下输出越强。每轴上限填 0 可关闭该轴普通阻尼；J6 保持关闭。</p></div></div><div class="table-scroll"><table class="param-table"><thead><tr><th>关节</th><th>功率上限 <small>mW</small></th><th>基础死区 <small>Nm</small></th><th>运动余量最大值 <small>Nm</small></th><th>满输出力矩标尺 <small>Nm · 超过死区部分</small></th></tr></thead><tbody id="paramRows"></tbody></table></div><div class="advanced"><button id="advancedToggle" class="quiet">滤波与响应参数</button><div id="advancedFields" hidden></div></div><div class="param-note">臂部运动超范围清零已临时关闭，超过旧速度/加速度阈值时继续计算阻尼。J1 按自身回转残差判断；近限位按轴释放。J2/J3 同时处于近零模型无效区时，会暂停 J2–J5 普通阻尼，任一电机角达到 5° 后恢复。故障和通信保护仍生效。</div></section>
 
-    <section class="view panel log-panel" id="logs" data-page="logs" role="tabpanel" aria-labelledby="tab-logs" hidden>
-      <div class="panel-head" data-enter><div class="panel-heading"><svg class="icon"><use href="icons.svg#terminal"></use></svg><h2>运行日志</h2></div><button id="toggleLog" class="secondary" data-icon="chevron-down">展开日志</button></div>
-      <div class="log-empty" id="logEmpty" data-enter><svg class="icon"><use href="icons.svg#terminal"></use></svg><h3>会话记录</h3><p>展开查看当前会话的原始输出</p></div>
-      <pre id="log" hidden>尚无运行日志</pre><p id="logPath" class="subnote" data-enter>日志保存在本机 data/ 目录</p>
-    </section>
   </div>
   <footer data-enter><span>Fashionstar <span class="footer-divider"></span> Star Arm 102</span><span>关闭页面不会停止会话  停止运行可能回零或卸力</span></footer>
 </main>

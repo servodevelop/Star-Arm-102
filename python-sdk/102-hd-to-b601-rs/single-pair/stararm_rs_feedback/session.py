@@ -1,34 +1,28 @@
 """在官方 teleop_loop 内临时接入，复用主臂串口，不修改已安装的 LeRobot 文件。"""
-import csv
-import logging
 import math
 import time
 
 from .can_feedback import CANFeedback, FeedbackError
 from .config import NAMES
 from .controller import Feedback
-from .unloaded import Observer, Profile, Recorder
+from .unloaded import Observer, Profile
 
-log = logging.getLogger(__name__)
 
 
 class Session:
     monitor_read_retries = 0  # 历史入口沿用原单次读取，动态会话可启用一次补读。
-    csv_header = ["monotonic_s", "joint", "motor_torque_nm", "motor_pos_deg",
-                  "leader_error_deg", "load_ratio", "mode", "power_mw", "output_enabled",
-                  "damping_load_ratio", "residual_torque_nm", "unloaded_status"]
-
     def __init__(self, leader, robot, cfg, *, enabled=False, log_path=None,
                  collect_path=None, monitor_factory=CANFeedback, clock=time.monotonic):
+        if log_path is not None or collect_path is not None:
+            raise ValueError("Session recording is disabled in this version")
         self.leader, self.robot, self.cfg = leader, robot, cfg.validate()
-        self.enabled, self.log_path, self.clock = enabled, log_path, clock
+        self.enabled, self.clock = enabled, clock
         self.monitor_factory = monitor_factory
-        self.monitor = self.feedback = self.csv_file = None
-        self.csv = None
+        self.monitor = self.feedback = None
         self.patched = False
         self.monitor_ok = False
-        self.next_log = 0.
         self.closed = False
+        self.cleanup_issue = None
         self.held_action = None
         self.reporting = []
         self.pending_read = False
@@ -39,9 +33,6 @@ class Session:
         self.original_zero_samples = None
         self.monitor_retries_used = 0
         self.latest_leader_action = None
-        self.collect_path = collect_path
-        self.recorder = None
-        self.capture_complete = False
 
     def _validate_pair(self):
         if (self.leader.name != "rebot_arm_102_leader" or
@@ -78,32 +69,21 @@ class Session:
     def __enter__(self):
         try:
             self._validate_pair()
-            if self.collect_path and (self.enabled or self.cfg.unloaded_profile):
-                raise ValueError("Unloaded capture requires monitor mode without an unloaded profile")
             observer = None
             if self.cfg.unloaded_profile:
                 profile = Profile(self.cfg.unloaded_profile)
                 profile.check_robot(self.robot)
                 observer = Observer(profile, self.cfg.residual_reference_nm)
-            if self.collect_path:
-                self.recorder = Recorder(self.collect_path, self.robot)
-                log.warning("UNLOADED CAPTURE: keep gripper empty, avoid external contact; "
-                            "move slowly through varied poses, pause at each pose, Ctrl+C to finish")
             # 修复版 SDK 保留零度跳变过滤；3 帧确认适配 30Hz，持续零度不再反复过滤。
             self.original_zero_samples = self.leader.bus.set_zero_confirm_samples(3)
             self.feedback = Feedback(self.leader.bus, self.ids, self.cfg, self.enabled, observer=observer)
             self.monitor = self.monitor_factory(self.robot, self.cfg)
-            if self.log_path:
-                self.csv_file = open(self.log_path, "x", newline="", encoding="utf-8")
-                self.csv = csv.writer(self.csv_file)
-                self.csv.writerow(self.csv_header)
             # RS 的统一 request_feedback() 是空操作，不能靠它产生状态帧。
             # 先创建接收 socket，再通过官方 SDK 开启主动上报；不设置零点、不下发角度。
             # 先登记后写入，部分失败时也能在 close() 尝试关闭已开启的上报。
             for name in NAMES:
                 self.reporting.append(name)
                 self.robot.motors[name].robstride_set_active_report(True)
-            log.info("RS active reporting enabled for all seven joints; waiting for fresh feedback")
             deadline = self.clock() + self.cfg.startup_timeout_s
             while True:
                 try:
@@ -165,16 +145,10 @@ class Session:
                     self.leader_issues = self.monitor_issues
                     if self.leader_gap_since is None:
                         self.leader_gap_since = read_started
-                        log.warning("Leader read incomplete: %s; skipping new follower targets "
-                                    "until fresh feedback (timeout %.2fs)",
-                                    ", ".join(self.leader_issues), self.cfg.leader_timeout_s)
                     self._check_leader_timeout(now)
                 else:
                     # 超过超时后，即使迟来的回包恢复，也不自动放行。
                     self._check_leader_timeout(now)
-                    if self.leader_gap_since is not None:
-                        log.info("Leader feedback restored after %d skipped frames; resuming",
-                                 self.skipped_leader_frames)
                     self.leader_gap_since = None
                     self.skipped_leader_frames = 0
                 self.pending_read = True
@@ -192,7 +166,7 @@ class Session:
                     now = self.clock()
                     self._check_leader_timeout(now)
                     self._handle_leader_gap(checked_states, now)
-                    self._log_leader_gap(checked_states, now)
+                    self._publish_leader_gap(checked_states, now)
                     self.skipped_leader_frames += 1
                     # 返回上一条有效的实际目标供官方循环显示；不调用 original_send。
                     return dict(self.last_sent)
@@ -205,21 +179,17 @@ class Session:
                 states = self.monitor.snapshot()
                 now = self.clock()
                 errors = self.feedback.update(sent, states, self.directions, now)
-                if self.recorder:
-                    self.recorder.update(states, now)
                 if self.enabled and self.feedback.holding and self.held_action is None:
                     self.held_action = {n + ".pos": sent[n + ".pos"] / self.directions[n] for n in NAMES}
                 elif not self.feedback.holding:
                     self.held_action = None
-                self._log(states, errors, now)
+                self._publish(states, errors, now)
                 return sent
 
             self.leader.bus.sync_monitor = monitored
             self.leader.get_action = get_action
             self.robot.send_action = send_action
             self.patched = True
-            log.warning("RS feedback: %s; follower teleoperation is ACTIVE",
-                        "Leader damping/hold ENABLED" if self.enabled else "MONITOR ONLY, no Leader force writes")
             return self
         except BaseException:
             self._skip_fault_zero()
@@ -235,8 +205,8 @@ class Session:
             if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value):
                 raise FeedbackError(f"Missing/non-finite action: {n}.pos")
 
-    def _log_leader_gap(self, states, now):
-        pass  # 动态会话扩展为逐帧记录；历史入口保持原日志格式。
+    def _publish_leader_gap(self, states, now):
+        pass  # DynamicSession publishes live state through the in-memory channel.
 
     def _handle_leader_gap(self, states, now):
         self.feedback.interrupt(now)
@@ -248,32 +218,8 @@ class Session:
             raise FeedbackError(f"Leader feedback timeout after {now - self.leader_gap_since:.3f}s: "
                                 f"{', '.join(self.leader_issues)}; no new follower target sent")
 
-    def _log(self, states, errors, now):
-        if self.csv:
-            for i, n in enumerate(NAMES):
-                mode, power, _ = self.feedback.sent[n]
-                o = self.feedback.observer
-                self.csv.writerow([now, n, states[n].torq, math.degrees(states[n].pos),
-                                   errors[n], self.feedback.loads[n], hex(mode), power, self.enabled,
-                                   self.feedback.damping_loads[n],
-                                   o.residual_nm[i] if o and i < 6 else "", o.status if o else "legacy"])
-        if now >= self.next_log:
-            summary = " | ".join(f"{n}: {states[n].torq:+.2f}Nm err={errors[n]:.1f}deg "
-                                 f"p={self.feedback.sent[n][1]}mW" for n in NAMES)
-            mode = "HOLD" if self.feedback.holding else (
-                "FREE" if self.feedback.observer and all(v[0] == 0x10 for v in self.feedback.sent.values())
-                else "DAMPING")
-            log.info("RS %s%s | %s", mode,
-                     " (simulated output)" if not self.enabled else "", summary)
-            if self.feedback.observer:
-                o = self.feedback.observer
-                log.info("RS UNLOADED: %s | residual Nm: %s", o.status,
-                         ", ".join(f"J{i+1}={x:+.2f}" for i, x in enumerate(o.residual_nm)))
-            if self.recorder:
-                log.info("UNLOADED CAPTURE: %d samples", self.recorder.meta['sample_count'])
-            self.next_log = now + 1
-            if self.csv_file:
-                self.csv_file.flush()
+    def _publish(self, states, errors, now):
+        pass
 
     def _skip_fault_zero(self):
         # 数据/适配错误时不要让官方 disconnect 再主动规划回零运动。
@@ -282,7 +228,6 @@ class Session:
             self.robot._skip_safe_zero_on_disconnect = True
 
     def __exit__(self, kind, exc, traceback):
-        self.capture_complete = kind is None or issubclass(kind, KeyboardInterrupt)
         if kind is not None and not issubclass(kind, KeyboardInterrupt):
             self._skip_fault_zero()
         self.close()
@@ -300,7 +245,7 @@ class Session:
                 try:
                     self.leader.bus.set_zero_confirm_samples(self.original_zero_samples)
                 except Exception:
-                    log.exception("Could not restore Leader zero confirmation setting")
+                    self.cleanup_issue = "主臂零度确认设置恢复失败"
             if self.feedback:
                 self.feedback.close()
         finally:
@@ -310,13 +255,7 @@ class Session:
                     try:
                         self.robot.motors[name].robstride_set_active_report(False)
                     except Exception:
-                        log.exception("Could not stop RS active reporting for %s", name)
+                        self.cleanup_issue = f"从臂状态上报关闭失败： {name}"
             finally:
-                try:
-                    if self.monitor:
-                        self.monitor.close()
-                finally:
-                    if self.csv_file:
-                        self.csv_file.close()
-                    if self.recorder:
-                        self.recorder.close(complete=self.capture_complete)
+                if self.monitor:
+                    self.monitor.close()

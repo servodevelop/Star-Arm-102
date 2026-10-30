@@ -1,5 +1,4 @@
 import copy
-import csv
 import json
 import math
 from pathlib import Path
@@ -287,13 +286,13 @@ class DynamicTests(unittest.TestCase):
                 self.assertEqual(o.ordinary_power_mw[6],0)
                 self.assertGreater(o.ordinary_power_mw[2],400)
 
-    def test_gripper_live_session_near_arm_limit_and_separate_log_validity(self):
+    def test_gripper_live_session_near_arm_limit_and_separate_axis_validity(self):
         for enabled in (False,True):
             with self.subTest(enabled=enabled),tempfile.TemporaryDirectory() as t:
                 root=Path(t);leader,robot,path=setup(root);spec=spec_for(path,robot);clock=Clock()
                 q=list(Q);q[1]=0.;out=root/'gripper.csv'
                 with DynamicSession(leader,robot,dynamic_config(),spec=spec,enabled=enabled,
-                                    monitor_factory=MutableMonitor,clock=clock,log_path=out) as s:
+                                    monitor_factory=MutableMonitor,clock=clock) as s:
                     for j in range(201):
                         clock.now=100+j*.02
                         tau=s.feedback.observer.model.evaluate(q,[0.]*6,[0.]*6)+[1. if 25<=j<125 else 0.]
@@ -306,11 +305,7 @@ class DynamicTests(unittest.TestCase):
                             self.assertEqual(s.feedback.sent['gripper'][:2],(0x12,1200))
                             self.assertTrue(all(s.feedback.sent[n][:2]==(0x10,0) for n in NAMES[:6]))
                         if j==200:self.assertEqual(s.feedback.sent['gripper'][:2],(0x10,0))
-                with out.open() as f:rows=list(csv.DictReader(f))
-                self.assertTrue(any(r['joint']=='gripper' and r['dynamic_valid']=='True' and
-                                    r['unloaded_status'].startswith('RS GRIPPER:') and
-                                    int(r['power_mw'])==1200 for r in rows))
-                self.assertTrue(all(r['dynamic_valid']=='False' for r in rows if r['joint']=='shoulder_lift'))
+                self.assertFalse(out.exists())
                 if enabled:
                     self.assertTrue(any(servo==6 and m==0x12 and p==1200 for servo,m,p in leader.bus.calls))
                     self.assertTrue(all(m==0x10 for _,m,p in leader.bus.calls[-7:]))
@@ -406,13 +401,13 @@ class DynamicTests(unittest.TestCase):
                 self.assertEqual(s.feedback.observer.started,started)
                 self.assertGreater(s.feedback.sent['elbow_flex'][1],400)
 
-    def test_dynamic_failed_leader_retry_updates_from_rs_skips_logs_then_times_out(self):
+    def test_dynamic_failed_leader_retry_updates_from_rs_skips_targets_then_times_out(self):
         with tempfile.TemporaryDirectory() as t:
             root=Path(t);leader,robot,path=setup(root);spec=spec_for(path,robot);clock=Clock()
             out=root/'gap.csv'
             with self.assertRaisesRegex(FeedbackError,'Leader feedback timeout'):
                 with DynamicSession(leader,robot,dynamic_config(),spec=spec,enabled=True,
-                                    monitor_factory=MutableMonitor,clock=clock,log_path=out) as s:
+                                    monitor_factory=MutableMonitor,clock=clock) as s:
                     for j in range(101):
                         clock.now=100+j*.02;tau=s.feedback.observer.model.evaluate(Q,[0.]*6,[0.]*6)+[1.];tau[2]+=5.
                         s.monitor.states={n:State(Q[i],0.,tau[i],25.,2,0,clock.now) for i,n in enumerate(NAMES)}
@@ -427,9 +422,7 @@ class DynamicTests(unittest.TestCase):
                     self.assertGreater(s.feedback.sent['gripper'][1],400)
                     clock.now+=.26
                     robot.send_action(leader.get_action())
-            with out.open() as f:rows=list(csv.DictReader(f))
-            self.assertTrue(any(r['dynamic_valid']=='True' and int(r['power_mw'])>400 and
-                                r['leader_read_issues'] and r['leader_read_retry_count']=='1' for r in rows))
+            self.assertFalse(out.exists())
             self.assertTrue(robot._skip_safe_zero_on_disconnect)
             self.assertTrue(all(mode==0x10 for _,mode,_ in leader.bus.calls[-7:]))
 
@@ -550,13 +543,13 @@ class DynamicTests(unittest.TestCase):
         o.update(q,[0.]*7,g,100.03,received_at=[100.02]*7)
         self.assertAlmostEqual(o.velocity[2],.02/(.06+.02)*(.003/.02),places=10)
 
-    def test_dynamic_session_sends_live_output_and_rich_log_monitor_stays_read_only(self):
+    def test_dynamic_session_sends_live_output_without_files_monitor_stays_read_only(self):
         for enabled in (False,True):
             with self.subTest(enabled=enabled),tempfile.TemporaryDirectory() as t:
                 root=Path(t);leader,robot,path=setup(root);spec=spec_for(path,robot);clock=Clock()
                 out=root/'dynamic.csv'
                 with DynamicSession(leader,robot,dynamic_config(),spec=spec,enabled=enabled,
-                                    monitor_factory=MutableMonitor,clock=clock,log_path=out) as s:
+                                    monitor_factory=MutableMonitor,clock=clock) as s:
                     for j in range(351):
                         clock.now=100+j*.02;q,v,a=moving(j*.02)
                         tau=s.feedback.observer.model.evaluate(q,v,a)+[0.]
@@ -570,15 +563,7 @@ class DynamicTests(unittest.TestCase):
                             self.assertTrue(all(s.feedback.sent[NAMES[i]][1]>400 for i in (0,1,2,3,4,6)))
                     self.assertFalse(s.feedback.holding)
                     self.assertTrue(all(x[:2]==(0x10,0) for x in s.feedback.sent.values()))
-                with out.open() as f:rows=list(csv.DictReader(f))
-                self.assertEqual(len(rows),351*7)
-                self.assertIn('estimated_acceleration_rad_s2',rows[0])
-                self.assertTrue(all(None not in r for r in rows))
-                gripping=[r for r in rows if r['joint']=='gripper' and r['dynamic_valid']=='True']
-                self.assertTrue(gripping)
-                self.assertTrue(all(r['dynamic_signal']=='gripper_motor_torque_nm' and
-                                    r['model_torque_nm']=='' and r['raw_residual_nm']!=''
-                                    and r['deadzone_nm']!='' for r in gripping))
+                self.assertFalse(out.exists())
                 if enabled:
                     for axis in (0,1,2,3,4,6):
                         self.assertTrue(any(servo==axis and m==0x12 and p>400
