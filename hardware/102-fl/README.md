@@ -24,8 +24,8 @@
 | Directory | Description | Status |
 | --- | --- | --- |
 | [Assembly guide](../../docs/diy-assembly/README.md#102-fl) | Main arm assembly video | ✅ Complete |
-| [step/](step/) | Part models in parts/; whole-arm assemblies in assembly/ | ✅ Complete |
-| [stl/](stl/) | [Download all STL files (11 parts)](stl/downloads/star-arm-102-fl-stl-2026-10-22.zip?raw=true) · [Browse individual STL files](stl/) | ✅ Complete |
+| [step/](step/) | Whole-arm STEP assembly models | ✅ Complete |
+| [3mf/](3mf/) | 3D printing files (3MF) | — Coming soon |
 | [drawings/](drawings/) | PDF / DWG drawings | ✅ Complete |
 | [URDF Models](urdf/) | [Download complete URDF package](urdf/downloads/star-arm-102-fl-urdf-2026-10-23.zip?raw=true) · [Browse source](urdf/stararm102-fl-description/) | ✅ Complete |
 
@@ -37,9 +37,9 @@ The table below lists **29 assembly items** for 102-FL. Missing images are marke
 
 For printed parts, the part name identifies the component. English names in the assembly tree, such as `Link 1`, correspond to the English BOM’s Part Name column.
 
-For printed parts, Model / Specification / Part Identifier lists the part identifier, matching the supplied STEP and STL filenames (without extensions). For example, `Link 1` uses the identifier `star-arm-102-link1`. The `star-arm-102-` prefix identifies the product series when files are downloaded separately.
+For printed parts, Model / Specification / Part Identifier lists the part identifier. For example, `Link 1` uses the identifier `star-arm-102-link1`. The `star-arm-102-` prefix identifies the product series.
 
-Print settings are not recorded here: take the STL from [stl/](stl/) and slice it for your own printer, because layer height, wall count and infill depend on the machine and filament used.
+3MF printing files will be provided in [3mf/](3mf/); they are not yet available. Print settings are not listed here; choose layer height, wall count and infill for your printer and filament.
 
 Printed-part images are rendered from the corresponding STEP models. Fastener images are AI-generated illustrations; refer to the table text for specifications. Click an image to enlarge it.
 

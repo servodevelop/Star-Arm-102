@@ -189,13 +189,8 @@ Star-Arm-102/
 ├── README.zh.md
 ├── hardware/
 │   ├── 102-ld/                               BOM in each model README; LD layout expanded below
-│   │   ├── step/
-│   │   │   ├── assembly/
-│   │   │   └── parts/
-│   │   ├── stl/
-│   │   │   ├── downloads/
-│   │   │   │   └── star-arm-102-ld-stl-2026-10-21.zip
-│   │   │   └── *.stl
+│   │   ├── step/                            Whole-arm STEP assemblies
+│   │   ├── 3mf/                             3D printing files coming soon
 │   │   ├── drawings/
 │   │   └── urdf/
 │   ├── 102-hd/

@@ -37,7 +37,7 @@
 
 ## 目录结构
 
-三个型号的目录结构一致：单个 STL 文件位于 stl/，整套下载 ZIP 位于 stl/downloads/。下方展开 LD 的目录。各型号提供对应文件和页内 BOM，省略具体零件文件。
+三个型号的目录结构一致：整机 STEP 装配模型直接放在 step/；3mf/ 用于提供 3D 打印文件，目前待提供。下方展开 LD 的目录，各型号的 README 内含对应 BOM。
 
 ```text
 hardware/
@@ -47,12 +47,8 @@ hardware/
 │   ├── README.md
 │   ├── README.zh.md
 │   ├── step/
-│   │   ├── assembly/
-│   │   └── parts/
-│   ├── stl/
-│   │   ├── downloads/
-│   │   │   └── star-arm-102-ld-stl-2026-10-21.zip
-│   │   └── *.stl
+│   │   └── star-arm-102-ld-assembly-export-2026-10-22.step
+│   ├── 3mf/
 │   ├── drawings/
 │   └── urdf/
 │       ├── downloads/
@@ -64,7 +60,7 @@ hardware/
 └── flexible-gripper/
 ```
 
-`step/assembly/` 存放 CAD 装配模型；装配、PID 设置与零位校准集中在 [DIY 装配指南](../docs/diy-assembly/README.zh.md)。各型号的 ROS 1 源码与完整 ZIP：[LD](102-ld/urdf/)、[HD](102-hd/urdf/)、[FL](102-fl/urdf/)。LD 与 HD 包含相同模型。
+`step/` 存放 CAD 装配模型；装配、PID 设置与零位校准集中在 [DIY 装配指南](../docs/diy-assembly/README.zh.md)。各型号的 ROS 1 源码与完整 ZIP：[LD](102-ld/urdf/)、[HD](102-hd/urdf/)、[FL](102-fl/urdf/)。LD 与 HD 包含相同模型。
 
 ## 许可
 

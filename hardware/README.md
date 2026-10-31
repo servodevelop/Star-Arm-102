@@ -37,7 +37,7 @@ Joints 1–6 (J1–J6) above map to servo IDs 0–5; the handle/gripper maps to 
 
 ## Directory structure
 
-All three models share the same layout: individual STL files in stl/ and the complete download ZIP in stl/downloads/. The LD layout is expanded below. Each model has its own files and inline BOM. Individual part files are omitted.
+All three models share the same layout: whole-arm STEP assemblies are stored directly in step/; 3mf/ is reserved for 3D printing files, which are not yet available. The LD layout is expanded below. Each model README contains its own BOM.
 
 ```text
 hardware/
@@ -47,12 +47,8 @@ hardware/
 │   ├── README.md
 │   ├── README.zh.md
 │   ├── step/
-│   │   ├── assembly/
-│   │   └── parts/
-│   ├── stl/
-│   │   ├── downloads/
-│   │   │   └── star-arm-102-ld-stl-2026-10-21.zip
-│   │   └── *.stl
+│   │   └── star-arm-102-ld-assembly-export-2026-10-22.step
+│   ├── 3mf/
 │   ├── drawings/
 │   └── urdf/
 │       ├── downloads/
@@ -64,7 +60,7 @@ hardware/
 └── flexible-gripper/
 ```
 
-`step/assembly/` contains CAD assemblies; assembly, PID setup and zero calibration are covered in the [DIY assembly guide](../docs/diy-assembly/README.md). Each model provides its ROS 1 source package and complete ZIP: [LD](102-ld/urdf/), [HD](102-hd/urdf/), [FL](102-fl/urdf/). LD and HD contain the same model.
+`step/` contains CAD assemblies; assembly, PID setup and zero calibration are covered in the [DIY assembly guide](../docs/diy-assembly/README.md). Each model provides its ROS 1 source package and complete ZIP: [LD](102-ld/urdf/), [HD](102-hd/urdf/), [FL](102-fl/urdf/). LD and HD contain the same model.
 
 ## Licensing
 
