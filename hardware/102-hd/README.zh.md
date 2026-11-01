@@ -39,15 +39,26 @@
 
 打印件的“型号／规格／零件标识”栏填写零件标识。例如，“连杆 1”的零件标识为 `star-arm-102-link1`；`star-arm-102-` 前缀用于识别所属产品系列。
 
+左右指环以正常握持手柄时操作者的左右为准。
+
+<details>
+<summary>查看左右指环安装位置（L／R）</summary>
+
+<a href="images/102-hd-finger-ring-orientation.png"><img src="images/102-hd-finger-ring-orientation.png" alt="102-HD 指环安装位置：以操作者视角区分，L 为左指环，R 为右指环" width="520"></a>
+
+`L` = 左指环（Left Finger Ring）；`R` = 右指环（Right Finger Ring）。图中蓝色和橙色仅用于区分零件，两件打印件的实际颜色均为象牙白。
+
+</details>
+
 3MF 打印文件将放在 [3mf/](3mf/)，目前待提供。本表不记录打印参数；层高、壁数和填充率应根据打印机与耗材选择。
 
 打印件图片由对应的 STEP 模型渲染生成。紧固件图片为 AI 生成的外观示意图，规格以表格文字为准；点击图片可放大查看。
 
 | 序号 | 品名 | 型号／规格／零件标识 | 图片 | 描述 | 数量 |
 | :---: | --- | --- | :---: | --- | :---: |
-| 1 | UART 总线舵机 | RP8-U45H-M | <img src="images/rp8-u45h-m.png" alt="RP8-U45H-M" width="90"> | 12V；45kg-cm；118rpm；双轴；空心杯电机；12 位磁性绝对值编码器；25T | 4 |
-| 2 | UART 总线舵机 | RP8-U45H-M-C028 | <img src="images/rp8-u45h-m-c028.webp" alt="RP8-U45H-M-C028" width="90"> | 12V；45kg-cm；118rpm；双轴款壳体（平面下盖，无后输出轴）；空心杯电机；12 位磁性绝对值编码器；25T | 2 |
-| 3 | UART 总线舵机 | RP8-U45H-M-C029 | <img src="images/rp8-u45h-m-c029.webp" alt="RP8-U45H-M-C029" width="90"> | 12V；45kg-cm；118rpm；双轴款壳体（平面下盖，无后输出轴）；空心杯电机；12 位磁性绝对值编码器；D 型轴 | 1 |
+| 1 | UART 总线舵机 | RP8-U45H-M | <a href="images/rp8-u45h-m.png"><img src="images/rp8-u45h-m.png" alt="RP8-U45H-M" width="90"></a> | 12V；45kg-cm；118rpm；双轴；空心杯电机；12 位磁性绝对值编码器；25T | 4 |
+| 2 | UART 总线舵机 | RP8-U45H-M-C028 | <a href="images/rp8-u45h-m-c028.webp"><img src="images/rp8-u45h-m-c028.webp" alt="RP8-U45H-M-C028" width="90"></a> | 12V；45kg-cm；118rpm；双轴款壳体（平面下盖，无后输出轴）；空心杯电机；12 位磁性绝对值编码器；25T | 2 |
+| 3 | UART 总线舵机 | RP8-U45H-M-C029 | <a href="images/rp8-u45h-m-c029.webp"><img src="images/rp8-u45h-m-c029.webp" alt="RP8-U45H-M-C029" width="90"></a> | 12V；45kg-cm；118rpm；双轴款壳体（平面下盖，无后输出轴）；空心杯电机；12 位磁性绝对值编码器；D 型轴 | 1 |
 | 4 | 基座底板 | star-arm-102-base-bottom | <a href="images/star-arm-102-base-bottom.png"><img src="images/star-arm-102-base-bottom.png" alt="star-arm-102-base-bottom" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
 | 5 | 基座顶板 | star-arm-102-base-top | <a href="images/star-arm-102-base-top.png"><img src="images/star-arm-102-base-top.png" alt="star-arm-102-base-top" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
 | 6 | 连杆 1 | star-arm-102-link1 | <a href="images/star-arm-102-link1.png"><img src="images/star-arm-102-link1.png" alt="star-arm-102-link1" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
@@ -62,9 +73,9 @@
 | 15 | 右指环 | star-arm-102-finger-ring-right | <a href="images/star-arm-102-finger-ring-right.png"><img src="images/star-arm-102-finger-ring-right.png" alt="star-arm-102-finger-ring-right" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
 | 16 | HD 按钮上盖 | hd-button-cover | <a href="images/hd-button-cover.png"><img src="images/hd-button-cover.png" alt="hd-button-cover" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
 | 17 | HD 按钮底座 | hd-button-base | <a href="images/hd-button-base.png"><img src="images/hd-button-base.png" alt="hd-button-base" width="90"></a> | 象牙白，PLA 3D 打印件 | 1 |
-| 18 | TTL/USB 舵机转接板 | UC-01 | <img src="../../media/uc-01-primary.webp" alt="UC-01" width="90"> | USB Type-C；半双工／全双工转换；3.3 V／5 V TTL 电平可切换；输入电压 6–15 V；2 个 PH2.0 舵机接口；反接保护<br>XT30 接口 | 1 |
+| 18 | TTL/USB 舵机转接板 | UC-01 | <a href="../../media/uc-01-primary.webp"><img src="../../media/uc-01-primary.webp" alt="UC-01" width="90"></a> | USB Type-C；半双工／全双工转换；3.3 V／5 V TTL 电平可切换；输入电压 6–15 V；2 个 PH2.0 舵机接口；反接保护<br>XT30 接口 | 1 |
 | 19 | 按钮板 | UK-01 | <a href="images/uk-01-board.webp"><img src="images/uk-01-board.webp" alt="UK-01 电路板" width="90"></a> | 带座子 | 1 |
-| 20 | 推力滚针轴承 | AXK2035+2AS | <img src="../../media/axk2035-2as-bearing.png" alt="AXK2035+2AS 滚针轴承" width="90"> | 内径 20 mm，外径 35 mm，厚度 4 mm | 1 |
+| 20 | 推力滚针轴承 | AXK2035+2AS | <a href="../../media/axk2035-2as-bearing.png"><img src="../../media/axk2035-2as-bearing.png" alt="AXK2035+2AS 滚针轴承" width="90"></a> | 内径 20 mm，外径 35 mm，厚度 4 mm | 1 |
 | 21 | 舵机连接线 | PH2.0 (PH-3Y)<br>120 mm | <a href="../../media/ph-3y-servo-cable-120mm-thumbnail.png"><img src="../../media/ph-3y-servo-cable-120mm-thumbnail.png" alt="PH2.0 120 mm 舵机连接线" width="90"></a> | 黑色硅胶绝缘排线，外覆黑色编织护套；两端线序反向；每根导体 60 × Ø0.08 mm（约 22 AWG） | 6 |
 | 22 | 舵机连接线 | PH2.0 (PH-3Y)<br>200 mm | <a href="../../media/ph-3y-servo-cable-200mm-thumbnail.png"><img src="../../media/ph-3y-servo-cable-200mm-thumbnail.png" alt="PH2.0 200 mm 舵机连接线" width="90"></a> | 黑色硅胶绝缘排线，外覆黑色编织护套；两端线序反向；每根导体 60 × Ø0.08 mm（约 22 AWG） | 2 |
 | 23 | 内六角圆柱头螺钉 | M3 × 22 | <a href="../../media/fasteners/m3-22-socket-head-cap-screw.png"><img src="../../media/fasteners/m3-22-socket-head-cap-screw.png" alt="M3 × 22 内六角圆柱头螺钉示意图" width="90"></a> | 黑色表面 | 4 |

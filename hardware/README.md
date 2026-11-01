@@ -47,7 +47,7 @@ hardware/
 │   ├── README.md
 │   ├── README.zh.md
 │   ├── step/
-│   │   └── star-arm-102-ld-assembly-export-2026-10-22.step
+│   │   └── star-arm-102-ld-assembly-export-2026-11-01.step
 │   ├── 3mf/
 │   ├── drawings/
 │   └── urdf/

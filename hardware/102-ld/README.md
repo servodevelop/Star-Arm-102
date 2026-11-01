@@ -39,6 +39,17 @@ For printed parts, the part name identifies the component. English names in the 
 
 For printed parts, Model / Specification / Part Identifier lists the part identifier. For example, `Link 1` uses the identifier `star-arm-102-link1`. The `star-arm-102-` prefix identifies the product series.
 
+Left and right finger rings are named from the operator’s perspective while holding the handle in its normal operating position.
+
+<details>
+<summary>View finger ring orientation (L / R)</summary>
+
+<a href="images/102-ld-finger-ring-orientation.png"><img src="images/102-ld-finger-ring-orientation.png" alt="102-LD finger ring orientation: L is the left finger ring and R is the right finger ring, from the operator’s perspective" width="520"></a>
+
+`L` = Left Finger Ring; `R` = Right Finger Ring. Blue and orange distinguish the parts in this diagram; both printed parts are ivory.
+
+</details>
+
 3MF printing files will be provided in [3mf/](3mf/); they are not yet available. Print settings are not listed here; choose layer height, wall count and infill for your printer and filament.
 
 Printed-part images are rendered from the corresponding STEP models. Fastener images are AI-generated illustrations; refer to the table text for specifications. Click an image to enlarge it.

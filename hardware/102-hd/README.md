@@ -39,15 +39,26 @@ For printed parts, the part name identifies the component. English names in the 
 
 For printed parts, Model / Specification / Part Identifier lists the part identifier. For example, `Link 1` uses the identifier `star-arm-102-link1`. The `star-arm-102-` prefix identifies the product series.
 
+Left and right finger rings are named from the operator’s perspective while holding the handle in its normal operating position.
+
+<details>
+<summary>View finger ring orientation (L / R)</summary>
+
+<a href="images/102-hd-finger-ring-orientation.png"><img src="images/102-hd-finger-ring-orientation.png" alt="102-HD finger ring orientation: L is the left finger ring and R is the right finger ring, from the operator’s perspective" width="520"></a>
+
+`L` = Left Finger Ring; `R` = Right Finger Ring. Blue and orange distinguish the parts in this diagram; both printed parts are ivory.
+
+</details>
+
 3MF printing files will be provided in [3mf/](3mf/); they are not yet available. Print settings are not listed here; choose layer height, wall count and infill for your printer and filament.
 
 Printed-part images are rendered from the corresponding STEP models. Fastener images are AI-generated illustrations; refer to the table text for specifications. Click an image to enlarge it.
 
 | No. | Part Name | Model / Specification / Part Identifier | Image | Description | Quantity |
 | :---: | --- | --- | :---: | --- | :---: |
-| 1 | UART bus servo | RP8-U45H-M | <img src="images/rp8-u45h-m.png" alt="RP8-U45H-M" width="90"> | 12V; 45kg-cm; 118rpm; Dual-shaft; Coreless Motor; 12-bit Magnetic Absolute Encoder; 25T | 4 |
-| 2 | UART bus servo | RP8-U45H-M-C028 | <img src="images/rp8-u45h-m-c028.webp" alt="RP8-U45H-M-C028" width="90"> | 12V; 45kg-cm; 118rpm; Dual-shaft Housing (Flat Bottom Cover, No Rear Output Shaft); Coreless Motor; 12-bit Magnetic Absolute Encoder; 25T | 2 |
-| 3 | UART bus servo | RP8-U45H-M-C029 | <img src="images/rp8-u45h-m-c029.webp" alt="RP8-U45H-M-C029" width="90"> | 12V; 45kg-cm; 118rpm; Dual-shaft Housing (Flat Bottom Cover, No Rear Output Shaft); Coreless Motor; 12-bit Magnetic Absolute Encoder; D-Type Shaft | 1 |
+| 1 | UART bus servo | RP8-U45H-M | <a href="images/rp8-u45h-m.png"><img src="images/rp8-u45h-m.png" alt="RP8-U45H-M" width="90"></a> | 12V; 45kg-cm; 118rpm; Dual-shaft; Coreless Motor; 12-bit Magnetic Absolute Encoder; 25T | 4 |
+| 2 | UART bus servo | RP8-U45H-M-C028 | <a href="images/rp8-u45h-m-c028.webp"><img src="images/rp8-u45h-m-c028.webp" alt="RP8-U45H-M-C028" width="90"></a> | 12V; 45kg-cm; 118rpm; Dual-shaft Housing (Flat Bottom Cover, No Rear Output Shaft); Coreless Motor; 12-bit Magnetic Absolute Encoder; 25T | 2 |
+| 3 | UART bus servo | RP8-U45H-M-C029 | <a href="images/rp8-u45h-m-c029.webp"><img src="images/rp8-u45h-m-c029.webp" alt="RP8-U45H-M-C029" width="90"></a> | 12V; 45kg-cm; 118rpm; Dual-shaft Housing (Flat Bottom Cover, No Rear Output Shaft); Coreless Motor; 12-bit Magnetic Absolute Encoder; D-Type Shaft | 1 |
 | 4 | Base bottom plate | star-arm-102-base-bottom | <a href="images/star-arm-102-base-bottom.png"><img src="images/star-arm-102-base-bottom.png" alt="star-arm-102-base-bottom" width="90"></a> | Ivory, PLA 3D printed part | 1 |
 | 5 | Base top plate | star-arm-102-base-top | <a href="images/star-arm-102-base-top.png"><img src="images/star-arm-102-base-top.png" alt="star-arm-102-base-top" width="90"></a> | Ivory, PLA 3D printed part | 1 |
 | 6 | Link 1 | star-arm-102-link1 | <a href="images/star-arm-102-link1.png"><img src="images/star-arm-102-link1.png" alt="star-arm-102-link1" width="90"></a> | Ivory, PLA 3D printed part | 1 |
@@ -62,9 +73,9 @@ Printed-part images are rendered from the corresponding STEP models. Fastener im
 | 15 | Right finger ring | star-arm-102-finger-ring-right | <a href="images/star-arm-102-finger-ring-right.png"><img src="images/star-arm-102-finger-ring-right.png" alt="star-arm-102-finger-ring-right" width="90"></a> | Ivory, PLA 3D printed part | 1 |
 | 16 | HD button cover | hd-button-cover | <a href="images/hd-button-cover.png"><img src="images/hd-button-cover.png" alt="hd-button-cover" width="90"></a> | Ivory, PLA 3D printed part | 1 |
 | 17 | HD button base | hd-button-base | <a href="images/hd-button-base.png"><img src="images/hd-button-base.png" alt="hd-button-base" width="90"></a> | Ivory, PLA 3D printed part | 1 |
-| 18 | TTL/USB Servo Adapter | UC-01 | <img src="../../media/uc-01-primary.webp" alt="UC-01" width="90"> | USB Type-C; half-/full-duplex conversion; selectable 3.3 V / 5 V TTL levels; 6–15 V input; 2 × PH2.0 servo ports; reverse-polarity protection<br>XT30 connector | 1 |
+| 18 | TTL/USB Servo Adapter | UC-01 | <a href="../../media/uc-01-primary.webp"><img src="../../media/uc-01-primary.webp" alt="UC-01" width="90"></a> | USB Type-C; half-/full-duplex conversion; selectable 3.3 V / 5 V TTL levels; 6–15 V input; 2 × PH2.0 servo ports; reverse-polarity protection<br>XT30 connector | 1 |
 | 19 | Button board | UK-01 | <a href="images/uk-01-board.webp"><img src="images/uk-01-board.webp" alt="UK-01 board" width="90"></a> | With socket | 1 |
-| 20 | Thrust needle roller bearing | AXK2035+2AS | <img src="../../media/axk2035-2as-bearing.png" alt="AXK2035+2AS thrust needle roller bearing" width="90"> | inner diameter 20 mm, outer diameter 35 mm, thickness 4 mm | 1 |
+| 20 | Thrust needle roller bearing | AXK2035+2AS | <a href="../../media/axk2035-2as-bearing.png"><img src="../../media/axk2035-2as-bearing.png" alt="AXK2035+2AS thrust needle roller bearing" width="90"></a> | inner diameter 20 mm, outer diameter 35 mm, thickness 4 mm | 1 |
 | 21 | Servo cable | PH2.0 (PH-3Y)<br>120 mm | <a href="../../media/ph-3y-servo-cable-120mm-thumbnail.png"><img src="../../media/ph-3y-servo-cable-120mm-thumbnail.png" alt="PH2.0 120 mm servo cable" width="90"></a> | Black silicone-insulated ribbon cable with black braided sleeving; reversed pin order between ends; 60 × Ø0.08 mm strands per conductor (approx. 22 AWG) | 6 |
 | 22 | Servo cable | PH2.0 (PH-3Y)<br>200 mm | <a href="../../media/ph-3y-servo-cable-200mm-thumbnail.png"><img src="../../media/ph-3y-servo-cable-200mm-thumbnail.png" alt="PH2.0 200 mm servo cable" width="90"></a> | Black silicone-insulated ribbon cable with black braided sleeving; reversed pin order between ends; 60 × Ø0.08 mm strands per conductor (approx. 22 AWG) | 2 |
 | 23 | Hexagon socket head cap screw | M3 × 22 | <a href="../../media/fasteners/m3-22-socket-head-cap-screw.png"><img src="../../media/fasteners/m3-22-socket-head-cap-screw.png" alt="M3 × 22 hexagon socket head cap screw illustration" width="90"></a> | Black finish | 4 |

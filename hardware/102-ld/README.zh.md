@@ -39,6 +39,17 @@
 
 打印件的“型号／规格／零件标识”栏填写零件标识。例如，“连杆 1”的零件标识为 `star-arm-102-link1`；`star-arm-102-` 前缀用于识别所属产品系列。
 
+左右指环以正常握持手柄时操作者的左右为准。
+
+<details>
+<summary>查看左右指环安装位置（L／R）</summary>
+
+<a href="images/102-ld-finger-ring-orientation.png"><img src="images/102-ld-finger-ring-orientation.png" alt="102-LD 指环安装位置：以操作者视角区分，L 为左指环，R 为右指环" width="520"></a>
+
+`L` = 左指环（Left Finger Ring）；`R` = 右指环（Right Finger Ring）。图中蓝色和橙色仅用于区分零件，两件打印件的实际颜色均为象牙白。
+
+</details>
+
 3MF 打印文件将放在 [3mf/](3mf/)，目前待提供。本表不记录打印参数；层高、壁数和填充率应根据打印机与耗材选择。
 
 打印件图片由对应的 STEP 模型渲染生成。紧固件图片为 AI 生成的外观示意图，规格以表格文字为准；点击图片可放大查看。
