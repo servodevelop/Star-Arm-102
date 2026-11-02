@@ -33,7 +33,7 @@ class WebTests(unittest.TestCase):
         self.assertEqual(validate(defaults()),defaults())
         changes=[('max_power_mw',2000),('max_power_mw',True),('power_filter_s',0.),
                  ('deadzone_nm',[float('nan')]*7),('joint_power_mw',[1500]*7),
-                 ('joint_power_mw',[1200]*7),('revision',-1),('hold_mw',5)]
+                 ('joint_power_mw',[1200]*6+[True]),('revision',-1),('hold_mw',5)]
         for key,value in changes:
             d=defaults();d[key]=value
             with self.subTest(key=key,value=value),self.assertRaises(ValueError):validate(d)
@@ -49,6 +49,32 @@ class WebTests(unittest.TestCase):
             self.assertEqual(app.settings(),saved)
             self.assertEqual(list(app.store.glob('.settings*')),[])
 
+    def test_web_save_locks_existing_torque_and_response_parameters(self):
+        with tempfile.TemporaryDirectory() as folder:
+            app=Dashboard(folder)
+            initial=app.settings()
+            initial['power_filter_s']=.22
+            initial['deadzone_nm'][0]=.85
+            atomic_json(app.settings_path,initial)
+            before={path.name:path.read_bytes() for path in app.store.glob('*.json')}
+            keys=('deadzone_nm','moving_margin_nm','excess_full_scale_nm',
+                  'residual_filter_s','confirmation_s','power_filter_s',
+                  'power_rise_mw_s','power_fall_mw_s')
+            for key in keys:
+                changed=copy.deepcopy(initial)
+                if isinstance(changed[key],list):changed[key][0]+=.05
+                else:changed[key]*=1.1
+                with self.subTest(key=key),self.assertRaisesRegex(ValueError,'固定参数'):
+                    app.save(changed)
+                self.assertEqual({path.name:path.read_bytes() for path in app.store.glob('*.json')},before)
+            changed=copy.deepcopy(initial)
+            changed['max_power_mw']=800
+            changed['joint_power_mw']=[min(power,800) for power in changed['joint_power_mw']]
+            saved=app.save(changed)
+            self.assertEqual(saved['revision'],1)
+            self.assertEqual(saved['max_power_mw'],800)
+            for key in keys:self.assertEqual(saved[key],initial[key])
+
     def test_http_token_origin_static_paths_and_get_never_start_hardware(self):
         with tempfile.TemporaryDirectory() as t:
             app=Dashboard(t);server=Server(('127.0.0.1',0),make_handler(app))
@@ -58,6 +84,7 @@ class WebTests(unittest.TestCase):
                 with patch('stararm_rs_feedback.dashboard.subprocess.Popen') as popen:
                     with urlopen(base+'/api/bootstrap') as r:boot=json.load(r)
                     self.assertIn('defaults',boot)
+                    self.assertIn(5,boot['active_joint_indices'])
                     for p in ('/','/app.js','/model/robot.json','/api/state'):
                         with urlopen(base+p) as r:self.assertEqual(r.status,200)
                     for p in ('/../dashboard.py','/%2e%2e/dashboard.py','/data/web/settings.json','/api/log','/api/replay'):

@@ -37,9 +37,9 @@
   </div>
   <section class="metrics" aria-label="会话概览" data-enter>
     <article><span class="metric-name">会话状态</span><b id="session" data-state-motion>未启动</b><small id="sessionDetail">本地设备</small></article>
-    <article><span class="metric-name">Leader 阻尼</span><b><i id="activeCount">—</i><em> / 6 轴</em></b><small id="outputDetail">等待反馈数据</small></article>
+    <article><span class="metric-name">Leader 阻尼</span><b><i id="activeCount">—</i><em id="activeTotal"> / 7 轴</em></b><small id="outputDetail">等待反馈数据</small></article>
     <article><span class="metric-name">峰值扭矩</span><b><i id="maxTorque">—</i><em> N·m</em></b><small id="maxTorqueJoint">RS 电机反馈值</small></article>
-    <article><span class="metric-name">数据时效</span><b id="freshness" data-state-motion>—</b><small id="revision">参数尚未应用</small></article>
+    <article><span class="metric-name">数据时效</span><b id="freshness">—</b><small id="revision">参数尚未应用</small></article>
   </section>
   <div id="contentSurface" class="content-surface">
     <section class="view workspace" id="workspace" data-page="workspace" role="tabpanel" aria-labelledby="tab-workspace">
@@ -73,7 +73,7 @@
         </section>
       </div>
     </section>
-<section class="view panel params-panel" id="parameters" data-page="parameters" role="tabpanel" aria-labelledby="tab-parameters" hidden><div class="panel-head" data-enter><div><h2><svg class="icon"><use href="icons.svg#sliders-horizontal"></use></svg> 阻尼参数</h2><p>保存后自动应用  重新初始化约 0.25 秒  HOLD 保持 1500 mW</p></div><div class="param-actions"><span id="dirty" class="tag">已保存</span><button id="defaults" class="quiet">恢复默认值</button><button id="save" class="primary">保存并应用</button></div></div><div class="global-settings" data-enter><label>普通阻尼总上限 <span><input id="maxPower" type="number" min="400" max="1500" step="10"><em>mW</em></span><small>400–1500；各轴还受下方上限限制</small></label><div class="param-explainer"><b>只调整普通动态阻尼</b><p>死区越小越容易触发；满输出标尺越小，同等负载下输出越强。每轴上限填 0 可关闭该轴普通阻尼；J6 保持关闭。</p></div></div><div class="table-scroll"><table class="param-table"><thead><tr><th>关节</th><th>功率上限 <small>mW</small></th><th>基础死区 <small>Nm</small></th><th>运动余量最大值 <small>Nm</small></th><th>满输出力矩标尺 <small>Nm · 超过死区部分</small></th></tr></thead><tbody id="paramRows"></tbody></table></div><div class="advanced"><button id="advancedToggle" class="quiet">滤波与响应参数</button><div id="advancedFields" hidden></div></div><div class="param-note">臂部运动超范围清零已临时关闭，超过旧速度/加速度阈值时继续计算阻尼。J1 按自身回转残差判断；近限位按轴释放。J2/J3 同时处于近零模型无效区时，会暂停 J2–J5 普通阻尼，任一电机角达到 5° 后恢复。故障和通信保护仍生效。</div></section>
+<section class="view panel params-panel" id="parameters" data-page="parameters" role="tabpanel" aria-labelledby="tab-parameters" hidden><div class="panel-head" data-enter><div><h2><svg class="icon"><use href="icons.svg#sliders-horizontal"></use></svg> 阻尼参数</h2><p>保存后自动应用  重新初始化约 0.25 秒  HOLD 保持 1500 mW</p></div><div class="param-actions"><span id="dirty" class="tag">已保存</span><button id="defaults" class="quiet">恢复默认上限</button><button id="save" class="primary">保存并应用</button></div></div><div class="global-settings" data-enter><label>普通阻尼强度上限 <span><input id="maxPower" type="number" min="400" max="1500" step="10"><em>mW</em></span><small>400–1500 mW；调大允许更强阻尼，调小限制阻尼强度</small></label><div class="param-explainer"><b>阻尼强度怎么调？</b><p>这是各关节共用的强度上限，实际阻尼随负载变化，并受下方各关节上限限制。想让某一关节更强，需同时检查该关节上限；填 0 可关闭该关节普通阻尼。降低共同上限时，超出的关节上限会同步降低。</p></div></div><div class="table-scroll"><table class="param-table"><thead><tr><th>关节</th><th>功率上限 <small>mW</small></th><th>基础死区 <small>Nm · 固定</small></th><th>运动余量最大值 <small>Nm · 固定</small></th><th>满输出力矩标尺 <small>Nm · 超过死区部分 · 固定</small></th></tr></thead><tbody id="paramRows"></tbody></table></div><div class="advanced"><button id="advancedToggle" class="quiet">响应参数（固定）</button><div id="advancedFields" hidden></div></div><div class="param-note">臂部运动超范围清零已临时关闭，超过旧速度/加速度阈值时继续计算阻尼。J1 按自身回转残差判断；近限位按轴释放。J2/J3 同时处于近零模型无效区时，会暂停 J2–J5 普通阻尼，任一电机角达到 5° 后恢复。故障和通信保护仍生效。</div></section>
 
   </div>
   <footer data-enter><span>Fashionstar <span class="footer-divider"></span> Star Arm 102</span><span>关闭页面不会停止会话  停止运行可能回零或卸力</span></footer>

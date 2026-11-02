@@ -5,6 +5,7 @@ import {finite,torqueVisual} from './torque.js';
 import * as Motion from './motion.js';
 import {buttonContent} from './icons.js';
 import {translate,rememberText,initLanguage} from './i18n.js';
+import {PoseTimeline,labelColumns} from './presentation.js';
 function text(element,value){Motion.text(element,translate(value));rememberText(element,value);}
 
 const $=id=>document.getElementById(id);
@@ -15,6 +16,7 @@ let history=[],lastHistory=null,busy=false,networkFailed=false;
 const fmt=(v,n=2)=>typeof v==='number'&&Number.isFinite(v)?v.toFixed(n):'—';
 let forceMetric='torque_nm',forceFresh=false,freshDeadline=0;
 const forceElements=[],forceMarkers=[],forceAnchors=[];
+const poseTimeline=new PoseTimeline();
 let activeView='workspace',navIndicator,metricIndicator;
 function setButton(id,label,name){
   const button=$(id);if(button.dataset.content===`${name}:${label}`)return;
@@ -32,7 +34,7 @@ function setButton(id,label,name){
 function initInterface(){
   $('contentSurface').dataset.motionEngine='layout-morph';
   document.querySelectorAll('[data-icon]').forEach(button=>setButton(button.id,button.textContent.trim(),button.dataset.icon));
-  setButton('defaults','恢复默认','rotate-ccw');setButton('save','保存并应用','save');setButton('advancedToggle','滤波与响应参数','chevron-down');
+  setButton('defaults','恢复默认上限','rotate-ccw');setButton('save','保存并应用','save');setButton('advancedToggle','响应参数（固定）','chevron-down');
   navIndicator=Motion.slidingIndicator(document.querySelector('.page-tabs'),'[aria-selected=true]');
   metricIndicator=Motion.slidingIndicator(document.querySelector('.segmented'),'[aria-pressed=true]');
   initScaleMenu();
@@ -108,7 +110,7 @@ function buildTables(){
   names.forEach((name,i)=>{
     const label=document.createElement('button');label.className='force-label unavailable';label.setAttribute('aria-pressed',String(i===selected));
     label.innerHTML=`<span><span class="force-axis">J${i+1}</span><span class="force-level">等待</span></span><span><b>—</b><em>N·m</em></span>`;
-    label.onclick=()=>selectJoint(i);label.title=`J${i+1} · ${name}`;$('forceLabels').appendChild(label);
+    label.onclick=()=>selectJoint(i);$('forceLabels').appendChild(label);
     const line=document.createElementNS('http://www.w3.org/2000/svg','path');$('forceLines').appendChild(line);
     forceElements.push({label,line,value:label.querySelector('b'),level:label.querySelector('.force-level')});
   });
@@ -122,9 +124,16 @@ function buildTables(){
 }
 function buildParams(){
   $('maxPower').value=settings.max_power_mw;
-  $('paramRows').innerHTML=names.map((n,i)=>`<tr><td><div class="joint-name"><span style="background:${colors[i]}"></span>J${i+1}<small>${n}${i===5?' · 普通阻尼关闭':''}</small></div></td>${['joint_power_mw',...Object.keys(boot.arrays)].map(key=>{const bounds=key==='joint_power_mw'?[0,1500]:boot.arrays[key];return `<td><input aria-label="J${i+1} ${key==='joint_power_mw'?'功率上限':boot.arrays[key][2]}" type="number" data-key="${key}" data-index="${i}" min="${bounds[0]}" max="${bounds[1]}" step="${key==='joint_power_mw'?10:.01}" value="${settings[key][i]}" ${i===5?'disabled':''}></td>`;}).join('')}</tr>`).join('');
-  $('advancedFields').innerHTML=Object.entries(boot.scalars).map(([key,[lo,hi,label,unit]])=>`<label>${label}<span>${unit}</span><input type="number" data-key="${key}" min="${lo}" max="${hi}" step="${hi>100?100:.01}" value="${settings[key]}"></label>`).join('');
+  const j6Supported=boot.active_joint_indices?.includes(5)===true;
+  $('activeTotal').textContent=j6Supported?' / 7 轴':' / 6 轴';
+  $('paramRows').innerHTML=names.map((n,i)=>`<tr><td><div class="joint-name"><span style="background:${colors[i]}"></span>J${i+1}<small>${n}${i===5&&!j6Supported?' · 重启网页服务后可调':''}</small></div></td><td><input aria-label="J${i+1} 功率上限" type="number" data-key="joint_power_mw" data-index="${i}" min="0" max="${settings.max_power_mw}" step="10" value="${settings.joint_power_mw[i]}" ${i===5&&!j6Supported?'disabled':''}></td>${Object.keys(boot.arrays).map(key=>`<td><output class="fixed-value" aria-label="J${i+1} ${boot.arrays[key][2]}（固定）" data-fixed-key="${key}" data-index="${i}">${settings[key][i]}</output></td>`).join('')}</tr>`).join('');
+  $('advancedFields').innerHTML=Object.entries(boot.scalars).map(([key,[lo,hi,label,unit]])=>`<label>${label}<span>${unit}</span><output class="fixed-value" aria-label="${label}（固定）" data-fixed-key="${key}">${settings[key]}</output></label>`).join('');
   for(const input of document.querySelectorAll('.params-panel input'))input.addEventListener('input',markDirty);
+  $('maxPower').oninput=()=>{
+    const cap=$('maxPower').valueAsNumber;
+    if(!Number.isInteger(cap)||!$('maxPower').checkValidity())return;
+    document.querySelectorAll('[data-key="joint_power_mw"]').forEach(input=>{input.max=cap;if(Number(input.value)>cap)input.value=cap;});
+  };
   document.querySelectorAll('#paramRows tr,#advancedFields label').forEach(element=>element.setAttribute('data-enter',''));if(activeView==='parameters')Motion.enter($('parameters'));
 }
 function collectSettings(){
@@ -137,9 +146,9 @@ function collectSettings(){
   if(!$('maxPower').checkValidity())throw new Error('总功率上限须为 400–1500 mW');return next;
 }
 $('save').onclick=async()=>{try{const next=collectSettings();$('save').disabled=true;settings=await api('/api/settings',next);dirty=false;text($('dirty'),'已保存');$('dirty').className='tag';notice(latestStatus?.running?'参数已保存，等待控制循环确认生效。':'参数已保存，下次启动时生效。','success');}catch(e){notice(e.message,'error');}finally{$('save').disabled=false;}};
-$('defaults').onclick=()=>{const revision=settings.revision;settings=structuredClone(boot.defaults);settings.revision=revision;Motion.morph(()=>{buildParams();markDirty();},{snapshot:true});notice('已填入默认值  保存并应用后生效');};
+$('defaults').onclick=()=>{settings.max_power_mw=boot.defaults.max_power_mw;settings.joint_power_mw=structuredClone(boot.defaults.joint_power_mw);Motion.morph(()=>{buildParams();markDirty();},{snapshot:true});notice('已恢复默认阻尼上限，保存并应用后生效。');};
 let advancedOpen=false;
-$('advancedToggle').onclick=()=>{advancedOpen=!advancedOpen;$('advancedToggle').setAttribute('aria-expanded',String(advancedOpen));Motion.show($('advancedFields'),advancedOpen,{collapse:true,duration:300});setButton('advancedToggle',advancedOpen?'收起响应参数':'滤波与响应参数',advancedOpen?'chevron-down':'settings-2');};
+$('advancedToggle').onclick=()=>{advancedOpen=!advancedOpen;$('advancedToggle').setAttribute('aria-expanded',String(advancedOpen));Motion.show($('advancedFields'),advancedOpen,{collapse:true,duration:300});setButton('advancedToggle',advancedOpen?'收起响应参数（固定）':'响应参数（固定）',advancedOpen?'chevron-down':'settings-2');};
 async function start(mode){
   if(busy)return;
   if(dirty){notice('有未保存参数，请先保存或恢复已保存值。','error');return;}
@@ -160,6 +169,7 @@ function updateDetail(){
   text($('selectedResidual'),fmt(j?.residual_nm)+' Nm');text($('selectedDeadzone'),fmt(j?.deadzone_nm)+' Nm');text($('selectedLeader'),fmt(j?.leader_pos_deg,1)+'°');
 }
 function renderTelemetry(frame,fresh=true){
+  if(latest?.monotonic_s===frame.monotonic_s&&latest?.run_id===frame.run_id&&forceFresh===fresh)return;
   latest=frame;forceFresh=fresh;text($('source'),fresh?'实时 CAN':'数据已过期');$('source').className='tag '+(fresh?'live':'pending');
   const joints=frame.joints||[];let max=-1,axis=0,active=0;
   Array.from({length:7},(_,i)=>joints[i]||{}).forEach((j,i)=>{
@@ -170,14 +180,14 @@ function renderTelemetry(frame,fresh=true){
   });
   text($('activeCount'),fresh?active:'—');text($('outputDetail'),frame.holding?'HOLD · 独立堵转保持':frame.output_enabled?'反馈输出已启用':'仅监测 · 未发送 Leader 阻尼');
   text($('maxTorque'),fmt(max<0?null:max));text($('maxTorqueJoint'),`J${axis+1} · ${names[axis]}`);
-  updateDetail();setPose(joints);updateForces();
+  updateDetail();if(fresh)poseTimeline.push(joints,frame.monotonic_s,frame.run_id??'',performance.now());updateForces();
   if(fresh&&frame.monotonic_s!==lastHistory){
     lastHistory=frame.monotonic_s;history.push({time:frame.monotonic_s,torque:joints.map(j=>j.torque_nm)});
     history=history.filter(p=>frame.monotonic_s-p.time<=30);drawTrend();
   }
 }
 function clearTelemetry(){
-  latest=null;forceFresh=false;updateForces();updateDetail();text($('source'),'等待数据');$('source').className='tag';text($('activeCount'),'—');text($('outputDetail'),'等待反馈数据');text($('maxTorque'),'—');text($('maxTorqueJoint'),'RS 电机反馈值');
+  latest=null;forceFresh=false;poseTimeline.clear();updateForces();updateDetail();text($('source'),'等待数据');$('source').className='tag';text($('activeCount'),'—');text($('outputDetail'),'等待反馈数据');text($('maxTorque'),'—');text($('maxTorqueJoint'),'RS 电机反馈值');
   for(let i=0;i<7;i++){for(const key of ['pos','cur','power'])$(key+i).textContent='—';text($('mode'+i),'—');$('mode'+i).className='mode UNKNOWN';$('bar'+i).style.width='0%';}
 }
 function renderStatus(data){
@@ -195,15 +205,16 @@ function renderStatus(data){
   if(data.phase==='exited'&&data.exit_code!==0&&data.exit_code!==-2)notice(`会话已结束（退出代码 ${data.exit_code}）`,'error');
   if(data.error)notice(data.error,'error');
 }
-async function poll(){try{renderStatus(await api('/api/state'));}catch(e){networkFailed=true;setButtons();document.body.classList.add('stale');$('led').className='led orange';text($('connection'),'网页服务连接中断');text($('freshness'),'已过期');if(latest)renderTelemetry(latest,false);notice('网页服务暂不可达；此状态不能确认机械臂已停止。','error');}setTimeout(poll,250);}
+async function poll(){try{renderStatus(await api('/api/state'));}catch(e){networkFailed=true;setButtons();document.body.classList.add('stale');$('led').className='led orange';text($('connection'),'网页服务连接中断');text($('freshness'),'已过期');if(latest)renderTelemetry(latest,false);notice('网页服务暂不可达；此状态不能确认机械臂已停止。','error');}setTimeout(poll,latestStatus?.running?80:500);}
 // Expire on the client even while a state request is still waiting for its timeout.
 setInterval(()=>{if(forceFresh&&performance.now()>freshDeadline){document.body.classList.add('stale');text($('freshness'),'已过期');text($('connection'),'等待新鲜设备数据');$('led').className='led orange';renderTelemetry(latest,false);}},100);
 let chartHover=null;
 function drawTrend(){
   const canvas=$('trend'),width=canvas.clientWidth,height=canvas.clientHeight;
   if(width<1||height<1)return;
-  const dpr=devicePixelRatio||1;canvas.width=width*dpr;canvas.height=height*dpr;
-  const ctx=canvas.getContext('2d');ctx.scale(dpr,dpr);ctx.clearRect(0,0,width,height);
+  const dpr=devicePixelRatio||1;
+  if(canvas.width!==Math.round(width*dpr)||canvas.height!==Math.round(height*dpr)){canvas.width=Math.round(width*dpr);canvas.height=Math.round(height*dpr);}
+  const ctx=canvas.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,width,height);
   const values=history.flatMap(point=>point.torque.filter(finite).map(Math.abs));
   const range=Math.ceil(Math.max(1,...values)*1.15*2)/2;
   const left=32,right=width-14,top=10,bottom=height-12,mid=(top+bottom)/2;
@@ -242,16 +253,16 @@ function resetView(){
 async function initModel(){
   try{
     const view=$('viewport');scene=new THREE.Scene();camera=new THREE.PerspectiveCamera(38,1,.005,20);camera.up.set(0,0,1);
-    renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.2;
+    renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));renderer.shadowMap.enabled=true;renderer.shadowMap.autoUpdate=false;renderer.shadowMap.needsUpdate=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.2;
     view.appendChild(renderer.domElement);controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.minDistance=.3;controls.maxDistance=3.;controls.maxPolarAngle=Math.PI*.49;resetView();
-    scene.add(new THREE.HemisphereLight(0xffffff,0xa7b6cd,2.1));const sun=new THREE.DirectionalLight(0xf9fbff,3);sun.position.set(1,-1,2);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);sun.shadow.camera.left=-1;sun.shadow.camera.right=1;sun.shadow.camera.top=1;sun.shadow.camera.bottom=-1;sun.shadow.bias=-.0005;scene.add(sun);
+    scene.add(new THREE.HemisphereLight(0xffffff,0xa7b6cd,2.1));const sun=new THREE.DirectionalLight(0xf9fbff,3);sun.position.set(1,-1,2);sun.castShadow=true;sun.shadow.mapSize.set(1024,1024);sun.shadow.camera.left=-1;sun.shadow.camera.right=1;sun.shadow.camera.top=1;sun.shadow.camera.bottom=-1;sun.shadow.bias=-.0005;scene.add(sun);
     const rim=new THREE.DirectionalLight(0xdde9ff,2);rim.position.set(-1,.5,1);scene.add(rim);
     const grid=new THREE.GridHelper(2,40,0xd4deed,0xe9eef5);grid.rotation.x=Math.PI/2;grid.position.z=-.001;scene.add(grid);
     const floor=new THREE.Mesh(new THREE.PlaneGeometry(5,5),new THREE.ShadowMaterial({opacity:.12}));floor.position.z=-.002;floor.receiveShadow=true;scene.add(floor);
     const model=await(await fetch('model/robot.json')).json();robotGroup=new THREE.Group();scene.add(robotGroup);
     for(const link of model.links){const group=new THREE.Group();group.name=link.name;linkGroups[link.name]=group;}
     robotGroup.add(linkGroups[model.root]);
-    for(const joint of model.joints){const base=new THREE.Group(),moving=new THREE.Group();poseObject(base,joint);base.add(moving);moving.add(linkGroups[joint.child]);linkGroups[joint.parent].add(base);modelJoints.push({...joint,base,moving});
+    for(const joint of model.joints){const base=new THREE.Group(),moving=new THREE.Group();poseObject(base,joint);base.add(moving);moving.add(linkGroups[joint.child]);linkGroups[joint.parent].add(base);modelJoints.push({...joint,base,moving,axisVector:new THREE.Vector3(...joint.axis),lastValue:null});
       if(joint.type==='revolute'){const helper=new THREE.AxesHelper(.055);helper.visible=false;helper.material.transparent=true;helper.material.opacity=0;base.add(helper);axes.push(helper);}}
     for(let i=0;i<7;i++){
       const anchor=i<6?modelJoints.find(j=>j.name===`joint${i+1}`).base:linkGroups.gripper_end;
@@ -261,23 +272,38 @@ async function initModel(){
     const tasks=model.links.flatMap(link=>link.visuals.map(async v=>{
       if(!cache.has(v.mesh))cache.set(v.mesh,loader.loadAsync(v.mesh));const geometry=await cache.get(v.mesh);geometry.computeVertexNormals();
       const baseColor=new THREE.Color(...v.color.slice(0,3));if(v.color[1]>.5&&v.color[0]<v.color[1])baseColor.set(v.color[0]>.5?0x7f96b6:0x333c4a);const material=new THREE.MeshStandardMaterial({color:baseColor,metalness:.48,roughness:.5});const mesh=new THREE.Mesh(geometry,material);mesh.userData.baseColor=material.color.clone();modelMeshes.push(mesh);mesh.castShadow=true;mesh.receiveShadow=true;mesh.scale.fromArray(v.scale);poseObject(mesh,v);linkGroups[link.name].add(mesh);text($('modelLoadingText'),`正在加载模型 ${++completed}/${total}`);
-    }));await Promise.all(tasks);modelReady=true;Motion.show($('modelLoading'),false,{duration:400});if(latest)setPose(latest.joints);updateForces();
+    }));await Promise.all(tasks);modelReady=true;Motion.show($('modelLoading'),false,{duration:400});updateForces();
     const resize=()=>{const w=view.clientWidth,h=view.clientHeight;if(w<1||h<1)return;renderer.setSize(w,h);camera.aspect=w/h;camera.updateProjectionMatrix();drawTrend();};new ResizeObserver(resize).observe(view);resize();
     $('resetView').onclick=resetView;$('showAxes').onchange=()=>axes.forEach(axis=>{axis.visible=true;axis.material.transparent=true;});controls.addEventListener('start',()=>{cameraReset=null;});
+    let previousRender=performance.now();
     const animate=()=>{
       requestAnimationFrame(animate);
-      if($('workspace').hidden)return;
+      if($('workspace').hidden||document.hidden)return;
+      const now=performance.now(),dt=Math.min(.1,Math.max(0,(now-previousRender)/1000));previousRender=now;
+      if(forceFresh){const positions=poseTimeline.at(now);if(positions)setPose(positions);}
       if(cameraReset){const t=Math.min(1,(performance.now()-cameraReset.time)/550),ease=1-(1-t)**4;camera.position.copy(cameraReset.position).lerp(new THREE.Vector3(.82,-.98,.67),ease);controls.target.copy(cameraReset.target).lerp(new THREE.Vector3(0,0,.27),ease);if(t===1)cameraReset=null;}
       axes.forEach(axis=>{const target=$('showAxes').checked?1:0;if(axis.material.transparent)axis.material.opacity=Motion.reducedMotion()?target:THREE.MathUtils.lerp(axis.material.opacity,target,.18);axis.visible=axis.material.opacity>.01&&($('showAxes').checked||axis.material.transparent);});
-      const blend=Motion.reducedMotion()?1:.22;
-      forceMarkers.forEach(marker=>{const target=$('showForces').checked ? .85 : 0;marker.material.opacity=Motion.reducedMotion()?target:THREE.MathUtils.lerp(marker.material.opacity,target,.18);marker.visible=marker.material.opacity>.005;marker.scale.lerp(new THREE.Vector3().setScalar(marker.userData.selected?1.35:1),blend);});
+      const blend=Motion.reducedMotion()?1:1-Math.exp(-dt/.065);
+      forceMarkers.forEach(marker=>{const target=$('showForces').checked ? .85 : 0;marker.material.opacity=Motion.reducedMotion()?target:THREE.MathUtils.lerp(marker.material.opacity,target,.18);marker.visible=marker.material.opacity>.005;const size=THREE.MathUtils.lerp(marker.scale.x,marker.userData.selected?1.35:1,blend);marker.scale.setScalar(size);});
       modelMeshes.forEach(mesh=>{if(mesh.userData.targetColor){mesh.material.color.lerp(mesh.userData.targetColor,blend);mesh.material.emissive.lerp(mesh.userData.targetEmissive,blend);mesh.material.emissiveIntensity=THREE.MathUtils.lerp(mesh.material.emissiveIntensity,mesh.userData.targetIntensity,blend);}});
-      modelJoints.forEach(joint=>{if(joint.targetQuaternion)joint.moving.quaternion.slerp(joint.targetQuaternion,blend);if(joint.targetPosition)joint.moving.position.lerp(joint.targetPosition,blend);});
       controls.update();renderer.render(scene,camera);positionForceLabels();
     };animate();view.classList.add('model-ready');Motion.show($('forceLabels'),$('showForces').checked,{duration:380});Motion.show($('forceLines'),$('showForces').checked,{duration:380});
   }catch(e){text($('modelLoadingText'),'模型加载失败：'+e.message);}
 }
-function setPose(joints){if(!modelReady)return;for(const j of modelJoints){if(j.type==='revolute'){const index=Number(j.name.replace('joint',''))-1;const angle=(joints[index]?.motor_pos_deg??0)*Math.PI/180;j.targetQuaternion=new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(...j.axis),angle);}else if(j.type==='prismatic'){const opening=THREE.MathUtils.clamp((joints[6]?.motor_pos_deg??0)/270,0,1)*.05;j.targetPosition=new THREE.Vector3(...j.axis).multiplyScalar(opening);}}}
+function setPose(positions){
+  if(!modelReady)return;
+  let changed=false;
+  for(const joint of modelJoints){
+    const index=joint.type==='revolute'?Number(joint.name.replace('joint',''))-1:6,value=positions[index];
+    if(!finite(value)||value===joint.lastValue)continue;
+    joint.lastValue=value;
+    if(joint.type==='revolute')joint.moving.quaternion.setFromAxisAngle(joint.axisVector,value*Math.PI/180);
+    else if(joint.type==='prismatic')joint.moving.position.copy(joint.axisVector).multiplyScalar(THREE.MathUtils.clamp(value/270,0,1)*.05);
+    else continue;
+    changed=true;
+  }
+  if(changed)renderer.shadowMap.needsUpdate=true;
+}
 function highlightModel(){updateForces();}
 function updateForces(){
   const scale=Number($('heatScale').value),options={fresh:forceFresh,metric:forceMetric,scale};
@@ -299,24 +325,25 @@ function updateForces(){
   });
 }
 const projectedPoint=new THREE.Vector3();
+let labelLayout=null;
 function positionForceLabels(){
   if(!modelReady||$('forceLabels').hidden)return;
-  const width=$('viewport').clientWidth,height=$('viewport').clientHeight,labelWidth=forceElements[0].label.offsetWidth,labelHeight=forceElements[0].label.offsetHeight;
-  const projected=forceAnchors.map((anchor,i)=>{anchor.getWorldPosition(projectedPoint);projectedPoint.project(camera);return {i,x:(projectedPoint.x+1)*width/2,y:(1-projectedPoint.y)*height/2,visible:Math.abs(projectedPoint.z)<=1&&Math.abs(projectedPoint.x)<=1&&Math.abs(projectedPoint.y)<=1};});
-  for(const side of [[0,1,2],[3,4,5,6]]){
-    const items=side.map(i=>projected[i]).sort((a,b)=>a.y-b.y),gap=labelHeight+9,minY=94,maxY=height-43-labelHeight;
-    const positions=items.map((point,index)=>Math.max(minY+index*gap,Math.min(maxY,point.y-labelHeight/2)));
-    for(let k=1;k<positions.length;k++)positions[k]=Math.max(positions[k],positions[k-1]+gap);
-    if(positions.at(-1)>maxY){positions[positions.length-1]=maxY;for(let k=positions.length-2;k>=0;k--)positions[k]=Math.min(positions[k],positions[k+1]-gap);}
-    items.forEach((point,index)=>{
-      const left=side[0]===0,x=left?14:width-labelWidth-14,y=positions[index],item=forceElements[point.i];
-      const position=item.position||(item.position={x,y});
-      const blend=Motion.reducedMotion()?1:.22;position.x+=(x-position.x)*blend;position.y+=(y-position.y)*blend;
-      item.label.style.transform=`translate(${position.x}px,${position.y}px)`;item.line.style.opacity=point.visible ? '.3' : '0';
-      const fromX=left?position.x+labelWidth:position.x,fromY=position.y+labelHeight/2,elbow=left?fromX+12:fromX-12;
-      item.line.setAttribute('d',`M ${fromX} ${fromY} L ${elbow} ${fromY} L ${point.x} ${point.y}`);
-    });
+  const width=$('viewport').clientWidth,height=$('viewport').clientHeight;
+  const labelWidth=forceElements[0].label.offsetWidth,labelHeight=forceElements[0].label.offsetHeight;
+  const key=`${width}:${height}:${labelWidth}:${labelHeight}`;
+  if(labelLayout?.key!==key){
+    labelLayout={key,positions:labelColumns(width,height,labelWidth,labelHeight)};
+    forceElements.forEach((item,i)=>{const {x,y}=labelLayout.positions[i];item.label.style.transform=`translate(${x}px,${y}px)`;});
   }
+  forceAnchors.forEach((anchor,i)=>{
+    projectedPoint.setFromMatrixPosition(anchor.matrixWorld).project(camera);
+    const visible=Math.abs(projectedPoint.z)<=1&&Math.abs(projectedPoint.x)<=1&&Math.abs(projectedPoint.y)<=1;
+    const pointX=(projectedPoint.x+1)*width/2,pointY=(1-projectedPoint.y)*height/2;
+    const {x,y,left}=labelLayout.positions[i],fromX=left?x+labelWidth:x,fromY=y+labelHeight/2;
+    const item=forceElements[i],path=`M ${fromX} ${fromY} L ${left?fromX+12:fromX-12} ${fromY} L ${pointX.toFixed(1)} ${pointY.toFixed(1)}`;
+    if(item.path!==path){item.path=path;item.line.setAttribute('d',path);}
+    if(item.visible!==visible){item.visible=visible;item.line.style.opacity=visible?'.3':'0';}
+  });
 }
 async function init(){
   initInterface();buildTables();initLanguage(()=>{navIndicator();metricIndicator();drawTrend();Motion.animate($('contentSurface'),[{opacity:.7},{opacity:1}],{duration:200});});Motion.enter($('jointRows'));drawTrend();new ResizeObserver(drawTrend).observe($('trend'));initModel();

@@ -48,3 +48,7 @@ assert.equal(heading.firstChild.data,'力反馈工作台');
 locale.setLanguage('en');
 const reloaded=await import(uri+'#reload');assert.equal(reloaded.currentLanguage(),'en');
 console.log('i18n checks passed: dynamic states, attributes, inserted fields, raw logs, persistence and reversal');
+
+assert.equal(locale.translate('恢复默认上限','en'),'Restore default caps');
+assert.equal(locale.translate('响应参数（固定）','en'),'Response settings (fixed)');
+assert.equal(locale.translate(' / 7 轴','en'),' / 7 axes');

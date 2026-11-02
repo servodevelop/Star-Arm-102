@@ -1,13 +1,25 @@
 """只收不发的 SocketCAN 监听：以真实 CAN 帧时间检查新鲜度，避开 SDK 无时间戳缓存。"""
 import math
+import logging
 import time
 from dataclasses import dataclass
 
 from .config import NAMES
 
+log = logging.getLogger(__name__)
+
 
 class FeedbackError(RuntimeError):
     pass
+
+
+class FeedbackStaleError(FeedbackError):
+    def __init__(self, joints, *, recovery_s=None):
+        self.joints = tuple(joints)
+        message = f"RS feedback missing/stale: {', '.join(self.joints)}"
+        if recovery_s is not None:
+            message += f" (no fresh CAN frame within {recovery_s * 1000:.0f}ms recovery window)"
+        super().__init__(message)
 
 
 @dataclass(frozen=True)
@@ -25,8 +37,14 @@ class CANFeedback:
     # 对应官方 B601-RS：J1–J3 rs-06，J4–J7 rs-00。
     LIMITS = {"rs-06": (4 * math.pi, 50., 36.), "rs-00": (4 * math.pi, 33., 14.)}
 
-    def __init__(self, robot, cfg, *, bus=None, clock=time.monotonic, wall_clock=time.time):
+    def __init__(self, robot, cfg, *, bus=None, clock=time.monotonic, wall_clock=time.time,
+                 gripper_recovery_s=0.):
+        if (isinstance(gripper_recovery_s, bool)
+                or not isinstance(gripper_recovery_s, (int, float))
+                or not math.isfinite(gripper_recovery_s) or not 0 <= gripper_recovery_s <= .1):
+            raise ValueError("gripper_recovery_s must be within 0..0.1 seconds")
         self.cfg, self.clock, self.wall_clock = cfg, clock, wall_clock
+        self.gripper_recovery_s = gripper_recovery_s
         if robot.config.can_adapter != "socketcan":
             raise ValueError("RS feedback currently requires can_adapter=socketcan")
         self.by_id, self.states = {}, {}
@@ -84,6 +102,37 @@ class CANFeedback:
             self.states[name] = state
 
     def snapshot(self):
+        try:
+            return self._snapshot()
+        except FeedbackStaleError as error:
+            if (not self.gripper_recovery_s or error.joints != ("gripper",)
+                    or "gripper" not in self.states):
+                raise
+            last_error = error
+        started = self.clock()
+        deadline = started + self.gripper_recovery_s
+        log.warning("RS gripper feedback stale; waiting up to %.0fms for a fresh CAN frame; "
+                    "new follower targets paused", self.gripper_recovery_s * 1000)
+        while self.clock() < deadline:
+            # 只等真实新回包；不重发运动指令，也不更新旧状态的接收时间。
+            msg = self.bus.recv(timeout=min(.01, max(0., deadline - self.clock())))
+            if msg is not None:
+                self.ingest(msg)
+            try:
+                states = self._snapshot()
+            except FeedbackStaleError as error:
+                if error.joints != ("gripper",):
+                    raise
+                last_error = error
+                continue
+            if self.clock() > deadline:
+                break
+            log.info("RS gripper feedback recovered after %.1fms; resuming with fresh CAN states",
+                     (self.clock() - started) * 1000)
+            return states
+        raise FeedbackStaleError(last_error.joints, recovery_s=self.gripper_recovery_s)
+
+    def _snapshot(self):
         # 有界处理，避免其他设备 CAN 流量使控制循环永久陷在 drain 中。
         for _ in range(512):
             msg = self.bus.recv(timeout=0)
@@ -98,7 +147,7 @@ class CANFeedback:
         missing = [n for n in NAMES if n not in self.states or
                    not 0 <= now - self.states[n].received_at <= self.cfg.feedback_timeout_s]
         if missing:
-            raise FeedbackError(f"RS feedback missing/stale: {', '.join(missing)}")
+            raise FeedbackStaleError(missing)
         return dict(self.states)
 
     def close(self):

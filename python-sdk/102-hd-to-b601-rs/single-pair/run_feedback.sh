@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 cd -- "$(dirname -- "${BASH_SOURCE[0]}")"
-# 普通动态阻尼的每轴功率上限（mW），J1-J5 与夹爪共用此上限。
+# 普通动态阻尼的每轴功率上限（mW），J1-J6 与夹爪共用此上限。
 # 默认 1200；也可用 bash run_feedback.sh 1500 临时覆盖，不必改源码。
 # 实际输出随各轴负载变化；这个参数不改变独立堵转 HOLD 的功率。
 if (( $# > 1 )); then
@@ -17,7 +17,7 @@ if [[ ! "$power_mw" =~ ^[0-9]{3,4}$ ]] || (( 10#$power_mw < 400 || 10#$power_mw 
 fi
 cat <<'TEXT'
 动态反馈：会启动从臂跟随，并向主臂输出阻尼/保持。
-按当前状态持续更新 J1-J5 与夹爪阻尼，不需要停稳、不使用 3 秒保留。
+按当前状态持续更新 J1-J6 与夹爪阻尼，不需要停稳、不使用 3 秒保留。
 臂部运动超范围清零已关闭；速度/加速度超过旧阈值时继续计算阻尼。
 J1 只按自身回转负载判断；限位按轴释放，主臂缺帧先限时补读一次。
 J2/J3 电机角同时接近零位（均小于 3 度）时暂停 J2-J5 阻尼，任一达到 5 度后恢复。
@@ -28,7 +28,7 @@ Leader 连续缺帧 0.25 秒仍退出；CAN 过期、故障及限位检查保留
 先空载缓慢移动，再持物缓慢移动、放下对比。
 从臂仍会执行官方启动夹爪检查；Ctrl+C 后官方会回零/卸力，请留出空间并做好支撑。
 TEXT
-echo "本次 J1-J5 与夹爪普通阻尼上限：${power_mw} mW"
+echo "本次 J1-J6 与夹爪普通阻尼上限：${power_mw} mW"
 exec python -m stararm_rs_feedback.dynamic \
   --dynamic-spec feedback.rs-dynamic.json --feedback-enable \
   --dynamic-max-power-mw "$power_mw" \

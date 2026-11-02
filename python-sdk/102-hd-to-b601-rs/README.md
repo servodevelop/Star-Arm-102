@@ -176,7 +176,7 @@ Open **http://127.0.0.1:8765** in a browser on the same host. A different HTTP p
 
 </details>
 
-The screenshots use simulated telemetry and do not show a hardware validation run.
+The screenshots use simulated telemetry and do not show a hardware validation run. Tuning screenshots show an earlier interface; the parameter table below describes the current editable controls.
 
 1. Choose **Monitor only** for the first session. The follower still follows the leader, but this layer sends no Leader damping. Check live CAN data, angles, current and torque.
 2. Stop the session and wait for cleanup. Choose **Start feedback** to enable ordinary damping and the independent stall holding logic. Start unloaded and move slowly before comparing a supported payload.
@@ -192,7 +192,7 @@ Torque is displayed in N·m. It includes gravity and motion; the residual also c
 
 ## Tune damping
 
-Open **Feedback tuning**. Save and apply to persist the settings; a running control loop reports the applied revision after confirmation. Restoring defaults only fills the form until it is saved.
+Open **Feedback tuning**. Save and apply to persist the settings; a running control loop reports the applied revision after confirmation. Restoring default caps only fills the form until it is saved.
 
 ![Damping settings](images/tuning-en.png)
 
@@ -205,16 +205,18 @@ Open **Feedback tuning**. Save and apply to persist the settings; a running cont
 
 | Setting | Effect |
 | --- | --- |
-| Overall power cap | Ordinary damping ceiling, 400–1500 mW; default 1200 mW |
-| Per joint cap | 0 disables ordinary damping on that axis; may not exceed the overall cap |
-| Base deadzone | Residual below this threshold does not request ordinary damping |
-| Max motion margin | Additional residual allowance during motion |
-| Full output scale | Excess torque above the deadzone that reaches full ordinary output |
-| Filtering and response | Torque/output smoothing, load confirmation and power rise/fall rates |
+| Ordinary damping strength cap | 400–1500 mW, 1200 mW by default; higher allows stronger damping, lower limits damping strength |
+| Per joint power cap | 0 disables ordinary damping on that joint; cannot exceed the shared cap. Lowering the shared cap also lowers any joint caps above it |
+| Base deadzone | Fixed display; ordinary damping is not requested below this residual |
+| Maximum motion margin | Fixed display; extra residual allowance during motion |
+| Full output torque scale | Fixed display; extra torque above the deadzone needed for full ordinary output |
+| Response settings | Fixed display; torque/output smoothing, load confirmation, power rise and fall rates |
 
-Change one item at a time. Begin with the defaults, compare unloaded and loaded slow movement, then reduce unwanted damping with a larger deadzone or lower axis cap. Lowering the full output scale increases output at the same excess torque. Reinitialization after a settings change takes about 0.25 s.
+Only the shared cap and the seven joint power caps are editable in the workbench. Actual output changes with the current load and is limited by both caps. Raising the shared cap does not raise individual caps automatically. “Restore default caps” restores only power caps, preserving fixed settings and existing custom values. Defaults are grouped in `single-pair/stararm_rs_feedback/tuning.py`.
 
-J6 ordinary damping stays disabled. Stall **HOLD** is separate and may request 1500 mW on all Leader joints, regardless of the ordinary cap. Near a software limit the corresponding axis releases ordinary damping. When J2 and J3 are both within the invalid near zero region (below 3° in magnitude), J2–J5 ordinary damping pauses; it recovers when either reaches 5°. The former arm speed/acceleration cutoff is disabled, while fault, freshness and communication guards remain active.
+J1–J6 and the gripper support ordinary dynamic damping; J1 and J6 each use their own rotation residual. A J6 cap saved as 0 by an earlier version is retained; raise it and save to enable that axis. Stall **HOLD** is independent of ordinary caps and can request 1500 mW on every Leader joint. Ordinary damping releases per axis near software limits. When J2/J3 are both in the invalid near zero model region (both absolute angles below 3°), J2–J5 damping pauses until either reaches 5°. The former arm speed/acceleration reset remains disabled; fault, freshness and communication guards remain active.
+
+If only a previously seen gripper frame becomes stale, the monitor waits at most an additional 100 ms for a real fresh frame, pausing new follower targets during that wait. The session still ends if feedback does not recover. Other joints, faults and temperatures are still checked. The model uses interpolation between measured poses, annotations stay in fixed positions, and the start button is green.
 
 For terminal operation with the same default devices:
 
@@ -248,6 +250,8 @@ source .venv/bin/activate
 
 Do not commit device calibration, local settings, environment directories or runtime caches. Current connection and settings errors appear directly in the workbench; there is no log file to download.
 
+For an upgrade from 0.7.1 or earlier, back up and move the old binding out of the way, then repeat Bind the feedback model above with the same existing calibration. The new J6 policy needs a new binding. This is offline and does not recalibrate or set zero. Do not edit policy hashes to bypass validation.
+
 <a id="troubleshooting"></a>
 
 ## Troubleshooting
@@ -260,7 +264,7 @@ Do not commit device calibration, local settings, environment directories or run
 | Missing SDK method or unsupported loop API | Reactivate `.venv`, rerun `bash setup.sh`, then `python -m stararm_rs_feedback.doctor`; do not mix other plugins or SDK wheels |
 | Model missing or resource check fails | Rerun `python -m stararm_rs_feedback.resources`; check network and the same cache environment variables |
 | Page opens but no arm data | Opening the page is passive; complete calibration/binding, stop terminal controllers, then start Monitor only |
-| No Leader damping | Monitor mode sends none; also check J6, axis caps, deadzones, near zero model validity, limits and fresh data |
+| No Leader damping | Monitor mode sends none; check axis caps (including J6 saved by an older version), fixed deadzones, near zero model validity, limits and fresh data |
 | Old or blank torque values | Check the data-age indicator and CAN communication |
 | Settings remain pending | Check the applied/saved revisions and the current error shown in the workbench; invalid settings are rejected rather than silently applied |
 | Existing session or port in use | Return to the original session and stop it normally; do not force-kill a running arm process |
@@ -282,4 +286,5 @@ python -m unittest discover -s tests -p "test_*.py"
 node tests/test_torque.mjs
 node tests/test_motion.mjs
 node tests/test_i18n.mjs
+node tests/test_presentation.mjs
 ```

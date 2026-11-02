@@ -9,89 +9,60 @@ import re
 import sys
 
 from .config import Config, NAMES
+from .can_feedback import CANFeedback
 from .dynamics import DynamicsModel
 from .runtime import install_runtime_wrapper
 from .session import Session
 from .runtime import check_can
 from .unloaded import robot_signature, vector
 
-# 下标从 0 开始：0=J1，1=J2，2=J3，3=J4，4=J5，5=J6，6=夹爪/J7。
-# 当前普通动态阻尼覆盖 J1-J5 与夹爪；J6 仍可参与独立的堵转 HOLD。
-ARM_JOINTS=(0,1,2,3,4)
+# 常用阻尼参数集中在 tuning.py；下面保留模型与通信策略。
+from . import tuning
+
+ARM_JOINTS=(0,1,2,3,4,5)
 ACTIVE_JOINTS=ARM_JOINTS+(6,)
 
-# 调参入口：修改本 POLICY 后，必须同步 feedback.rs-dynamic.json 中的 policy，
-# 否则启动时会报 Invalid dynamic spec。JSON 不支持 # 或 // 注释。
-# Nm 是从臂估计力矩；mW 是主臂舵机请求功率，两者不能直接换算。
 POLICY = dict(
-    # 策略记录的默认值/允许范围。实际每轴功率上限由启动参数传入，默认见脚本。
-    # 若改允许范围，还需同步 run_feedback.sh 和 dynamic_config() 的范围检查。
-    default_power_mw=1200,
+    default_power_mw=tuning.DEFAULT_POWER_MW,
     allowed_power_mw=[400,1500],
     active_joint_indices=list(ACTIVE_JOINTS),
+    deadzone_nm=tuning.DEADZONE_NM[:],
+    moving_margin_nm=tuning.MOVING_MARGIN_NM[:],
+    excess_full_scale_nm=tuning.EXCESS_FULL_SCALE_NM[:],
+    residual_filter_s=tuning.RESIDUAL_FILTER_S,
+    confirmation_s=tuning.CONFIRMATION_S,
+    power_filter_s=tuning.POWER_FILTER_S,
+    power_rise_mw_s=tuning.POWER_RISE_MW_S,
+    power_fall_mw_s=tuning.POWER_FALL_MW_S,
 
-    # 以下三个数组均按 [J1, J2, J3, J4, J5, J6, 夹爪] 排列。
-    # 基础死区（Nm）：调小更容易触发；调大可减少空载误触发。
-    deadzone_nm=[.7,1.,1.,.6,.35,0.,.35],
-    # 运动时附加死区的最大值（Nm）：调小后，运动中更容易产生阻尼。
-    # 实际死区还包含与加速度有关的余量，并非始终等于基础值+此最大值。
-    moving_margin_nm=[.15,.4,.6,.2,.15,0.,.08],
-    # 超出实际死区多少 Nm 后达到所选功率上限：调小，同样负载下输出更强。
-    # 只增强夹爪可改最后的 .25，例如 .20；此值不是功率上限。
-    excess_full_scale_nm=[1.,3.,5.,3.,1.,1.,.25],
-    # 每轴只根据自身速度增加门槛，避免 J2/J3 运动抬高 J1 的触发门槛。
     arm_motion_margin_per_axis=True,
     arm_motion_scale_rad_s=.25,
-    # 限位只释放对应关节；离开到 3 度才恢复，避免在 2 度边界反复切换。
+    # 限位与近零模型区使用不同的进入/恢复阈值，避免边界反复切换。
     joint_limit_margin_deg=2.,
     joint_limit_rearm_margin_deg=3.,
-    # J2/J3 同时接近零位时，旧空载记录存在较大重力模型误差。
-    # 此时只停用依赖该重力模型的 J2-J5；J1 仍按自身回转信号判断。
     home_model_guard_enter_deg=3.,
     home_model_guard_exit_deg=5.,
-    # 动态会话对不可靠的主臂回包补读一次；仍失败时暂停从臂新目标并检查超时。
-    # 普通阻尼继续由新鲜 RS 状态更新，不把短暂 Leader 缺帧当成 RS 模型失效。
     leader_monitor_retries=1,
-
-    # 夹爪使用有符号电机力矩；不经过臂部 URDF 补偿，也不是指尖力（N）。
     gripper_signal='signed_motor_torque_nm',
-    # 臂部近限位/模型运动范围检查只重置臂部，不重置夹爪估计器。
     gripper_independent_from_arm_estimator=True,
-    # 夹爪速度达到此值（电机域 rad/s）时，运动附加死区达到最大值。
     gripper_motion_scale_rad_s=.5,
-    # 夹爪加速度余量系数：实际死区再加 此值*|电机加速度|（Nm）。
     gripper_acceleration_margin_nm_s2=.01,
-    # 夹爪异常运动释放条件（电机域 rad/s、rad/s²），不是阻尼功率参数。
     gripper_max_speed_rad_s=6.,
     gripper_max_acceleration_rad_s2=60.,
-
-    # 以下滤波时间常数单位均为秒；减小通常响应更快，也更易受噪声影响。
-    velocity_filter_s=.06,       # 位置差分速度的平滑时间。
-    acceleration_filter_s=.10,  # 估计加速度的平滑时间。
-    residual_filter_s=.12,      # 臂部剩余力矩/夹爪电机力矩的平滑时间。
-    confirmation_s=.10,         # 连续超出死区多久才开始增加阻尼。
-    power_filter_s=.06,         # 目标功率的平滑时间；调小后功率跟随更快。
-    startup_s=.25,              # 初次启动或重置后，暂不输出的初始化时间。
-    source_age_s=.15,           # CAN 数据允许的最大年龄，超时释放全部普通阻尼。
-    gap_s=.25,                  # 更新/样本允许的最大间隔，超时重新初始化。
-    # 临时关闭“模型运动超范围 -> 全臂清零并重新等待启动”。
-    # False 时仍持续计算动态残差；不改变 CAN 时效、故障、位置跳变或限位检查。
-    # 恢复旧行为时改为 True，并同步本地 feedback.rs-dynamic.json 的同名字段。
+    velocity_filter_s=.06,
+    acceleration_filter_s=.10,
+    startup_s=.25,
+    source_age_s=.15,
+    gap_s=.25,
+    # False：超出旧模型运动范围仍计算阻尼；其他保护保持生效。
     arm_motion_range_reset=False,
-    # 以下是旧模型重置阈值（rad/s、rad/s²），仅上述开关为 True 时生效。
     max_speed_rad_s=2.,
-    max_acceleration_rad_s2=25.,
-    # 功率变化速率（mW/s），臂部与夹爪共用：调大分别让增阻/释放更快。
-    power_rise_mw_s=5000.,
-    power_fall_mw_s=10000.)
+    max_acceleration_rad_s2=25.)
 
 
-def dynamic_config(max_power=1200):
-    # 普通动态阻尼的实际范围检查；改允许范围需与脚本、POLICY、JSON 一致。
+def dynamic_config(max_power=tuning.DEFAULT_POWER_MW):
     if type(max_power) is not int or not 400<=max_power<=1500:
         raise ValueError('Dynamic ordinary power must be an integer within 400..1500 mW')
-    # 覆盖 Config 中旧入口的 600mW 默认值；这里的 max_power 才是动态模式上限。
-    # 10mW 为发送死区：小于此差值的功率更新可能等到定时刷新再发送。
     return Config(power_max_mw=max_power,power_deadband_mw=10).validate()
 
 
@@ -173,8 +144,6 @@ class GripperObserver:
             if self.since is None:self.since=now
             if now-self.since>=POLICY['confirmation_s']:
                 # 目标功率 = 上限 * min(1, 超出死区的力矩 / 满输出标尺)。
-                # 例：静止时死区 .35Nm、标尺 .25Nm，上限 1200mW，
-                # 滤波力矩 .475Nm 对应目标 600mW；.60Nm 对应目标 1200mW。
                 target=self.max_power*min(1.,excess/POLICY['excess_full_scale_nm'][6])
         else:
             self.since=None
@@ -357,6 +326,7 @@ class DynamicSession(Session):
     def __init__(self,*args,spec,web_bridge=None,**kwargs):
         self.spec=spec
         self.web_bridge=web_bridge
+        kwargs.setdefault('monitor_factory',functools.partial(CANFeedback,gripper_recovery_s=.10))
         super().__init__(*args,**kwargs)
 
     def __enter__(self):
@@ -399,8 +369,7 @@ def main(argv=None):
     parser=argparse.ArgumentParser(description='Experimental continuous dynamic RS damping; monitor by default',
                                    allow_abbrev=False)
     parser.add_argument('--dynamic-spec',required=True)
-    # 直接运行本 Python 入口且未传参数时使用 1200mW；脚本始终会显式传入值。
-    parser.add_argument('--dynamic-max-power-mw',type=int,default=1200)
+    parser.add_argument('--dynamic-max-power-mw',type=int,default=tuning.DEFAULT_POWER_MW)
     parser.add_argument('--feedback-enable',action='store_true')
     parser.add_argument('--web-settings',help=argparse.SUPPRESS)
     parser.add_argument('--web-fd',type=int,help=argparse.SUPPRESS)

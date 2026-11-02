@@ -7,6 +7,7 @@ from pathlib import Path
 import tempfile
 
 from .dynamic import POLICY
+from .tuning import DEFAULT_POWER_MW, JOINT_POWER_MW
 
 SCALARS = {
     'residual_filter_s': (.02, 1., '力矩滤波时间', 's'),
@@ -22,8 +23,8 @@ ARRAYS = {
 }
 
 def defaults():
-    return dict(format='stararm-rs-web-v1', revision=0, max_power_mw=1200,
-                joint_power_mw=[1200, 1200, 1200, 1200, 1200, 0, 1200],
+    return dict(format='stararm-rs-web-v1', revision=0, max_power_mw=DEFAULT_POWER_MW,
+                joint_power_mw=[min(DEFAULT_POWER_MW,power) for power in JOINT_POWER_MW],
                 **{k:copy.deepcopy(POLICY[k]) for k in (*SCALARS, *ARRAYS)})
 
 def validate(data):
@@ -35,24 +36,28 @@ def validate(data):
     if type(d['max_power_mw']) is not int or not 400<=d['max_power_mw']<=1500:
         raise ValueError('总功率上限须为 400–1500 mW 的整数')
     powers=d['joint_power_mw']
-    if (not isinstance(powers,list) or len(powers)!=7 or powers[5]!=0 or
+    if (not isinstance(powers,list) or len(powers)!=7 or
             any(type(p) is not int or not 0<=p<=d['max_power_mw'] for p in powers)):
-        raise ValueError('各轴上限须在 0 到总上限之间，J6 普通阻尼保持 0')
+        raise ValueError('各轴上限须在 0 到总上限之间')
     for key,(lo,hi,*_) in {**SCALARS,**ARRAYS}.items():
         values=d[key] if key in ARRAYS else [d[key]]
         if not isinstance(values,list) or (key in ARRAYS and len(values)!=7):
             raise ValueError(f'{key}: 需要七个值')
-        # J6 不参与普通阻尼，保留代码中的原值。
-        for i,x in enumerate(values):
-            if key in ARRAYS and i==5:
-                if x!=POLICY[key][5]:raise ValueError('J6 参数不可修改')
-                continue
+        for x in values:
             if isinstance(x,bool) or not isinstance(x,(int,float)) or not math.isfinite(x) or not lo<=x<=hi:
                 raise ValueError(f'{key}: 数值须在 {lo} 到 {hi} 之间')
     return d
 
 def read(path):
-    return validate(json.loads(Path(path).read_text(encoding='utf-8')))
+    data=json.loads(Path(path).read_text(encoding='utf-8'))
+    # 旧网页强制关闭 J6，死区也固定为 0；补齐有效参数，保留其已保存的关闭状态。
+    if isinstance(data,dict):
+        keys=('joint_power_mw','deadzone_nm','moving_margin_nm','excess_full_scale_nm')
+        if (all(isinstance(data.get(k),list) and len(data[k])==7 for k in keys)
+                and all(type(data[k][5]) in (int,float) for k in keys)
+                and [data[k][5] for k in keys]==[0,0,0,1]):
+            for key in ARRAYS:data[key][5]=defaults()[key][5]
+    return validate(data)
 
 def atomic_json(path, data):
     path=Path(path);path.parent.mkdir(parents=True,exist_ok=True)

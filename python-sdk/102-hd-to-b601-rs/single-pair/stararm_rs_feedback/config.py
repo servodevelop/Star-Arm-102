@@ -4,6 +4,8 @@ import math
 from dataclasses import dataclass, field, fields
 from pathlib import Path
 
+from .tuning import HOLD_POWER_MW
+
 NAMES = ("shoulder_pan", "shoulder_lift", "elbow_flex", "wrist_flex",
          "wrist_yaw", "wrist_roll", "gripper")
 
@@ -22,7 +24,7 @@ class Config:
     power_max_mw: int = 600
     power_deadband_mw: int = 20
     # 持续堵转后的 HOLD 保持功率（mW），独立于普通动态阻尼上限。
-    hold_mw: int = 1500
+    hold_mw: int = HOLD_POWER_MW
     refresh_s: float = .5
     lock_deg: float = 20
     release_deg: float = 8
