@@ -60,9 +60,9 @@ Printed-part images are rendered from the corresponding STEP models. Fastener im
 <tr>
   <td align="center">1</td>
   <td>UART bus servo</td>
-  <td>RX8-U50H-M</td>
-  <td align="center"><a href="images/rx8-u50h-m-primary.png"><img src="images/rx8-u50h-m-primary.png" alt="RX8-U50H-M" width="90"></a></td>
-  <td>12V; 50kg-cm; 70rpm; Dual-shaft; Brushless Motor; 12-bit Magnetic Absolute Encoder; 25T</td>
+  <td>RX8-U48H-M</td>
+  <td align="center"><a href="images/rx8-u48h-m.webp"><img src="images/rx8-u48h-m.webp" alt="RX8-U48H-M" width="90"></a></td>
+  <td>12V; 48kg-cm; 70rpm; Dual-shaft; Brushless Motor; 12-bit Magnetic Absolute Encoder; 25T</td>
   <td align="center">2</td>
 </tr>
 <tr>
