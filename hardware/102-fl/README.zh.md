@@ -297,7 +297,7 @@
 
 以下为柔性夹爪的 **7 件机械零件**，用于替换标准夹爪的主体及左右指尖（上表第 13–15 项）。共用舵机不重复计入；安装紧固件的规格与用量待核对，因此本表不是完整改装采购清单。每项数量按一套柔性夹爪计算。
 
-图片取自[柔性夹爪版整机 STEP](step/star-arm-102-fl-flexible-gripper-assembly-export-2026-11-01.step)。“型号／规格／零件标识”栏采用 STEP 中的英文零件名称，便于在装配树中定位。主体、连杆和齿轮为象牙白 PLA 3D 打印件，左右指尖为象牙白 TPU 3D 打印件。左右连杆几何相同，按安装位置区分，各需 1 件。
+图片取自[柔性夹爪版整机 STEP](step/star-arm-102-fl-flexible-gripper-assembly-export-2026-11-01.step)。“型号／规格／零件标识”栏采用 STEP 中的英文零件名称，便于在装配树中定位。主体、连杆和齿轮为象牙白 PLA 3D 打印件，左右指尖为白色 TPU 90A 3D 打印件。左右连杆几何相同，按安装位置区分，各需 1 件。
 
 <table width="100%">
 <thead>
@@ -356,7 +356,7 @@
   <td>柔性夹爪左指尖</td>
   <td>Flexible Gripper Fingertip Left</td>
   <td align="center"><a href="images/flexible-gripper-fingertip-left.png"><img src="images/flexible-gripper-fingertip-left.png" alt="柔性夹爪左指尖" width="90"></a></td>
-  <td>象牙白，TPU 3D 打印件</td>
+  <td>白色，TPU 90A 3D 打印件</td>
   <td align="center">1</td>
 </tr>
 <tr>
@@ -364,7 +364,7 @@
   <td>柔性夹爪右指尖</td>
   <td>Flexible Gripper Fingertip Right</td>
   <td align="center"><a href="images/flexible-gripper-fingertip-right.png"><img src="images/flexible-gripper-fingertip-right.png" alt="柔性夹爪右指尖" width="90"></a></td>
-  <td>象牙白，TPU 3D 打印件</td>
+  <td>白色，TPU 90A 3D 打印件</td>
   <td align="center">1</td>
 </tr>
 </tbody>

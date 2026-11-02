@@ -297,7 +297,7 @@ Printed-part images are rendered from the corresponding STEP models. Fastener im
 
 The **7 mechanical parts** below replace the standard gripper body and both fingertips (items 13–15 above). Shared servos are not counted again. Installation fastener specifications and quantities await verification, so this is not a complete retrofit purchasing BOM. Quantities are per flexible gripper.
 
-Images are rendered from the [flexible-gripper whole-arm STEP](step/star-arm-102-fl-flexible-gripper-assembly-export-2026-11-01.step). Model / Specification / Part Identifier uses the English component labels from the STEP assembly tree for easy identification. The body, links and gears are ivory PLA 3D printed parts; both fingertips are ivory TPU 3D printed parts. The left and right links have identical geometry and are distinguished by their installation positions, with one of each required.
+Images are rendered from the [flexible-gripper whole-arm STEP](step/star-arm-102-fl-flexible-gripper-assembly-export-2026-11-01.step). Model / Specification / Part Identifier uses the English component labels from the STEP assembly tree for easy identification. The body, links and gears are ivory PLA 3D printed parts; both fingertips are white TPU 90A 3D printed parts. The left and right links have identical geometry and are distinguished by their installation positions, with one of each required.
 
 <table width="100%">
 <thead>
@@ -356,7 +356,7 @@ Images are rendered from the [flexible-gripper whole-arm STEP](step/star-arm-102
   <td>Flexible Gripper Fingertip Left</td>
   <td>Flexible Gripper Fingertip Left</td>
   <td align="center"><a href="images/flexible-gripper-fingertip-left.png"><img src="images/flexible-gripper-fingertip-left.png" alt="Flexible Gripper Fingertip Left" width="90"></a></td>
-  <td>Ivory, TPU 3D printed part</td>
+  <td>White, TPU 90A 3D printed part</td>
   <td align="center">1</td>
 </tr>
 <tr>
@@ -364,7 +364,7 @@ Images are rendered from the [flexible-gripper whole-arm STEP](step/star-arm-102
   <td>Flexible Gripper Fingertip Right</td>
   <td>Flexible Gripper Fingertip Right</td>
   <td align="center"><a href="images/flexible-gripper-fingertip-right.png"><img src="images/flexible-gripper-fingertip-right.png" alt="Flexible Gripper Fingertip Right" width="90"></a></td>
-  <td>Ivory, TPU 3D printed part</td>
+  <td>White, TPU 90A 3D printed part</td>
   <td align="center">1</td>
 </tr>
 </tbody>
