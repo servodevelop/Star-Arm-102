@@ -14,15 +14,15 @@
 <table width="100%">
 <tr>
 <td width="33%" align="center" valign="top">
-<a href="102-ld/"><img src="images/102-ld-model-preview.png" alt="Star Arm 102-LD product photo" width="100%"><br><strong>102-LD</strong></a>
+<a href="102-ld/"><img src="images/102-ld-model-preview.png" alt="Star Arm 102-LD product photo" width="100%"><br><strong>Star Arm 102-LD</strong></a>
 <br><sub>Leader arm</sub>
 </td>
 <td width="33%" align="center" valign="top">
-<a href="102-hd/"><img src="images/102-hd-model-preview-mirrored.png" alt="Star Arm 102-HD product photo" width="100%"><br><strong>102-HD</strong></a>
+<a href="102-hd/"><img src="images/102-hd-model-preview-mirrored.png" alt="Star Arm 102-HD product photo" width="100%"><br><strong>Star Arm 102-HD</strong></a>
 <br><sub>Pose-holding leader arm</sub>
 </td>
 <td width="33%" align="center" valign="top">
-<a href="102-fl/"><img src="images/102-fl-model-preview.png" alt="Star Arm 102-FL product photo" width="100%"><br><strong>102-FL</strong></a>
+<a href="102-fl/"><img src="images/102-fl-model-preview.png" alt="Star Arm 102-FL product photo" width="100%"><br><strong>Star Arm 102-FL</strong></a>
 <br><sub>Follower arm · optional camera shown</sub>
 </td>
 </tr>
