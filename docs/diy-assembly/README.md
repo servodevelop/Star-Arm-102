@@ -43,14 +43,14 @@ Click a cover or its link below to watch the tutorial on YouTube.
 <a id="flexible-gripper-assembly"></a>
 <h3>🤏 Flexible Gripper Assembly</h3>
 <a href="https://www.youtube.com/watch?v=lqLOFoPuTgw"><img src="images/star-arm-flexible-gripper-assembly-preview.jpg" alt="Star Arm 102 flexible gripper assembly video cover" width="100%"></a>
-<p>Replace and assemble the flexible gripper. See <a href="../../hardware/flexible-gripper/">Flexible Gripper Hardware</a> for parts and BOM.</p>
+<p>Replace and assemble the flexible gripper. Browse the <a href="../../hardware/flexible-gripper/">model and printing files</a> or see the 102-FL <a href="../../hardware/102-fl/README.md#flexible-gripper-bom">flexible-gripper BOM</a>. 3MF files are coming soon.</p>
 <p><a href="https://www.youtube.com/watch?v=lqLOFoPuTgw">▶ Watch on YouTube</a></p>
 </td>
 <td width="50%" valign="top">
 <a id="camera-module-assembly"></a>
 <h3>📷 Camera Module Assembly</h3>
 <p><strong>Video coming soon.</strong></p>
-<p>See <a href="../../hardware/camera-module/">Camera Module Hardware</a> for parts and BOM.</p>
+<p>Browse the <a href="../../hardware/camera-module/">model and printing files</a> or see the 102-FL <a href="../../hardware/102-fl/README.md#camera-module-bom">optional camera-module BOM</a>. 3MF files are coming soon.</p>
 </td>
 </tr>
 </table>

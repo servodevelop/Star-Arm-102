@@ -299,6 +299,8 @@ The **7 mechanical parts** below replace the standard gripper body and both fing
 
 Images are rendered from the [flexible-gripper whole-arm STEP](step/star-arm-102-fl-flexible-gripper-assembly-export-2026-11-01.step). Model / Specification / Part Identifier uses the English component labels from the STEP assembly tree for easy identification. The body, links and gears are ivory PLA 3D printed parts; both fingertips are white TPU 90A 3D printed parts. The left and right links have identical geometry and are distinguished by their installation positions, with one of each required.
 
+Part models and drawings are available in the [flexible-gripper directory](../flexible-gripper/); 3MF printing files are coming soon.
+
 <table width="100%">
 <thead>
 <tr>
@@ -373,7 +375,9 @@ Images are rendered from the [flexible-gripper whole-arm STEP](step/star-arm-102
 
 ## Camera Module (Optional)
 
-**Optional; excluded from the 29 standard-gripper assembly items.** The following parts form one first-person camera module mounted above the gripper, with one of each required. The camera model, interface and performance specifications await confirmation. The camera image is a STEP shape reference; its actual appearance depends on the selected model. Installation cables and fasteners will be checked after camera selection.
+**Optional; excluded from the 29 standard-gripper assembly items.** The following parts form one first-person camera module mounted above the gripper, with one of each required. Camera specifications are taken from the HQ-1080KDT-01 datasheet V01. The image is a STEP shape reference; refer to the actual module for its appearance. Installation cables and fasteners await verification.
+
+1080p at 60fps applies to MJPG output; YUV at 1920 × 1080 is limited to 5fps. The datasheet specifies an object distance of 70cm to infinity, so close-range gripper imaging needs verification. The 100° field of view is not identified as horizontal, vertical or diagonal.
 
 The third-person desktop camera base serves a different mounting arrangement and is excluded here; see the [camera-module directory](../camera-module/) for those resources.
 
@@ -407,10 +411,10 @@ The third-person desktop camera base serves a different mounting arrangement and
 </tr>
 <tr>
   <td align="center">3</td>
-  <td>Camera module</td>
-  <td>To be confirmed</td>
-  <td align="center"><a href="images/first-person-camera-module.png"><img src="images/first-person-camera-module.png" alt="Camera module" width="90"></a></td>
-  <td>Model, interface and performance specifications to be confirmed; STEP shape reference</td>
+  <td>USB camera module</td>
+  <td>HQ-1080KDT-01</td>
+  <td align="center"><a href="images/first-person-camera-module.png"><img src="images/first-person-camera-module.png" alt="HQ-1080KDT-01 USB camera module (STEP shape reference)" width="90"></a></td>
+  <td>2 MP color CMOS; 1920 × 1080 @ 60fps (MJPG); USB 2.0; 5V USB bus power; 100° field of view; module size 32 × 32 × 18 mm</td>
   <td align="center">1</td>
 </tr>
 </tbody>

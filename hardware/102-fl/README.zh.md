@@ -299,6 +299,8 @@
 
 图片取自[柔性夹爪版整机 STEP](step/star-arm-102-fl-flexible-gripper-assembly-export-2026-11-01.step)。“型号／规格／零件标识”栏采用 STEP 中的英文零件名称，便于在装配树中定位。主体、连杆和齿轮为象牙白 PLA 3D 打印件，左右指尖为白色 TPU 90A 3D 打印件。左右连杆几何相同，按安装位置区分，各需 1 件。
 
+零件模型与图纸见[柔性夹爪目录](../flexible-gripper/)；3MF 打印文件待提供。
+
 <table width="100%">
 <thead>
 <tr>
@@ -373,7 +375,9 @@
 
 ## 摄像头模组（选配）
 
-**选配，不计入标准夹爪版的 29 项装机物料。** 以下为安装在夹爪上方的一套第一视角摄像头模组，每项各需 1 件；摄像头型号、接口及性能规格待确认。摄像头图片为 STEP 外形参考，实际外观以最终选型为准；安装线材及紧固件待选型后核对。
+**选配，不计入标准夹爪版的 29 项装机物料。** 以下为安装在夹爪上方的一套第一视角摄像头模组，每项各需 1 件。摄像头参数依据 HQ-1080KDT-01 规格书 V01；图片为 STEP 外形参考，实际外观以实物为准。安装线材及紧固件待核对。
+
+1080p／60fps 为 MJPG 输出模式；YUV 在 1920 × 1080 下为 5fps。规格书标注物距为 70cm 至无穷远，夹爪近距离拍摄需确认成像效果；100° 视场角未注明水平、垂直或对角线方向。
 
 第三视角桌面摄像头底座属于另一种安装方式，不计入本表；相关资源见[摄像头模组目录](../camera-module/)。
 
@@ -407,10 +411,10 @@
 </tr>
 <tr>
   <td align="center">3</td>
-  <td>摄像头模组</td>
-  <td>待确认</td>
-  <td align="center"><a href="images/first-person-camera-module.png"><img src="images/first-person-camera-module.png" alt="摄像头模组" width="90"></a></td>
-  <td>型号、接口及性能规格待确认；STEP 外形参考</td>
+  <td>USB 摄像头模组</td>
+  <td>HQ-1080KDT-01</td>
+  <td align="center"><a href="images/first-person-camera-module.png"><img src="images/first-person-camera-module.png" alt="HQ-1080KDT-01 USB 摄像头模组（STEP 外形参考）" width="90"></a></td>
+  <td>200 万像素彩色 CMOS；1920 × 1080 @ 60fps（MJPG）；USB 2.0；5V USB 供电；视场角 100°；模组尺寸 32 × 32 × 18 mm</td>
   <td align="center">1</td>
 </tr>
 </tbody>

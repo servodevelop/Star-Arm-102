@@ -43,14 +43,14 @@ BOM、CAD（STEP）、URDF 与 3D 打印文件：[102-LD](../../hardware/102-ld/
 <a id="flexible-gripper-assembly"></a>
 <h3>🤏 柔性夹爪装配</h3>
 <a href="https://www.youtube.com/watch?v=lqLOFoPuTgw"><img src="images/star-arm-flexible-gripper-assembly-preview.jpg" alt="Star Arm 102 柔性夹爪装配视频封面" width="100%"></a>
-<p>柔性夹爪的更换与装配。零件与 BOM 见<a href="../../hardware/flexible-gripper/">柔性夹爪硬件资料</a>。</p>
+<p>柔性夹爪的更换与装配。查看<a href="../../hardware/flexible-gripper/">模型与打印文件</a>，或查看 102-FL 的<a href="../../hardware/102-fl/README.zh.md#flexible-gripper-bom">柔性夹爪 BOM</a>。3MF 文件待提供。</p>
 <p><a href="https://www.youtube.com/watch?v=lqLOFoPuTgw">▶ 在 YouTube 观看</a></p>
 </td>
 <td width="50%" valign="top">
 <a id="camera-module-assembly"></a>
 <h3>📷 摄像头模组装配</h3>
 <p><strong>装配视频待上线。</strong></p>
-<p>零件与 BOM 见<a href="../../hardware/camera-module/">摄像头模组硬件资料</a>。</p>
+<p>查看<a href="../../hardware/camera-module/">模型与打印文件</a>，或查看 102-FL 的<a href="../../hardware/102-fl/README.zh.md#camera-module-bom">摄像头模组 BOM（选配）</a>。3MF 文件待提供。</p>
 </td>
 </tr>
 </table>

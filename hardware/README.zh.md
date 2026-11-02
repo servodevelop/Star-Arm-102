@@ -9,9 +9,26 @@
 - [🛠️ DIY 装配](../docs/diy-assembly/)
 - [📂 目录结构](#directory-structure)
 
-按型号查看详情：**[102-LD](102-ld/)** · **[102-HD](102-hd/)** · **[102-FL](102-fl/)**。
+**按型号查看详情：**
 
-配件：**[摄像头模组](camera-module/)** · **[柔性夹爪](flexible-gripper/)**。
+<table width="100%">
+<tr>
+<td width="33%" align="center" valign="top">
+<a href="102-ld/"><img src="images/102-ld-model-preview.png" alt="Star Arm 102-LD 产品图" width="100%"><br><strong>102-LD</strong></a>
+<br><sub>示教主臂</sub>
+</td>
+<td width="33%" align="center" valign="top">
+<a href="102-hd/"><img src="images/102-hd-model-preview-mirrored.png" alt="Star Arm 102-HD 产品图" width="100%"><br><strong>102-HD</strong></a>
+<br><sub>姿态保持主臂</sub>
+</td>
+<td width="33%" align="center" valign="top">
+<a href="102-fl/"><img src="images/102-fl-model-preview.png" alt="Star Arm 102-FL 产品图" width="100%"><br><strong>102-FL</strong></a>
+<br><sub>执行从臂 · 摄像头选配</sub>
+</td>
+</tr>
+</table>
+
+配件文件：**[摄像头模组](camera-module/)** · **[柔性夹爪](flexible-gripper/)**。BOM：[摄像头模组（选配）](102-fl/README.zh.md#camera-module-bom) · [柔性夹爪](102-fl/README.zh.md#flexible-gripper-bom)。
 
 <a id="product-specifications"></a>
 
@@ -26,7 +43,7 @@
 | 负载 | — | — | 500g（建议在 70% 臂展处使用） |
 | 重复定位精度／编码器 | 12-bit 磁编码器 | 12-bit 磁编码器 | 2mm |
 | 关节运动范围 | 关节 1: ±110°<br>关节 2: 0°–180°<br>关节 3: 0°–270°<br>关节 4: ±90°<br>关节 5: ±65°<br>关节 6: ±150°<br>手柄: 0°–90° | 关节 1: ±110°<br>关节 2: 0°–180°<br>关节 3: 0°–270°<br>关节 4: ±90°<br>关节 5: ±65°<br>关节 6: ±150°<br>手柄: 0°–90° | 关节 1: ±110°<br>关节 2: 0°–180°<br>关节 3: 0°–270°<br>关节 4: ±90°<br>关节 5: ±65°<br>关节 6: ±150°<br>夹爪: 0°–90° |
-| 舵机配置 | RA8-U01H-M × 4<br>RA8-U02H-M × 1<br>RA8-U03H-M × 2 | RP8-U45H-M × 4<br>RP8-U45H-M-C029 × 1<br>RP8-U45H-M-C028 × 2 | RA8-U35H-M × 3<br>RX8-U50H-M × 2<br>RA8-U27H-M-C005 × 1<br>RA8-U35H-M-C047 × 1 |
+| 舵机配置 | RA8-U01H-M × 4<br>RA8-U02H-M × 1<br>RA8-U03H-M × 2 | RP8-U45H-M × 4<br>RP8-U45H-M-C029 × 1<br>RP8-U45H-M-C028 × 2 | RA8-U35H-M × 3<br>RX8-U48H-M × 2<br>RA8-U27H-M-C005 × 1<br>RA8-U35H-M-C047 × 1 |
 | 本机重量 | 764g | 934g | 865g |
 | 通信方式 | UART / UC-01 | UART / UC-01 | UART / UC-01 |
 | 工作温度 | 0–40°C | 0–40°C | 0–40°C |
@@ -38,6 +55,8 @@
 ## 目录结构
 
 三个型号的目录结构一致：整机 STEP 装配模型直接放在 step/；3mf/ 用于提供 3D 打印文件，目前待提供。下方展开 LD 的目录，各型号的 README 内含对应 BOM。
+
+配件目录仅存放 `step/`、`3mf/` 和 `drawings/`；3MF 文件待提供。柔性夹爪和摄像头模组的 BOM 集中在 102-FL 页面。
 
 ```text
 hardware/
@@ -57,7 +76,13 @@ hardware/
 ├── 102-hd/
 ├── 102-fl/
 ├── camera-module/
+│   ├── step/
+│   ├── 3mf/
+│   └── drawings/
 └── flexible-gripper/
+    ├── step/
+    ├── 3mf/
+    └── drawings/
 ```
 
 `step/` 存放 CAD 装配模型；装配、PID 设置与零位校准集中在 [DIY 装配指南](../docs/diy-assembly/README.zh.md)。各型号的 ROS 1 源码与完整 ZIP：[LD](102-ld/urdf/)、[HD](102-hd/urdf/)、[FL](102-fl/urdf/)。LD 与 HD 包含相同模型。
