@@ -27,7 +27,7 @@
 | --- | --- | --- |
 | [DIY 装配](../../docs/diy-assembly/README.zh.md#102-fl) | 主体机械臂装配视频 | ✅ 已完成 |
 | [step/](step/) | 整机 STEP 模型：[标准夹爪版](step/star-arm-102-fl-assembly-export-2026-11-01.step) · [柔性夹爪版](step/star-arm-102-fl-flexible-gripper-assembly-export-2026-11-01.step) | ✅ 已完成 |
-| [3mf/](3mf/) | 3D 打印文件（3MF） | — 待提供 |
+| [3mf/](3mf/) | [下载 3MF 打印文件（2026-08-07）](3mf/star-arm-102-fl-2026-08-07.3mf?raw=true) | ✅ 已提供 |
 | [drawings/](drawings/) | PDF／DWG 图纸 | ✅ 已完成 |
 | [URDF 模型](urdf/) | [下载完整 URDF 包](urdf/downloads/star-arm-102-fl-urdf-2026-10-23.zip?raw=true) · [浏览源码](urdf/stararm102-fl-description/) | ✅ 已完成 |
 
@@ -41,7 +41,7 @@
 
 打印件的“型号／规格／零件标识”栏填写零件标识。例如，“连杆 1”的零件标识为 `star-arm-102-link1`；`star-arm-102-` 前缀用于识别所属产品系列。
 
-3MF 打印文件将放在 [3mf/](3mf/)，目前待提供。本表不记录打印参数；层高、壁数和填充率应根据打印机与耗材选择。
+[3MF 打印文件（2026-08-07）](3mf/star-arm-102-fl-2026-08-07.3mf?raw=true)已放在 [3mf/](3mf/)。本表不记录打印参数；层高、壁数和填充率应根据打印机与耗材选择。
 
 打印件图片由对应的 STEP 模型渲染生成。紧固件图片为 AI 生成的外观示意图，规格以表格文字为准；点击图片可放大查看。
 

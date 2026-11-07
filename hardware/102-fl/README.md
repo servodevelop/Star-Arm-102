@@ -27,7 +27,7 @@
 | --- | --- | --- |
 | [Assembly guide](../../docs/diy-assembly/README.md#102-fl) | Main arm assembly video | ✅ Complete |
 | [step/](step/) | Whole-arm STEP models: [Standard gripper](step/star-arm-102-fl-assembly-export-2026-11-01.step) · [Flexible gripper](step/star-arm-102-fl-flexible-gripper-assembly-export-2026-11-01.step) | ✅ Complete |
-| [3mf/](3mf/) | 3D printing files (3MF) | — Coming soon |
+| [3mf/](3mf/) | [Download 3MF printing file (2026-08-07)](3mf/star-arm-102-fl-2026-08-07.3mf?raw=true) | ✅ Available |
 | [drawings/](drawings/) | PDF / DWG drawings | ✅ Complete |
 | [URDF Models](urdf/) | [Download complete URDF package](urdf/downloads/star-arm-102-fl-urdf-2026-10-23.zip?raw=true) · [Browse source](urdf/stararm102-fl-description/) | ✅ Complete |
 
@@ -41,7 +41,7 @@ For printed parts, the part name identifies the component. English names in the 
 
 For printed parts, Model / Specification / Part Identifier lists the part identifier. For example, `Link 1` uses the identifier `star-arm-102-link1`. The `star-arm-102-` prefix identifies the product series.
 
-3MF printing files will be provided in [3mf/](3mf/); they are not yet available. Print settings are not listed here; choose layer height, wall count and infill for your printer and filament.
+The [3MF printing file (2026-08-07)](3mf/star-arm-102-fl-2026-08-07.3mf?raw=true) is available in [3mf/](3mf/). Print settings are not listed here; choose layer height, wall count and infill for your printer and filament.
 
 Printed-part images are rendered from the corresponding STEP models. Fastener images are AI-generated illustrations; refer to the table text for specifications. Click an image to enlarge it.
 

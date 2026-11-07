@@ -54,7 +54,7 @@ Joints 1–6 (J1–J6) above map to servo IDs 0–5; the handle/gripper maps to 
 
 ## Directory structure
 
-All three models share the same layout: whole-arm STEP assemblies are stored directly in step/; 3mf/ is reserved for 3D printing files, which are not yet available. The LD layout is expanded below. Each model README contains its own BOM.
+All three models share the same layout: whole-arm STEP assemblies are stored directly in step/; 3mf/ contains 3D printing files. The [102-FL 3MF file](102-fl/3mf/) is available; LD and HD files are coming soon. The LD layout is expanded below. Each model README contains its own BOM.
 
 Accessory directories contain only `step/`, `3mf/` and `drawings/`; 3MF files are not yet available. Flexible-gripper and camera-module BOMs are maintained on the 102-FL page.
 
