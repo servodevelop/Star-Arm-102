@@ -1,0 +1,9 @@
+# Upload only application source and build manifests.
+/*
+!src
+!public
+!package.json
+!pnpm-lock.yaml
+!pnpm-workspace.yaml
+!next.config.ts
+!tsconfig.json

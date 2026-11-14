@@ -1,0 +1,7 @@
+name: vla-arms-agent
+services:
+  web:
+    build: .
+    ports:
+      - "${BIND_ADDRESS:-0.0.0.0}:${HTTP_PORT:-8780}:3000"
+    restart: unless-stopped
