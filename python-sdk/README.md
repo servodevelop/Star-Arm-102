@@ -9,6 +9,7 @@ Control Star Arm 102 directly with Python, without ROS or LeRobot. Choose your l
 | 102-LD/HD → 102-FL | Single pair (1-to-1) | 1 leader + 1 follower; 2 arms total | [Single-pair guide](102-ld-hd-to-102-fl/single-pair/README.md) |
 | 102-LD/HD → 102-FL | Dual pair (2-to-2) | 2 leaders + 2 followers; 4 arms total | [Dual-pair guide](102-ld-hd-to-102-fl/dual-pair/README.md) |
 | 102-HD → B601-RS | Planned single-pair force feedback | SDK and operating instructions pending | [Integration status](102-hd-to-b601-rs/README.md) |
+| 102-HD → B601-RS | Single-pair teleoperation: fixed unloaded damping + gripper contact hold | 1 leader + 1 follower; 2 arms total | [User guide (LeRobot-based)](102-hd-b601-rs-damping/README.md) |
 
 The existing control programs are for [102-LD/HD → 102-FL](102-ld-hd-to-102-fl/README.md). In dual-pair mode, leader 1 controls follower 1 and leader 2 controls follower 2. Normal following and hover behavior are described in each guide; their availability depends on the hardware and implementation.
 

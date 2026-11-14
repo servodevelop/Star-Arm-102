@@ -1,0 +1,16 @@
+[package]
+name = "smart_servo_py"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+description = "PyO3 bindings for MotorBridge Smart Servo"
+
+[lib]
+name = "_native"
+crate-type = ["cdylib"]
+
+[dependencies]
+pyo3.workspace = true
+smart_servo_core = { path = "../smart_servo_core" }
+smart_servo_vendor_fashionstar = { path = "../smart_servo_vendors/fashionstar" }

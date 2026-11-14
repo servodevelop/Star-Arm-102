@@ -1,0 +1,10 @@
+[package]
+name = "smart_servo_vendor_fashionstar"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+
+[dependencies]
+smart_servo_core = { path = "../../smart_servo_core" }
+

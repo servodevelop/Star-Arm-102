@@ -1,0 +1,30 @@
+[build-system]
+requires = ["maturin>=1.7,<2"]
+build-backend = "maturin"
+
+[project]
+name = "motorbridge-smart-servo"
+version = "0.0.4+rsfix1.damping1"
+description = "PyO3 bindings for MotorBridge Smart Servo"
+requires-python = ">=3.9"
+readme = "README.md"
+authors = [{ name = "tianrking" }]
+license = "MIT"
+keywords = ["motor", "servo", "fashionstar", "uart", "robotics"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Rust",
+  "Topic :: Scientific/Engineering",
+]
+
+[project.scripts]
+motorbridge-smart-servo = "motorbridge_smart_servo.cli:main"
+
+[tool.maturin]
+module-name = "motorbridge_smart_servo._native"
+bindings = "pyo3"
+features = ["pyo3/extension-module", "pyo3/abi3-py39"]
+include = ["src/motorbridge_smart_servo/py.typed"]
+manifest-path = "smart_servo_py/Cargo.toml"
+python-source = "src"

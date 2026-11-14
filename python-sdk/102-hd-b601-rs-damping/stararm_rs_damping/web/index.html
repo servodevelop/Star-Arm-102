@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>RS 空载阻尼工作台</title><link rel="icon" href="brand/fashionstar.png"><link rel="stylesheet" href="style.css">
+  <script type="importmap">{"imports":{"three":"./vendor/three.module.js"}}</script>
+</head>
+<body>
+<header class="app-header">
+  <a class="brand" href="#workspace"><img src="brand/fashionstar.png" alt="Fashionstar"><span><b>RS 空载阻尼</b><small>Star Arm 102 · B601 RS</small></span></a>
+  <nav class="page-tabs" aria-label="工作台页面"><button data-view="workspace" aria-selected="true">实时工作台</button><button data-view="parameters" aria-selected="false">阻尼与夹爪</button><button data-view="logs" aria-selected="false">运行日志</button></nav>
+  <span class="head-status"><i id="led" class="led"></i><span id="connection">正在连接本地服务</span><span id="version" class="version">本地 · 8767</span></span>
+</header>
+<main>
+  <div class="toolbar"><div><p class="eyebrow">StarArm · 固定空载阻尼</p><h1 id="pageTitle">空载阻尼工作台</h1></div><div class="actions"><span id="revision" class="tag">等待配置</span><button id="start" disabled>启动跟随</button><button id="stop" class="danger" disabled>停止运行</button></div></div>
+  <div id="notice" class="notice" role="status"><span id="noticeText">网页服务启动后不会自动连接机械臂；点击“启动跟随”后开始。</span><button id="dismissNotice" class="quiet" aria-label="关闭提示">×</button></div>
+  <div class="metrics">
+    <article><span class="metric-name">会话状态</span><b id="session">未启动</b><small id="sessionDetail">Star Arm 102 / B601 RS</small></article>
+    <article><span class="metric-name">最大实际电机扭矩</span><b><i id="maxTorque">—</i><em>Nm</em></b><small id="maxTorqueJoint">RS 电机读回</small></article>
+    <article><span class="metric-name">固定阻尼轴数</span><b><i id="activeCount">—</i><em>/ 7</em></b><small id="outputDetail">等待实时数据</small></article>
+    <article><span class="metric-name">设备数据时效</span><b id="freshness">—</b><small>断连时不会据此确认设备已停止</small></article>
+  </div>
+  <div id="contentSurface">
+    <section id="workspace" class="view workspace" data-page="workspace">
+      <section class="panel model-panel">
+        <div class="panel-head"><h2>B601 RS · 实时姿态</h2><span id="source" class="tag">等待数据</span></div>
+        <div class="visual-controls"><span>实际电机扭矩</span><label class="scale-control">颜色量程 <select id="heatScale" aria-label="实际扭矩颜色量程"><option value="2">2 Nm</option><option value="5" selected>5 Nm</option><option value="10">10 Nm</option><option value="20">20 Nm</option></select></label></div>
+        <div id="viewport">
+          <div class="model-label"><span class="view-coordinate">PERSPECTIVE</span><span>6 自由度 + 夹爪</span></div>
+          <div class="view-tools"><label><input id="showAxes" type="checkbox">坐标轴</label><label><input id="showForces" type="checkbox" checked>标注</label><button id="resetView" class="quiet" aria-label="重置模型视角">重置视角</button></div>
+          <svg id="forceLines" aria-hidden="true"></svg><div id="forceLabels" aria-label="选择模型关节"></div>
+          <div id="modelLoading" class="loading"><span class="loading-ring"></span><span id="modelLoadingText">正在加载 RS 模型</span></div>
+          <div class="model-footer"><span>拖动旋转 · 滚轮缩放</span><span id="forceStatus">等待关节数据</span></div>
+        </div>
+        <div class="heat-legend"><span>扭矩绝对值</span><i></i><span>0 → <b id="scaleMax">5 Nm</b></span><small>含重力与运动影响；仅用于显示</small></div>
+      </section>
+      <div class="telemetry-column">
+        <section class="panel joint-panel"><div class="panel-head"><h2>7 轴状态</h2><span class="panel-caption">RS 实际读回 / Leader 请求</span></div><div class="table-scroll"><table class="live-table"><thead><tr><th>关节</th><th>姿态<small>°</small></th><th>扭矩<small>Nm</small></th><th>电流<small>A</small></th><th>Leader<small>模式 / mW</small></th></tr></thead><tbody id="jointRows"></tbody></table></div>
+          <div class="joint-inspector"><div class="inspector-title"><b id="selectedTitle">J1 底座回转</b><span id="selectedReason">等待数据</span></div><div class="readback-grid"><span>Leader 姿态<b id="selectedLeader">—</b></span><span>实际电流<b id="selectedCurrent">—</b></span><span>实际功率<b id="selectedPower">—</b></span><span>实际电压<b id="selectedVoltage">—</b></span></div><p>Leader 实际电流、功率和电压仅显示 0.25 秒内的可靠读回；缺失或过期显示 —。</p></div>
+        </section>
+        <section class="panel gripper-status"><div class="panel-head"><h2>J7 夹爪锁止</h2><span id="gripperLockPhase" class="mode UNKNOWN">等待数据</span></div><div class="gripper-status-body"><div><span>保持请求</span><b id="gripperLockPower">—</b></div><p id="gripperLockReason">等待夹爪状态</p><small>接触 HOLD 优先；锁止开启且未接触或释放后，J7 自由。</small></div></section>
+      </div>
+    </section>
+    <section id="parameters" class="view panel params-panel" data-page="parameters" hidden>
+      <div class="panel-head"><div><h2>固定空载阻尼</h2><p>功率固定，不随负载改变；运行中保存后，以“已应用”版本确认。</p></div><div class="param-actions"><span id="dirty" class="tag">已保存</span><button id="defaults" class="quiet">恢复固定阻尼默认值</button><button id="save" class="primary">保存并应用</button></div></div>
+      <div class="damping-settings"><label class="toggle-label"><input id="dampingEnabled" type="checkbox"><span><b>启用固定空载阻尼</b><small>此开关只控制固定阻尼，夹爪锁止独立工作。</small></span></label><p>各轴可填 0–1500 mW；调大允许更强阻尼，填 0 关闭该轴固定阻尼。默认七轴均为 100 mW。</p><div id="dampingRows" class="damping-grid"></div><p class="j7-note">J7 固定阻尼仅在夹爪锁止关闭时生效。锁止开启时，未接触和释放后均为 FREE；夹住物体时转为 HOLD，保留反向轻开的体验。</p></div>
+      <section class="gripper-lock-settings" aria-labelledby="gripperLockTitle"><div class="gripper-lock-controls"><label class="toggle-label"><input id="gripperLockEnabled" type="checkbox"><span><b id="gripperLockTitle">启用夹爪接触锁止</b><small>仅 J7，与固定阻尼开关独立</small></span></label><label class="gripper-lock-power">保持功率<span><input id="gripperHoldPower" type="number" min="100" max="1500" step="1" required aria-label="夹爪保持功率"><em>mW</em></span><small>100–1500 mW；保持力有限，反向张开或失物后释放。</small></label></div>
+        <p>修改接触或释放参数会重置夹爪接触状态，需要重新夹取；仅修改保持功率保留当前 HOLD。其他关节固定阻尼不变。</p>
+        <div class="gripper-tuning-grid">
+          <label class="gripper-tuning-field">接触扭矩阈值<span><input id="contactTorque" data-lock-field="contact_torque_nm" type="number" step="any" required disabled aria-label="接触扭矩阈值"><em>Nm</em></span><small id="contactTorqueRange">等待服务参数</small><small>调大需更强夹持力矩；调小更灵敏，也更易误触发。</small></label>
+          <label class="gripper-tuning-field">释放扭矩阈值<span><input id="releaseTorque" data-lock-field="release_torque_nm" type="number" step="any" required disabled aria-label="释放扭矩阈值"><em>Nm</em></span><small id="releaseTorqueRange">等待服务参数</small><small>调大更早释放，必须小于接触阈值；调小更易保留夹持。</small></label>
+          <label class="gripper-tuning-field">接触确认时间<span><input id="contactDwell" data-lock-field="contact_dwell_s" type="number" step="any" required disabled aria-label="接触确认时间"><em>s</em></span><small id="contactDwellRange">等待服务参数</small><small>调大可过滤短暂碰触，但锁止更慢。</small></label>
+          <label class="gripper-tuning-field">失物释放确认时间<span><input id="releaseDwell" data-lock-field="release_dwell_s" type="number" step="any" required disabled aria-label="失物释放确认时间"><em>s</em></span><small id="releaseDwellRange">等待服务参数</small><small>调大可容忍短暂力矩下降，但脱落释放更慢。</small></label>
+          <label class="gripper-tuning-field">反向解锁角度<span><input id="openAngle" data-lock-field="open_release_leader_deg" type="number" step="any" required disabled aria-label="反向解锁角度"><em>°</em></span><small id="openAngleRange">等待服务参数</small><small>调小只需更少反向位移；调大减少抖动误释放。</small></label>
+          <label class="gripper-tuning-field">反向解锁确认时间<span><input id="openDwell" data-lock-field="open_release_dwell_s" type="number" step="any" required disabled aria-label="反向解锁确认时间"><em>s</em></span><small id="openDwellRange">等待服务参数</small><small>调小解锁更快；调大过滤短暂反向抖动。</small></label>
+        </div><p id="gripperUnavailable" class="warning" hidden>当前服务夹爪参数不完整，请更新并重启网页服务。</p>
+      </section>
+    </section>
+    <section id="logs" class="view panel" data-page="logs" hidden><div class="panel-head"><div><h2>运行日志</h2><p>当前会话的文字日志，不录制 CSV。</p></div><button id="refreshLog" class="quiet">刷新日志</button></div><pre id="log">尚无运行日志</pre></section>
+  </div>
+  <footer><span>StarArm RS Unloaded Damping · 本地工作台</span><span>关闭页面不会停止会话；停止时可能回零或卸力，请留出空间。</span></footer>
+</main>
+<script type="module" src="app.js"></script>
+</body></html>

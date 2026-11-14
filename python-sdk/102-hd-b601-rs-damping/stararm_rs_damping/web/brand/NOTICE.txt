@@ -1,0 +1,5 @@
+Fashionstar brand mark
+
+fashionstar.png is the Fashionstar logo used in the Star Arm 102 product interface.
+The mark remains the property of its respective brand owner. It is not included
+under the Lucide icon license or the licenses of other third-party components.

@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+build/
+.build/
+dist/
+data/
+.integration/
+vendor/runtime/
+vendor/wheels/
