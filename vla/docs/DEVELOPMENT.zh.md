@@ -18,7 +18,7 @@ vla-arms-agent 是独立的 Next.js 工程，使用 React、TypeScript 和 Verce
 docker compose up -d --build
 ```
 
-容器内监听 `3000` 端口，本机映射为 `8780`。需要调整访问地址或端口时，复制 `.env.example` 为 `.env`，设置 `BIND_ADDRESS` 和 `HTTP_PORT`。
+容器内监听 `3000` 端口，默认映射为本机 `8780`。需要调整监听地址或端口时，可在启动 Compose 时设置 `BIND_ADDRESS` 和 `HTTP_PORT`，例如：`BIND_ADDRESS=0.0.0.0 HTTP_PORT=8781 docker compose up -d --build`。
 
 本地修改代码时，运行 `pnpm install --frozen-lockfile` 和 `pnpm dev`，访问 `http://localhost:3000`，修改会自动更新到页面。
 

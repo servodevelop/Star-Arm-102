@@ -18,7 +18,7 @@ Build and start with Docker:
 docker compose up -d --build
 ```
 
-The container listens on port `3000`, mapped to host port `8780`. Copy `.env.example` to `.env` and set `BIND_ADDRESS` and `HTTP_PORT` to change the binding or port.
+The container listens on port `3000`, mapped to host port `8780` by default. Override `BIND_ADDRESS` and `HTTP_PORT` when starting Compose to change the binding or port, for example: `BIND_ADDRESS=0.0.0.0 HTTP_PORT=8781 docker compose up -d --build`.
 
 For local development, run `pnpm install --frozen-lockfile` and `pnpm dev`, then visit `http://localhost:3000`. Changes update in the page automatically.
 
