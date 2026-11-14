@@ -114,7 +114,7 @@ for await (const line of createInterface({ input: process.stdin })) {
           .locator("option")
           .count()) < 3
       )
-        await page.getByRole("button", { name: "授权并刷新摄像头" }).click();
+        await page.locator(".camera-card").first().getByRole("button", { name: "授权并刷新摄像头" }).click();
       await page.waitForFunction(
         () =>
           document.querySelector('[aria-label="外部相机设备"]').options

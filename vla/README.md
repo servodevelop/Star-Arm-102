@@ -104,7 +104,7 @@ The container builds the page and starts Next.js. Open **[http://localhost:8780]
 In “Connect and observe”:
 
 1. Select “Select serial port and connect” and choose the arm's USB serial port in the browser dialog.
-2. Select “Authorize and refresh cameras” and bind the external and wrist cameras.
+2. Select “Authorize / refresh” beside “Bound device” in either camera card, allow camera access in Chrome, then bind the external and wrist cameras. Camera authorization works independently of the follower connection.
 3. Start previews, confirm the views match the installed cameras, and choose resolution and frame rate.
 4. Select “Save configuration” to retain device bindings.
 

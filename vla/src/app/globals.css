@@ -750,3 +750,20 @@ th {
   width: auto;
   min-width: 120px;
 }
+
+.camera-binding {
+  display: grid;
+  gap: 6px;
+}
+.camera-binding-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.camera-authorize {
+  min-height: 36px;
+  padding: 4px 10px;
+  font-size: 12px;
+}

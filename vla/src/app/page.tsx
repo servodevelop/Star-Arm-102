@@ -620,9 +620,26 @@ export default function Page() {
                     : ""}
                 </span>
               </div>
-              <label>
-                {t("绑定设备")}
+              <div className="camera-binding">
+                <div className="camera-binding-heading">
+                  <label htmlFor={`camera-device-${role}`}>
+                    {t("绑定设备")}
+                  </label>
+                  <button
+                    type="button"
+                    className="camera-authorize"
+                    aria-label={t("授权并刷新摄像头")}
+                    title={t("授权后显示当前电脑的摄像头，无需连接从臂。")}
+                    disabled={!ready || Boolean(pending)}
+                    onClick={() => void action("cameras", refreshCameras)}
+                  >
+                    {pending === "cameras"
+                      ? t("正在请求摄像头权限…")
+                      : t("授权 / 刷新")}
+                  </button>
+                </div>
                 <select
+                  id={`camera-device-${role}`}
                   aria-label={t("{0}设备", titles[role])}
                   value={config.cameras[role].deviceId}
                   onChange={(e) =>
@@ -644,13 +661,15 @@ export default function Page() {
                         {t("（当前不可用）")}
                       </option>
                     )}
-                  {devices.map((d, i) => (
-                    <option key={d.deviceId || i} value={d.deviceId}>
-                      {d.label || t("摄像头 {0}", i + 1)}
-                    </option>
-                  ))}
+                  {devices
+                    .filter((d) => d.deviceId)
+                    .map((d, i) => (
+                      <option key={d.deviceId || i} value={d.deviceId}>
+                        {d.label || t("摄像头 {0}", i + 1)}
+                      </option>
+                    ))}
                 </select>
-              </label>
+              </div>
               <div className="fields two">
                 <label>
                   {t("采集分辨率")}
@@ -708,12 +727,6 @@ export default function Page() {
           ))}
         </div>
         <div className="section-foot">
-          <button
-            disabled={!ready || Boolean(pending)}
-            onClick={() => void action("cameras", refreshCameras)}
-          >
-            {t("授权并刷新摄像头")}
-          </button>
           <p>{t("画面卡顿时，可关闭暂不使用的一路相机。")}</p>
         </div>
       </div>

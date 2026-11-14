@@ -75,6 +75,10 @@ export const messages: Record<string, string> = {
   开启预览: "Start preview",
   关闭: "Close",
   授权并刷新摄像头: "Authorize and refresh cameras",
+  "授权 / 刷新": "Authorize / refresh",
+  "正在请求摄像头权限…": "Requesting camera access…",
+  "授权后显示当前电脑的摄像头，无需连接从臂。":
+    "Authorize to list cameras on this computer. No arm connection is required.",
   "画面卡顿时，可关闭暂不使用的一路相机。":
     "If video stutters, close the camera you are not using.",
   "AI 与任务": "AI and tasks",
