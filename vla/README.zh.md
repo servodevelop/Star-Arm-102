@@ -2,7 +2,7 @@
 
 ← [Star Arm 102](../README.zh.md) · <sub>[English](README.md) / **简体中文**</sub>
 
-[在线工作台](https://vla-arms-agent.vercel.app) · [源码仓库](https://github.com/servodevelop/Star-Arm-102/tree/main/vla)
+[源码仓库](https://github.com/servodevelop/Star-Arm-102/tree/main/vla)
 
 **用自然语言，让机械臂看见物体、完成抓取与放置。**
 

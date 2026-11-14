@@ -2,7 +2,7 @@
 
 ← [Star Arm 102](../README.md) · <sub>**English** / [简体中文](README.zh.md)</sub>
 
-[Online workbench](https://vla-arms-agent.vercel.app) · [Source repository](https://github.com/servodevelop/Star-Arm-102/tree/main/vla)
+[Source repository](https://github.com/servodevelop/Star-Arm-102/tree/main/vla)
 
 **Use natural language to guide a robot arm through visual pick-and-place tasks.**
 
