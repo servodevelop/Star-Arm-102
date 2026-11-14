@@ -25,7 +25,7 @@ if (process.argv[2] === "summary") {
   const mean = (values) => values.reduce((sum, v) => sum + v, 0) / values.length;
   const table = reports.flatMap((r) => r.pick_places.map((p, index) => `| ${r.round} | ${index + 1} | ${p.destination} | ${seconds(p.elapsed_ms)} | ${p.note ?? "完成"} |`)).join("\n");
   const roundTable = reports.map((r) => `| ${r.round} | ${seconds(r.return_to_work_ms)} | ${seconds(r.total_ms)} | ${r.physical_success ? "完成" : "失败"} |`).join("\n");
-  const report = `# 真实网页抓放测试报告\n\n测试日期：${new Date(reports[0].started_at).toLocaleDateString("sv-SE", { timeZone: "Asia/Shanghai" })}。\n\n` +
+  const report = `# 真实网页抓放测试报告\n\n← [vla-arms-agent](../README.zh.md) · <sub>[English](GRASP_TEST_REPORT.md) / **简体中文**</sub>\n\n测试日期：${new Date(reports[0].started_at).toLocaleDateString("sv-SE", { timeZone: "Asia/Shanghai" })}。\n\n` +
     `## 结果\n\n本次 ${reports.length} 轮任务完成 ${passed} 轮，共 ${grabs.length} 次完成抓放（含追加纠偏）。整轮完成率 ${(100 * passed / reports.length).toFixed(0)}%。实际夹取尝试 ${attempts} 次，其中 ${grabs.length} 次完成搬运（${(100 * grabs.length / attempts).toFixed(1)}%），${retries} 次滑脱后由 AI 自主重抓恢复；已排除回工作位的闭爪指令。未人工移动物体或代替执行动作。成功按抓住、搬运并释放至目标区域核对，放置精度不作为验收条件。\n\n` +
     `## 单次抓放耗时\n\n单位：秒。到中心框、到红框分别记录；追加纠偏抓放单独列出，未将整轮时间平分。\n\n| 轮次 | 本轮第几次 | 目标 | 耗时 | 结果与备注 |\n| --- | ---: | --- | ---: | --- |\n${table}\n\n` +
     `| 轮次 | 回工作位并闭爪累计 | 整轮合计 | 最终结果 |\n| --- | ---: | ---: | --- |\n${roundTable}\n\n` +
@@ -34,8 +34,8 @@ if (process.argv[2] === "summary") {
     `使用同一真实网页、同一会话，Star Arm 102-FL 从臂，外部与腕部相机均绑定 1280×720、30 FPS，按需切换采集。模型 ${[...new Set(reports.map((r) => r.model))].join("、")}，思考强度 ${[...new Set(reports.map((r) => r.effort))].join("、")}。\n\n` +
     reports.filter((r) => r.prompt_note).map((r) => `- 第 ${r.round} 轮提示词：${r.prompt_note}。\n`).join("") + "\n" +
     `整轮执行累计 ${seconds(total)} 秒，模型请求累计 ${seconds(modelTime)} 秒，占 ${(100 * modelTime / total).toFixed(1)}%；其余包含相机、串口动作、运动等待与前端处理。\n\n` +
-    `原始时间戳、实际反馈、工具结果和图像保存在 \`temp/five-rounds/round-*/\`。记录与汇总脚本为 [task-report.mjs](../tests/task-report.mjs)，使用方法见 [测试说明](../tests/README.md)。\n`;
-  const target = resolve("docs/GRASP_TEST_REPORT.md");
+    `原始时间戳、实际反馈、工具结果和图像保存在 \`temp/five-rounds/round-*/\`。记录与汇总脚本为 [task-report.mjs](../tests/task-report.mjs)，使用方法见 [测试说明](../tests/README.zh.md)。\n`;
+  const target = resolve("docs/GRASP_TEST_REPORT.zh.md");
   writeFileSync(target, report);
   console.log(JSON.stringify({ report: target, rounds: reports.length, passed, pick_places: grabs.length, retries, average_pick_place_ms: mean(grabs.map((p) => p.elapsed_ms)) }));
   process.exit(0);

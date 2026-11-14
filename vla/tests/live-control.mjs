@@ -71,6 +71,7 @@ cdp.on("DeviceAccess.deviceRequestPrompted", async (e) => {
     });
 });
 await page.goto(process.env.ARM_URL ?? "http://localhost:8780");
+await page.getByRole("combobox", { name: "Language / 语言" }).selectOption("zh");
 await page.getByRole("button", { name: "配置已保存" }).waitFor();
 console.log(JSON.stringify({ ready: true }));
 async function open(title) {

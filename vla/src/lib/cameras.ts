@@ -1,3 +1,4 @@
+import { t } from "./i18n";
 export type Role = "external" | "wrist";
 export type Binding = {
   deviceId: string;
@@ -35,7 +36,7 @@ export class Cameras {
   async start(role: Role, binding: Binding) {
     this.stop(role);
     const generation = this.generations.get(role);
-    if (!binding.deviceId) throw Error("请先选择摄像头");
+    if (!binding.deviceId) throw Error(t("请先选择摄像头"));
     const stream = await navigator.mediaDevices.getUserMedia({
       video: {
         deviceId: { exact: binding.deviceId },
@@ -54,7 +55,7 @@ export class Cameras {
     track.addEventListener("ended", () => {
       if (generation === this.generations.get(role)) {
         this.stop(role);
-        this.changed(role, "信号已断开");
+        this.changed(role, t("信号已断开"));
       }
     });
     const video = this.videos.get(role);
@@ -89,12 +90,12 @@ export class Cameras {
     this.streams.delete(role);
     const video = this.videos.get(role);
     if (video) video.srcObject = null;
-    this.changed(role, "未开启");
+    this.changed(role, t("未开启"));
   }
   async activate(role: Role, exclusive: boolean) {
     const active = this.available().includes(role);
     const binding = this.bindings[role];
-    if (!active && !binding?.deviceId) throw Error("此角色没有相机绑定");
+    if (!active && !binding?.deviceId) throw Error(t("此角色没有相机绑定"));
     if (exclusive)
       for (const other of ["external", "wrist"] as Role[])
         if (other !== role) this.stop(other);
@@ -124,7 +125,7 @@ export class Cameras {
       signal.throwIfAborted();
       try {
         if (!this.available().includes(role) && !this.bindings[role]?.deviceId)
-          throw Error("尚未绑定摄像头");
+          throw Error(t("尚未绑定摄像头"));
         await this.activate(role, exclusive);
         signal.throwIfAborted();
         observations.push(this.capture(role));
@@ -146,23 +147,23 @@ export class Cameras {
       !video?.videoWidth ||
       video.readyState < 2
     )
-      throw Error(`${role === "wrist" ? "腕部" : "外部"}摄像头没有有效画面`);
+      throw Error(t("{0}摄像头没有有效画面", role === "wrist" ? t("腕部") : t("外部")));
     const stream = this.streams.get(role)!;
     const deviceId = stream.getVideoTracks()[0].getSettings().deviceId;
     if (video.srcObject !== stream ||
       (deviceId && this.bindings[role]?.deviceId && deviceId !== this.bindings[role]!.deviceId))
-      throw Error(`${role} 摄像头画面来源与当前绑定不一致`);
+      throw Error(t("{0} 摄像头画面来源与当前绑定不一致", role));
     const canvas = document.createElement("canvas");
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
     const context = canvas.getContext("2d");
-    if (!context) throw Error("浏览器无法创建取图画布");
+    if (!context) throw Error(t("浏览器无法创建取图画布"));
     context.drawImage(video, 0, 0);
     const pixels = context.getImageData(0, 0, canvas.width, canvas.height).data;
     let hasSignal = false;
     for (let i = 0; i < pixels.length; i += 4)
       if (pixels[i] || pixels[i + 1] || pixels[i + 2]) { hasSignal = true; break; }
-    if (!hasSignal) throw Error(`${role} 摄像头当前为全黑图，请检查画面或照明`);
+    if (!hasSignal) throw Error(t("{0} 摄像头当前为全黑图，请检查画面或照明", role));
     return {
       role,
       captured_at: new Date().toISOString(),

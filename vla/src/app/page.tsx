@@ -1,5 +1,7 @@
 "use client";
 
+import { t, setLocale, type Locale } from "../lib/i18n";
+import { useLocale } from "./locale";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import {
@@ -96,23 +98,24 @@ function ArmPreview({ state }: { state: RobotState }) {
       <div className="preview-tools">
         <span>
           <i className="dot" />
-          实际回读 <i className="dot amber" />
-          目标预览
+          {t("实际回读")}
+          <i className="dot amber" />
+          {t("目标预览")}
         </span>
         <select
-          aria-label="姿态预览视角"
+          aria-label={t("姿态预览视角")}
           value={view}
           onChange={(e) => setView(e.target.value)}
         >
-          <option value="space">空间</option>
-          <option value="side">侧视</option>
-          <option value="top">俯视</option>
+          <option value="space">{t("空间")}</option>
+          <option value="side">{t("侧视")}</option>
+          <option value="top">{t("俯视")}</option>
         </select>
       </div>
       <svg
         viewBox="0 0 420 340"
         role="img"
-        aria-label="实际机械臂与目标的运动学预览"
+        aria-label={t("实际机械臂与目标的运动学预览")}
       >
         <defs>
           <pattern
@@ -151,7 +154,7 @@ function ArmPreview({ state }: { state: RobotState }) {
         {state.actual && render(state.actual.points, false)}
         {!state.actual && (
           <text x="210" y="120" textAnchor="middle" fill="#92a3a8">
-            连接从臂后显示实际姿态
+            {t("连接从臂后显示实际姿态")}
           </text>
         )}
       </svg>
@@ -160,6 +163,7 @@ function ArmPreview({ state }: { state: RobotState }) {
 }
 
 export default function Page() {
+  const locale = useLocale();
   const [ready, setReady] = useState(false);
   const [secure, setSecure] = useState(true);
   const [serialSupported, setSerialSupported] = useState(true);
@@ -168,8 +172,8 @@ export default function Page() {
   const key = config.apiKey ?? "";
   const [devices, setDevices] = useState<MediaDeviceInfo[]>([]);
   const [cameraStatus, setCameraStatus] = useState<Record<Role, string>>({
-    external: "未开启",
-    wrist: "未开启",
+    external: t("未开启"),
+    wrist: t("未开启"),
   });
   const [cameraBusy, setCameraBusy] = useState<Partial<Record<Role, boolean>>>(
     {},
@@ -201,9 +205,9 @@ export default function Page() {
     setSecure(window.isSecureContext);
     setSerialSupported("serial" in navigator);
     if (!window.isSecureContext)
-      reportError("请使用 HTTPS 或 localhost 连接相机与机械臂。");
+      reportError(t("请使用 HTTPS 或 localhost 连接相机与机械臂。"));
     else if (!("serial" in navigator))
-      reportError("当前浏览器不支持串口连接，请使用 Chrome 或 Edge。");
+      reportError(t("当前浏览器不支持串口连接，请使用 Chrome 或 Edge。"));
     let mounted = true;
     let previousError: string | null = null;
     const r = new Robot((v) => {
@@ -227,7 +231,7 @@ export default function Page() {
         () => {
           sessionSave.current = undefined;
           void save("session", a.session).catch((e) => {
-            if (mounted) reportError(`会话保存失败：${message(e)}`);
+            if (mounted) reportError(t("会话保存失败：{0}", message(e)));
           });
         },
         active ? 500 : 0,
@@ -250,7 +254,7 @@ export default function Page() {
         if (mounted)
           setDevices(listed?.filter((d) => d.kind === "videoinput") ?? []);
       } catch (e) {
-        if (mounted) reportError(`本地数据读取失败：${message(e)}`);
+        if (mounted) reportError(t("本地数据读取失败：{0}", message(e)));
       } finally {
         if (mounted) {
           initDone.current = true;
@@ -259,12 +263,13 @@ export default function Page() {
       }
     })();
     const changed = () => {
-      void navigator.mediaDevices.enumerateDevices()
+      void navigator.mediaDevices
+        .enumerateDevices()
         .then((v) => {
           if (mounted) setDevices(v.filter((d) => d.kind === "videoinput"));
         })
         .catch((e) => {
-          if (mounted) reportError(`相机列表读取失败：${message(e)}`);
+          if (mounted) reportError(t("相机列表读取失败：{0}", message(e)));
         });
     };
     navigator.mediaDevices?.addEventListener("devicechange", changed);
@@ -302,7 +307,8 @@ export default function Page() {
     try {
       await fn();
     } catch (e) {
-      if (e instanceof Error && e.name === "AbortError") toast.info("请求已停止");
+      if (e instanceof Error && e.name === "AbortError")
+        toast.info(t("请求已停止"));
       else reportError(message(e));
     } finally {
       setPending("");
@@ -320,7 +326,7 @@ export default function Page() {
   }
   async function refreshCameras() {
     if (!navigator.mediaDevices)
-      throw Error("相机需要 HTTPS 或 localhost 安全上下文");
+      throw Error(t("相机需要 HTTPS 或 localhost 安全上下文"));
     let listed = await navigator.mediaDevices.enumerateDevices();
     if (!listed.some((d) => d.kind === "videoinput" && d.label)) {
       const permission = await navigator.mediaDevices.getUserMedia({
@@ -344,7 +350,7 @@ export default function Page() {
     const snapshot = structuredClone(config);
     await save("config", snapshot);
     setSaved(JSON.stringify(snapshot));
-    toast.success("配置已保存");
+    toast.success(t("配置已保存"));
   }
   async function send() {
     const input = text.trim();
@@ -377,24 +383,36 @@ export default function Page() {
         <div>
           <span className="eyebrow">vla-arms-agent</span>
           <h1>
-            看见，判断，行动<span className="accent">。</span>
+            {t("看见，判断，行动")}
+            <span className="accent">{locale === "zh" ? "。" : "."}</span>
           </h1>
-          <p>连接相机与机械臂，用自然语言完成任务。</p>
+          <p>{t("连接相机与机械臂，用自然语言完成任务。")}</p>
         </div>
         <div className="top-actions">
+          <select
+            className="language-select"
+            aria-label="Language / 语言"
+            value={locale}
+            onChange={(e) => setLocale(e.target.value as Locale)}
+          >
+            <option value="en">English</option>
+            <option value="zh">简体中文</option>
+          </select>
           <span className={`badge ${state.connected ? "on" : ""}`}>
             <i className="dot" />
-            {state.connected ? "从臂已连接" : "从臂未连接"}
+            {state.connected ? t("从臂已连接") : t("从臂未连接")}
           </span>
           <button
             className="stop"
             disabled={!ready}
-            onClick={() => void action("stop", () => {
-              modelRequest.current?.abort();
-              return agent.current!.stop();
-            })}
+            onClick={() =>
+              void action("stop", () => {
+                modelRequest.current?.abort();
+                return agent.current!.stop();
+              })
+            }
           >
-            停止 AI 与运动
+            {t("停止 AI 与运动")}
           </button>
         </div>
       </header>
@@ -409,34 +427,44 @@ export default function Page() {
               aria-controls="device-panel"
               onClick={() => setDevicesOpen((open) => !open)}
             >
-              连接与观察
-              <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
-                <path d="m5 8 5 5 5-5" fill="none" stroke="currentColor" strokeWidth="1.5" />
+              {t("连接与观察")}
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                aria-hidden="true"
+              >
+                <path
+                  d="m5 8 5 5 5-5"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                />
               </svg>
             </button>
           </h2>
-          <p>连接机械臂，绑定外部与腕部相机。</p>
+          <p>{t("连接机械臂，绑定外部与腕部相机。")}</p>
         </div>
         <button
           className={dirty ? "primary" : undefined}
           disabled={!ready || Boolean(pending)}
           onClick={() => void action("save", saveConfig)}
         >
-          {dirty ? "保存配置" : "配置已保存"}
+          {dirty ? t("保存配置") : t("配置已保存")}
         </button>
       </section>
       <div id="device-panel" hidden={!devicesOpen}>
         <div className="device-grid">
           <section className="card arm-card">
             <div className="card-title">
-              <h3>从臂连接</h3>
+              <h3>{t("从臂连接")}</h3>
             </div>
             <div className="fields two">
               <label>
-                串口波特率
+                {t("串口波特率")}
                 <input
                   type="number"
-                  aria-label="串口波特率"
+                  aria-label={t("串口波特率")}
                   value={config.baudRate}
                   disabled={state.connected}
                   onChange={(e) =>
@@ -445,10 +473,10 @@ export default function Page() {
                 />
               </label>
               <label>
-                默认动作时长 / ms
+                {t("默认动作时长 / ms")}
                 <input
                   type="number"
-                  aria-label="默认动作时长"
+                  aria-label={t("默认动作时长")}
                   value={config.ai.durationMs}
                   onChange={(e) => editAI("durationMs", +e.target.value)}
                 />
@@ -473,10 +501,10 @@ export default function Page() {
                 }
               >
                 {pending === "serial"
-                  ? "正在连接…"
+                  ? t("正在连接…")
                   : state.connected
-                    ? "断开从臂"
-                    : "选择串口并连接"}
+                    ? t("断开从臂")
+                    : t("选择串口并连接")}
               </button>
               <button
                 disabled={disabled || !state.connected}
@@ -485,27 +513,25 @@ export default function Page() {
                   void action("refresh", () => robot.current!.refresh())
                 }
               >
-                {pending === "refresh" ? "回读中…" : "回读姿态"}
+                {pending === "refresh" ? t("回读中…") : t("回读姿态")}
               </button>
             </div>
-            <p className="caption">
-              连接后读取当前姿态。
-            </p>
+            <p className="caption">{t("连接后读取当前姿态。")}</p>
             <dl className="stats">
               <div>
-                <dt>执行状态</dt>
+                <dt>{t("执行状态")}</dt>
                 <dd>
                   {state.busy
-                    ? "执行中"
+                    ? t("执行中")
                     : pending === "refresh"
-                      ? "回读中"
+                      ? t("回读中")
                       : state.connected
-                        ? "就绪"
-                        : "未连接"}
+                        ? t("就绪")
+                        : t("未连接")}
                 </dd>
               </div>
               <div>
-                <dt>夹爪实际开口角</dt>
+                <dt>{t("夹爪实际开口角")}</dt>
                 <dd>
                   {state.gripper_deg == null
                     ? "—"
@@ -513,26 +539,26 @@ export default function Page() {
                 </dd>
               </div>
               <div>
-                <dt>夹爪功率回读</dt>
+                <dt>{t("夹爪功率回读")}</dt>
                 <dd>
                   {state.monitors[6] ? `${state.monitors[6].power} mW` : "—"}
                 </dd>
               </div>
             </dl>
             <details>
-              <summary>关节映射与零点</summary>
+              <summary>{t("关节映射与零点")}</summary>
               <p className="caption">
-                方向与零点用于校准关节角度，修改后会更新姿态与预览。
+                {t("方向与零点用于校准关节角度，修改后会更新姿态与预览。")}
               </p>
               <div className="mapping-grid">
-                <span>关节</span>
-                <span>方向</span>
-                <span>零点 / °</span>
+                <span>{t("关节")}</span>
+                <span>{t("方向")}</span>
+                <span>{t("零点 / °")}</span>
                 {config.mapping.directions.map((v, i) => (
                   <div className="mapping-row" key={i}>
                     <span>J{i + 1}</span>
                     <select
-                      aria-label={`J${i + 1} 方向`}
+                      aria-label={t("J{0} 方向", i + 1)}
                       value={v}
                       disabled={running || state.busy}
                       onChange={(e) =>
@@ -547,11 +573,11 @@ export default function Page() {
                         }))
                       }
                     >
-                      <option value={1}>同向</option>
-                      <option value={-1}>反向</option>
+                      <option value={1}>{t("同向")}</option>
+                      <option value={-1}>{t("反向")}</option>
                     </select>
                     <input
-                      aria-label={`J${i + 1} 零点`}
+                      aria-label={t("J{0} 零点", i + 1)}
                       type="number"
                       value={config.mapping.offsets[i]}
                       disabled={running || state.busy}
@@ -575,8 +601,10 @@ export default function Page() {
           {(["external", "wrist"] as Role[]).map((role) => (
             <section className="card camera-card" key={role}>
               <div className="card-title">
-                <h3>{titles[role]}</h3>
-                <span className="muted camera-status">{cameraStatus[role]}</span>
+                <h3>{t(titles[role])}</h3>
+                <span className="muted camera-status">
+                  {t(cameraStatus[role])}
+                </span>
               </div>
               <div className="camera-video">
                 <video
@@ -584,16 +612,18 @@ export default function Page() {
                   autoPlay
                   muted
                   playsInline
-                  aria-label={`${titles[role]}实时画面`}
+                  aria-label={t("{0}实时画面", titles[role])}
                 />
                 <span>
-                  {cameraStatus[role] === "未开启" ? "选择设备并开启预览" : ""}
+                  {!cameras.current?.available().includes(role)
+                    ? t("选择设备并开启预览")
+                    : ""}
                 </span>
               </div>
               <label>
-                绑定设备
+                {t("绑定设备")}
                 <select
-                  aria-label={`${titles[role]}设备`}
+                  aria-label={t("{0}设备", titles[role])}
                   value={config.cameras[role].deviceId}
                   onChange={(e) =>
                     binding(role, {
@@ -604,27 +634,28 @@ export default function Page() {
                     })
                   }
                 >
-                  <option value="">未绑定</option>
+                  <option value="">{t("未绑定")}</option>
                   {config.cameras[role].deviceId &&
                     !devices.some(
                       (d) => d.deviceId === config.cameras[role].deviceId,
                     ) && (
                       <option value={config.cameras[role].deviceId} disabled>
-                        {config.cameras[role].label || "已绑定设备"}（当前不可用）
+                        {config.cameras[role].label || t("已绑定设备")}
+                        {t("（当前不可用）")}
                       </option>
                     )}
                   {devices.map((d, i) => (
                     <option key={d.deviceId || i} value={d.deviceId}>
-                      {d.label || `摄像头 ${i + 1}`}
+                      {d.label || t("摄像头 {0}", i + 1)}
                     </option>
                   ))}
                 </select>
               </label>
               <div className="fields two">
                 <label>
-                  采集分辨率
+                  {t("采集分辨率")}
                   <select
-                    aria-label={`${titles[role]}分辨率`}
+                    aria-label={t("{0}分辨率", titles[role])}
                     value={`${config.cameras[role].width}x${config.cameras[role].height}`}
                     onChange={(e) => {
                       const [width, height] = e.target.value
@@ -638,9 +669,9 @@ export default function Page() {
                   </select>
                 </label>
                 <label>
-                  期望帧率
+                  {t("期望帧率")}
                   <select
-                    aria-label={`${titles[role]}帧率`}
+                    aria-label={t("{0}帧率", titles[role])}
                     value={config.cameras[role].fps}
                     onChange={(e) => binding(role, { fps: +e.target.value })}
                   >
@@ -661,16 +692,16 @@ export default function Page() {
                     void action(`camera-${role}`, () => startCamera(role))
                   }
                 >
-                  {cameraBusy[role] ? "开启中…" : "开启预览"}
+                  {cameraBusy[role] ? t("开启中…") : t("开启预览")}
                 </button>
                 <button
                   disabled={!ready}
                   onClick={() => {
                     cameras.current!.stop(role);
-                    setCameraStatus((v) => ({ ...v, [role]: "未开启" }));
+                    setCameraStatus((v) => ({ ...v, [role]: t("未开启") }));
                   }}
                 >
-                  关闭
+                  {t("关闭")}
                 </button>
               </div>
             </section>
@@ -681,33 +712,31 @@ export default function Page() {
             disabled={!ready || Boolean(pending)}
             onClick={() => void action("cameras", refreshCameras)}
           >
-            授权并刷新摄像头
+            {t("授权并刷新摄像头")}
           </button>
-          <p>
-            画面卡顿时，可关闭暂不使用的一路相机。
-          </p>
+          <p>{t("画面卡顿时，可关闭暂不使用的一路相机。")}</p>
         </div>
       </div>
 
       <section className="section-heading">
         <span>02</span>
         <div>
-          <h2>AI 与任务</h2>
-          <p>保留上下文，运行中可继续发送提醒和补充。</p>
+          <h2>{t("AI 与任务")}</h2>
+          <p>{t("保留上下文，运行中可继续发送提醒和补充。")}</p>
         </div>
         <span className={`badge ${running ? "on" : ""}`}>
-          {running ? "正在处理" : "等待任务"}
+          {running ? t("正在处理") : t("等待任务")}
         </span>
       </section>
       <div className="work-grid">
         <section className="card ai-card">
           <details className="settings">
-            <summary>模型与动作配置</summary>
+            <summary>{t("模型与动作配置")}</summary>
             <div className="fields">
               <label>
-                OpenAI 兼容 API 地址
+                {t("OpenAI 兼容 API 地址")}
                 <input
-                  aria-label="AI API 地址"
+                  aria-label={t("AI API 地址")}
                   value={config.ai.baseURL}
                   onChange={(e) => editAI("baseURL", e.target.value)}
                   placeholder="http://127.0.0.1:8317/v1"
@@ -723,14 +752,14 @@ export default function Page() {
                   onChange={(e) =>
                     setConfig((value) => ({ ...value, apiKey: e.target.value }))
                   }
-                  placeholder="保存 AI 配置后将自动记住"
+                  placeholder={t("保存 AI 配置后将自动记住")}
                 />
               </label>
               <div className="fields two">
                 <label>
-                  模型
+                  {t("模型")}
                   <input
-                    aria-label="AI 模型"
+                    aria-label={t("AI 模型")}
                     list="models"
                     value={config.ai.model}
                     onChange={(e) => editAI("model", e.target.value)}
@@ -742,12 +771,12 @@ export default function Page() {
                   </datalist>
                 </label>
                 <label>
-                  思考强度
+                  {t("思考强度")}
                   <input
-                    aria-label="AI 思考强度"
+                    aria-label={t("AI 思考强度")}
                     list="efforts"
                     value={config.ai.effort}
-                    placeholder="模型默认"
+                    placeholder={t("模型默认")}
                     onChange={(e) => editAI("effort", e.target.value)}
                   />
                   <datalist id="efforts">
@@ -760,38 +789,56 @@ export default function Page() {
                 </label>
               </div>
               <label>
-                原生上下文压缩阈值 / token
-                <input type="number" min="0" aria-label="原生上下文压缩阈值"
-                  value={config.ai.compactTokens ?? DEFAULT_AI.compactTokens}
-                  onChange={(e) => editAI("compactTokens", +e.target.value)} />
-                <span className="caption">达到后由模型原生压缩，0 关闭；思考强度保持不变。</span>
-              </label>
-              <label>
-                夹爪默认功率上限 / mW
+                {t("原生上下文压缩阈值 / token")}
                 <input
                   type="number"
-                  aria-label="夹爪功率上限"
+                  min="0"
+                  aria-label={t("原生上下文压缩阈值")}
+                  value={config.ai.compactTokens ?? DEFAULT_AI.compactTokens}
+                  onChange={(e) => editAI("compactTokens", +e.target.value)}
+                />
+                <span className="caption">
+                  {t("达到后由模型原生压缩，0 关闭；思考强度保持不变。")}
+                </span>
+              </label>
+              <label>
+                {t("夹爪默认功率上限 / mW")}
+                <input
+                  type="number"
+                  aria-label={t("夹爪功率上限")}
                   value={config.ai.gripperPowerMw}
                   onChange={(e) => editAI("gripperPowerMw", +e.target.value)}
                 />
               </label>
             </div>
             <p className="caption">
-              模型需支持看图和工具调用。配置修改从下次任务生效。夹爪功率填 0 使用默认值。
+              {t(
+                "模型需支持看图和工具调用。配置修改从下次任务生效。夹爪功率填 0 使用默认值。",
+              )}
             </p>
-            {session.usage && <p className="caption" aria-label="AI 请求性能">
-              最近模型响应 {session.usage.responseMs == null ? "未回报" : `${(session.usage.responseMs / 1000).toFixed(1)} 秒`}
-              {" · "}输入 {session.usage.inputTokens ?? "未回报"} token
-              {" · "}缓存命中 {session.usage.inputTokens && session.usage.cachedTokens != null
-                ? `${(100 * session.usage.cachedTokens / session.usage.inputTokens).toFixed(1)}%` : "未回报"}
-            </p>}
+            {session.usage && (
+              <p className="caption" aria-label={t("AI 请求性能")}>
+                {t("最近模型响应")}
+                {session.usage.responseMs == null
+                  ? t("未回报")
+                  : t("{0} 秒", (session.usage.responseMs / 1000).toFixed(1))}
+                {" · "}
+                {t("输入")}
+                {session.usage.inputTokens ?? t("未回报")} token
+                {" · "}
+                {t("缓存命中")}
+                {session.usage.inputTokens && session.usage.cachedTokens != null
+                  ? `${((100 * session.usage.cachedTokens) / session.usage.inputTokens).toFixed(1)}%`
+                  : t("未回报")}
+              </p>
+            )}
             <div className="actions">
               <button
                 className={dirty ? "primary" : undefined}
                 disabled={!ready || Boolean(pending) || !dirty}
                 onClick={() => void action("save", saveConfig)}
               >
-                保存 AI 配置
+                {t("保存 AI 配置")}
               </button>
               <button
                 disabled={!ready || Boolean(pending) || running}
@@ -800,11 +847,11 @@ export default function Page() {
                     const request = new AbortController();
                     modelRequest.current = request;
                     setCatalog(await models(config.ai, key, request.signal));
-                    toast.success("模型列表已更新");
+                    toast.success(t("模型列表已更新"));
                   })
                 }
               >
-                刷新模型列表
+                {t("刷新模型列表")}
               </button>
               <button
                 disabled={!ready || Boolean(pending) || running}
@@ -824,31 +871,39 @@ export default function Page() {
                   })
                 }
               >
-                {pending === "check" ? "正在验证…" : "验证连接与能力"}
+                {pending === "check" ? t("正在验证…") : t("验证连接与能力")}
               </button>
             </div>
           </details>
           <div className="composer">
             {!entries.length && (
               <div className="task-intro">
-                <h3>用一句话定义任务</h3>
-                <p>例如：观察两路画面，把紫色海绵放到中心标记，然后回到工作位。</p>
+                <h3>{t("用一句话定义任务")}</h3>
+                <p>
+                  {t(
+                    "例如：观察两路画面，把紫色海绵放到中心标记，然后回到工作位。",
+                  )}
+                </p>
               </div>
             )}
-            <label htmlFor="task">{hasConversation ? "追加对话" : "AI 任务"}</label>
+            <label htmlFor="task">
+              {hasConversation ? t("追加对话") : t("AI 任务")}
+            </label>
             <p className="caption" id="task-hint">
               {hasConversation
-                ? "新任务建议先开启新会话。"
-                : "开启外部相机预览后，任务会附带其当前画面。"}
+                ? t("新任务建议先开启新会话。")
+                : t("开启外部相机预览后，任务会附带其当前画面。")}
             </p>
             <textarea
               id="task"
-              aria-label="AI 任务"
+              aria-label={t("AI 任务")}
               aria-describedby="task-hint"
               value={text}
               onChange={(e) => setText(e.target.value)}
               rows={3}
-              placeholder="描述目标；仅观察时请说明。Ctrl / ⌘ + Enter 发送。"
+              placeholder={t(
+                "描述目标；仅观察时请说明。Ctrl / ⌘ + Enter 发送。",
+              )}
               onKeyDown={(e) => {
                 if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
                   e.preventDefault();
@@ -862,13 +917,13 @@ export default function Page() {
                 disabled={!ready || !text.trim()}
                 onClick={requestSend}
               >
-                {hasConversation ? "追加对话" : "开始会话"}
+                {hasConversation ? t("追加对话") : t("开始会话")}
               </button>
               <button
                 disabled={!ready || running}
                 onClick={() => agent.current!.reset()}
               >
-                新会话
+                {t("新会话")}
               </button>
             </div>
           </div>
@@ -876,35 +931,53 @@ export default function Page() {
             <div
               className="conversation"
               ref={flowList}
-              aria-label="AI 流程"
+              aria-label={t("AI 流程")}
               aria-live="polite"
               onScroll={(e) => {
                 const flow = e.currentTarget;
                 followFlow.current =
-                  Math.ceil(flow.scrollTop + flow.clientHeight) >= flow.scrollHeight;
+                  Math.ceil(flow.scrollTop + flow.clientHeight) >=
+                  flow.scrollHeight;
               }}
             >
               {orderedEntries.map(({ entry: e, order }) =>
                 e.kind === "tool" ? (
-                  <details className="tool-entry" data-entry-order={order} key={e.id}>
-                    <summary><span className="step-title" title={e.text}>{e.text}</span></summary>
+                  <details
+                    className="tool-entry"
+                    data-entry-order={order}
+                    key={e.id}
+                  >
+                    <summary>
+                      <span className="step-title" title={t(e.text)}>
+                        {t(e.text)}
+                      </span>
+                    </summary>
                     <pre>{e.detail}</pre>
                   </details>
                 ) : (
-                  <div className={`entry ${e.kind}`} data-entry-order={order} key={e.id}>
+                  <div
+                    className={`entry ${e.kind}`}
+                    data-entry-order={order}
+                    key={e.id}
+                  >
                     <div className="entry-label">
                       {e.kind === "user"
-                        ? "你"
+                        ? t("你")
                         : e.kind === "assistant"
                           ? "AI"
-                          : "状态"}
+                          : t("状态")}
                       <time>
-                        {new Date(e.at).toLocaleTimeString("zh-CN", {
-                          hour12: false,
-                        })}
+                        {new Date(e.at).toLocaleTimeString(
+                          locale === "zh" ? "zh-CN" : "en",
+                          {
+                            hour12: false,
+                          },
+                        )}
                       </time>
                     </div>
-                    <div className="entry-text">{e.text}</div>
+                    <div className="entry-text">
+                      {e.kind === "status" ? t(e.text) : e.text}
+                    </div>
                   </div>
                 ),
               )}
@@ -913,7 +986,7 @@ export default function Page() {
         </section>
         <section className="card control-card">
           <div className="card-title">
-            <h3>姿态与手动控制</h3>
+            <h3>{t("姿态与手动控制")}</h3>
           </div>
           <ArmPreview state={state} />
           <div className="joint-readings">
@@ -929,7 +1002,7 @@ export default function Page() {
             ))}
           </div>
           <div className="tcp-line">
-            <span>实际 TCP / mm</span>
+            <span>{t("实际 TCP / mm")}</span>
             <strong>
               {state.actual
                 ? state.actual.tcp_mm.map((v) => v.toFixed(1)).join(" / ")
@@ -937,7 +1010,7 @@ export default function Page() {
             </strong>
           </div>
           <details>
-            <summary>关节目标与夹爪</summary>
+            <summary>{t("关节目标与夹爪")}</summary>
             <div className="joint-inputs">
               {draft.map((v, i) => (
                 <label key={i}>
@@ -945,7 +1018,7 @@ export default function Page() {
                   <input
                     type="number"
                     step="1"
-                    aria-label={`J${i + 1} 目标角度`}
+                    aria-label={t("J{0} 目标角度", i + 1)}
                     value={v}
                     onChange={(e) =>
                       setDraft((values) =>
@@ -966,13 +1039,13 @@ export default function Page() {
                   void action("preview", () => robot.current!.preview(draft))
                 }
               >
-                预览目标
+                {t("预览目标")}
               </button>
               <button
                 disabled={disabled || !state.actual}
                 onClick={() => setDraft([...state.actual!.joints_deg])}
               >
-                使用实际角度
+                {t("使用实际角度")}
               </button>
               <button
                 className="primary"
@@ -983,7 +1056,7 @@ export default function Page() {
                   )
                 }
               >
-                执行关节目标
+                {t("执行关节目标")}
               </button>
               <button
                 disabled={disabled || !state.connected}
@@ -996,15 +1069,15 @@ export default function Page() {
                   )
                 }
               >
-                回工作位
+                {t("回工作位")}
               </button>
             </div>
             <div className="gripper-input">
               <label>
-                夹爪开口角 / °
+                {t("夹爪开口角 / °")}
                 <input
                   type="number"
-                  aria-label="夹爪目标开口角"
+                  aria-label={t("夹爪目标开口角")}
                   value={gripper}
                   onChange={(e) => setGripper(+e.target.value)}
                 />
@@ -1021,17 +1094,21 @@ export default function Page() {
                   )
                 }
               >
-                执行夹爪
+                {t("执行夹爪")}
               </button>
             </div>
             <p className="caption">
-              工作位会闭合夹爪。开口参考：30°约 71 mm，60°约 129 mm（测量深度不同）。
+              {t(
+                "工作位会闭合夹爪。开口参考：30°约 71 mm，60°约 129 mm（测量深度不同）。",
+              )}
             </p>
           </details>
           <details>
-            <summary>TCP 位置逆解</summary>
+            <summary>{t("TCP 位置逆解")}</summary>
             <p className="caption">
-              输入目标位置，先预览，再执行。未找到解时，可先调整关节角度。
+              {t(
+                "输入目标位置，先预览，再执行。未找到解时，可先调整关节角度。",
+              )}
             </p>
             <label className="checkbox">
               <input
@@ -1039,7 +1116,7 @@ export default function Page() {
                 checked={relative}
                 onChange={(e) => setRelative(e.target.checked)}
               />
-              相对当前 TCP 的增量
+              {t("相对当前 TCP 的增量")}
             </label>
             <div className="fields three">
               {target.map((v, i) => (
@@ -1069,31 +1146,38 @@ export default function Page() {
                   const solved = inverse(position, actual.joints_deg);
                   if (!solved.joints_deg)
                     throw Error(
-                      `IK 未找到解：${solved.reason}，位置误差 ${solved.error_mm?.toFixed(2)} mm`,
+                      t(
+                        "IK 未找到解：{0}，位置误差 {1} mm",
+                        solved.reason,
+                        solved.error_mm?.toFixed(2),
+                      ),
                     );
                   setDraft(solved.joints_deg);
                   robot.current!.preview(solved.joints_deg);
                   toast.success(
-                    `位置逆解已预览，误差 ${solved.error_mm?.toFixed(3)} mm；在关节控制中点击执行`,
+                    t(
+                      "位置逆解已预览，误差 {0} mm；在关节控制中点击执行",
+                      solved.error_mm?.toFixed(3),
+                    ),
                   );
                 })
               }
             >
-              求解并预览
+              {t("求解并预览")}
             </button>
           </details>
           <details>
-            <summary>实际舵机反馈</summary>
+            <summary>{t("实际舵机反馈")}</summary>
             <div className="table-scroll">
               <table>
                 <thead>
                   <tr>
                     <th>ID</th>
-                    <th>原始角度</th>
-                    <th>电压</th>
-                    <th>电流</th>
-                    <th>功率</th>
-                    <th>状态</th>
+                    <th>{t("原始角度")}</th>
+                    <th>{t("电压")}</th>
+                    <th>{t("电流")}</th>
+                    <th>{t("功率")}</th>
+                    <th>{t("状态")}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -1119,11 +1203,15 @@ export default function Page() {
         aria-labelledby="append-title"
         aria-describedby="append-description"
       >
-        <h2 id="append-title">追加到当前会话？</h2>
-        <p id="append-description">会继续使用当前聊天记录。新任务建议先开启新会话。</p>
+        <h2 id="append-title">{t("追加到当前会话？")}</h2>
+        <p id="append-description">
+          {t("会继续使用当前聊天记录。新任务建议先开启新会话。")}
+        </p>
         <div className="dialog-message">{text.trim()}</div>
         <div className="actions dialog-actions">
-          <button onClick={() => appendDialog.current?.close()}>取消</button>
+          <button onClick={() => appendDialog.current?.close()}>
+            {t("取消")}
+          </button>
           <button
             className="primary"
             onClick={() => {
@@ -1131,7 +1219,7 @@ export default function Page() {
               void send();
             }}
           >
-            确认追加
+            {t("确认追加")}
           </button>
         </div>
       </dialog>

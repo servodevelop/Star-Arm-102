@@ -1,51 +1,53 @@
-# 真实网页抓放测试报告
+# Real-browser pick-and-place report
 
-测试日期：2026-11-14。
+← [vla-arms-agent](../README.md) · <sub>**English** / [简体中文](GRASP_TEST_REPORT.zh.md)</sub>
 
-## 结果
+Test date: 2026-11-14.
 
-本次 5 轮任务完成 5 轮，共 11 次完成抓放（含追加纠偏）。整轮完成率 100%。实际夹取尝试 14 次，其中 11 次完成搬运（78.6%），3 次滑脱后由 AI 自主重抓恢复；已排除回工作位的闭爪指令。未人工移动物体或代替执行动作。成功按抓住、搬运并释放至目标区域核对，放置精度不作为验收条件。
+## Result
 
-## 单次抓放耗时
+All 5 task rounds completed, comprising 11 completed pick-and-place actions including an additional placement correction. Whole-round completion was 100%. There were 14 actual grasp attempts, of which 11 transported the object (78.6%); the AI recovered from 3 slips autonomously. Work-pose gripper-close commands are excluded. No person moved the object or substituted actions during execution. Completion was checked against grasping, transporting, and releasing into the target area; placement precision was not an acceptance condition.
 
-单位：秒。到中心框、到红框分别记录；追加纠偏抓放单独列出，未将整轮时间平分。
+## Per-action timing
 
-| 轮次 | 本轮第几次 | 目标 | 耗时 | 结果与备注 |
+Times are seconds. Center and red-area placements are timed separately; additional corrections are separate actions. Whole-round time is not divided equally.
+
+| Round | Action within round | Destination | Duration | Result and notes |
 | --- | ---: | --- | ---: | --- |
-| 1 | 1 | 中心框 | 117.2 | 完成 |
-| 1 | 2 | 红框区域 | 55.9 | 完成 |
-| 2 | 1 | 中心框 | 134.1 | 完成 |
-| 2 | 2 | 红框区域 | 59.4 | 完成 |
-| 3 | 1 | 中心框 | 128.3 | 完成 |
-| 3 | 2 | 红框区域 | 56.6 | 完成 |
-| 4 | 1 | 中心框 | 137.5 | 完成 |
-| 4 | 2 | 红框区域 | 98.9 | 落点靠左，AI 追加纠偏 |
-| 4 | 3 | 红框区域纠偏 | 226.0 | 完成；包含 2 次滑脱后重抓 |
-| 5 | 1 | 中心框 | 211.1 | 完成；包含 1 次滑脱后重抓 |
-| 5 | 2 | 红框区域 | 64.0 | 完成 |
+| 1 | 1 | Center box | 117.2 | Completed |
+| 1 | 2 | Red area | 55.9 | Completed |
+| 2 | 1 | Center box | 134.1 | Completed |
+| 2 | 2 | Red area | 59.4 | Completed |
+| 3 | 1 | Center box | 128.3 | Completed |
+| 3 | 2 | Red area | 56.6 | Completed |
+| 4 | 1 | Center box | 137.5 | Completed |
+| 4 | 2 | Red area | 98.9 | Placement too far left; AI added a correction |
+| 4 | 3 | Red-area correction | 226.0 | Completed, including regrasping after 2 slips |
+| 5 | 1 | Center box | 211.1 | Completed, including regrasping after 1 slip |
+| 5 | 2 | Red area | 64.0 | Completed |
 
-| 轮次 | 回工作位并闭爪累计 | 整轮合计 | 最终结果 |
+| Round | Return-to-work and close total | Full round | Final result |
 | --- | ---: | ---: | --- |
-| 1 | 11.9 | 185.0 | 完成 |
-| 2 | 9.7 | 203.3 | 完成 |
-| 3 | 9.6 | 194.5 | 完成 |
-| 4 | 28.0 | 490.4 | 完成 |
-| 5 | 13.7 | 288.8 | 完成 |
+| 1 | 11.9 | 185.0 | Completed |
+| 2 | 9.7 | 203.3 | Completed |
+| 3 | 9.6 | 194.5 | Completed |
+| 4 | 28.0 | 490.4 | Completed |
+| 5 | 13.7 | 288.8 | Completed |
 
-第一次平均 145.7 秒，第二次平均 67.0 秒。全部单次抓放平均 117.2 秒，范围 55.9～226.0 秒。
+Mean first action: 145.7 seconds; mean second action: 67.0 seconds. Across all individual pick-and-place actions, the mean was 117.2 seconds, ranging from 55.9 to 226.0 seconds.
 
-## 计时与条件
+## Timing and conditions
 
-第一次从网页发送任务开始，至中心框放置确认；第二次从该确认开始，至红框放置确认。取图、模型判断、姿态调整、执行、释放和结果确认均计入对应抓放，回工作位单列。追加纠偏从重新开始抓取的决策开始，至本次放置确认，包含过程中的重抓耗时。边界使用网页会话时间戳，并核对对应过程画面。两轮之间的人工审查等待不计入执行耗时。
+The first action runs from sending the task to center-placement confirmation. The second runs from that confirmation to red-area placement confirmation. Each includes capture, model decisions, pose corrections, execution, release, and verification. Returning to work is separate. Additional correction runs from the decision to regrasp until its placement confirmation, including retries. Boundaries use page conversation timestamps checked against images. Human review waits between rounds are excluded.
 
-使用同一真实网页、同一会话，Star Arm 102-FL 从臂，外部与腕部相机均绑定 1280×720、30 FPS，按需切换采集。模型 gpt-6-astra，思考强度 medium。
+All rounds used one real page and conversation, a Star Arm 102-FL follower, and external and wrist cameras bound at 1280×720 and 30 FPS, switching capture as needed. Model: gpt-6-astra, reasoning effort medium.
 
-- 第 1 轮提示词：含前伸回收提醒。
-- 第 2 轮提示词：含前伸回收提醒。
-- 第 3 轮提示词：含前伸回收提醒。
-- 第 4 轮提示词：含前伸回收提醒。
-- 第 5 轮提示词：含前伸回收提醒，并按用户补充加入先抬起再平移、避免桌面拖动。
+- Round 1 prompt included the forward-overreach correction reminder.
+- Round 2 prompt included the forward-overreach correction reminder.
+- Round 3 prompt included the forward-overreach correction reminder.
+- Round 4 prompt included the forward-overreach correction reminder.
+- Round 5 also added the user's instruction to lift before translating and avoid dragging across the table.
 
-整轮执行累计 1362.0 秒，模型请求累计 1184.0 秒，占 86.9%；其余包含相机、串口动作、运动等待与前端处理。
+Total execution across rounds was 1362.0 seconds. Model requests accounted for 1184.0 seconds (86.9%). The remainder includes cameras, serial actions, movement waits, and page processing.
 
-原始时间戳、实际反馈、工具结果和图像保存在 `temp/five-rounds/round-*/`。记录与汇总脚本为 [task-report.mjs](../tests/task-report.mjs)，使用方法见 [测试说明](../tests/README.md)。
+Raw timestamps, feedback, tool results, and images are stored in `temp/five-rounds/round-*/`. Recording and summary code is [task-report.mjs](../tests/task-report.mjs); see [testing](../tests/README.md) for usage.

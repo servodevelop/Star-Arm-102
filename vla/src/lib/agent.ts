@@ -1,10 +1,11 @@
+import { t, getLocale, translate } from "./i18n";
 import { createOpenAI } from "@ai-sdk/openai";
 import { generateText, isStepCount, streamText, tool } from "ai";
 import { z } from "zod";
 import { Cameras, type CameraFrame } from "./cameras";
 import { Robot } from "./robot";
 import { networkErrorMessage, networkRecovery, networkRetries, resilientModel } from "./network";
-import { instructions } from "./prompts";
+import { getInstructions } from "./prompts";
 import { createRobotTools, robotSnapshot } from "./tools";
 import { activeContext, hasCompaction, withoutCompactions } from "./context";
 import {
@@ -67,12 +68,14 @@ export class Agent {
       return;
     }
     if (!settings.baseURL.trim() || !settings.model.trim() || !apiKey.trim())
-      throw Error("请填写模型地址、模型 ID 和 API Key");
+      throw Error(t("请填写模型地址、模型 ID 和 API Key"));
+    const locale = getLocale();
+    const systemInstructions = getInstructions(locale);
     this.controller = new AbortController();
     const signal = this.controller.signal;
     this.session.active = true;
     try {
-      const scope = JSON.stringify([settings.baseURL.replace(/\/+$/, ""), settings.model]);
+      const scope = JSON.stringify([settings.baseURL.replace(/\/+$/, ""), settings.model, locale]);
       if (this.session.contextScope && this.session.contextScope !== scope) {
         this.session.messages = withoutCompactions(this.session.messages);
         delete this.session.cacheKey;
@@ -82,16 +85,16 @@ export class Agent {
       this.session.cacheKey ??= crypto.randomUUID();
       this.entry("user", text);
       this.session.messages.push({ role: "user", content: text });
-      const state = `任务开始时的实际状态数据（后续以工具反馈为准）：${JSON.stringify(robotSnapshot(this.robot, this.cameras))}`;
+      const state = t("任务开始时的实际状态数据（后续以工具反馈为准）：{0}", JSON.stringify(robotSnapshot(this.robot, this.cameras, locale)));
       const available = this.cameras.available();
       const role = available.includes("external") ? "external" : undefined;
       let frame: CameraFrame | undefined;
       if (role) {
         try { frame = this.cameras.capture(role); }
-        catch (error) { this.entry("status", `初始画面未就绪，可用相机工具取图：${String(error)}`); }
+        catch (error) { this.entry("status", t("初始画面未就绪，可用相机工具取图：{0}", String(error))); }
       }
       this.session.messages.push({ role: "user", content: frame ? [
-        { type: "text", text: `${state}\n已采集的本轮初始画面：${JSON.stringify({ role: frame.role, captured_at: frame.captured_at, width: frame.width, height: frame.height })}` },
+        { type: "text", text: t("{0}\n已采集的本轮初始画面：{1}", state, JSON.stringify({ role: frame.role, captured_at: frame.captured_at, width: frame.width, height: frame.height })) },
         { type: "file", data: frame.dataURL, mediaType: frame.dataURL.slice(5, frame.dataURL.indexOf(";")) },
       ] : state });
       this.emit();
@@ -105,6 +108,7 @@ export class Agent {
         cameras: this.cameras,
         settings,
         signal,
+        locale,
         record: (kind, text, detail) => this.entry(kind, text, detail),
         changed: () => this.emit(),
       });
@@ -113,7 +117,7 @@ export class Agent {
         this.flushPending();
         const threshold = settings.compactTokens ?? DEFAULT_AI.compactTokens!;
         if (threshold > 0 && (this.session.usage?.inputTokens ?? 0) >= threshold) {
-          await this.compact(settings, apiKey, signal);
+          await this.compact(settings, apiKey, signal, systemInstructions);
           this.flushPending();
         }
         const startedTools = new Set<string>();
@@ -121,7 +125,7 @@ export class Agent {
           model: provider.responses(settings.model),
           // Static instructions preserve a reusable system prefix. Dynamic
           // posture, timestamps and reminders belong in conversation data.
-          system: instructions,
+          system: systemInstructions,
           messages: activeContext(this.session.messages),
           tools,
           providerOptions: {
@@ -144,7 +148,7 @@ export class Agent {
                 reply = undefined;
                 this.entry(
                   "status",
-                  `网络重试 ${status.attempt}/${networkRetries}，10 秒后继续：${status.error}`,
+                  t("网络重试 {0}/{1}，10 秒后继续：{2}", status.attempt, networkRetries, status.error),
                 );
               },
             ),
@@ -161,8 +165,8 @@ export class Agent {
             if (unanswered.length) this.session.messages.push({ role: "tool", content: unanswered.map((call) => ({
               type: "tool-result", toolCallId: call.toolCallId, toolName: call.toolName,
               output: { type: "error-text", value: startedTools.has(call.toolCallId)
-                ? "调用已开始处理，但未收到完整结果；先核对实际状态，不要自动重放动作。"
-                : `模型响应结束原因为 ${step.finishReason}；SDK 未执行此调用。` },
+                ? t("调用已开始处理，但未收到完整结果；先核对实际状态，不要自动重放动作。")
+                : t("模型响应结束原因为 {0}；SDK 未执行此调用。", step.finishReason) },
             })) });
             if (hasCompaction(step.response.messages)) delete this.session.usage;
             else this.session.usage = {
@@ -183,31 +187,31 @@ export class Agent {
         }
         const reason = await result.finishReason;
         if (reason === "length") {
-          this.entry("status", "模型输出达到长度限制，保留当前结果并继续");
+          this.entry("status", t("模型输出达到长度限制，保留当前结果并继续"));
           this.session.messages.push({
             role: "user",
-            content: "上一段模型输出因长度限制截断。依据已经返回的工具结果继续当前任务，已执行的动作不重复执行。",
+            content: t("上一段模型输出因长度限制截断。依据已经返回的工具结果继续当前任务，已执行的动作不重复执行。"),
           });
           continue;
         }
         if (reason !== "stop" && reason !== "tool-calls")
-          throw Error(`模型响应未正常完成：${reason}`);
+          throw Error(t("模型响应未正常完成：{0}", reason));
         if (reason !== "tool-calls" && !this.session.pending.length) break;
       }
-      this.entry("status", "本轮已结束；请以相机画面和实际反馈核对物体结果");
+      this.entry("status", t("本轮已结束；请以相机画面和实际反馈核对物体结果"));
     } catch (error) {
       const message = networkErrorMessage(error);
       this.entry(
         "status",
         signal.aborted
-          ? "已停止，未完成目标保留在当前会话"
-          : `运行失败：${message}`,
+          ? t("已停止，未完成目标保留在当前会话")
+          : t("运行失败：{0}", message),
       );
       this.flushPending();
       // Persist an explicit boundary so a resumed conversation does not assume success.
       this.session.messages.push({
         role: "user",
-        content: `上一轮${signal.aborted ? "已停止" : `中断：${message}`}。先检查当前实际状态，再继续；不要自动重放已经执行的动作。`,
+        content: t("上一轮{0}。先检查当前实际状态，再继续；不要自动重放已经执行的动作。", signal.aborted ? t("已停止") : t("中断：{0}", message)),
       });
     } finally {
       this.session.active = false;
@@ -215,15 +219,15 @@ export class Agent {
       this.emit();
     }
   }
-  private async compact(settings: AISettings, apiKey: string, signal: AbortSignal) {
-    this.entry("status", "正在原生压缩上下文");
+  private async compact(settings: AISettings, apiKey: string, signal: AbortSignal, systemInstructions: string) {
+    this.entry("status", t("正在原生压缩上下文"));
     const started = performance.now();
     const recovery = networkRecovery(signal, async (status) => {
-      this.entry("status", `网络重试 ${status.attempt}/${networkRetries}，10 秒后继续：${status.error}`);
+      this.entry("status", t("网络重试 {0}/{1}，10 秒后继续：{2}", status.attempt, networkRetries, status.error));
     });
     const result = await recovery.run(() => generateText({
       model: createOpenAI({ baseURL: settings.baseURL.replace(/\/+$/, ""), apiKey }).responses(settings.model),
-      system: instructions,
+      system: systemInstructions,
       messages: activeContext(this.session.messages),
       providerOptions: { openai: {
         store: false, compactionTrigger: true, promptCacheKey: this.session.cacheKey,
@@ -235,10 +239,10 @@ export class Agent {
     }));
     signal.throwIfAborted();
     if (!hasCompaction(result.response.messages))
-      throw Error("模型入口未返回原生 compaction 项；原会话已保留，未使用手工摘要替代");
+      throw Error(t("模型入口未返回原生 compaction 项；原会话已保留，未使用手工摘要替代"));
     this.session.messages.push(...result.response.messages);
     delete this.session.usage;
-    this.entry("status", "原生上下文压缩完成，继续当前任务", {
+    this.entry("status", t("原生上下文压缩完成，继续当前任务"), {
       duration_ms: performance.now() - started,
       input_tokens: result.usage.inputTokens, output_tokens: result.usage.outputTokens,
     });
@@ -251,12 +255,12 @@ export class Agent {
     this.controller?.abort();
   }
   reset() {
-    if (this.running) throw Error("请先停止当前任务");
+    if (this.running) throw Error(t("请先停止当前任务"));
     this.session = emptySession();
     this.emit();
   }
   restore(session: Session) {
-    if (this.running) throw Error("请先停止当前任务");
+    if (this.running) throw Error(t("请先停止当前任务"));
     this.session = {
       ...emptySession(), ...session,
       active: false,
@@ -265,17 +269,17 @@ export class Agent {
       entries: session.entries.map((entry) => ({
         ...entry,
         text: entry.kind === "tool"
-          ? entry.text.replace(/ · 执行中$/, " · 已中断，待核对")
+          ? translate(entry.text, "zh").replace(/ · 执行中$/, " · 已中断，待核对")
           : entry.text,
       })),
     };
     this.flushPending();
-    if (session.active || session.entries.some((e) => e.kind === "tool" && e.text.endsWith(" · 执行中"))) {
+    if (session.active || session.entries.some((e) => e.kind === "tool" && translate(e.text, "zh").endsWith(" · 执行中"))) {
       this.session.messages.push({
         role: "user",
-        content: "页面已重新打开，上轮任务已中断。先检查当前实际状态，再继续；不要自动重放已经执行的动作。",
+        content: t("页面已重新打开，上轮任务已中断。先检查当前实际状态，再继续；不要自动重放已经执行的动作。"),
       });
-      this.entry("status", "上轮任务已中断；重新连接设备后可在当前会话继续");
+      this.entry("status", t("上轮任务已中断；重新连接设备后可在当前会话继续"));
     }
     this.emit();
   }
@@ -288,7 +292,7 @@ export async function models(settings: AISettings, apiKey: string, signal?: Abor
   );
   const value = await response.json();
   if (!response.ok)
-    throw Error(value.error?.message ?? `模型列表 HTTP ${response.status}`);
+    throw Error(value.error?.message ?? t("模型列表 HTTP {0}", response.status));
   return (value.data as { id: string }[]).map((v) => v.id);
 }
 export async function checkAI(
@@ -315,7 +319,7 @@ export async function checkAI(
         content: [
           {
             type: "text",
-            text: "调用 describe_input 描述当前输入，再根据工具结果简短回复。不会操作机械臂。",
+            text: t("调用 describe_input 描述当前输入，再根据工具结果简短回复。不会操作机械臂。"),
           },
           ...(frame ? [{ type: "image" as const, image: frame.dataURL }] : []),
         ],
@@ -323,7 +327,7 @@ export async function checkAI(
     ],
     tools: {
       describe_input: tool({
-        description: "返回输入；不操作设备",
+        description: t("返回输入；不操作设备"),
         inputSchema: z.object({ description: z.string() }),
         execute: (input) => {
           called = true;
@@ -336,6 +340,6 @@ export async function checkAI(
     abortSignal: signal,
   });
   const text = await result.text;
-  if (!called || !text) throw Error("未完成工具调用与回复，不能确认兼容");
-  return `${settings.model}：文本、流式、工具回传通过${frame ? "；已发送相机图片，请核对描述" : "；识图未测（未开启相机）"}。${text}`;
+  if (!called || !text) throw Error(t("未完成工具调用与回复，不能确认兼容"));
+  return t("{0}：文本、流式、工具回传通过{1}。{2}", settings.model, frame ? t("；已发送相机图片，请核对描述") : t("；识图未测（未开启相机）"), text);
 }

@@ -42,7 +42,9 @@ button {
   padding: 8px 14px;
   border-radius: var(--radius);
   white-space: nowrap;
-  transition: background-color 120ms ease, border-color 120ms ease;
+  transition:
+    background-color 120ms ease,
+    border-color 120ms ease;
 }
 button:hover:not(:disabled) {
   border-color: var(--accent);
@@ -260,6 +262,7 @@ p {
 .fields {
   display: grid;
   gap: 16px;
+  align-items: end;
 }
 .two {
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -692,7 +695,14 @@ th {
     padding: 0;
   }
   .section-heading {
+    display: grid;
+    grid-template-columns: 18px minmax(0, 1fr);
     gap: 12px;
+  }
+  .section-heading > button,
+  .section-heading > .badge {
+    grid-column: 2;
+    justify-self: start;
   }
   .section-foot {
     align-items: flex-start;
@@ -734,4 +744,9 @@ th {
   details > summary::after {
     transition: none;
   }
+}
+
+.language-select {
+  width: auto;
+  min-width: 120px;
 }

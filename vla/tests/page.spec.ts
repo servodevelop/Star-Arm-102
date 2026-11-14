@@ -1,5 +1,9 @@
 import { test, expect } from "@playwright/test";
 
+test.beforeEach(async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem("vla-language", "zh"));
+});
+
 test("独立部署页：配置编辑、保存、刷新、预览不运动和窄屏布局", async ({
   page,
 }) => {

@@ -1,3 +1,4 @@
+import { t } from "../../lib/i18n";
 // FL-only typed subset of star-arm-studio 71114a0 fashionstar_serial.js.
 export interface Packet {
   code: number;
@@ -20,7 +21,7 @@ export function pack(
   params: number[] | Uint8Array,
   response = false,
 ) {
-  if (params.length > 255) throw Error("协议参数长度超过一字节范围");
+  if (params.length > 255) throw Error(t("协议参数长度超过一字节范围"));
   const frame = Uint8Array.from([
     ...(response ? [0x05, 0x1c] : [0x12, 0x4c]),
     code,
@@ -74,9 +75,9 @@ export const ServoProtocol = {
       options.servoIds.length !== angles.length ||
       (Array.isArray(options.power) && options.power.length !== angles.length)
     )
-      throw Error("同步指令的角度、ID 与功率条目数量不一致");
+      throw Error(t("同步指令的角度、ID 与功率条目数量不一致"));
     if (angles.some((angle) => !Number.isFinite(angle) || angle * 10 < -0x80000000 || angle * 10 > 0x7fffffff))
-      throw Error("舵机角度超出协议 32 位有符号数范围");
+      throw Error(t("舵机角度超出协议 32 位有符号数范围"));
     const bytes = new Uint8Array(3 + angles.length * 15),
       v = new DataView(bytes.buffer);
     bytes.set([14, 15, angles.length]);

@@ -12,6 +12,8 @@ const pending = new Set(), requests = [], rounds = [];
 const hash = (v) => createHash("sha256").update(JSON.stringify(v)).digest("hex");
 try {
   const p = b.contexts().flatMap((c) => c.pages()).find((p) => p.url().startsWith(process.env.ARM_URL ?? "http://localhost:8780/"));
+  if (!p) throw Error("Open the test page first");
+  await p.getByRole("combobox", { name: "Language / 语言" }).selectOption("zh");
   if (await p.getByText("正在处理", { exact: true }).count()) throw Error("Another task is running");
   const model = await p.getByLabel("AI 模型", { exact: true }).inputValue();
   const client_bundle_hash = hash(await p.locator("script[src]").evaluateAll((nodes) => nodes.map((n) => new URL(n.src).pathname)));

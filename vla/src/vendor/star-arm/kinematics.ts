@@ -1,3 +1,4 @@
+import { t } from "../../lib/i18n";
 // Typed adaptation of star-arm-studio 71114a0 ik_solver.js.
 // Same URDF transforms and damped least-squares position solver; adds link points.
 import { JOINTS, type Joint } from "./model-data";
@@ -66,7 +67,7 @@ function rotation(axis: number[], angle: number) {
 }
 export function forwardKinematics(angles: number[]) {
   if (angles.length !== 6 || !angles.every(Number.isFinite))
-    throw Error("正解需要 6 个有限弧度值");
+    throw Error(t("正解需要 6 个有限弧度值"));
   let matrix = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
   const points = [[0, 0, 0]];
   JOINTS.forEach((j, i) => {

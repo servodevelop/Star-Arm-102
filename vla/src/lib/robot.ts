@@ -1,3 +1,4 @@
+import { t } from "./i18n";
 import { SerialServoBus } from "../vendor/star-arm/serial";
 import { ServoProtocol } from "../vendor/star-arm/protocol";
 import {
@@ -35,7 +36,7 @@ export function delay(ms: number, signal?: AbortSignal) {
   return new Promise<void>((resolve, reject) => {
     const abort = () => {
       clearTimeout(timer);
-      reject(signal?.reason ?? new DOMException("已停止", "AbortError"));
+      reject(signal?.reason ?? new DOMException(t("已停止"), "AbortError"));
     };
     const timer = setTimeout(() => {
       signal?.removeEventListener("abort", abort);
@@ -146,8 +147,8 @@ export class Robot {
     const epoch = this.epoch;
     const result = this.tail.then(async () => {
       external?.throwIfAborted();
-      if (epoch !== this.epoch) throw Error("操作已取消");
-      if (!this.bus.connected) throw Error("从臂串口未连接");
+      if (epoch !== this.epoch) throw Error(t("操作已取消"));
+      if (!this.bus.connected) throw Error(t("从臂串口未连接"));
       const signal = external
         ? AbortSignal.any([this.cancellation.signal, external])
         : this.cancellation.signal;
@@ -169,7 +170,7 @@ export class Robot {
     const result = await this.bus.feedback(ids, signal);
     if (result.missingIds.length)
       throw Error(
-        `舵机回读不完整，未响应 ID：${result.missingIds.join(", ")}；不将目标角度当成反馈`,
+        t("舵机回读不完整，未响应 ID：{0}；不将目标角度当成反馈", result.missingIds.join(", ")),
       );
     const monitors = ids.map((id) => result.monitors[id]) as Telemetry[];
     this.update({
@@ -223,7 +224,7 @@ export class Robot {
     signal?: AbortSignal,
   ) {
     if (!Number.isFinite(angle) || angle < 0 || angle > 90)
-      throw Error("夹爪驱动角范围为 0～90°，0°闭合、90°最大张开");
+      throw Error(t("夹爪驱动角范围为 0～90°，0°闭合、90°最大张开"));
     return this.command([angle], [6], durationMs, powerMw, signal);
   }
   private command(
@@ -234,13 +235,13 @@ export class Robot {
     signal?: AbortSignal,
   ) {
     if (!Number.isInteger(duration) || duration <= 0 || duration > 0xffffffff)
-      throw Error("运动时长需为有效的正整数毫秒");
+      throw Error(t("运动时长需为有效的正整数毫秒"));
     const powers = Array.isArray(power) ? power : angles.map(() => power);
     if (
       powers.length !== angles.length ||
       powers.some((p) => !Number.isInteger(p) || p < 0 || p > 65535)
     )
-      throw Error("协议功率需为 0～65535 mW 的整数，0 使用舵机默认");
+      throw Error(t("协议功率需为 0～65535 mW 的整数，0 使用舵机默认"));
     return this.enqueue(async (inner) => {
       const ramp = Math.min(65535, Math.floor(duration / 4));
       await this.bus.write(

@@ -1,3 +1,5 @@
+import { setLocale } from "../src/lib/i18n";
+setLocale("zh");
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { forwardKinematics } from "../src/vendor/star-arm/kinematics";

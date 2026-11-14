@@ -1,3 +1,4 @@
+import { t } from "../../lib/i18n";
 // Typed FL transport adapted from star-arm-studio 71114a0 serial_servo_bus.js
 // and servo_readback.js. One reader, one monitor request per bus owner.
 import {
@@ -53,10 +54,10 @@ export class SerialServoBus {
     // A lost stream can still own its Web Serial locks. Release that old
     // connection before opening again; otherwise the UI cannot reconnect.
     if (this.lost) await this.disconnect();
-    if (this.port) throw Error("串口已经打开");
+    if (this.port) throw Error(t("串口已经打开"));
     if (!port && !this.serial)
       throw Error(
-        "Web Serial 不可用，请使用 HTTPS / localhost 下的 Chrome 或 Edge",
+        t("Web Serial 不可用，请使用 HTTPS / localhost 下的 Chrome 或 Edge"),
       );
     this.port = port ?? (await this.serial!.requestPort());
     this.lost = false;
@@ -92,7 +93,7 @@ export class SerialServoBus {
       while (epoch === this.epoch) {
         const { done, value } = await reader.read();
         if (epoch !== this.epoch) return;
-        if (done) throw Error(`${this.name} 串口已断开`);
+        if (done) throw Error(t("{0} 串口已断开", this.name));
         if (!value) continue;
         for (const packet of this.parser.push(value)) {
           const monitor = parseMonitor(packet);
@@ -111,7 +112,7 @@ export class SerialServoBus {
     }
   }
   async write(frame: Uint8Array) {
-    if (!this.writer || this.lost) throw Error("从臂串口未连接");
+    if (!this.writer || this.lost) throw Error(t("从臂串口未连接"));
     try {
       await this.writer.write(frame);
     } catch (e) {

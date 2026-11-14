@@ -1,3 +1,5 @@
+import { setLocale } from "../src/lib/i18n";
+setLocale("zh");
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { Cameras, CAMERA_STARTUP_MS } from "../src/lib/cameras";

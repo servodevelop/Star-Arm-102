@@ -56,6 +56,8 @@ const reviewImageMs = review.entries.filter((e) => e.kind === "tool")
   .reduce((total, e) => total + (JSON.parse(e.detail ?? "{}").output?.observation_ms ?? 0), 0);
 const doc = `# AI 等待时间、缓存与原生压缩
 
+← [vla-arms-agent](../README.zh.md) · <sub>[English](PERFORMANCE.md) / **简体中文**</sub>
+
 测试日期：2026-11-14。模型固定为 gpt-6.1-sol，medium 与 low 分别作同等级对照。全部任务从本机真实网页的表单、开始或追加按钮执行，读取实际机械臂反馈和 1280×720 外部相机画面。先用静止场景比较模型等待和缓存，再单独执行完整抓放。前两组对照使用 471be14 的单张首帧实现；末节为动作后默认双图的 Astra 真机结果。
 
 ## 同等级六轮只读对照
@@ -151,7 +153,7 @@ ${review.review}
 
 ## 复测
 
-[测试说明](../tests/README.md)列出 benchmark-cache.mjs、profile-task.mjs 与本报告生成器的用法。数据写入 temp/native-compaction/ 和 temp/latency-comparison/，可重新采集；报告不包含 API Key、请求图片或原生密文。抓放结果需检查抬升与最终画面，不能只采用模型自述。
+[测试说明](../tests/README.zh.md)列出 benchmark-cache.mjs、profile-task.mjs 与本报告生成器的用法。数据写入 temp/native-compaction/ 和 temp/latency-comparison/，可重新采集；报告不包含 API Key、请求图片或原生密文。抓放结果需检查抬升与最终画面，不能只采用模型自述。
 `;
-await writeFile("docs/PERFORMANCE.md", doc);
-console.log(JSON.stringify({ report: "docs/PERFORMANCE.md", same_effort_pairs: pairs.length, physical_reviewed: true }));
+await writeFile("docs/PERFORMANCE.zh.md", doc);
+console.log(JSON.stringify({ report: "docs/PERFORMANCE.zh.md", same_effort_pairs: pairs.length, physical_reviewed: true }));

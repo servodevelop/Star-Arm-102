@@ -1,98 +1,108 @@
-# 部署与开发说明
+# Deployment and development
 
-## 运行方式
+← [vla-arms-agent](../README.md) · <sub>**English** / [简体中文](DEVELOPMENT.zh.md)</sub>
 
-vla-arms-agent 是独立的 Next.js 工程，使用 React、TypeScript 和 Vercel AI SDK。Docker 使用 Node.js 26 LTS、pnpm 12 和 Next.js 的 standalone 构建，由 Node.js 直接运行生成的 `server.js`，提供页面和静态资源。直接依赖固定为已验证的稳定版本，完整依赖由锁文件管理。
+## Runtime
 
-浏览器负责相机采集、图像获取、运动学计算、Web Serial 通信和 AI 工具执行。模型请求由浏览器直接发送到配置的 OpenAI 兼容 Responses 服务。工程的安装、构建与运行均使用本目录内的源码和依赖。
+vla-arms-agent is an independent Next.js application using React, TypeScript, and Vercel AI SDK. Docker uses Node.js 26 LTS, pnpm 12, and the Next.js standalone build. Node.js serves the generated `server.js`, page, and static assets directly. Direct dependencies are pinned to verified stable versions; the lockfile controls the full dependency tree.
 
-## 本地运行与调试
+The browser handles camera capture, image extraction, kinematics, Web Serial, and AI tool execution. Model requests go directly to the configured OpenAI-compatible Responses endpoint. Installation, builds, and execution use this directory's source and dependencies.
 
-本机使用 Chrome 或 Edge 访问 `http://localhost:8780`，通过浏览器弹窗授权串口和摄像头。
+## Local operation and development
 
-使用 Docker 构建并启动：
+Open `http://localhost:8780` in Chrome or Edge and authorize cameras and the serial port in browser dialogs.
+
+Build and start with Docker:
 
 ```sh
 docker compose up -d --build
 ```
 
-容器内监听 `3000` 端口，本机映射为 `8780`。需要调整访问地址或端口时，复制 `.env.example` 为 `.env`，设置 `BIND_ADDRESS` 和 `HTTP_PORT`。
+The container listens on port `3000`, mapped to host port `8780`. Copy `.env.example` to `.env` and set `BIND_ADDRESS` and `HTTP_PORT` to change the binding or port.
 
-本地修改代码时，运行 `pnpm install --frozen-lockfile` 和 `pnpm dev`，访问 `http://localhost:3000`，修改会自动更新到页面。
+For local development, run `pnpm install --frozen-lockfile` and `pnpm dev`, then visit `http://localhost:3000`. Changes update in the page automatically.
 
-本机 `localhost` 支持浏览器的串口与相机授权。通过其他电脑访问时，使用受信任的 HTTPS 入口连接工作台，证书可沿用部署环境中的 HTTPS 配置。
+Browser device authorization works on localhost. Access from another computer requires trusted HTTPS; use the deployment environment's HTTPS configuration.
 
-模型服务需允许工作台页面发起跨域请求（CORS）。HTTPS 页面使用 HTTPS 模型地址，或浏览器支持访问的本地入口。串口与摄像头由浏览器所在电脑接入。
+The model endpoint must allow cross-origin requests (CORS) from the workbench. An HTTPS page needs an HTTPS model endpoint or a browser-supported local endpoint. Devices connect to the computer running the browser.
 
-## Vercel 部署
+## Vercel deployment
 
-源码位于 [servodevelop/Star-Arm-102 的 vla 目录](https://github.com/servodevelop/Star-Arm-102/tree/main/vla)。关联此仓库部署时，将 Vercel 的 Root Directory 设置为 `vla`，使用 Next.js 预设、Node.js 26，并将生产环境的 `ENABLE_EXPERIMENTAL_COREPACK` 设置为 `1`，使构建使用 `packageManager` 指定的 pnpm 12。
+Source is in [servodevelop/Star-Arm-102, directory vla](https://github.com/servodevelop/Star-Arm-102/tree/main/vla). For Git deployment, set Root Directory to `vla`, use the Next.js preset and Node.js 26, and set production `ENABLE_EXPERIMENTAL_COREPACK` to `1` to select pnpm 12 from `packageManager`.
 
-Vercel 提供 HTTPS 页面。机械臂、摄像头和模型连接仍由访问页面的浏览器完成，模型服务需允许该站点的 CORS 来源；AI 密钥在页面输入。设备连接到浏览器所在电脑。
+Vercel serves the HTTPS page. The browser still handles the arm, cameras, and model connection. Allow the site's CORS origin at the model service and enter the AI key in the page. Devices connect to the browser's computer.
 
-通过 `vercel --prod` 发布本地已提交版本，或在 Vercel 中关联上述仓库进行 Git 部署。
+Publish a committed local version with `vercel --prod`, or connect the repository above for Git deployment.
 
-## AI 与控制链路
+## Interface and AI language
 
-AI 通过八个工具调用与手动控制共用的执行方法：
+English is the default. The header's language selector switches to Simplified Chinese. The browser remembers the choice independently of model and device settings. Switching language updates controls, accessibility labels, application statuses, and notifications without reconnecting devices or starting motion.
 
-| 工具 | 功能 |
+A new AI turn snapshots the selected language for its static instructions and tool descriptions. Changing the interface during a running turn keeps that turn's instructions unchanged; the next turn uses the new language. Switching language rebuilds native context and cache scope from the original history. User input and existing assistant replies stay in their original language.
+
+Translations are in `src/lib/messages.ts`; `src/lib/i18n.ts` handles parameters and application-status localization. `src/lib/prompts.ts` contains matching English and Chinese task, tool, and experience sections. Protocol bytes, joint mappings, coordinates, and numeric parameters share one implementation. Documentation uses an English default file and a `.zh.md` Chinese counterpart.
+
+## AI and control flow
+
+AI uses eight tools backed by the same execution methods as manual controls:
+
+| Tool | Purpose |
 | --- | --- |
-| `get_state` | 读取实际关节、末端位置和设备状态 |
-| `observe_camera` | 开启或切换绑定相机，获取当前压缩图像 |
-| `preview_joints` | 批量预览候选关节姿态 |
-| `move_joints` | 执行六轴绝对关节目标 |
-| `move_tcp` | 根据末端绝对位置或位移增量求解并执行 |
-| `gripper` | 设置夹爪开口角和协议功率上限 |
-| `work_pose` | 同步返回六轴工作位并闭合夹爪 |
-| `run_sequence` | 按顺序执行已确定的连续动作 |
+| `get_state` | Read actual joints, TCP, and device state |
+| `observe_camera` | Activate or switch a bound camera and return a compressed image |
+| `preview_joints` | Preview multiple candidate joint poses |
+| `move_joints` | Execute six absolute joint targets |
+| `move_tcp` | Solve and execute an absolute TCP position or relative offset |
+| `gripper` | Set opening angle and protocol power limit |
+| `work_pose` | Return all six axes and close the gripper synchronously |
+| `run_sequence` | Execute a determined action sequence in order |
 
-运动工具默认在动作结束后附带外部与腕部两张图，AI 可设置 `observe: false` 不附图；连续动作序列只在整组结束后取图一次。`observe_exclusive: true` 轮流开启两路分别取图，`false` 保留双路；不填写时，双路已开启则保留，否则轮流取图并结束在外部视角。各图带有角色、时间和实际分辨率。全黑帧、空帧和来源不匹配会返回对应相机的错误，正常图片继续返回；取图失败保留已完成动作，不重复执行。
+Motion tools attach fresh external and wrist images by default; `observe: false` opts out. Sequences capture once at the end. `observe_exclusive: true` alternates cameras, while `false` retains both. When omitted, existing dual capture is retained; otherwise capture alternates and ends on the external view. Each image includes its role, timestamp, and actual resolution. All-black, empty, or mismatched-source images return errors for the affected camera while valid images remain available. Capture failure preserves completed movement without replaying it.
 
-新开启的相机在播放后等待 500 ms，让后续帧替代启动帧，再报告采集就绪；已有采集流直接复用。相机取图使用浏览器原生 WebP、质量参数 0.9，保留实际采集分辨率。工具输出按图片数据声明实际 MIME 类型，历史 JPEG 与新图片均保持类型一致。图像压缩不改变关节反馈与运动命令。
+A newly activated camera waits 500 ms after playback starts before reporting readiness, allowing later frames to replace startup frames; existing streams are reused immediately. Native browser WebP at quality 0.9 preserves actual resolution. Image outputs declare the actual MIME type, including historical JPEG images. Compression changes neither feedback nor commands.
 
-模型支持同轮多工具调用。姿态预览可以在运动等待期间计算；串口动作、相机切换与取图按调用顺序执行。序列中的某一步求解或执行失败时，返回已完成步骤和当前结果，供模型继续决策。
+Multiple tools can be called in one model turn. Pose previews can compute while movement waits; serial actions, camera switching, and capture retain call order. A failed sequence step returns completed steps and the current result for the next decision.
 
-移动工具自动校验目标并更新页面预览。模型比较多组候选时使用批量预览；姿态已确定时直接移动。模型收到关节角、TCP、工具轴及各轴相对基座 XY 平面的仰角；完整连杆几何保留在页面渲染中，避免重复发送。
+Motion tools validate targets and update the preview. Use batched previews to compare candidates and move directly once the target is determined. Model input includes joint angles, TCP, tool axes, and their elevation relative to base XY; complete link geometry remains in the page renderer instead of being repeatedly sent.
 
-系统提示词保持固定；任务、初始姿态、实时反馈和补充要求通过会话消息发送。任务启动时附带已开启预览的一张外部相机当前帧；动作完成后由运动工具返回外部与腕部两张图，独立观察仍使用相机工具。初始取图不额外启动或关闭摄像头；请求未绑定角色时不关闭已有预览。模型直接获得画面和实际姿态，需要新视角或更新反馈时再调用工具，减少先请求取图再决策的往返。
+System instructions remain static. Task text, initial pose, feedback, and reminders are conversation messages. An already active external preview supplies the task's initial image. Motion tools supply both views after execution; independent observation uses the camera tool. Initial capture does not start or close cameras. An unbound-role request preserves existing previews. Images and actual state are supplied directly to reduce observation round trips.
 
-同一会话使用持久的 `prompt_cache_key`，在一个原生压缩窗口内只追加消息，保留原始图像、工具结果和加密推理。默认输入达到 256K（262144）token 后，在模型调用结束后、下一次请求之前使用 Vercel AI SDK 的 `compactionTrigger` 调用同一个 `/responses` 入口；原生密文检查点保持原样，后续输入从最新检查点开始。浏览器仍保存完整原始历史，未采用手工摘要。阈值在模型配置中调整，0 关闭；当前入口必须实际返回可承接的 `openai.compaction` 项才记录成功。压缩过程显示在 AI 流程中，可以停止；期间收到的用户补充会在后续模型请求前送达。
+Each conversation retains `prompt_cache_key` and append-only messages within a native compaction window, including original images, tool results, and encrypted reasoning. The default threshold is 256K (262144) input tokens. After a model call and before the next, Vercel AI SDK `compactionTrigger` uses the same `/responses` endpoint. Native encrypted checkpoints pass through unchanged, and later input starts at the latest checkpoint. The browser keeps full original history rather than a manual summary. Set the threshold to 0 to disable it. Success requires a usable `openai.compaction` item. Compaction progress is visible and cancellable; additional user messages are delivered before the next model request.
 
-模型配置中显示最近一次模型响应时间、输入 token 和上游回报的缓存命中率。切换模型或入口时使用保留的原始历史，重新建立缓存与原生压缩上下文。CLIProxyAPI 的 `routing.session-affinity: true` 有助于同一会话复用上游凭据；本地代理已启用此项。缓存命中以模型回报为准，不以请求中存在缓存键代替实测。
+Settings show the latest response time, input tokens, and provider-reported cache hit rate. Model or endpoint changes rebuild context from original history. CLIProxyAPI `routing.session-affinity: true` helps reuse upstream credentials within a conversation. This is a model-service setting; cache hits are measured from actual provider usage rather than inferred from a cache key.
 
-网络瞬时错误最多重试 15 次，每次间隔 10 秒。模型输出达到长度限制时保留历史并继续；未执行的调用与已开始但结果未确认的调用分别返回明确错误，避免留下缺少结果的调用或重放动作。过滤及失败响应显示错误，同一会话可继续发送。
+Transient network failures retry up to 15 times, 10 seconds apart. Length-limited output retains history and continues. Unexecuted calls and started calls with unconfirmed results receive distinct errors, preventing orphaned calls or action replay. Filtered and failed responses show errors; the conversation remains available for further messages.
 
-在“模型与动作配置”点击“保存 AI 配置”，即可保存 API Key、模型与动作参数。配置与会话存入当前浏览器的 IndexedDB，刷新后自动恢复。清空 API Key 后保存配置，即可清除已保存的密钥。
-项目改名后，同一网站来源下的旧配置和会话会自动复制到 `vla-arms-agent` 数据库；已有新名称数据时直接使用。不同域名各自保存浏览器数据，Vercel 与 localhost 的设备授权、绑定和设置分别配置。
-运行中的补充消息随会话保存。重新打开页面会将未结束任务标记为中断，保留历史和补充；重新连接设备后可继续发送，模型先核对实际状态，不自动重放动作。停止按钮同时取消任务、模型连接验证或模型列表请求。
+Select “Save AI settings” to save the key, model, and motion parameters. Configuration and conversations use browser IndexedDB and restore on refresh. Clear the key field and save to remove a stored key.
+On the same origin, old configurations and conversations migrate once into the `vla-arms-agent` database; existing new-name data takes precedence. Different origins retain separate permissions, bindings, and settings.
+Live additional messages save with the conversation. Reopening marks unfinished tasks interrupted and retains history and pending messages. After reconnecting, continue by sending a message; the model checks actual state without replaying motion. Stop also cancels model validation or model-list requests.
 
-## 运动与夹爪参数
+## Motion and gripper parameters
 
-| 项目 | 当前实现 |
+| Item | Current implementation |
 | --- | --- |
-| 串口 | 默认 1 Mbps，舵机 ID 0–6，同步位置指令 |
-| 实际姿态 | 电机回读角度经模型映射和正运动学计算 |
-| 末端位置 | 模型 `link6` 原点，工具参数使用毫米 |
-| 位置逆解 | 从当前关节角出发的简化阻尼最小二乘迭代，求解 TCP 位置 |
-| 夹爪朝向 | 通过关节目标调整 |
-| 环境碰撞检测 | 当前版本未集成 |
-| 夹爪控制 | 开口角与协议功率上限，角度 0°为闭合 |
-| 夹爪功率 | 单位 mW，0 使用舵机默认；此项设置输出功率上限 |
+| Serial | Default 1 Mbps, servo IDs 0–6, synchronous position commands |
+| Actual pose | Motor angles transformed through model mapping and FK |
+| TCP | Model `link6` origin; tools use millimeters |
+| Position IK | Simplified local damped least-squares iteration from current angles |
+| Gripper orientation | Adjusted through joint targets |
+| Environment collision detection | Not integrated in this version |
+| Gripper control | Opening angle and protocol power limit; 0° closed |
+| Gripper power | mW; 0 uses the servo default; this is an output power limit |
 
-位置逆解返回迭代次数与位置误差。局部求解遇到困难时，可以预览并调整关节构型，再尝试位置运动。
+Position IK returns iteration count and position error. Preview and adjust the joint configuration before retrying when local solving is difficult.
 
-夹爪参考数据沿用原项目审核过的夹持空间：30°约 71 mm，60°约 129 mm。两组数据对应不同测量深度，应作为各自的开口参考使用。机械行程上限为 90°，实际开口按物体宽度选择。
+Reviewed gripping-space references are approximately 71 mm at 30° and 129 mm at 60°. The two samples use different measurement depths and are separate opening references. Mechanical travel ends at 90°; choose the actual opening for the object width.
 
-J4 使用参考模型的 +Z 轴和一次反向映射。原项目的舵机工作位 J4=+60°，对应本工程模型角 J4=-60°。方向与零点可以在页面配置，正逆转换共用同一份映射。
+J4 uses the reference model's +Z axis with a single reverse mapping. The previous project's motor work angle J4=+60° corresponds to model J4=-60° here. The page configures directions and offsets, with one mapping for both conversions.
 
-关节角 0.5° 以内的偏差视为正常。预览与执行的模型范围检查使用同一 0.5° 容差，原始反馈保持不变；AI 状态数据与提示词包含此说明。位置逆解仍在 URDF 范围内迭代。
+Joint feedback deviations within 0.5° are normal. Preview and execution share the 0.5° model-range tolerance while original feedback stays unchanged. The AI state and instructions include this rule. Position IK still iterates within URDF limits.
 
-工作位模型角为 `[0,0,-60,-60,0,0]°`。六轴与闭合夹爪通过同一条七轴同步指令执行，夹爪功率配置仅作用于夹爪。停止操作使用厂商保持当前位置指令，保留当前夹爪状态。
+The work pose is `[0,0,-60,-60,0,0]°` in model coordinates. One seven-axis synchronous command returns the arm and closes the gripper; the gripper's power setting affects only its own servo. Stop uses the vendor's hold-current-position command and retains gripper state.
 
-反馈回读与动作共用串口队列。后台读数不会切换页面执行状态；手动回读由按钮显示进度。
+Feedback and motion share one serial queue. Background feedback does not change the page execution state; manual refresh shows progress on its button.
 
-## 开发命令
+## Development commands
 
 ```sh
 pnpm install --frozen-lockfile
@@ -103,10 +113,10 @@ pnpm test:e2e
 pnpm build
 ```
 
-测试用途、真实网页验收入口和输出目录见 [测试说明](../tests/README.md)。
+See [testing](../tests/README.md) for automated checks, real-browser entry points, and output directories.
 
-## 代码来源
+## Code sources
 
-从臂协议与运动学参考 `star-arm-studio`，在本工程内适配为 TypeScript，来源提交和移植范围见 [vendor 说明](../src/vendor/star-arm/README.md)。
+Follower communication and kinematics derive from `star-arm-studio` and are adapted here in TypeScript. See the [vendor notes](../src/vendor/star-arm/README.md) for the source commit and scope.
 
-AI 的任务编排、上下文和网络恢复参考原 `robot-arm` 的纯视觉流程，参考提交为 `5412efe`。
+AI orchestration, context, and network recovery reference the original `robot-arm` pure-vision flow at commit `5412efe`.

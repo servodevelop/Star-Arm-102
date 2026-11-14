@@ -1,3 +1,4 @@
+import { t } from "./i18n";
 import {
   forwardKinematics,
   solveInverseKinematics,
@@ -31,12 +32,12 @@ export function servoAngles(model: number[], mapping: Mapping) {
 }
 export function assertJoints(values: number[]) {
   if (values.length !== 6 || !values.every(Number.isFinite))
-    throw Error("需要 6 个有限的模型关节角（度）");
+    throw Error(t("需要 6 个有限的模型关节角（度）"));
   values.forEach((v, i) => {
     const [lower, upper] = limits[i];
     if (v < lower - JOINT_ANGLE_TOLERANCE_DEG - 1e-6 || v > upper + JOINT_ANGLE_TOLERANCE_DEG + 1e-6)
       throw Error(
-        `J${i + 1} 超出原模型范围 ${limits[i].map((v) => v.toFixed(1)).join("～")}°`,
+        t("J{0} 超出原模型范围 {1}°", i + 1, limits[i].map((v) => v.toFixed(1)).join("～")),
       );
   });
 }
