@@ -318,7 +318,7 @@
   </link>
   <joint
     name="joint5"
-    type="fixed">
+    type="revolute">
     <origin
       xyz="0.035 -0.00203 0"
       rpy="-1.5708 0 0" />
@@ -327,10 +327,10 @@
     <child
       link="link5" />
     <axis
-      xyz="0 0 0" />
+      xyz="0 0 -1" />
     <limit
-      lower="-2.27"
-      upper="2.27"
+      lower="-1.0471975511965976"
+      upper="1.0471975511965976"
       effort="100"
       velocity="1" />
   </joint>

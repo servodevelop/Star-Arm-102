@@ -38,8 +38,8 @@
     </joint>
     <joint name="joint5">
       <command_interface name="position">
-        <param name="min">-1.57</param>
-        <param name="max">1.57</param>
+        <param name="min">-1.0471975511965976</param>
+        <param name="max">1.0471975511965976</param>
       </command_interface>
       <state_interface name="position"/>
       <state_interface name="velocity"/>
