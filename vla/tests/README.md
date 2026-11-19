@@ -4,6 +4,7 @@
 
 The real-browser helpers select Chinese through the header before using their existing selectors. `locale.spec.ts` separately checks both languages, persistence, accessibility labels, errors, and saved tool-state recovery. Report generators write Chinese `.zh.md` files; review and update the English counterpart together.
 
+- `service-tier.test.ts` / `service-tier.spec.ts`: Check saved tier selection, real SDK request serialization, native compaction, connection verification, and provider-reported tiers. `service-tier-fixture.ts` supplies local protocol responses; tests do not contact a model service or operate hardware.
 - `i18n.test.ts`: Translation parameters and unknown errors, language-specific schemas with identical motion values, English tool-state recovery, and fixed prompt/tool language during a running task. Uses local SDK fixtures without network or hardware access.
 - `core.test.ts`: Fixed forward-kinematics results and protocol packets from the vendor workbench; virtual serial tests cover fragmentation, background feedback readiness, execution state, queues, cancellation, connection failures, and reconnection. No hardware motion.
 - `context.test.ts`: Native encrypted-checkpoint continuation, full-history retention, and preservation of context when a checkpoint is invalid.

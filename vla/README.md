@@ -112,7 +112,9 @@ If both cameras have the same name, preview them individually to identify their 
 
 ### 3. Connect AI
 
-Expand “Model and motion settings”, enter the endpoint, API key, and model name, choose reasoning effort, then select “Verify connection and capabilities”. With a camera preview active, verification uses a current image to check visual understanding.
+Expand “Model and motion settings”, enter the endpoint, API key, and model name, choose reasoning effort and the service tier, then select “Verify connection and capabilities”. With a camera preview active, verification uses a current image to check visual understanding.
+
+The service tier defaults to Auto. Select Fast or Ultrafast for faster, higher-priced processing, Standard for standard processing, Priority for older compatible endpoints, or Flex for lower-cost processing that may take longer. Save AI settings to retain the choice. The selected model and endpoint must support the tier; the page displays the server-reported tier for the latest task request.
 
 Task instructions and images are sent to the configured AI service. The current browser stores the API key with the configuration and restores it after refresh. Clear the field and save to remove it.
 

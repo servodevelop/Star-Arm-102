@@ -17,6 +17,18 @@ import {
 } from "./types";
 export { type Entry, type Session, type AISettings, DEFAULT_AI } from "./types";
 
+function requestOptions(settings: AISettings) {
+  return {
+    store: false,
+    serviceTier: settings.serviceTier ?? "auto",
+    ...(settings.effort ? { reasoningEffort: settings.effort } : {}),
+  };
+}
+function reportedServiceTier(metadata?: Record<string, Record<string, unknown>>) {
+  const tier = metadata?.openai?.serviceTier;
+  return typeof tier === "string" ? tier : undefined;
+}
+
 export class Agent {
   session: Session = emptySession();
   get running() { return this.session.active; }
@@ -130,10 +142,9 @@ export class Agent {
           tools,
           providerOptions: {
             openai: {
-              store: false,
+              ...requestOptions(settings),
               promptCacheKey: this.session.cacheKey,
               parallelToolCalls: true,
-              ...(settings.effort ? { reasoningEffort: settings.effort } : {}),
             },
           },
           maxRetries: 0,
@@ -173,6 +184,7 @@ export class Agent {
               inputTokens: step.usage.inputTokens,
               cachedTokens: step.usage.inputTokenDetails.cacheReadTokens,
               responseMs: step.performance.responseTimeMs,
+              serviceTier: reportedServiceTier(step.providerMetadata),
             };
             this.emit();
           },
@@ -230,8 +242,7 @@ export class Agent {
       system: systemInstructions,
       messages: activeContext(this.session.messages),
       providerOptions: { openai: {
-        store: false, compactionTrigger: true, promptCacheKey: this.session.cacheKey,
-        ...(settings.effort ? { reasoningEffort: settings.effort } : {}),
+        ...requestOptions(settings), compactionTrigger: true, promptCacheKey: this.session.cacheKey,
       } },
       toolChoice: "none",
       maxRetries: 0,
@@ -245,6 +256,7 @@ export class Agent {
     this.entry("status", t("原生上下文压缩完成，继续当前任务"), {
       duration_ms: performance.now() - started,
       input_tokens: result.usage.inputTokens, output_tokens: result.usage.outputTokens,
+      service_tier: reportedServiceTier(result.providerMetadata),
     });
   }
   async stop() {
@@ -309,8 +321,7 @@ export async function checkAI(
     }).responses(settings.model),
     providerOptions: {
       openai: {
-        store: false,
-        ...(settings.effort ? { reasoningEffort: settings.effort } : {}),
+        ...requestOptions(settings),
       },
     },
     messages: [
@@ -341,5 +352,8 @@ export async function checkAI(
   });
   const text = await result.text;
   if (!called || !text) throw Error(t("未完成工具调用与回复，不能确认兼容"));
-  return t("{0}：文本、流式、工具回传通过{1}。{2}", settings.model, frame ? t("；已发送相机图片，请核对描述") : t("；识图未测（未开启相机）"), text);
+  const tier = reportedServiceTier(await result.providerMetadata);
+  const summary = t("{0}：文本、流式、工具回传通过{1}。{2}", settings.model, frame ? t("；已发送相机图片，请核对描述") : t("；识图未测（未开启相机）"), text);
+  return tier ? `${summary}
+${t("服务端档位：{0}", tier)}` : summary;
 }

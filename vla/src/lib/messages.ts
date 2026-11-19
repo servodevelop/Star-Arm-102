@@ -1,5 +1,16 @@
 // Chinese source strings are stable message keys; parameters keep values out of translations.
 export const messages: Record<string, string> = {
+  "服务档位（serviceTier）": "Service tier (serviceTier)",
+  "AI 服务档位": "AI service tier",
+  "自动（服务端默认）": "Auto (server default)",
+  "标准（default）": "Standard (default)",
+  "快速（fast）": "Fast (fast)",
+  "极速（ultrafast）": "Ultrafast (ultrafast)",
+  "优先（priority，兼容旧接口）": "Priority (legacy compatibility)",
+  "弹性（flex）": "Flex (flex)",
+  "Fast、Ultrafast 更快且费用更高；Flex 更省费用但可能更慢。实际档位以服务端回显为准。": "Fast and Ultrafast cost more for faster processing; Flex costs less but may be slower. Check the tier reported by the server.",
+  "服务端档位": "Server tier",
+  "服务端档位：{0}": "Server tier: {0}",
   外部相机: "External camera",
   腕部相机: "Wrist camera",
   实际回读: "Actual feedback",

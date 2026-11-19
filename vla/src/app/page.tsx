@@ -22,7 +22,7 @@ import {
 } from "@/lib/model";
 import { Robot, type RobotState } from "@/lib/robot";
 import { load, save } from "@/lib/storage";
-import { emptySession } from "@/lib/types";
+import { emptySession, SERVICE_TIERS, type ServiceTier } from "@/lib/types";
 
 const blankBinding = (): Binding => ({
   deviceId: "",
@@ -58,6 +58,14 @@ const initial: RobotState = {
 const titles: Record<Role, string> = {
   external: "外部相机",
   wrist: "腕部相机",
+};
+const tierLabels: Record<ServiceTier, string> = {
+  auto: "自动（服务端默认）",
+  default: "标准（default）",
+  fast: "快速（fast）",
+  ultrafast: "极速（ultrafast）",
+  priority: "优先（priority，兼容旧接口）",
+  flex: "弹性（flex）",
 };
 const message = (error: unknown) =>
   error instanceof Error ? error.message : String(error);
@@ -802,6 +810,17 @@ export default function Page() {
                 </label>
               </div>
               <label>
+                {t("服务档位（serviceTier）")}
+                <select
+                  aria-label={t("AI 服务档位")}
+                  value={config.ai.serviceTier ?? "auto"}
+                  onChange={(e) => editAI("serviceTier", e.target.value as ServiceTier)}
+                >
+                  {SERVICE_TIERS.map((tier) => <option key={tier} value={tier}>{t(tierLabels[tier])}</option>)}
+                </select>
+                <span className="caption">{t("Fast、Ultrafast 更快且费用更高；Flex 更省费用但可能更慢。实际档位以服务端回显为准。")}</span>
+              </label>
+              <label>
                 {t("原生上下文压缩阈值 / token")}
                 <input
                   type="number"
@@ -843,6 +862,8 @@ export default function Page() {
                 {session.usage.inputTokens && session.usage.cachedTokens != null
                   ? `${((100 * session.usage.cachedTokens) / session.usage.inputTokens).toFixed(1)}%`
                   : t("未回报")}
+                {" · "}
+                {t("服务端档位")}: {session.usage.serviceTier ?? t("未回报")}
               </p>
             )}
             <div className="actions">
